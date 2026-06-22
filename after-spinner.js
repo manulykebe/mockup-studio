@@ -1,13 +1,13 @@
 async function waitForSpinner() {
     const selector = 'div.loading.loading-spinner.loading-lg';
 
-    if (document.querySelector(selector)) {
+    if (!document.querySelector(selector)) {
         return;
     }
 
     return new Promise((resolve) => {
         const observer = new MutationObserver(() => {
-            if (document.querySelector(selector)) {
+            if (!document.querySelector(selector)) {
                 observer.disconnect();
                 resolve();
             }
@@ -23,7 +23,7 @@ async function waitForSpinner() {
 
 function runAfterSpinner() {
     waitForSpinner().then(() => {
-        window.dispatchEvent(new CustomEvent('spinner-loaded'));
+        window.dispatchEvent(new CustomEvent('spinner-unloaded'));
         alert('Spinner unloaded!');
     });
 }
@@ -37,3 +37,10 @@ if (document.readyState === 'loading') {
 } else {
     setTimeout(runAfterSpinner, 1000);
 }
+
+
+function myFunction() {
+    console.log('Spinner is gone');
+}
+
+window.addEventListener('spinner-unloaded', myFunction);
