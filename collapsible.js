@@ -64,11 +64,5 @@ function makeCollapsible() {
     });
 }
 
-// Call the function when DOM is ready with 1 second delay
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(makeCollapsible, 1000);
-    });
-} else {
-    setTimeout(makeCollapsible, 1000);
-}
+
+makeCollapsible()
