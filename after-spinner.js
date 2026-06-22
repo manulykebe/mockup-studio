@@ -21,9 +21,19 @@ async function waitForSpinner() {
 }
 
 
-waitForSpinner().then(() => {
-    window.dispatchEvent(new CustomEvent('spinner-loaded'));
-    alert('Spinner unloaded!');
-});
+function runAfterSpinner() {
+    waitForSpinner().then(() => {
+        window.dispatchEvent(new CustomEvent('spinner-loaded'));
+        alert('Spinner unloaded!');
+    });
+}
 
 
+// Call the function when DOM is ready with 1 second delay
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(runAfterSpinner, 1000);
+    });
+} else {
+    setTimeout(runAfterSpinner, 1000);
+}
