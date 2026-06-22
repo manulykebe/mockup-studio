@@ -1,0 +1,7 @@
+compared with current balance link for preparations;
+UI/UX attributes:
+
+title="GxP Preparation Balance Measurement"
+aria-label="GxP Preparation Balance Measurement"
+same base classes: d-flex align-items-center justify-content-center text-gray-500 text-gray-700-hover text-gray-700-focus btn btn-icon
+
