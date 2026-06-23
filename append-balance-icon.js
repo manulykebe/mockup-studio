@@ -75,6 +75,9 @@ function appendBalanceButtonToSampleBinderElements() {
             button.style.border = '2px solid #f2c100';
             button.style.borderRadius = '50%';
             button.style.boxShadow = '0 0 0 4px rgba(242, 193, 0, 0.24)';
+            button.addEventListener('click', () => {
+                window.open('https://www.google.com', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+            });
             targetControls.insertBefore(button, targetControls.firstChild);
         }
     });
