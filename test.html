@@ -1,192 +1,41 @@
-<html lang="en">
+th[role=columnheader]:not([data-sort-method='none']) {
+	cursor: pointer;
+}
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GxP Preparation Balance Measurement</title>
-  <script type="module" crossorigin="" src="/assets/balanceMeasurementAction-BhID9Hl-.js"></script>
-  <link rel="modulepreload" crossorigin="" href="/assets/fonts-v3l-Kk5w.js">
-  <link rel="modulepreload" crossorigin="" href="/assets/NewRelicContext-D0jqJ3MV.js">
-  <link rel="modulepreload" crossorigin="" href="/assets/ToastContext-CI-m7gIf.js">
-  <link rel="modulepreload" crossorigin="" href="/assets/ToastContainer-DdJUmron.js">
-  <link rel="modulepreload" crossorigin="" href="/assets/ErrorHandlerService-CdzdpHyF.js">
-  <link rel="modulepreload" crossorigin="" href="/assets/ReasonForChangeFields-CwhRrzOj.js">
-  <link rel="stylesheet" crossorigin="" href="/assets/fonts-BN8ni-Ys.css">
-  <link rel="stylesheet" crossorigin="" href="/assets/balanceMeasurementAction-DlZbLjC6.css">
-  <script
-    src="chrome-extension://akloompimekeojpneifhfnjgbjemcdeb/injected-scripts/executor.js?id=js-injector-1782141543142&amp;t=1782141543142"
-    data-js-injector="executor"></script>
-  <script type="text/javascript" async="">
-    window.NREUM || (NREUM = {});
-    NREUM.init = { session_replay: { enabled: true, block_selector: '', mask_text_selector: '', sampling_rate: 10.0, error_sampling_rate: 100.0, mask_all_inputs: false, collect_fonts: true, inline_images: false, inline_stylesheet: true, fix_stylesheets: true, preload: true, mask_input_options: {} }, distributed_tracing: { enabled: true }, performance: { capture_measures: true }, browser_consent_mode: { enabled: false }, privacy: { cookies_enabled: true }, ajax: { deny_list: ["bam.nr-data.net"], capture_payloads: 'off' } };
-    NREUM.info = {
-      "beacon": "bam.nr-data.net",
-      "errorBeacon": "bam.nr-data.net",
-      "licenseKey": "NRJS-c878152d63fa725f703",
-      "applicationID": "1134667183",
-      "sa": 1
-    };
+th[role=columnheader]:not([data-sort-method='none']):after {
+	content: '';
+	float: right;
+	margin-top: 7px;
+	border-width: 0 4px 4px;
+	border-style: solid;
+	border-color: #404040 transparent;
+	visibility: hidden;
+	opacity: 0;
+	-ms-user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	user-select: none;
+}
 
-    NREUM.info.applicationName = "balance-measurement-action";
+th[aria-sort=ascending]:not([data-sort-method='none']):after {
+	border-bottom: none;
+	border-width: 4px 4px 0;
+}
 
-    (function () {
-      var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://js-agent.newrelic.com/nr-loader-spa-current.min.js';
-      script.onload = function () {
-        console.debug('New Relic Browser Agent script loaded');
-      };
-      script.onerror = function () {
-        console.error('Failed to load New Relic Browser Agent script');
-      };
-      document.head.appendChild(script);
-    })();
-  </script>
-  <script type="text/javascript" src="https://js-agent.newrelic.com/nr-loader-spa-current.min.js"></script>
-</head>
+th[aria-sort]:not([data-sort-method='none']):after {
+	visibility: visible;
+	opacity: 0.4;
+}
 
-<body>
-  <div id="root">
-    <div class="min-h-screen bg-base-200 flex flex-col items-center py-8 px-2">
-      <div class="card w-full max-w-5xl bg-base-100 shadow-xl">
-        <div class="card-body">
-          <div class="mb-4">
-            <h2 class="text-lg font-semibold text-base-content">Table: Prep3</h2>
-          </div>
-          <div class="flex flex-col">
-            <div class="flex flex-col gap-4 mb-4">
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="form-control"><label class="label"><span
-                      class="label-text font-bold">Balance</span></label><select class="select select-bordered w-full">
-                    <option value="f76b3e01-fb47-48a1-874b-611ca61d91f6">001-002 (eStream Test Instance 001)</option>
-                  </select></div>
-                <div class="form-control"><label class="label"><span class="label-text font-bold">Weigh
-                      Method</span></label><select class="select select-bordered w-full">
-                    <option value="Direct">Direct</option>
-                    <option value="Residual Difference">Residual Difference</option>
-                    <option value="Difference">Difference</option>
-                  </select></div>
-              </div>
-              <div class="bg-base-200 border border-base-300 rounded-lg p-3">
-                <h3 class="text-xs font-semibold mb-3 text-base-content/50 uppercase tracking-wide"
-                  style="cursor: pointer; user-select: none;"><span class="collapsible-icon"
-                    style="display: inline-block; transition: transform 0.3s; cursor: pointer; margin-right: 0px; transform: rotate(0deg);">›</span>Metrology
-                </h3>
-                <div class="collapsible-content" style="display: none; overflow: hidden;">
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div class=""><label class="label py-1"><span class="label-text text-sm font-semibold">Calibration
-                          Due Date</span></label>
-                      <div class="px-3 py-2 rounded-lg border bg-green-100 text-green-800 border-green-300 text-sm"
-                        title="Calibration is valid">31-Dec-2099 00:00 GMT+1</div>
-                    </div>
-                    <div class=""><label class="label py-1"><span class="label-text text-sm font-semibold">Verification
-                          Due Date</span></label>
-                      <div class="px-3 py-2 rounded-lg border bg-yellow-100 text-yellow-800 border-yellow-300 text-sm"
-                        title="Verification event not found">–</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="bg-base-200 border border-base-300 rounded-lg p-3">
-                <h3 class="text-xs font-semibold mb-3 text-base-content/50 uppercase tracking-wide"
-                  style="cursor: pointer; user-select: none;"><span class="collapsible-icon"
-                    style="display: inline-block; transition: transform 0.3s; cursor: pointer; margin-right: 0px; transform: rotate(0deg);">›</span>Equipment
-                  Status</h3>
-                <div class="collapsible-content" style="display: none; overflow: hidden;">
-                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                    <div class="flex flex-col"><label class="text-sm font-medium text-gray-700 mb-1">Lower Operating
-                        Limit</label>
-                      <div
-                        class="px-3 py-2 border rounded text-sm font-medium  bg-gray-100 text-gray-800 border-gray-300">
-                        0.0001 g</div>
-                    </div>
-                    <div class="flex flex-col"><label class="text-sm font-medium text-gray-700 mb-1">Upper Operating
-                        Limit</label>
-                      <div
-                        class="px-3 py-2 border rounded text-sm font-medium  bg-gray-100 text-gray-800 border-gray-300">
-                        200 g</div>
-                    </div>
-                    <div class="flex flex-col"><label class="text-sm font-medium text-gray-700 mb-1">GxP Level</label>
-                      <div
-                        class="px-3 py-2 border rounded text-sm font-medium capitalize bg-green-100 text-green-800 border-green-300">
-                        GMP</div>
-                    </div>
-                    <div class="flex flex-col"><label class="text-sm font-medium text-gray-700 mb-1">Status</label>
-                      <div
-                        class="px-3 py-2 border rounded text-sm font-medium capitalize bg-green-100 text-green-800 border-green-300">
-                        Active</div>
-                    </div>
-                    <div class="flex flex-col"><label class="text-sm font-medium text-gray-700 mb-1">Life Cycle
-                        State</label>
-                      <div
-                        class="px-3 py-2 border rounded text-sm font-medium capitalize bg-green-100 text-green-800 border-green-300">
-                        active</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="mt-2">
-            <div class="overflow-x-auto rounded-lg border border-base-200 bg-base-100 shadow-md">
-              <table class="table table-zebra w-full table-fixed text-[0.8rem]">
-                <thead>
-                  <tr>
-                    <th
-                      class="px-2.5 py-1.75 bg-base-200 text-base-content font-semibold whitespace-normal break-words w-[32%]">
-                      Reference</th>
-                    <th
-                      class="px-2.5 py-1.75 bg-base-200 text-base-content font-semibold whitespace-normal break-words w-[32%]">
-                      Name</th>
-                    <th
-                      class="px-2.5 py-1.75 bg-base-200 text-base-content font-semibold whitespace-normal break-words w-[18%]">
-                      Planned Amt</th>
-                    <th
-                      class="px-2.5 py-1.75 bg-base-200 text-base-content font-semibold whitespace-normal break-words w-[18%]">
-                      Actual Amt</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="px-2.5 py-1.75">455575594</td>
-                    <td class="px-2.5 py-1.75">Acetonitrile ULC-MS</td>
-                    <td class="px-2.5 py-1.75">-</td>
-                    <td class="px-2.5 py-1.75">
-                      <div class="flex flex-col gap-1">
-                        <div class="flex justify-between gap-1 h-6">
-                          <div class="rounded w-full h-6 flex items-center justify-start "><span>-</span></div><button
-                            class="btn btn-xs px-0.75 text-[0.625rem] flex items-center justify-center relative btn-outline btn-primary"><span
-                              class="">Measure</span></button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-2.5 py-1.75">S134950-test sample</td>
-                    <td class="px-2.5 py-1.75">test sample</td>
-                    <td class="px-2.5 py-1.75">-</td>
-                    <td class="px-2.5 py-1.75">
-                      <div class="flex flex-col gap-1">
-                        <div class="flex justify-between gap-1 h-6">
-                          <div class="rounded w-full h-6 flex items-center justify-start "><span>25.0006 g</span></div>
-                          <button
-                            class="btn btn-xs px-0.75 text-[0.625rem] flex items-center justify-center relative btn-outline btn-primary"><span
-                              class="">Measure</span></button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="mt-2 flex justify-end"><button class="btn">Close</button></div>
-        </div>
-      </div>
-    </div>
-  </div>
+th[role=columnheader]:not([data-sort-method='none']):focus:after,
+th[role=columnheader]:not([data-sort-method='none']):hover:after {
+	visibility: visible;
+	opacity: 1;
+}
 
 
-</body>
-
-</html>
+<script src="https://tristen.ca/tablesort/src/tablesort.js"></script>
+<script src="https://tristen.ca/tablesort/src/sorts/tablesort.date.js"></script>
+<script src="https://tristen.ca/tablesort/src/sorts/tablesort.dotsep.js"></script>
+<script src="https://tristen.ca/tablesort/src/sorts/tablesort.filesize.js"></script>
+<script src="https://tristen.ca/tablesort/src/sorts/tablesort.number.js"></script>
