@@ -34,8 +34,8 @@ function appendBalanceButtonToSampleBinderElements() {
         }
 
         const titleText = titleDiv.textContent || '';
-        if (!titleText.toLowerCase().includes('sample')) {
-            return;
+        if (!titleText.toLowerCase().includes('sample') && !titleText.toLowerCase().includes('prep')) {
+            // return;
         }
 
         const controls = binder.querySelectorAll(controlsSelector);
@@ -62,6 +62,9 @@ function appendBalanceButtonToSampleBinderElements() {
 
         console.log(productIds);
 
+        const params = new URLSearchParams(window.location.search)
+        const focus = params.get('focus') || 'grid%3Aef43efa0-9353-4078-b68b-acdeafecd2e4'
+
         const template = document.createElement('template');
         template.innerHTML = buttonHtml.trim();
         const button = template.content.firstElementChild;
@@ -76,7 +79,7 @@ function appendBalanceButtonToSampleBinderElements() {
             button.style.borderRadius = '50%';
             button.style.boxShadow = '0 0 0 4px rgba(242, 193, 0, 0.24)';
             button.addEventListener('click', () => {
-                window.open('https://www.google.com', '_blank', 'toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                window.open('https://dev.ui.eln-integrations.im.jnj.com/balance-measurement-action.html?__eid=' + focus, '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
             });
             targetControls.insertBefore(button, targetControls.firstChild);
         }
