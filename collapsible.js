@@ -119,6 +119,29 @@ function makeCollapsible() {
             }
         };
 
+        // Update summary squares when a select value changes while panel is collapsed
+        const selects = contentWrapper.querySelectorAll('select.select.select-bordered.w-full');
+        selects.forEach((sel) => {
+            sel.addEventListener('change', () => {
+                const wrapper = sel.closest('.collapsible-content');
+                const header = wrapper ? wrapper.previousElementSibling : null;
+                if (!header) return;
+                // Only update if a summary currently exists (panel is collapsed)
+                if (!header._collapsibleSummary) return;
+
+                const colors = getSummaryColors(wrapper);
+                if (colors.length > 0) {
+                    const newSummary = createSummary(colors);
+                    try { header._collapsibleSummary.remove(); } catch (e) { /* ignore */ }
+                    header.appendChild(newSummary);
+                    header._collapsibleSummary = newSummary;
+                } else {
+                    try { header._collapsibleSummary.remove(); } catch (e) { /* ignore */ }
+                    delete header._collapsibleSummary;
+                }
+            });
+        });
+
         icon.addEventListener('click', toggleCollapse);
         h3.addEventListener('click', toggleCollapse);
 
