@@ -157,5 +157,11 @@ function makeCollapsible() {
     });
 }
 
+const headings = document.querySelectorAll('h3');
+
+// Loop through each h3 and remove the 'mb-3' class
+headings.forEach(h3 => {
+    h3.classList.remove('mb-3');
+});
 
 makeCollapsible()
