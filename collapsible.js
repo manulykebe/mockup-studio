@@ -3,10 +3,12 @@
  * By default, sections are collapsed
  */
 function makeCollapsible() {
+
     // Find all H3 elements
     const h3Elements = document.querySelectorAll('h3');
 
     h3Elements.forEach((h3) => {
+        h3.classList.remove('mb-3');
         // Create the collapsible icon
         const icon = document.createElement('span');
         icon.className = 'collapsible-icon';
@@ -156,12 +158,5 @@ function makeCollapsible() {
         }
     });
 }
-
-const headings = document.querySelectorAll('h3');
-
-// Loop through each h3 and remove the 'mb-3' class
-headings.forEach(h3 => {
-    h3.classList.remove('mb-3');
-});
 
 makeCollapsible()
