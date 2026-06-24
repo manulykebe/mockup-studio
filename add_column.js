@@ -75,7 +75,28 @@ function appendContent(cell, content) {
 		return;
 	}
 
+	if (typeof content === 'string') {
+		const autoMatch = content.match(/^Auto-(\d+)$/);
+		if (autoMatch) {
+			const length = Number.parseInt(autoMatch[1], 10);
+			cell.textContent = generateRandomString(length);
+			return;
+		}
+	}
+
 	cell.textContent = String(content);
+}
+
+function generateRandomString(length) {
+	const size = Math.max(0, Number.parseInt(length, 10) || 0);
+	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	let result = '';
+
+	for (let i = 0; i < size; i += 1) {
+		result += chars.charAt(Math.floor(Math.random() * chars.length));
+	}
+
+	return result;
 }
 
 
