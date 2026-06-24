@@ -78,3 +78,4 @@ function appendContent(cell, content) {
 	cell.textContent = String(content);
 }
 
+// https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js"
