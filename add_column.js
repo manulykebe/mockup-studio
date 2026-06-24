@@ -110,4 +110,5 @@ measureBtn.textContent = 'measure';
 
 addColumn(position = -1, headerText = 'Measurement', cellContent = measureBtn)
 
+// https://purge.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js
 // https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js
