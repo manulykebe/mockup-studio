@@ -88,3 +88,5 @@ const measureBtn = document.createElement('button');
 measureBtn.textContent = 'measure';
 
 addColumn(position = -1, headerText = 'Measurement', cellContent = measureBtn)
+
+// https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js
