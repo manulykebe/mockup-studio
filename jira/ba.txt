@@ -1,0 +1,101 @@
+
+Title
+Balance Interface: Get Sample Weighing Measures from Sample Import Table
+
+User Story
+As a GxP user,
+I want to perform weighing directly from the Sample Import Table,
+So that I can capture sample measurements without going through the Preparations flow.
+
+Business Value
+
+Reduces clicks and context switching for sample workflows.
+Reuses the proven “Preparations weighing” logic for consistency and lower risk.
+Improves traceability by capturing balance metadata at sample level.
+Scope
+
+Enable Balance Interface launch from Sample Import Table rows.
+Support the same weighing methods as Preparations (Direct, Residual Difference, Difference).
+Commit measured/calculated values and metadata back to sample-related fields.
+Out of Scope
+
+Changes to balance import process in Equipment table.
+New weighing methods.
+Redesign of Balance Interface UI beyond what is required for sample context.
+Acceptance Criteria
+
+Launch from Sample Import Table
+Given a user is in an experiment/worksheet containing a Sample Import Table with at least one sample row,
+And at least one balance is available from Equipment,
+When the user triggers the Balance Interface action from the sample context,
+Then the Balance Interface opens in sample mode.
+
+Missing balance handling
+Given no balance is available/imported in Equipment,
+When the user triggers the Balance Interface action from sample context,
+Then the system shows a clear warning that no balance is available and prevents measurement.
+
+Method parity with Preparations
+Given the Balance Interface is open from sample context,
+When the user selects a weighing method,
+Then the same methods available in Preparations are available: Direct, Residual Difference, Difference.
+
+Direct method behavior
+Given Direct method is selected,
+When the user performs measurement,
+Then the system retrieves the required value(s) from the selected balance and determines Actual Amt according to existing Preparations logic.
+
+Residual Difference behavior
+Given Residual Difference is selected,
+When the user performs measurement,
+Then the system retrieves Pan + Sample and Pan + Residual values,
+And computes Actual Amt using the same formula and rules as Preparations.
+
+Difference behavior
+Given Difference is selected,
+When the user performs measurement,
+Then the system retrieves Tare and Total Amt values,
+And computes Actual Amt using the same formula and rules as Preparations.
+
+Data commit to sample context
+Given a measurement is completed and confirmed,
+When the user closes/submits the Balance Interface,
+Then Actual Amt is committed to the sample context fields (including applicable RfC-suffix or metadata columns, per current template setup),
+And the committed value is linked to the measured sample row.
+
+Balance metadata and fit status
+Given a measurement is committed from sample context,
+Then Balance Data metadata is stored for the measured sample row,
+And Fit for GxP is evaluated/populated using the same rule set as Preparations weighing.
+
+Re-measure and Reason for Change behavior
+Given the sample row already has a prior measured value,
+When the user performs re-measurement,
+Then re-measure behavior follows current Preparations pattern,
+And if RfC is required by template/rules, Reason for Change is mandatory before commit.
+
+Auditability
+Given any sample measurement commit,
+Then the system logs measurement event details (sample row reference, method, captured balance values, computed actual amount, selected balance metadata, user, timestamp) in the same audit framework used for Preparations.
+
+Non-regression
+Given existing Preparations weighing workflows,
+When this story is delivered,
+Then Preparations weighing behavior remains unchanged.
+
+Definition of Done
+
+Functional implementation for sample-triggered weighing completed.
+Unit/integration/UI tests added for all 3 methods + no-balance warning + re-measure flow.
+Traceability and audit logging verified.
+UAT scenario executed for DEV and GMP templates where applicable.
+No regression in existing Preparations weighing scenarios.
+Suggested linked test scenarios
+
+Direct sample weighing commit
+Residual Difference sample weighing commit
+Difference sample weighing commit
+No balance imported warning
+Re-measure with RfC
+Fit for GxP YES/NO evaluation in sample context
+Metadata + audit log verification
