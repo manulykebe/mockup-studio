@@ -9,7 +9,7 @@
  *   - string/number: converted to text
  */
 function addColumn(position = -1, headerText = 'Measurement', cellContent = '') {
-	const table = document.querySelector('table');
+	const table = document.getElementsByClassName('shadow-md')[0].shadowRoot.getElementById('MeasTable');
 	if (!table) {
 		throw new Error('No table element found in the current document.');
 	}
@@ -78,4 +78,13 @@ function appendContent(cell, content) {
 	cell.textContent = String(content);
 }
 
-// https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js"
+
+document.getElementsByClassName('shadow-md')[0].shadowRoot
+	.getElementById('MeasTable')
+	.querySelectorAll('button').forEach((button) => button.remove())
+
+
+const measureBtn = document.createElement('button');
+measureBtn.textContent = 'measure';
+
+addColumn(position = -1, headerText = 'Measurement', cellContent = measureBtn)
