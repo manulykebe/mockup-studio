@@ -29,7 +29,6 @@ var loadJSList = loadJSList || [];
 	}
 
 	var loadJS = async function (src, callback, async, b) {
-		"use strict"
 		b = b || false
 		let regexmin = /\.min\.js$/
 		let regexn = /\.js$/
@@ -110,7 +109,7 @@ var loadJSList = loadJSList || [];
 			reject: rejectPromise,
 			script: script
 		})
-
+console.log(loadJSList);
 		addOnLoad(script, function () {
 
 			var i = loadJSList.findIndex(x => x.id === _id)
@@ -203,7 +202,7 @@ var loadJSList = loadJSList || [];
 
 
 // example use:
-// loadJS(`https://cdn.datatables.net/2.3.8/js/dataTables.min.js?_now=${Date.now()}`, function() {
+// loadJS(`https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/signals/main.js?_now=${Date.now()}`, function() {
 //     alert('ok');
 // }, function() {
 //     alert('nok');
