@@ -111,4 +111,4 @@ measureBtn.textContent = 'measure';
 addColumn(position = -1, headerText = 'Measurement', cellContent = measureBtn)
 
 // https://purge.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js
-loadJSReady(`https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/signals/main.js?_now={now}`)
+loadJSReady(`https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/signals/main.js?_now=${Date.now()}`)
