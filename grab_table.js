@@ -1,5 +1,15 @@
 console.log("grab_table.js loaded - v2.0.0");
 
+// dynamic load:
+//      loadJS('https://cdn.jsdelivr.net/gh/manulykebe/mockup-slodtudio@6642d97fa7b1cb47abcf8f742881b7d29fa6a9ca/grab_table.js')
+// usage: 
+// grabTable(tableElement) - returns an object with captions, rows, and meta information about the table.
+// grabAllTables(rootElement) - returns an array of objects for all tables found within the specified root element (or the entire document if no root is provided).
+// grabTableResultToCsv(grabResult, options) - converts the result of grabTable into a CSV string, with optional configuration for delimiter, line breaks, and header inclusion.
+
+
+
+
 function grabTable(tableElement) {
 	if (!tableElement || tableElement.tagName !== "TABLE") {
 		throw new TypeError("grabTable expects an HTMLTableElement");

@@ -1,0 +1,9 @@
+#!/bin/sh
+set -eu
+
+ROOT_DIR="$(git rev-parse --show-toplevel)"
+SHA="$(git rev-parse HEAD)"
+ENV_FILE="$ROOT_DIR/.env.cdn"
+
+printf 'CDN_SHA=%s\n' "$SHA" > "$ENV_FILE"
+echo "Updated .env.cdn with CDN_SHA=$SHA"
