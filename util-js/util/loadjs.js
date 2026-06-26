@@ -62,6 +62,38 @@
 		})
 	}
 
+	var inspectScriptResponse = function (src) {
+		if (typeof fetch !== 'function') {
+			return Promise.resolve({ isJson: false })
+		}
+
+		return fetch(src, { method: 'GET', cache: 'no-store' }).then(function (response) {
+			var contentType = (response.headers.get('content-type') || '').toLowerCase()
+			return response.text().then(function (text) {
+				var trimmed = text.trim()
+				var looksLikeJson = contentType.indexOf('application/json') >= 0
+					|| contentType.indexOf('text/json') >= 0
+					|| ((trimmed[0] === '{' && trimmed[trimmed.length - 1] === '}')
+						|| (trimmed[0] === '[' && trimmed[trimmed.length - 1] === ']'))
+
+				if (!looksLikeJson) {
+					return { isJson: false }
+				}
+
+				try {
+					return {
+						isJson: true,
+						value: JSON.parse(trimmed)
+					}
+				} catch (err) {
+					return { isJson: false }
+				}
+			})
+		}).catch(function () {
+			return { isJson: false }
+		})
+	}
+
 	var loadJS = async function (src, callback, async, b) {
 		b = b || false
 		let regexmin = /\.min\.js$/
@@ -86,6 +118,13 @@
 		if (location.hostname !== 'localhost' && !b) src = src.replace(regexn, '.min.js').replace('.min.min.', '.min.')
 		if (loadJSConfig.devMode && !b && /^https:\/\/cdn\.jsdelivr\.net\//.test(src)) {
 			await purgeJsDelivr(src)
+		}
+
+		var inspected = await inspectScriptResponse(src)
+		if (inspected.isJson) {
+			console.log(inspected.value)
+			callCallback(null, inspected.value)
+			return Promise.resolve(inspected.value)
 		}
 
 		var loadJSList = getLoadJSList()
