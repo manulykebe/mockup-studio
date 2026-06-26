@@ -207,3 +207,6 @@ console.log(loadJSList);
 // }, function() {
 //     alert('nok');
 // });
+
+// this works
+// loadJS(`https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js?_now=${Date.now()}`)
