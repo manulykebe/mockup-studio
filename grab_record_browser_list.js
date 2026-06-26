@@ -191,7 +191,7 @@ function extractRecordRow(rowElement, captions, includeHtml) {
 	var keyUsage = {};
 
 	Array.from(rowElement.children).forEach(function (cell, visualIndex) {
-		var value = extractCellValue(cell, includeHtml);
+		var value = extractCellValue(cell, rowElement, includeHtml);
 		cells.push(value);
 		var caption = captions[visualIndex] || ("column_" + (visualIndex + 1));
 		var key = toUniqueKey(caption, keyUsage);
@@ -204,10 +204,10 @@ function extractRecordRow(rowElement, captions, includeHtml) {
 	};
 }
 
-function extractCellValue(cell, includeHtml) {
+function extractCellValue(cell, rowElement, includeHtml) {
 	var controls = Array.from(cell.querySelectorAll("input, select, textarea, button"));
 	var icons = Array.from(cell.querySelectorAll("svg"));
-	var text = extractTextWithChildMarkers(cell);
+	var text = extractTextWithChildMarkers(cell, rowElement);
 
 	if (!controls.length && !icons.length) {
 		return text;
@@ -277,8 +277,13 @@ function extractCellValue(cell, includeHtml) {
 	return value;
 }
 
-function extractTextWithChildMarkers(cell) {
+function extractTextWithChildMarkers(cell, rowElement) {
 	var text = normalizeText(cell.innerText || cell.textContent || "");
+	var parentListName = resolveChildOfListName(cell, rowElement);
+	if (parentListName) {
+		return text ? (text + " (child of " + parentListName + ")") : ("child of " + parentListName);
+	}
+
 	var childMarkers = Array.from(cell.children).map(function (child) {
 		var marker = child.getAttribute("data-testid") || child.getAttribute("aria-label") || child.className || child.tagName.toLowerCase();
 		return normalizeText(marker);
@@ -293,6 +298,37 @@ function extractTextWithChildMarkers(cell) {
 	}).join(" ");
 
 	return text ? (text + " " + markerText) : markerText;
+}
+
+function resolveChildOfListName(cell, rowElement) {
+	if (!cell || !cell.classList || !cell.classList.contains("metadata-name")) {
+		return "";
+	}
+
+	if (!cell.querySelector('[data-testid="relationship-tooltip"]')) {
+		return "";
+	}
+
+	var currentWrapper = rowElement && rowElement.parentElement;
+	if (!currentWrapper) {
+		return "";
+	}
+
+	var nextWrapper = currentWrapper.nextElementSibling;
+	while (nextWrapper) {
+		var nextNameCell = nextWrapper.querySelector('.record-browser-row.clickable .metadata-row.metadata-record .metadata-name');
+		if (nextNameCell) {
+			var nextName = normalizeText(nextNameCell.innerText || nextNameCell.textContent || "");
+			var hasRelationshipTooltip = nextNameCell.querySelector('[data-testid="relationship-tooltip"]') !== null;
+			if (nextName && !hasRelationshipTooltip) {
+				return nextName;
+			}
+		}
+
+		nextWrapper = nextWrapper.nextElementSibling;
+	}
+
+	return "";
 }
 
 function countFieldsPerColumn(rowElements, columnCount) {
