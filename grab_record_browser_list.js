@@ -1,4 +1,4 @@
-console.log("grab_record_browser_list.js loaded - v1.1.0");
+console.log("grab_record_browser_list.js loaded - v1.2.0");
 
 // usage:
 // await grabRecordBrowserList(recordBrowserDiv)
@@ -207,7 +207,7 @@ function extractRecordRow(rowElement, captions, includeHtml) {
 function extractCellValue(cell, includeHtml) {
 	var controls = Array.from(cell.querySelectorAll("input, select, textarea, button"));
 	var icons = Array.from(cell.querySelectorAll("svg"));
-	var text = normalizeText(cell.innerText || cell.textContent || "");
+	var text = extractTextWithChildMarkers(cell);
 
 	if (!controls.length && !icons.length) {
 		return text;
@@ -275,6 +275,24 @@ function extractCellValue(cell, includeHtml) {
 	}
 
 	return value;
+}
+
+function extractTextWithChildMarkers(cell) {
+	var text = normalizeText(cell.innerText || cell.textContent || "");
+	var childMarkers = Array.from(cell.children).map(function (child) {
+		var marker = child.getAttribute("data-testid") || child.getAttribute("aria-label") || child.className || child.tagName.toLowerCase();
+		return normalizeText(marker);
+	}).filter(Boolean);
+
+	if (!childMarkers.length) {
+		return text;
+	}
+
+	var markerText = childMarkers.map(function (marker) {
+		return "(child of " + marker + ")";
+	}).join(" ");
+
+	return text ? (text + " " + markerText) : markerText;
 }
 
 function countFieldsPerColumn(rowElements, columnCount) {
