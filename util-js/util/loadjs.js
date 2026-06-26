@@ -1,8 +1,18 @@
-var loadJSList = loadJSList || [];
 (function (w) {
+	var loadJSConfig = {
+		devMode: true
+	}
+
+	var getLoadJSList = function () {
+		if (!Array.isArray(loadJS.list)) {
+			loadJS.list = []
+		}
+		return loadJS.list
+	}
+
 	var requestId
 	var loadJSReady = function (f) {
-		if (loadJSList.filter(function (r) { return r.s == 0 }).length > 0)
+		if (getLoadJSList().filter(function (r) { return r.s == 0 }).length > 0)
 			requestAnimationFrame(function () { loadJSReady(f) })
 		else {
 			if (f !== undefined && typeof f == 'function') f()
@@ -24,8 +34,32 @@ var loadJSList = loadJSList || [];
 	}
 
 	var reLoadJS = async function (src, callback, async) {
+		var loadJSList = getLoadJSList()
 		loadJSList.splice(loadJSList.findIndex(function (l) { return l.src === src }), 1)
 		return await loadJS(src, callback, async)
+	}
+
+	var purgeJsDelivr = function (src) {
+		if (!/^https:\/\/cdn\.jsdelivr\.net\//.test(src)) {
+			return Promise.resolve()
+		}
+
+		var purgeUrl = src.replace('https://cdn.jsdelivr.net/', 'https://purge.jsdelivr.net/')
+		if (typeof fetch === 'function') {
+			return fetch(purgeUrl, { method: 'GET', cache: 'no-store', mode: 'no-cors' }).then(function () {
+				return undefined
+			}).catch(function (err) {
+				console.warn('warning', 'jsDelivr purge failed for ' + src, err)
+			})
+		}
+
+		return new Promise(function (resolve) {
+			var img = new Image()
+			img.onload = img.onerror = function () {
+				resolve()
+			}
+			img.src = purgeUrl + (purgeUrl.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now()
+		})
 	}
 
 	var loadJS = async function (src, callback, async, b) {
@@ -50,7 +84,11 @@ var loadJSList = loadJSList || [];
 
 		if (location.hostname === 'localhost' && !b) src = src.replace(regexmin, '.js')
 		if (location.hostname !== 'localhost' && !b) src = src.replace(regexn, '.min.js').replace('.min.min.', '.min.')
+		if (loadJSConfig.devMode && !b && /^https:\/\/cdn\.jsdelivr\.net\//.test(src)) {
+			await purgeJsDelivr(src)
+		}
 
+		var loadJSList = getLoadJSList()
 		var normalizedSrc = src.replace(regexmin, '.js')
 		var found = loadJSList.find(x => x.src === normalizedSrc)
 		if (found) {
@@ -109,7 +147,7 @@ var loadJSList = loadJSList || [];
 			reject: rejectPromise,
 			script: script
 		})
-console.log(loadJSList);
+		console.log(loadJSList);
 		addOnLoad(script, function () {
 
 			var i = loadJSList.findIndex(x => x.id === _id)
@@ -187,13 +225,26 @@ console.log(loadJSList);
 	}
 
 	if (typeof module !== "undefined") {
-		module.exports = {
+		loadJS.list = getLoadJSList()
+		var exported = {
 			loadJS: loadJS,
 			reLoadJS: reLoadJS,
-			loadJSReady: loadJSReady
+			loadJSReady: loadJSReady,
+			config: loadJSConfig
 		}
+		Object.defineProperty(exported, 'devMode', {
+			get: function () { return loadJSConfig.devMode },
+			set: function (value) { loadJSConfig.devMode = Boolean(value) }
+		})
+		module.exports = exported
 	}
 	else {
+		loadJS.list = getLoadJSList()
+		Object.defineProperty(loadJS, 'devMode', {
+			get: function () { return loadJSConfig.devMode },
+			set: function (value) { loadJSConfig.devMode = Boolean(value) }
+		})
+		loadJS.config = loadJSConfig
 		w.loadJS = loadJS
 		w.reLoadJS = reLoadJS
 		w.loadJSReady = loadJSReady
