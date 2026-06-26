@@ -1,4 +1,5 @@
 console.log("grab_table.js loaded - v2.0.0");
+
 function grabTable(tableElement) {
 	if (!tableElement || tableElement.tagName !== "TABLE") {
 		throw new TypeError("grabTable expects an HTMLTableElement");
