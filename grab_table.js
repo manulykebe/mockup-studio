@@ -1,3 +1,4 @@
+console.log("grab_table.js loaded - v2.0.0");
 function grabTable(tableElement) {
 	if (!tableElement || tableElement.tagName !== "TABLE") {
 		throw new TypeError("grabTable expects an HTMLTableElement");
@@ -40,6 +41,53 @@ function grabAllTables(rootElement) {
 			result: grabTable(table)
 		};
 	});
+}
+
+function grabTableResultToCsv(grabResult, options) {
+	if (!grabResult || typeof grabResult !== "object") {
+		throw new TypeError("grabTableResultToCsv expects output from grabTable");
+	}
+
+	var csvOptions = options || {};
+	var delimiter = typeof csvOptions.delimiter === "string" ? csvOptions.delimiter : ",";
+	var lineBreak = typeof csvOptions.lineBreak === "string" ? csvOptions.lineBreak : "\r\n";
+	var includeHeader = csvOptions.includeHeader !== false;
+
+	var rows = Array.isArray(grabResult.rows) ? grabResult.rows : [];
+	var captions = Array.isArray(grabResult.captions) ? grabResult.captions.slice() : [];
+
+	var columnCount = captions.length;
+	rows.forEach(function (row) {
+		var rowLength = row && Array.isArray(row.cells) ? row.cells.length : 0;
+		columnCount = Math.max(columnCount, rowLength);
+	});
+
+	if (!columnCount) {
+		return "";
+	}
+
+	for (var i = captions.length; i < columnCount; i += 1) {
+		captions.push("column_" + (i + 1));
+	}
+
+	var lines = [];
+
+	if (includeHeader) {
+		lines.push(captions.map(function (caption) {
+			return escapeCsvField(caption, delimiter);
+		}).join(delimiter));
+	}
+
+	rows.forEach(function (row) {
+		var cells = row && Array.isArray(row.cells) ? row.cells : [];
+		var line = [];
+		for (var c = 0; c < columnCount; c += 1) {
+			line.push(escapeCsvField(stringifyCellForCsv(cells[c]), delimiter));
+		}
+		lines.push(line.join(delimiter));
+	});
+
+	return lines.join(lineBreak);
 }
 
 function getHeaderRows(tableElement) {
@@ -215,6 +263,55 @@ function extractCellValue(cell) {
 	};
 }
 
+function stringifyCellForCsv(value) {
+	if (value === null || value === undefined) {
+		return "";
+	}
+
+	if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
+		return String(value);
+	}
+
+	if (Array.isArray(value)) {
+		return value.map(function (item) {
+			return stringifyCellForCsv(item);
+		}).join(" | ");
+	}
+
+	if (typeof value === "object") {
+		if ((value.type === "checkbox" || value.type === "radio") && typeof value.checked === "boolean") {
+			return value.checked ? "TRUE" : "FALSE";
+		}
+
+		if (value.value !== undefined && value.value !== null) {
+			if (Array.isArray(value.value)) {
+				return value.value.map(function (item) {
+					return stringifyCellForCsv(item);
+				}).join(" | ");
+			}
+
+			if (typeof value.value !== "object") {
+				return String(value.value);
+			}
+		}
+
+		if (value.text) {
+			return String(value.text);
+		}
+
+		return JSON.stringify(value);
+	}
+
+	return String(value);
+}
+
+function escapeCsvField(value, delimiter) {
+	var text = String(value || "");
+	var escaped = text.replace(/"/g, '""');
+	var needsQuote = escaped.indexOf(delimiter) !== -1 || escaped.indexOf("\n") !== -1 || escaped.indexOf("\r") !== -1 || escaped.indexOf('"') !== -1;
+	return needsQuote ? '"' + escaped + '"' : escaped;
+}
+
 function toUniqueKey(caption, keyUsage) {
 	var base = (caption || "").trim() || "column";
 	if (!keyUsage[base]) {
@@ -241,10 +338,15 @@ function inferColumnCount(rows) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-	module.exports = { grabTable: grabTable, grabAllTables: grabAllTables };
+	module.exports = {
+		grabTable: grabTable,
+		grabAllTables: grabAllTables,
+		grabTableResultToCsv: grabTableResultToCsv
+	};
 }
 
 if (typeof window !== "undefined") {
 	window.grabTable = grabTable;
 	window.grabAllTables = grabAllTables;
+	window.grabTableResultToCsv = grabTableResultToCsv;
 }
