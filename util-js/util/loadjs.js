@@ -186,7 +186,7 @@
 			reject: rejectPromise,
 			script: script
 		})
-		console.log(loadJSList);
+		
 		addOnLoad(script, function () {
 
 			var i = loadJSList.findIndex(x => x.id === _id)
