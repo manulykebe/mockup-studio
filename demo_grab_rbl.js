@@ -5,7 +5,7 @@ if (typeof window !== 'undefined') {
             console.save(
                 grabRecordBrowserResultToCsv(
                     await grabRecordBrowserList(rbl)
-                ), 'export-' + document.URL + '.json'
+                ), 'export-' + document.URL + '.csv'
             )
         })
 }
