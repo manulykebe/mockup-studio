@@ -114,8 +114,10 @@
 			}
 		}
 
-		if (location.hostname === 'localhost' && !b) src = src.replace(regexmin, '.js')
-		if (location.hostname !== 'localhost' && !b) src = src.replace(regexn, '.min.js').replace('.min.min.', '.min.')
+		if (!loadJSConfig.devMode && !b) {
+			if (location.hostname === 'localhost') src = src.replace(regexmin, '.js')
+			if (location.hostname !== 'localhost') src = src.replace(regexn, '.min.js').replace('.min.min.', '.min.')
+		}
 		if (loadJSConfig.devMode && !b && /^https:\/\/cdn\.jsdelivr\.net\//.test(src)) {
 			await purgeJsDelivr(src)
 		}
@@ -230,7 +232,7 @@
 		loop()
 
 		script.onerror = function () {
-			if (src.match(regexmin) && !b) {
+			if (!loadJSConfig.devMode && src.match(regexmin) && !b) {
 				document.getElementById(_id).remove()
 				console.warn('fallback', `will try to load the non-minified script of ${src}`)
 				loadJSList.splice(loadJSList.findIndex(x => x.src === normalizedSrc), 1)
@@ -238,7 +240,7 @@
 				loadJS(_src, callback, async, true).then(resolvePromise).catch(rejectPromise)
 				return
 			}
-			if (src.match(regexn) && !b) {
+			if (!loadJSConfig.devMode && src.match(regexn) && !b) {
 				document.getElementById(_id).remove()
 				console.warn('warning', `will try to load the minified script of ${src}`)
 				loadJSList.splice(loadJSList.findIndex(x => x.src === normalizedSrc), 1)
@@ -298,5 +300,8 @@
 //     alert('nok');
 // });
 
-// this works
+// cache-stable (recommended): pin to a commit SHA
+// loadJS('https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@6642d97fa7b1cb47abcf8f742881b7d29fa6a9ca/grab_table.js')
+
+// branch-based (can be stale on CDN edge cache)
 // loadJS(`https://cdn.jsdelivr.net/gh/manulykebe/mockup-studio@main/add_column.js?_now=${Date.now()}`)
