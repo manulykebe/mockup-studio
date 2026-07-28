@@ -3,22 +3,15 @@
 <head>
     <title>GMP000019_27-Jul-2026 12-45-47 UTC+0.datatable.html</title>
     <link rel="stylesheet" href="https://cdn.datatables.net/3.0.0/css/dataTables.dataTables.min.css" />
-    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" />
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/3.0.0/js/dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" />
     <script src="https://cdn.datatables.net/searchbuilder/2.0.0/js/dataTables.searchBuilder.min.js"></script>
 </head>
 
 <body>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            if (window.jQuery && window.jQuery.fn && window.jQuery.fn.DataTable) {
-                window.jQuery('#auditlog').DataTable({
-                    order: [[0, 'desc']],
-                    dom: 'QBfrtip',
-                    searchBuilder: true
-                });
-            } else if (window.DataTable) {
+            if (window.DataTable) {
                 new DataTable('#auditlog', {
                     order: [[0, 'desc']],
                     dom: 'QBfrtip',
