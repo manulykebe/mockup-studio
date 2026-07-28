@@ -14,8 +14,10 @@
             if (window.DataTable) {
                 new DataTable('#auditlog', {
                     order: [[0, 'desc']],
-                    dom: 'QBfrtip',
-                    searchBuilder: true
+                    dom: 'QBlfrtip',
+                    searchBuilder: true,
+                    lengthMenu: [ [5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'All'] ],
+                    pageLength: 5
                 });
             } else {
                 console.error('DataTables failed to load.');
