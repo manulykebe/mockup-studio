@@ -9,8 +9,18 @@
 </head>
 
 <body>
+    <div style="margin-bottom: 10px;">
+        <button id="open-in-new-window" type="button">Open in new window</button>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            var openButton = document.getElementById('open-in-new-window');
+            if (openButton) {
+                openButton.addEventListener('click', function () {
+                    window.open(window.location.href, '_blank', 'noopener,noreferrer');
+                });
+            }
+
             if (window.DataTable) {
                 new DataTable('#auditlog', {
                     order: [[0, 'desc']],
