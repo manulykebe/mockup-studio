@@ -7,8 +7,16 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/datetime/2.0.0/css/dataTables.dateTime.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/2.0.0/js/dataTables.dateTime.min.js"></script>
+    
     <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" />
     <script src="https://cdn.datatables.net/searchbuilder/2.0.0/js/dataTables.searchBuilder.min.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/4.0.0/js/buttons.dataTables.min.js"></script>
+    <link rel="https://cdn.datatables.net/buttons/4.0.0/css/buttons.dataTables.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" type="text/javascript"></script>
+    
 </head>
 
 <body>
@@ -23,7 +31,7 @@
                     window.open(window.location.href, '_blank', 'noopener,noreferrer');
                 });
             }
-            
+
             if (window.DataTable) {
 
                 new DataTable('#auditlog', {
@@ -37,7 +45,12 @@
                             targets: 0,
                             type: 'date'
                         }
-                    ]
+                    ],
+                    layout: {
+                        topStart: {
+                            buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
+                        }
+                    }
                 });
             } else {
                 console.error('DataTables failed to load.');
@@ -746,9 +759,11 @@
                 <td>Ado</td>
                 <td>GMP000019</td>
                 <td>Reopen</td>
-                <td></td> <td>Reopened because a mistake was found
+                <td></td>
+                <td>Reopened because a mistake was found
 
-                    VP : NEED TO DO SOME TEST WITH A TASK PLAN</td> <td></td>
+                    VP : NEED TO DO SOME TEST WITH A TASK PLAN</td>
+                <td></td>
                 <td></td>
                 <td>6a61ccff31b9b109640d48df</td>
             </tr>
@@ -1116,12 +1131,14 @@
                 <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
                     05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck
                     (tvande17)tttt#003; Added on 11-May-2026 12:57 UTC&#43;02:00; Added by Martine Ghysels
-                    (mghysel1)this is martines entry of the day</td> <td>#001; Added on 05-May-2026 11:14
+                    (mghysel1)this is martines entry of the day</td>
+                <td>#001; Added on 05-May-2026 11:14
                     UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry 05mei#002; Added on 06-May-2026
                     10:48 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)tttt#003; Added on 11-May-2026 12:57
                     UTC&#43;02:00; Added by Martine Ghysels (mghysel1)this is martines entry of the day
                     Â #004; Added on 11-May-2026 13:02 UTC&#43;02:00; Added by An Blockx (ablockx2)ANBL 11-MAY-2026: GxP
-                    Journal Entry</td> <td>6a01b7617a71d27f7e804f29</td>
+                    Journal Entry</td>
+                <td>6a01b7617a71d27f7e804f29</td>
             </tr>
             <tr>
                 <td>2026-05-11</td>
@@ -1147,8 +1164,10 @@
                 <td>Edit</td>
                 <td>Field Modified</td>
                 <td>Deviation</td>
-                <td>fddsq</td> <td>fddsq
-                    ANBL 11-MAY-2026: addition to Deviation field and entered the study type</td> <td>
+                <td>fddsq</td>
+                <td>fddsq
+                    ANBL 11-MAY-2026: addition to Deviation field and entered the study type</td>
+                <td>
                     6a01b6a37a71d27f7e8031c6</td>
             </tr>
             <tr>
@@ -1161,8 +1180,10 @@
                 <td>Edit</td>
                 <td>Field Modified</td>
                 <td>Comments</td>
-                <td>dsqffqsfdsf</td> <td>dsqffqsfdsf
-                    ANBL 11-MAY-2026: Comments add</td> <td>6a01b6a37a71d27f7e8031c6</td>
+                <td>dsqffqsfdsf</td>
+                <td>dsqffqsfdsf
+                    ANBL 11-MAY-2026: Comments add</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
             </tr>
             <tr>
                 <td>2026-05-11</td>
@@ -1174,8 +1195,10 @@
                 <td>Edit</td>
                 <td>Field Modified</td>
                 <td>Study Purpose</td>
-                <td>my study purpose</td> <td>my study purpose
-                    ANBL 11-MAY-2026: addition to Study Purpose</td> <td>6a01b6a37a71d27f7e8031c6</td>
+                <td>my study purpose</td>
+                <td>my study purpose
+                    ANBL 11-MAY-2026: addition to Study Purpose</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
             </tr>
             <tr>
                 <td>2026-05-11</td>
@@ -2441,8 +2464,10 @@
                 <td>Edit</td>
                 <td>Field Added</td>
                 <td>GMP Text Field</td>
-                <td></td> <td>vrije text
-                    unlock and extra text</td> <td>69fb00797a71d27f7e85f111</td>
+                <td></td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td>69fb00797a71d27f7e85f111</td>
             </tr>
             <tr>
                 <td>2026-05-06</td>
@@ -2453,8 +2478,10 @@
                 <td>GxP-GMP Journal Text</td>
                 <td>Edit</td>
                 <td>Field Removed</td>
-                <td>Journal Text</td> <td>vrije text
-                    unlock and extra text</td> <td></td>
+                <td>Journal Text</td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td></td>
                 <td>69fb00797a71d27f7e85f111</td>
             </tr>
             <tr>
@@ -2922,8 +2949,10 @@
                 <td>Edit</td>
                 <td>Field Modified</td>
                 <td>Journal Text</td>
-                <td></td> <td>vrije text
-                    unlock and extra text</td> <td>69f9b5307a71d27f7e465f8d</td>
+                <td></td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td>69f9b5307a71d27f7e465f8d</td>
             </tr>
             <tr>
                 <td>2026-05-05</td>
