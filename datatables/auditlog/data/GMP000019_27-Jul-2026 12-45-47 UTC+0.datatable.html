@@ -48,7 +48,52 @@
                     layout: {
                         top1: 'searchBuilder',
                         topStart: {
-                            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+                            buttons: [
+                                {
+                                    extend: 'pdfHtml5',
+                                    orientation: 'landscape',
+                                    pageSize: 'A4',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    },
+                                    customize: function(doc) {
+                                        doc.pageMargins = [5, 15, 5, 15];
+                                        doc.defaultStyle.fontSize = 6;
+                                        
+                                        if (doc.content && doc.content.length > 1 && doc.content[1].table) {
+                                            var table = doc.content[1].table;
+                                            
+                                            // Set specific column widths optimized for landscape A4
+                                            // Date, Time, User Name, User ID, Resource Type, Entity Name, Action, Change Type, Details, Old Value, New Value, Event ID
+                                            table.widths = [35, 30, 50, 75, 40, 70, 32, 45, 110, 55, 55, 95];
+                                            
+                                            // Make header bold and slightly larger
+                                            if (table.body && table.body.length > 0) {
+                                                table.body[0].forEach(function(cell) {
+                                                    cell.bold = true;
+                                                    cell.fontSize = 7;
+                                                    cell.fillColor = '#f0f0f0';
+                                                });
+                                            }
+                                            
+                                            table.layout = {
+                                                hLineWidth: function(i, node) { return 0.5; },
+                                                vLineWidth: function(i, node) { return 0.5; },
+                                                hLineColor: function(i, node) { return '#cccccc'; },
+                                                vLineColor: function(i, node) { return '#cccccc'; },
+                                                paddingLeft: function(i, node) { return 2; },
+                                                paddingRight: function(i, node) { return 2; },
+                                                paddingTop: function(i, node) { return 1; },
+                                                paddingBottom: function(i, node) { return 1; }
+                                            };
+                                        }
+                                    }
+                                },
+                                'copy', 
+                                'csv', 
+                                'excel', 
+                                'print'
+                            ]
                         }
                     }
                 });
