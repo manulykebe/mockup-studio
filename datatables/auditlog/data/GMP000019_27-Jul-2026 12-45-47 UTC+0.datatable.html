@@ -51,6 +51,10 @@
                             buttons: [
                                 {
                                     extend: 'pdfHtml5',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    },
                                     orientation: 'landscape',
                                     pageSize: 'A4',
                                     exportOptions: {
@@ -89,12 +93,38 @@
                                         }
                                     }
                                 },
-                                'copy', 
-                                'csv', 
-                                'excel', 
-                                'print'
+                                {
+                                    extend: 'copy',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'csv',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'excel',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'print',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                }
                             ]
-                        }
+                        },
+                        bottomStart: 'pageLength',
+                        bottomEnd: 'paging'
                     }
                 });
             } else {
