@@ -32,6 +32,7 @@ Private Sub cbSave_Click()
             End If
         
             Set targetDoc = Documents.Open(fileName:=targetPath, Visible:=True)
+            DocumentBeheer.Unprotect targetDoc
             
             With targetDoc.BuiltInDocumentProperties
                 .Item("Title").Value = Me.txtTitle.text
@@ -54,6 +55,7 @@ Private Sub cbSave_Click()
                  .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                  .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
             End With
+            DocumentBeheer.UnLockDocument targetDoc
             Call UpdateAllFields(targetDoc)
             
             Call text.ReplaceSection( _
@@ -69,7 +71,7 @@ Private Sub cbSave_Click()
         Case "Create new version"
             bIsWordTemplate = InStr(ActiveDocument.FullName, ".dot") > 0
             If bIsWordTemplate Then
-                DocumentBeheer.UnLockDocument
+                DocumentBeheer.Unprotect
                 With ActiveDocument.BuiltInDocumentProperties
                     .Item("title").Value = Me.txtTitle.text
                 End With
@@ -88,6 +90,7 @@ Private Sub cbSave_Click()
                      .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                      .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
                 End With
+                DocumentBeheer.UnLockDocument
                 Call UpdateAllFields(targetDoc)
                 
                 targetPath = Me.txtTargetFullPath.text
@@ -102,7 +105,7 @@ Private Sub cbSave_Click()
                 Exit Sub
             End If
             
-            DocumentBeheer.UnLockDocument
+            DocumentBeheer.Unprotect
             With ActiveDocument.BuiltInDocumentProperties
                 .Item("title").Value = Me.txtTitle.text
             End With
@@ -121,6 +124,7 @@ Private Sub cbSave_Click()
                  .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                  .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
             End With
+            DocumentBeheer.UnLockDocument
             Call UpdateAllFields(targetDoc)
             
                 
