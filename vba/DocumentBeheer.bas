@@ -1,10 +1,11 @@
 Attribute VB_Name = "DocumentBeheer"
+
 Sub ListAllCustomProperties(Optional whichDocument As Document)
     Dim prop As DocumentProperty
     If whichDocument Is Nothing Then
         Set whichDocument = ActiveDocument
     End If
-    ' Controleer of er ï¿½berhaupt aangepaste eigenschappen zijn
+    ' Controleer of er überhaupt aangepaste eigenschappen zijn
     If whichDocument.CustomDocumentProperties.Count = 0 Then
         MsgBox "Dit document bevat geen aangepaste eigenschappen.", vbInformation
         Exit Sub
@@ -121,3 +122,5 @@ Function thisIsAQualityDocument() As Boolean
     bFoundCustomDocumentProperty = findCustomDocumentProperty("document_guid")
     thisIsAQualityDocument = bFoundCustomDocumentProperty
 End Function
+
+
