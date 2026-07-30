@@ -7,11 +7,77 @@
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
         integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/datetime/2.0.0/js/dataTables.dateTime.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" />
+    <script src="https://cdn.datatables.net/searchbuilder/2.0.0/js/dataTables.searchBuilder.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            DataTable.datetime('d MMM YYYY');
-            var table = new DataTable('#example', {
+        function parseAuditDate(value) {
+            if (!value) {
+                return null;
+            }
 
+            var match = value.trim().match(/^(\d{1,2})-([A-Za-z]{3})-(\d{4})\s+(\d{2}):(\d{2}):(\d{2})\s+UTC\+0$/);
+            if (!match) {
+                return null;
+            }
+
+            var monthMap = {
+                Jan: 0,
+                Feb: 1,
+                Mar: 2,
+                Apr: 3,
+                May: 4,
+                Jun: 5,
+                Jul: 6,
+                Aug: 7,
+                Sep: 8,
+                Oct: 9,
+                Nov: 10,
+                Dec: 11
+            };
+
+            var date = new Date(Date.UTC(
+                parseInt(match[3], 10),
+                monthMap[match[2]],
+                parseInt(match[1], 10),
+                parseInt(match[4], 10),
+                parseInt(match[5], 10),
+                parseInt(match[6], 10)
+            ));
+
+            return isNaN(date.getTime()) ? null : date;
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var table = new DataTable('#auditlog', {
+                dom: 'Qfrtip',
+                searchBuilder: true,
+                columnDefs: [
+                    {
+                        targets: 0,
+                        type: 'date',
+                        render: {
+                            _: function (data) {
+                                return data;
+                            },
+                            sort: function (data) {
+                                var parsed = parseAuditDate(data);
+                                return parsed ? parsed.getTime() : data;
+                            },
+                            type: function (data) {
+                                var parsed = parseAuditDate(data);
+                                return parsed ? parsed.toISOString() : data;
+                            },
+                            filter: function (data) {
+                                var parsed = parseAuditDate(data);
+                                return parsed ? parsed.toISOString() : data;
+                            }
+                        },
+                        createdCell: function (td, cellData) {
+                            td.setAttribute('data-order', parseAuditDate(cellData) ? parseAuditDate(cellData).getTime() : cellData);
+                            td.setAttribute('data-search', parseAuditDate(cellData) ? parseAuditDate(cellData).toISOString() : cellData);
+                        }
+                    }
+                ]
             });
         });
     </script>
@@ -19,509 +85,2890 @@
 </head>
 
 <body>
-    <table id="example" class="display">
+    <table id="auditlog" class="display">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
+                <th>Date/Time</th>
+                <th>User Name</th>
+                <th>User ID</th>
+                <th>Resource Type</th>
+                <th>Entity Name</th>
+                <th>Action</th>
+                <th>Change Type</th>
+                <th>Details</th>
+                <th>Old Value</th>
+                <th>New Value</th>
+                <th>Event ID</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2 Jul 2025</td>
-                <td>$320,800</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Preparation Name |Ref</td>
+                <td></td>
+                <td>PREPARATRON 3001</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>25 Aug 2011</td>
-                <td>$170,750</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > PbOEL</td>
+                <td></td>
+                <td>PbOEL3a*</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>25 Jan 2024</td>
-                <td>$170,750</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Preparation Date</td>
+                <td></td>
+                <td>2026-07-22T22:03:00.000Z</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>25 Aug 2011</td>
-                <td>$170,750</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Expiration Date</td>
+                <td></td>
+                <td>2026-07-23T22:00:00.000Z</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>25 Jan 2024</td>
-                <td>$170,750</td>
-            </tr>
-            <!-- <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009-01-12</td>
-                <td>$86,000</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Storage Requirements</td>
+                <td></td>
+                <td>40 °C</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior JavaScript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012-03-29</td>
-                <td>$433,060</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Handling Instructions</td>
+                <td></td>
+                <td>PF Air/Store Under Nitrogen</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>33</td>
-                <td>2008-11-28</td>
-                <td>$162,700</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Total Amt</td>
+                <td></td>
+                <td>10 mL</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2012-12-02</td>
-                <td>$372,000</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Target pH</td>
+                <td></td>
+                <td>7</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Herrod Chandler</td>
-                <td>Sales Assistant</td>
-                <td>San Francisco</td>
-                <td>59</td>
-                <td>2012-08-06</td>
-                <td>$137,500</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Compound ID</td>
+                <td></td>
+                <td>1</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Rhona Davidson</td>
-                <td>Integration Specialist</td>
-                <td>Tokyo</td>
-                <td>55</td>
-                <td>2010-10-14</td>
-                <td>$327,900</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3001 > Prep Comment</td>
+                <td></td>
+                <td>OUI</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Colleen Hurst</td>
-                <td>JavaScript Developer</td>
-                <td>San Francisco</td>
-                <td>39</td>
-                <td>2009-09-15</td>
-                <td>$205,500</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Preparation Name |Ref</td>
+                <td></td>
+                <td>PREPARATRON 3002</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Sonya Frost</td>
-                <td>Software Engineer</td>
-                <td>Edinburgh</td>
-                <td>23</td>
-                <td>2008-12-13</td>
-                <td>$103,600</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > PbOEL</td>
+                <td></td>
+                <td>PbOEL3a*</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Jena Gaines</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>30</td>
-                <td>2008-12-19</td>
-                <td>$90,560</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Preparation Date</td>
+                <td></td>
+                <td>2026-07-22T22:03:00.000Z</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Quinn Flynn</td>
-                <td>Support Lead</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2013-03-03</td>
-                <td>$342,000</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Expiration Date</td>
+                <td></td>
+                <td>2026-07-23T22:00:00.000Z</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Charde Marshall</td>
-                <td>Regional Director</td>
-                <td>San Francisco</td>
-                <td>36</td>
-                <td>2008-10-16</td>
-                <td>$470,600</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Storage Requirements</td>
+                <td></td>
+                <td>40 °C</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Haley Kennedy</td>
-                <td>Senior Marketing Designer</td>
-                <td>London</td>
-                <td>43</td>
-                <td>2012-12-18</td>
-                <td>$313,500</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Handling Instructions</td>
+                <td></td>
+                <td>PF Air/Store Under Nitrogen</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Tatyana Fitzpatrick</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>19</td>
-                <td>2010-03-17</td>
-                <td>$385,750</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Total Amt</td>
+                <td></td>
+                <td>10 mL</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Michael Silva</td>
-                <td>Marketing Designer</td>
-                <td>London</td>
-                <td>66</td>
-                <td>2012-11-27</td>
-                <td>$198,500</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Target pH</td>
+                <td></td>
+                <td>7</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Paul Byrd</td>
-                <td>Chief Financial Officer (CFO)</td>
-                <td>New York</td>
-                <td>64</td>
-                <td>2010-06-09</td>
-                <td>$725,000</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Compound ID</td>
+                <td></td>
+                <td>1</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Gloria Little</td>
-                <td>Systems Administrator</td>
-                <td>New York</td>
-                <td>59</td>
-                <td>2009-04-10</td>
-                <td>$237,500</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>PREPARATRON 3002 > Prep Comment</td>
+                <td></td>
+                <td>OUI</td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Bradley Greer</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>41</td>
-                <td>2012-10-13</td>
-                <td>$132,000</td>
+                <td>23-Jul-2026 08:25:32 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>prep 1-5mei</td>
+                <td></td>
+                <td></td>
+                <td>6a61cffd7b43c5d34eba0e75</td>
             </tr>
             <tr>
-                <td>Dai Rios</td>
-                <td>Personnel Lead</td>
-                <td>Edinburgh</td>
-                <td>35</td>
-                <td>2012-09-26</td>
-                <td>$217,500</td>
+                <td>23-Jul-2026 08:25:15 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Refresh Definition From Template</td>
+                <td></td>
+                <td>Preparation Master</td>
+                <td></td>
+                <td></td>
+                <td>6a61cfecf118bc4047e412c7</td>
             </tr>
             <tr>
-                <td>Jenette Caldwell</td>
-                <td>Development Lead</td>
-                <td>New York</td>
-                <td>30</td>
-                <td>2011-09-03</td>
-                <td>$345,000</td>
+                <td>23-Jul-2026 08:25:11 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>6a61cfe77b43c5d34eba0923</td>
             </tr>
             <tr>
-                <td>Yuri Berry</td>
-                <td>Chief Marketing Officer (CMO)</td>
-                <td>New York</td>
-                <td>40</td>
-                <td>2009-06-25</td>
-                <td>$675,000</td>
+                <td>23-Jul-2026 08:25:10 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Trash</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>6a61cfe631b9b109640d49e4</td>
             </tr>
             <tr>
-                <td>Caesar Vance</td>
-                <td>Pre-Sales Support</td>
-                <td>New York</td>
-                <td>21</td>
-                <td>2011-12-12</td>
-                <td>$106,450</td>
+                <td>23-Jul-2026 08:18:54 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Last Action Result</td>
+                <td>[Import BIOVIA Samples 2026-Jul-23 08:14:04 (UTC)] Import to Sample Import Table completed, 1 sample
+                    created</td>
+                <td>[Import BIOVIA Samples 2026-Jul-23 08:18:54 (UTC)] Import to Sample Import Table completed, 1 sample
+                    created</td>
+                <td>6a61ce6f7b43c5d34eb9bd23</td>
             </tr>
             <tr>
-                <td>Doris Wilder</td>
-                <td>Sales Assistant</td>
-                <td>Sydney</td>
-                <td>23</td>
-                <td>2010-09-20</td>
-                <td>$85,600</td>
+                <td>23-Jul-2026 08:18:53 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Sample Import for editing</td>
+                <td></td>
+                <td></td>
+                <td>6a61ce6ef118bc4047e4121e</td>
             </tr>
             <tr>
-                <td>Angelica Ramos</td>
-                <td>Chief Executive Officer (CEO)</td>
-                <td>London</td>
-                <td>47</td>
-                <td>2009-10-09</td>
-                <td>$1,200,000</td>
+                <td>23-Jul-2026 08:18:04 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Sample Import for editing</td>
+                <td></td>
+                <td></td>
+                <td>6a61ce3c31b9b109640d493b</td>
             </tr>
             <tr>
-                <td>Gavin Joyce</td>
-                <td>Developer</td>
-                <td>Edinburgh</td>
-                <td>42</td>
-                <td>2010-12-22</td>
-                <td>$92,575</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Sample ID</td>
+                <td></td>
+                <td>S0033026</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Jennifer Chang</td>
-                <td>Regional Director</td>
-                <td>Singapore</td>
-                <td>28</td>
-                <td>2010-11-14</td>
-                <td>$357,650</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Sample Name</td>
+                <td></td>
+                <td>SAMPLE TEST 001</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Brenden Wagner</td>
-                <td>Software Engineer</td>
-                <td>San Francisco</td>
-                <td>28</td>
-                <td>2011-06-07</td>
-                <td>$206,850</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Compound ID</td>
+                <td></td>
+                <td>1</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Fiona Green</td>
-                <td>Chief Operating Officer (COO)</td>
-                <td>San Francisco</td>
-                <td>48</td>
-                <td>2010-03-11</td>
-                <td>$850,000</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Lot Number</td>
+                <td></td>
+                <td>2</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Shou Itou</td>
-                <td>Regional Marketing</td>
-                <td>Tokyo</td>
-                <td>20</td>
-                <td>2011-08-14</td>
-                <td>$163,000</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Sample Status</td>
+                <td></td>
+                <td>planned</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Michelle House</td>
-                <td>Integration Specialist</td>
-                <td>Sydney</td>
-                <td>37</td>
-                <td>2011-06-02</td>
-                <td>$95,400</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Sample Amount</td>
+                <td></td>
+                <td>1</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Suki Burks</td>
-                <td>Developer</td>
-                <td>London</td>
-                <td>53</td>
-                <td>2009-10-22</td>
-                <td>$114,500</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Sample Amount Unit</td>
+                <td></td>
+                <td>g</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Prescott Bartlett</td>
-                <td>Technical Author</td>
-                <td>London</td>
-                <td>27</td>
-                <td>2011-05-07</td>
-                <td>$145,000</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Preparation Date</td>
+                <td></td>
+                <td>2026-07-23T08:18:00Z</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Gavin Cortez</td>
-                <td>Team Leader</td>
-                <td>San Francisco</td>
-                <td>22</td>
-                <td>2008-10-26</td>
-                <td>$235,500</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Expiration Date</td>
+                <td></td>
+                <td>2026-07-23T22:00:00Z</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Martena Mccray</td>
-                <td>Post-Sales support</td>
-                <td>Edinburgh</td>
-                <td>46</td>
-                <td>2011-03-09</td>
-                <td>$324,050</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Storage Requirements</td>
+                <td></td>
+                <td>2-8C</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Unity Butler</td>
-                <td>Marketing Designer</td>
-                <td>San Francisco</td>
-                <td>47</td>
-                <td>2009-12-09</td>
-                <td>$85,675</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Handling Instructions</td>
+                <td></td>
+                <td>PF Light/Moisture/Air</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Howard Hatfield</td>
-                <td>Office Manager</td>
-                <td>San Francisco</td>
-                <td>51</td>
-                <td>2008-12-16</td>
-                <td>$164,500</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > PbOEL</td>
+                <td></td>
+                <td>PbOEL2</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Hope Fuentes</td>
-                <td>Secretary</td>
-                <td>San Francisco</td>
-                <td>41</td>
-                <td>2010-02-12</td>
-                <td>$109,850</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Project</td>
+                <td></td>
+                <td>Training</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Vivian Harrell</td>
-                <td>Financial Controller</td>
-                <td>San Francisco</td>
-                <td>62</td>
-                <td>2009-02-14</td>
-                <td>$452,500</td>
+                <td>23-Jul-2026 08:18:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SAMPLE TEST 001 > Library Ref</td>
+                <td></td>
+                <td>S0033026</td>
+                <td>6a61ce3c7b43c5d34eb9b4de</td>
             </tr>
             <tr>
-                <td>Timothy Mooney</td>
-                <td>Office Manager</td>
-                <td>London</td>
-                <td>37</td>
-                <td>2008-12-11</td>
-                <td>$136,200</td>
+                <td>23-Jul-2026 08:14:29 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Sample Import — Reason: Typing error</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd6693483c302a9962e3</td>
             </tr>
             <tr>
-                <td>Jackson Bradshaw</td>
-                <td>Director</td>
-                <td>New York</td>
-                <td>65</td>
-                <td>2008-09-26</td>
-                <td>$645,750</td>
+                <td>23-Jul-2026 08:14:04 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Last Action Result</td>
+                <td>[Import BIOVIA Samples 2026-May-08 06:00:08 (UTC)] Import to Sample Import Table completed, 1 sample
+                    created</td>
+                <td>[Import BIOVIA Samples 2026-Jul-23 08:14:04 (UTC)] Import to Sample Import Table completed, 1 sample
+                    created</td>
+                <td>6a61cd4d7b43c5d34eb98e6d</td>
             </tr>
             <tr>
-                <td>Olivia Liang</td>
-                <td>Support Engineer</td>
-                <td>Singapore</td>
-                <td>64</td>
-                <td>2011-02-03</td>
-                <td>$234,500</td>
+                <td>23-Jul-2026 08:14:03 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Sample Import — Reason: See comment; Comment: Created sample(s) added to import table</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd4c97e519e29ed3b8c8</td>
             </tr>
             <tr>
-                <td>Bruno Nash</td>
-                <td>Software Engineer</td>
-                <td>London</td>
-                <td>38</td>
-                <td>2011-05-03</td>
-                <td>$163,500</td>
+                <td>23-Jul-2026 08:14:02 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei_1</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd4c7b43c5d34eb98dea</td>
             </tr>
             <tr>
-                <td>Sakura Yamamoto</td>
-                <td>Support Engineer</td>
-                <td>Tokyo</td>
-                <td>37</td>
-                <td>2009-08-19</td>
-                <td>$139,575</td>
+                <td>23-Jul-2026 08:14:02 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei_2</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd4c7b43c5d34eb98dea</td>
             </tr>
             <tr>
-                <td>Thor Walton</td>
-                <td>Developer</td>
-                <td>New York</td>
-                <td>61</td>
-                <td>2013-08-11</td>
-                <td>$98,540</td>
+                <td>23-Jul-2026 08:14:02 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei after lock</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd4c7b43c5d34eb98dea</td>
             </tr>
             <tr>
-                <td>Finn Camacho</td>
-                <td>Support Engineer</td>
-                <td>San Francisco</td>
-                <td>47</td>
-                <td>2009-07-07</td>
-                <td>$87,500</td>
+                <td>23-Jul-2026 08:14:02 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>6c1a4694-2ba5-4b4d-896b-746dbedb6ad3</td>
+                <td></td>
+                <td></td>
+                <td>6a61cd4c7b43c5d34eb98dea</td>
             </tr>
             <tr>
-                <td>Serge Baldwin</td>
-                <td>Data Coordinator</td>
-                <td>Singapore</td>
-                <td>64</td>
-                <td>2012-04-09</td>
-                <td>$138,575</td>
+                <td>23-Jul-2026 08:12:45 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Reopen</td>
+                <td></td>
+                <td>Reopened because a mistake was found
+
+                    VP : NEED TO DO SOME TEST WITH A TASK PLAN</td>
+                <td></td>
+                <td></td>
+                <td>6a61ccff31b9b109640d48df</td>
             </tr>
             <tr>
-                <td>Zenaida Frank</td>
-                <td>Software Engineer</td>
-                <td>New York</td>
-                <td>63</td>
-                <td>2010-01-04</td>
-                <td>$125,250</td>
+                <td>11-Jun-2026 10:01:30 UTC+0</td>
+                <td>Vincent Poiatti</td>
+                <td>vpoiatti@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Accept</td>
+                <td></td>
+                <td>I confirm I have performed the basic GMP review; Reviewers: Tamara Van den broeck, Vincent Poiatti
+                </td>
+                <td></td>
+                <td></td>
+                <td>6a2a877bcdbdfa677eb75060</td>
             </tr>
             <tr>
-                <td>Zorita Serrano</td>
-                <td>Software Engineer</td>
-                <td>San Francisco</td>
-                <td>56</td>
-                <td>2012-06-01</td>
-                <td>$115,000</td>
+                <td>11-Jun-2026 09:56:58 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Change Reviewers</td>
+                <td></td>
+                <td>Reviewers: Tamara Van den broeck, Vincent Poiatti</td>
+                <td></td>
+                <td></td>
+                <td>6a2a866abab12e715c676d23</td>
             </tr>
             <tr>
-                <td>Jennifer Acosta</td>
-                <td>Junior JavaScript Developer</td>
-                <td>Edinburgh</td>
-                <td>43</td>
-                <td>2013-02-01</td>
-                <td>$75,650</td>
+                <td>11-May-2026 14:48:30 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Sign And Add Reviewers</td>
+                <td></td>
+                <td>This experiment is complete and is ready for review; Reviewers: Tamara Van den broeck</td>
+                <td></td>
+                <td></td>
+                <td>6a01ec3e4e46a76f11ae5670</td>
             </tr>
             <tr>
-                <td>Cara Stevens</td>
-                <td>Sales Assistant</td>
-                <td>New York</td>
-                <td>46</td>
-                <td>2011-12-06</td>
-                <td>$145,600</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Waters XBridge C18 5.0um 3.0 x 50 mm > Manufacturer Lot No |RfC</td>
+                <td></td>
+                <td>98765</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Hermione Butler</td>
-                <td>Regional Director</td>
-                <td>London</td>
-                <td>47</td>
-                <td>2011-03-21</td>
-                <td>$356,250</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Waters XBridge C18 5.0um 3.0 x 50 mm > Inventory Lot No |RfC</td>
+                <td></td>
+                <td>54321</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Lael Greer</td>
-                <td>Systems Administrator</td>
-                <td>London</td>
-                <td>21</td>
-                <td>2009-02-27</td>
-                <td>$103,500</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Waters XBridge C18 5.0um 3.0 x 50 mm > Expiration Date |RfC</td>
+                <td></td>
+                <td>2026-05-21T06:00:00.000Z</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Jonas Alexander</td>
-                <td>Developer</td>
-                <td>San Francisco</td>
-                <td>30</td>
-                <td>2010-07-14</td>
-                <td>$86,500</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>N-Methyl-2-pyrrolidone > Manufacturer Lot No |RfC</td>
+                <td></td>
+                <td>12345</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Shad Decker</td>
-                <td>Regional Director</td>
-                <td>Edinburgh</td>
-                <td>51</td>
-                <td>2008-11-13</td>
-                <td>$183,000</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>N-Methyl-2-pyrrolidone > Inventory Lot No |RfC</td>
+                <td></td>
+                <td>56789</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Michael Bruce</td>
-                <td>JavaScript Developer</td>
-                <td>Singapore</td>
-                <td>29</td>
-                <td>2011-06-27</td>
-                <td>$183,000</td>
+                <td>11-May-2026 12:32:12 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>N-Methyl-2-pyrrolidone > Expiration Date |RfC</td>
+                <td></td>
+                <td>2026-05-15T14:32:00.000Z</td>
+                <td>6a01cc4d7a71d27f7e852676</td>
             </tr>
             <tr>
-                <td>Donna Snider</td>
-                <td>Customer Support</td>
-                <td>New York</td>
-                <td>27</td>
-                <td>2011-01-25</td>
-                <td>$112,000</td>
-            </tr> -->
+                <td>11-May-2026 12:30:54 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>Waters XBridge C18 5.0um 3.0 x 50 mm > Material Name |Ref</td>
+                <td></td>
+                <td>Waters XBridge C18 5.0um 3.0 x 50 mm</td>
+                <td>6a01cbff7a71d27f7e850eb9</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:54 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Material/Lot/Container</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>N-Methyl-2-pyrrolidone > Material Name |Ref</td>
+                <td></td>
+                <td>N-Methyl-2-pyrrolidone</td>
+                <td>6a01cbff7a71d27f7e850eb9</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:41 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Materials CISPro</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Materials CISPro — Reason: Alternate container/equipment used</td>
+                <td></td>
+                <td></td>
+                <td>6a01cbf2971fcf7138f9b447</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:41 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>456369175 > Container ID</td>
+                <td></td>
+                <td>456369175</td>
+                <td>6a01cbf27a71d27f7e850ced</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:41 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>456369175 > Inventory Link</td>
+                <td></td>
+                <td>https://bioviacisprosbx.jnj.com/cispro/Main.html?nodeid=258184</td>
+                <td>6a01cbf27a71d27f7e850ced</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:41 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>https://bioviacisprosbx.jnj.com/cispro/Main.html?nodeid=232056 > Inventory Link</td>
+                <td></td>
+                <td>https://bioviacisprosbx.jnj.com/cispro/Main.html?nodeid=232056</td>
+                <td>6a01cbf27a71d27f7e850ced</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:30:41 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>https://bioviacisprosbx.jnj.com/cispro/Main.html?nodeid=232056 > Container ID</td>
+                <td>C004490</td>
+                <td>207619330</td>
+                <td>6a01cbf27a71d27f7e850ced</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:29:09 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Materials CISPro</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Materials CISPro for editing</td>
+                <td></td>
+                <td></td>
+                <td>6a01cb96971fcf7138f9b418</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:29:08 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>C004490 > Container ID</td>
+                <td></td>
+                <td>C004490</td>
+                <td>6a01cb967a71d27f7e84f042</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:29:08 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>19758024 > Container ID</td>
+                <td></td>
+                <td>19758024</td>
+                <td>6a01cb967a71d27f7e84f042</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:29:08 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Materials CISPro</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>19758024 > Inventory Link</td>
+                <td></td>
+                <td>https://bioviacisprosbx.jnj.com/cispro/Main.html?nodeid=235959</td>
+                <td>6a01cb967a71d27f7e84f042</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:26:50 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Analytical Equipment</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test demo > Equipment Name |Ref</td>
+                <td></td>
+                <td>test demo</td>
+                <td>6a01cb0a7a71d27f7e84cc89</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:26:50 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP-GMP Manual Analytical Equipment</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test demo > Calibration Due Date |RfC</td>
+                <td></td>
+                <td>2026-05-12T12:26:00.000Z</td>
+                <td>6a01cb0a7a71d27f7e84cc89</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:26:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Background External Partner</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Source</td>
+                <td></td>
+                <td>Internal</td>
+                <td>6a01cae07a71d27f7e84c084</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 12:26:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Background External Partner</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>External Partners</td>
+                <td></td>
+                <td>N/A</td>
+                <td>6a01cae07a71d27f7e84c084</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 11:02:58 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Entry</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Experiment steps</td>
+                <td>ANBL 11-MAY-2026: GxP Journal Entry</td>
+                <td></td>
+                <td>6a01b7637a71d27f7e804f56</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 11:02:56 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Log</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Read only rich text field</td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck
+                    (tvande17)tttt#003;
+                    Added on 11-May-2026 12:57 UTC&#43;02:00; Added by Martine Ghysels (mghysel1)this is martines entry
+                    of
+                    the day</td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck
+                    (tvande17)tttt#003;
+                    Added on 11-May-2026 12:57 UTC&#43;02:00; Added by Martine Ghysels (mghysel1)this is martines entry
+                    of
+                    the day
+                     #004; Added on 11-May-2026 13:02 UTC&#43;02:00; Added by An Blockx (ablockx2)ANBL 11-MAY-2026: GxP
+                    Journal Entry</td>
+                <td>6a01b7617a71d27f7e804f29</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 11:01:03 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Entry</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Experiment steps</td>
+                <td></td>
+                <td>ANBL 11-MAY-2026: GxP Journal Entry</td>
+                <td>6a01b6ef7a71d27f7e803ed5</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:59:46 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Deviation</td>
+                <td>fddsq</td>
+                <td>fddsq
+                    ANBL 11-MAY-2026: addition to Deviation field and entered the study type</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:59:46 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Comments</td>
+                <td>dsqffqsfdsf</td>
+                <td>dsqffqsfdsf
+                    ANBL 11-MAY-2026: Comments add</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:59:46 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Purpose</td>
+                <td>my study purpose</td>
+                <td>my study purpose
+                    ANBL 11-MAY-2026: addition to Study Purpose</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:59:46 UTC+0</td>
+                <td>An Blockx</td>
+                <td>ablockx2@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Type</td>
+                <td></td>
+                <td>ASAP Study</td>
+                <td>6a01b6a37a71d27f7e8031c6</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:58:11 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Deviation</td>
+                <td>s</td>
+                <td>fddsq</td>
+                <td>6a01b6447a71d27f7e80235e</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:58:11 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Comments</td>
+                <td>s</td>
+                <td>dsqffqsfdsf</td>
+                <td>6a01b6447a71d27f7e80235e</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:58:11 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Purpose</td>
+                <td>s</td>
+                <td>my study purpose</td>
+                <td>6a01b6447a71d27f7e80235e</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:58:11 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Type</td>
+                <td>ASAP Study</td>
+                <td></td>
+                <td>6a01b6447a71d27f7e80235e</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:57:55 UTC+0</td>
+                <td>Martine Ghysels</td>
+                <td>mghysel1@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Log</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Read only rich text field</td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)tttt
+                </td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck
+                    (tvande17)tttt#003;
+                    Added on 11-May-2026 12:57 UTC&#43;02:00; Added by Martine Ghysels (mghysel1)this is martines entry
+                    of
+                    the day</td>
+                <td>6a01b6347a71d27f7e80214b</td>
+            </tr>
+            <tr>
+                <td>11-May-2026 10:55:09 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Refresh Definition From Template</td>
+                <td></td>
+                <td>Background</td>
+                <td></td>
+                <td></td>
+                <td>6a01b58ec6d9b90a176a4c73</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 11:14:14 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Sample Import — Reason: See comment; Comment: new sample</td>
+                <td></td>
+                <td></td>
+                <td>69fdc587533698b1308420d3</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 11:14:13 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>S018165 > Sample ID</td>
+                <td></td>
+                <td>S018165</td>
+                <td>69fdc5877a71d27f7eff565d</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:10 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei after lock</td>
+                <td></td>
+                <td></td>
+                <td>69fd7bea7a71d27f7ef30060</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:09 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Last Action Result</td>
+                <td>[Import BIOVIA Samples 2026-May-08 05:57:20 (UTC)] Import to Sample Import Table completed, 2
+                    samples
+                    created</td>
+                <td>[Import BIOVIA Samples 2026-May-08 06:00:08 (UTC)] Import to Sample Import Table completed, 1 sample
+                    created</td>
+                <td>69fd7be97a71d27f7ef30030</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:08 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Sample Import — Reason: See comment; Comment: Edited by External Action</td>
+                <td></td>
+                <td></td>
+                <td>69fd7be84e46a76f11aca4e7</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample ID</td>
+                <td></td>
+                <td>S018164</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Name</td>
+                <td></td>
+                <td>test 08mei after lock</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Compound ID</td>
+                <td></td>
+                <td>56123</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Lot Number</td>
+                <td></td>
+                <td>54321</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Status</td>
+                <td></td>
+                <td>planned</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Amount</td>
+                <td></td>
+                <td>1</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Amount Unit</td>
+                <td></td>
+                <td>g</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Preparation Date</td>
+                <td></td>
+                <td>2026-05-07T22:00:00Z</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Expiration Date</td>
+                <td></td>
+                <td>2026-05-14T22:00:00Z</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Storage Requirements</td>
+                <td></td>
+                <td>-80C</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Handling Instructions</td>
+                <td></td>
+                <td>N/A</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > PbOEL</td>
+                <td></td>
+                <td>PbOEL1</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Comment</td>
+                <td></td>
+                <td>after lock sample import</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Location Path</td>
+                <td></td>
+                <td>Beerse</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Project</td>
+                <td></td>
+                <td>Training</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 06:00:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Library Ref</td>
+                <td></td>
+                <td>S018164</td>
+                <td>69fd7be87a71d27f7ef3001c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Name</td>
+                <td></td>
+                <td>test 08mei after lock</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Lot Number</td>
+                <td></td>
+                <td>54321</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Storage Requirements</td>
+                <td></td>
+                <td>-80C</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Compound ID</td>
+                <td></td>
+                <td>56123</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Preparation Date</td>
+                <td></td>
+                <td>2026-05-07T22:00:00.000Z</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Expiration Date</td>
+                <td></td>
+                <td>2026-05-14T22:00:00.000Z</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Handling Instructions</td>
+                <td></td>
+                <td>N/A</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > PbOEL</td>
+                <td></td>
+                <td>PbOEL1</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:58:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei after lock > Sample Comment</td>
+                <td></td>
+                <td>after lock sample import</td>
+                <td>69fd7ba07a71d27f7ef2f5d0</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:21 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei_1</td>
+                <td></td>
+                <td></td>
+                <td>69fd7b437a71d27f7ef2ea9c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:21 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Removed</td>
+                <td>test 08mei_2</td>
+                <td></td>
+                <td></td>
+                <td>69fd7b437a71d27f7ef2ea9c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:20 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Last Action Result</td>
+                <td>[Create Task Plan 2026-May-08 05:54:30 (UTC)] Task Plan created successfully</td>
+                <td>[Import BIOVIA Samples 2026-May-08 05:57:20 (UTC)] Import to Sample Import Table completed, 2
+                    samples
+                    created</td>
+                <td>69fd7b417a71d27f7ef2ea4c</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:20 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Sample Import</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Sample Import for editing</td>
+                <td></td>
+                <td></td>
+                <td>69fd7b404e46a76f11aca4a9</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample ID</td>
+                <td></td>
+                <td>S018162</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample Name</td>
+                <td></td>
+                <td>test 08mei_1</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Compound ID</td>
+                <td></td>
+                <td>98745</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Lot Number</td>
+                <td></td>
+                <td>12345</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample Status</td>
+                <td></td>
+                <td>planned</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample Amount</td>
+                <td></td>
+                <td>1</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample Amount Unit</td>
+                <td></td>
+                <td>g</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Storage Requirements</td>
+                <td></td>
+                <td>RT</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Location Path</td>
+                <td></td>
+                <td>Beerse</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Project</td>
+                <td></td>
+                <td>Training</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Library Ref</td>
+                <td></td>
+                <td>S018162</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample ID</td>
+                <td></td>
+                <td>S018163</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample Name</td>
+                <td></td>
+                <td>test 08mei_2</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Compound ID</td>
+                <td></td>
+                <td>98745</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Lot Number</td>
+                <td></td>
+                <td>12345</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample Status</td>
+                <td></td>
+                <td>planned</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample Amount</td>
+                <td></td>
+                <td>1</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample Amount Unit</td>
+                <td></td>
+                <td>g</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Storage Requirements</td>
+                <td></td>
+                <td>RT</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Location Path</td>
+                <td></td>
+                <td>Beerse</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Project</td>
+                <td></td>
+                <td>Training</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:57:19 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Import</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Library Ref</td>
+                <td></td>
+                <td>S018163</td>
+                <td>69fd7b407a71d27f7ef2ea27</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Sample Name</td>
+                <td></td>
+                <td>test 08mei_1</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Lot Number</td>
+                <td></td>
+                <td>12345</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Storage Requirements</td>
+                <td></td>
+                <td>RT</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_1 > Compound ID</td>
+                <td></td>
+                <td>98745</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Sample Name</td>
+                <td></td>
+                <td>test 08mei_2</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Lot Number</td>
+                <td></td>
+                <td>12345</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Storage Requirements</td>
+                <td></td>
+                <td>RT</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:56:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Sample Creation</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>test 08mei_2 > Compound ID</td>
+                <td></td>
+                <td>98745</td>
+                <td>69fd7af57a71d27f7ef2df88</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:54:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Task Plan Link</td>
+                <td></td>
+                <td>GMP000019 - DIPT - test 05mei</td>
+                <td>69fd7a977a71d27f7ef2d03d</td>
+            </tr>
+            <tr>
+                <td>08-May-2026 05:54:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Task Plan</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Last Action Result</td>
+                <td></td>
+                <td>[Create Task Plan 2026-May-08 05:54:30 (UTC)] Task Plan created successfully</td>
+                <td>69fd7a977a71d27f7ef2d03d</td>
+            </tr>
+            <tr>
+                <td>07-May-2026 11:43:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fc7ae37a71d27f7ec30d5a</td>
+            </tr>
+            <tr>
+                <td>07-May-2026 09:02:25 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fc55237a71d27f7ebd4b2d</td>
+            </tr>
+            <tr>
+                <td>07-May-2026 08:52:45 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fc52dd7a71d27f7ebce75c</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:55:48 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>GxP Waters Empower Reference</td>
+                <td>Copy</td>
+                <td></td>
+                <td>from GxP Waters Empower Reference</td>
+                <td></td>
+                <td></td>
+                <td>69fb0215533698b13082beb1</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:55:47 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fb02147a71d27f7e864a57</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:52:34 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Analytical Equipment</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Equipment Hub — Reason: Alternate container/equipment used</td>
+                <td></td>
+                <td></td>
+                <td>69fb0153533698b13082be44</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:52:33 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>AO-PH-011 > Lookup</td>
+                <td></td>
+                <td>AO-PH-011</td>
+                <td>69fb01537a71d27f7e8621a4</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:52:33 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>AO-PH-011 > Compliance Status</td>
+                <td></td>
+                <td>Status NOK/State NOK/</td>
+                <td>69fb01537a71d27f7e8621a4</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:52:33 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>AO-PH-011 > Column for Compliance Status calc.</td>
+                <td></td>
+                <td>Status NOK/State NOK/</td>
+                <td>69fb01537a71d27f7e8621a4</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:52:33 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>AO-PH-011 > Concatenate Status State GxP Level</td>
+                <td></td>
+                <td>PendingdraftGMP</td>
+                <td>69fb01537a71d27f7e8621a4</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:51:04 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Text</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked GMP Text Field — Reason: Additional information</td>
+                <td></td>
+                <td></td>
+                <td>69fb00f9c6d9b90a176791f6</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:50:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Text</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked GMP Text Field for editing</td>
+                <td></td>
+                <td></td>
+                <td>69fb00d6a2c659c922476fb9</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:50:29 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Text</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>GMP Text Field</td>
+                <td></td>
+                <td>yyy -aanpassing</td>
+                <td>69fb00d67a71d27f7e86035c</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:50:14 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Text</td>
+                <td>Refresh Definition From Template</td>
+                <td></td>
+                <td>GxP-GMP Text</td>
+                <td></td>
+                <td></td>
+                <td>69fb00c7971fcf7138f6d431</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:49:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fb00847a71d27f7e85f31f</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:49:07 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Trash</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69fb0084971fcf7138f6d41b</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:48:57 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Edit</td>
+                <td>Field Added</td>
+                <td>GMP Text Field</td>
+                <td></td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td>69fb00797a71d27f7e85f111</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:48:57 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Edit</td>
+                <td>Field Removed</td>
+                <td>Journal Text</td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td></td>
+                <td>69fb00797a71d27f7e85f111</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:48:50 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Refresh Definition From Template</td>
+                <td></td>
+                <td>GxP-GMP Journal Text</td>
+                <td></td>
+                <td></td>
+                <td>69fb0073a2c659c922476f85</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:48:24 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Log</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Read only rich text field</td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei</td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei#002; Added on 06-May-2026 10:48 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)tttt
+                </td>
+                <td>69fb00597a71d27f7e85ea7c</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:47:09 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Additional information > RfC| Doc Number</td>
+                <td>Typing Error</td>
+                <td>Additional information</td>
+                <td>69fb000e7a71d27f7e85dba5</td>
+            </tr>
+            <tr>
+                <td>06-May-2026 08:47:09 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Additional information > Doc Number |RfC</td>
+                <td>TV-PRT-0001</td>
+                <td>TV-PRT-0002</td>
+                <td>69fb000e7a71d27f7e85dba5</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:27:06 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Deviation</td>
+                <td></td>
+                <td>s</td>
+                <td>69f9b7eb7a71d27f7e4706a1</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:27:06 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Comments</td>
+                <td></td>
+                <td>s</td>
+                <td>69f9b7eb7a71d27f7e4706a1</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:27:06 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Purpose</td>
+                <td></td>
+                <td>s</td>
+                <td>69f9b7eb7a71d27f7e4706a1</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:27:06 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Background</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Study Type</td>
+                <td></td>
+                <td>ASAP Study</td>
+                <td>69f9b7eb7a71d27f7e4706a1</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:22:31 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Balance Data</td>
+                <td>001-002 | eStream Test Instance 001 | DIRECT | 4.9991 g | CAL DUE: 31-Dec-2099 00:00 UTC+01:00 | VER
+                    DUE: UNDEFINED | ACTIVE | DRAFT | GMP | LL: UNKNOWN | UL: UNKNOWN | TVANDE17 | 05-May-2026 11:22
+                    UTC+02:00</td>
+                <td></td>
+                <td>69f9b6d87a71d27f7e46c3cb</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:22:31 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > RfC| Actual Amt</td>
+                <td>Data updated</td>
+                <td>Typing Error</td>
+                <td>69f9b6d87a71d27f7e46c3cb</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:22:31 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Actual Amt |RfC</td>
+                <td>4.9991 g</td>
+                <td>4.9995 g</td>
+                <td>69f9b6d87a71d27f7e46c3cb</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:22:31 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Fit for GxP</td>
+                <td>NO</td>
+                <td></td>
+                <td>69f9b6d87a71d27f7e46c3cb</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:21:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Balance Data</td>
+                <td></td>
+                <td>001-002 | eStream Test Instance 001 | DIRECT | 4.9991 g | CAL DUE: 31-Dec-2099 00:00 UTC+01:00 | VER
+                    DUE: UNDEFINED | ACTIVE | DRAFT | GMP | LL: UNKNOWN | UL: UNKNOWN | TVANDE17 | 05-May-2026 11:22
+                    UTC+02:00</td>
+                <td>69f9b6987a71d27f7e46b1bd</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:21:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > RfC| Actual Amt</td>
+                <td></td>
+                <td>Data updated</td>
+                <td>69f9b6987a71d27f7e46b1bd</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:21:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Actual Amt |RfC</td>
+                <td></td>
+                <td>4.9991 g</td>
+                <td>69f9b6987a71d27f7e46b1bd</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:21:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Fit for GxP</td>
+                <td></td>
+                <td>NO</td>
+                <td>69f9b6987a71d27f7e46b1bd</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:45 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SC001180 > Prep ID</td>
+                <td></td>
+                <td>SC001180</td>
+                <td>69f9b6327a71d27f7e469ae5</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:45 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>SC001180 > Total Amt</td>
+                <td></td>
+                <td>999 item(s)</td>
+                <td>69f9b6327a71d27f7e469ae5</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:45 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>prep 1-5mei > Reference |Ref</td>
+                <td></td>
+                <td>SC001180</td>
+                <td>69f9b6327a71d27f7e469ae5</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:45 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>prep 1-5mei</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>prep 1-5mei > Name</td>
+                <td></td>
+                <td>prep 1-5mei</td>
+                <td>69f9b6327a71d27f7e469ae5</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:43 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69f9b62f7a71d27f7e469a41</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:38 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>prep 1-5mei > Prep ID</td>
+                <td></td>
+                <td>SC001180</td>
+                <td>69f9b62a7a71d27f7e469715</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:25 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>Analytical Equipment</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Equipment Hub for editing</td>
+                <td></td>
+                <td></td>
+                <td>69f9b61ec6d9b90a1766e5d0</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:24 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>001-002 > Lookup</td>
+                <td></td>
+                <td>001-002</td>
+                <td>69f9b61e7a71d27f7e469330</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:24 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>001-002 > Compliance Status</td>
+                <td></td>
+                <td>State NOK/</td>
+                <td>69f9b61e7a71d27f7e469330</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:24 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>001-002 > Column for Compliance Status calc.</td>
+                <td></td>
+                <td>State NOK/</td>
+                <td>69f9b61e7a71d27f7e469330</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:19:24 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Equipment Hub</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>001-002 > Concatenate Status State GxP Level</td>
+                <td></td>
+                <td>ActivedraftGMP</td>
+                <td>69f9b61e7a71d27f7e469330</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:18:10 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>prep 1-5mei > Preparation Name |Ref</td>
+                <td></td>
+                <td>prep 1-5mei</td>
+                <td>69f9b5d37a71d27f7e4686ae</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:18:10 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>prep 1-5mei > Actual pH |RfC</td>
+                <td></td>
+                <td>7</td>
+                <td>69f9b5d37a71d27f7e4686ae</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:18:10 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Preparation Master</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>prep 1-5mei > Actual Temp |RfC</td>
+                <td></td>
+                <td>20 °C</td>
+                <td>69f9b5d37a71d27f7e4686ae</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:15:53 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Locked Journal Text — Reason: Additional information</td>
+                <td></td>
+                <td></td>
+                <td>69f9b549c6d9b90a1766e5ad</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:15:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Edit Worksheet Reason Required Field</td>
+                <td></td>
+                <td>Unlocked Journal Text for editing</td>
+                <td></td>
+                <td></td>
+                <td>69f9b530971fcf7138f623c0</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:15:28 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP-GMP Journal Text</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Journal Text</td>
+                <td></td>
+                <td>vrije text
+                    unlock and extra text</td>
+                <td>69f9b5307a71d27f7e465f8d</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:15:18 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Edit Layout</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>69f9b5267a71d27f7e465d48</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:14:46 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Worksheet</td>
+                <td>GxP Journal Log</td>
+                <td>Edit</td>
+                <td>Field Modified</td>
+                <td>Read only rich text field</td>
+                <td></td>
+                <td>#001; Added on 05-May-2026 11:14 UTC&#43;02:00; Added by Tamara Van den broeck (tvande17)test entry
+                    05mei</td>
+                <td>69f9b5067a71d27f7e465525</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:12:44 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Typing Error > RfC| Doc Number</td>
+                <td></td>
+                <td>Typing Error</td>
+                <td>69f9b48d7a71d27f7e46383a</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:12:44 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Modified</td>
+                <td>Typing Error > Doc Number |RfC</td>
+                <td>TV-PRT</td>
+                <td>TV-PRT-0001</td>
+                <td>69f9b48d7a71d27f7e46383a</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>protocol > Doc Type |Ref</td>
+                <td></td>
+                <td>protocol</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>protocol > Doc Number |RfC</td>
+                <td></td>
+                <td>TV-PRT</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>protocol > Doc Version |RfC</td>
+                <td></td>
+                <td>1</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>protocol > Doc Followed as described?</td>
+                <td></td>
+                <td>Yes</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>specification > Doc Type |Ref</td>
+                <td></td>
+                <td>specification</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>specification > Doc Number |RfC</td>
+                <td></td>
+                <td>TV-SPEC</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>specification > Doc Version |RfC</td>
+                <td></td>
+                <td>2</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:10:30 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Grid</td>
+                <td>Document Reference</td>
+                <td>Edit</td>
+                <td>Row Added</td>
+                <td>specification > Doc Followed as described?</td>
+                <td></td>
+                <td>Yes</td>
+                <td>69f9b4077a71d27f7e461a7f</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:09:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Text Section</td>
+                <td>Conclusion</td>
+                <td>Copy</td>
+                <td></td>
+                <td>from Conclusion</td>
+                <td></td>
+                <td></td>
+                <td>69f9b3e9971fcf7138f62370</td>
+            </tr>
+            <tr>
+                <td>05-May-2026 09:09:55 UTC+0</td>
+                <td>Tamara Van den broeck</td>
+                <td>tvande17@its.jnj.com</td>
+                <td>Ado</td>
+                <td>GMP000019</td>
+                <td>Copy</td>
+                <td></td>
+                <td>from GxP-GMP General Template</td>
+                <td></td>
+                <td></td>
+                <td>69f9b3e9533698b1308214eb</td>
+            </tr>
         </tbody>
-        <tfoot>
-            <tr>
-                <th>Name</th>
-                <th>Position</th>
-                <th>Office</th>
-                <th>Age</th>
-                <th>Start date</th>
-                <th>Salary</th>
-            </tr>
-        </tfoot>
     </table>
 </body>
 
