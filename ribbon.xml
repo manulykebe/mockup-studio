@@ -1,0 +1,93 @@
+<customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_OnLoad">
+    <commands>
+        <!-- Overrides the Backstage Print button and Ctrl+P -->
+        <command idMso="PrintPreviewAndPrint" onAction="onFilePrint" />
+        <!-- Overrides the Quick Print button -->
+        <command idMso="FilePrintQuick" onAction="onFilePrintDefault" />
+    </commands>
+    <ribbon>
+        <tabs>
+            <!-- Home tabblad aanpassen -->
+            <tab idMso="TabHome">
+                <group idMso="GroupFont" visible="false" />
+                <group id="grpStyleFormatting" label="Style Format" insertAfterMso="GroupFont">
+                    <button id="btnBoldStyle" supertip="Bold" showLabel="false" label="Bold"
+                        imageMso="Bold" onAction="OnBoldCommand" size="normal" />
+                    <button id="btnItalicStyle" supertip="Italic" showLabel="false" label="Italic"
+                        imageMso="Italic" onAction="OnItalicCommand" size="normal" />
+                    <button id="btnUnderlineStyle" supertip="Underline" showLabel="false"
+                        label="Underline" imageMso="Underline" onAction="OnUnderlineCommand"
+                        size="normal" />
+                    <button id="btnStrikeStyle" supertip="Strikethrough" showLabel="false"
+                        label="Strike" imageMso="Strikethrough" onAction="OnStrikethroughCommand"
+                        size="normal" />
+                    <button id="btnSuperStyle" supertip="Superscript" showLabel="false"
+                        label="Superscript" imageMso="Superscript" onAction="OnSuperscriptCommand"
+                        size="normal" />
+                    <button id="btnSubStyle" supertip="Subscript" showLabel="false"
+                        label="Subscript" imageMso="Subscript" onAction="OnSubscriptCommand"
+                        size="normal" />
+                    <button id="btnClearStyle" supertip="Clear Format" showLabel="false"
+                        label="Clear Format" imageMso="ClearFormatting"
+                        onAction="OnClearFormattingCommand" size="large" />
+                </group>
+            </tab>
+            <tab idMso="TabTableDesign">
+                <group idMso="GroupBorders" visible="false" />
+            </tab>
+            <tab idMso="TabTableLayout">
+                <group idMso="GroupAlignment" visible="false" />
+            </tab>
+            <tab idMso="TabPageLayout">
+                <group idMso="GroupParagraph" visible="false" />
+                <group idMso="GroupArrange" visible="false" />
+            </tab>
+            <tab idMso="TabDesign">
+                <group idMso="GroupDocumentFormatting" visible="false" />
+            </tab>
+            <!-- Nieuw tabblad aanmaken -->
+            <tab id="customTabSopraSteria" label="Sopra Steria">
+
+                <!-- Groep voor de sjabloon- en versiebeheer acties -->
+                <group id="grpTemplateManagement" label="Documentbeheer">
+
+                    <!-- Create new template -->
+                    <button id="btnCreateTemplate"
+                        label="Create new template"
+                        imageMso="SlideNewGallery"
+                        size="large"
+                        getEnabled="OnCreateTemplateClick_Enabled"
+                        onAction="OnCreateTemplateClick" />
+
+                    <!-- Create new version -->
+                    <button id="btnCreateVersion"
+                        imageMso="FileSaveAs"
+                        size="large"
+                        getEnabled="OnCreateVersionClick_Enabled"
+                        getLabel="OnCreateVersionClick_Label"
+                        onAction="OnCreateVersionClick" />
+
+                    <!-- Create button Approve-->
+                    <button id="btnApprove"
+                        label="Approve"
+                        imageMso="AcceptTask"
+                        size="large"
+                        getEnabled="OnApproveClick_Enabled"
+                        onAction="OnApproveClick" />
+
+                    <separator id="sep1" />
+
+                    <!-- Create button Approve-->
+                    <button id="btnMetadata"
+                        label="Metadata"
+                        imageMso="PropertySheet"
+                        size="large"
+                        getEnabled="OnMetadataClick_Enabled"
+                        onAction="OnMetadataClick" />
+
+                </group>
+
+            </tab>
+        </tabs>
+    </ribbon>
+</customUI>
