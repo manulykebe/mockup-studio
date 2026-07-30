@@ -143,12 +143,22 @@ div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer
 div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-right,
 div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-left {
     margin-right: 0.8em;
+    background: none;
+    font-size: 1em;
+    color: black;
+    padding:  0px;
+    margin: 0px 2px;
 }
 
 div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-delete:last-child,
 div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-right:last-child,
 div.dtsb-searchBuilder div.dtsb-group div.dtsb-criteria div.dtsb-buttonContainer button.dtsb-left:last-child {
     margin-right: 0;
+    background: none;
+    font-size: 1em;
+    color: black;
+    padding: 0px;
+    margin: 0px 0px 0px 15px;
 }
 
 @media screen and (max-width: 550px) {
