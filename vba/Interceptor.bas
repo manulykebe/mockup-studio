@@ -4,7 +4,6 @@ Public TargetLocalPath As String
 Sub DocumentNew()
 End Sub
 Sub DocumentOpen()
-    Exit Sub
     Application.ScreenUpdating = False
     If Not thisIsAQualityDocument Then Exit Sub
     

@@ -2,7 +2,7 @@ Attribute VB_Name = "DocumentProperties"
 Function findCustomDocumentProperty(propertyName As String, Optional ByRef property As Office.DocumentProperty, Optional ByRef targetDocument As Document) As Boolean
     If targetDocument Is Nothing Then Set targetDocument = ActiveDocument
     findCustomDocumentProperty = False
-    For Each Item In ActiveDocument.CustomDocumentProperties
+    For Each Item In targetDocument.CustomDocumentProperties
         If Item.Name = propertyName Then
             findCustomDocumentProperty = True
             Set property = Item
