@@ -495,6 +495,6 @@ function makeCollapsible() {
 
 const link = document.createElement('link');
 link.rel = 'stylesheet';
-link.href = 'https://tristen.ca/tablesort/tablesort.css';
+link.href = 'https://cdn.datatables.net/3.0.0/css/dataTables.dataTables.min.css';
 document.head.appendChild(link);
 
