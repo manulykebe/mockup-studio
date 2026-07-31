@@ -2,6 +2,9 @@
   "name": "signals-investigate",
   "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "build": "esbuild src/index.js --bundle --format=iife --outfile=extract.js"
+  },
   "devDependencies": {
     "esbuild": "^0.28.1"
   },
