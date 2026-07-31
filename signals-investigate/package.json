@@ -1,0 +1,11 @@
+{
+  "name": "signals-investigate",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.28.1"
+  },
+  "dependencies": {
+    "async-monitor.js": "^1.2.1"
+  }
+}
