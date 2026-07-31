@@ -21,6 +21,12 @@
 })("undefined" !== typeof global ? global : this);
 
 
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.href = 'https://cdn.datatables.net/3.0.0/css/dataTables.dataTables.min.css';
+document.head.appendChild(link);
+
+
 async function waitForSpinner() {
   const selector = 'div.loading.loading-spinner.loading-lg';
 
