@@ -1,0 +1,12 @@
+Field;Type;Column 3
+Name;Experiment Number: Number Sequence;Edit field
+Description;Text: Text;Edit field
+Project;GxP Projects (external-BioviaHub): List;Edit field, Delete field
+Department;GxP Departments: List;Edit field, Delete field
+Team;GxP Teams: List;Edit field, Delete field
+Site;GxP Sites: List;Edit field, Delete field
+GxP Status;Non-GxP Status: List;Edit field, Delete field
+Review Type;Non-GxP Review Type: List;Edit field, Delete field
+Development Phase;GxP Development Phase: List;Edit field, Delete field
+Restricted Access by Contract;ICD number: List;Edit field, Delete field
+Experiment Inactivity;Experiment Inactivity: List;Edit field, Delete field

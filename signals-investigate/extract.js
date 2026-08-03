@@ -2344,5 +2344,78 @@
     ]);
     return rows;
   }
-  window.extract = { ...window.extract, getToc, getTable, getFieldsTable, getAllTables, getHistoryRecords, openToolbarPopup, closePopup, runChain };
+  var BINDER_ELEMENT_FOCUSED_SELECTOR = ".binder__element.binder__element--focused";
+  var HIDDEN_COLUMN_ITEM_SELECTOR = '[data-testid^="dropdown-item-unhide-column-"]';
+  async function waitForStableCount(selector, timeoutMs = 5e3) {
+    const start = Date.now();
+    let lastCount = -1;
+    let stableRounds = 0;
+    while (Date.now() - start < timeoutMs && stableRounds < 2) {
+      const count = document.querySelectorAll(selector).length;
+      stableRounds = count === lastCount ? stableRounds + 1 : 0;
+      lastCount = count;
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    return Array.from(document.querySelectorAll(selector));
+  }
+  function getBinderElementIcons(el) {
+    const groups = Array.from(el.querySelectorAll(".binder__element-header-controls"));
+    const icons = [];
+    groups.forEach((group) => {
+      Array.from(group.querySelectorAll("button[aria-label], a[aria-label]")).forEach((control) => {
+        icons.push(control.getAttribute("aria-label"));
+      });
+    });
+    return icons;
+  }
+  function getVisibleTableHeaders(table) {
+    const headerRow = table.querySelector('.header[role="row"]');
+    if (!headerRow) {
+      return [];
+    }
+    return Array.from(headerRow.querySelectorAll('[role="columnheader"]')).map((cell) => cell.textContent.trim()).filter(Boolean);
+  }
+  async function getHiddenTableHeaders(table) {
+    const settingsButton = table.querySelector('button[aria-label="Table Settings"]');
+    if (!settingsButton) {
+      return [];
+    }
+    const wasOpen = !!document.querySelector(".dropdown-menu");
+    if (!wasOpen) {
+      settingsButton.click();
+    }
+    const [, headers] = await runChain([
+      () => waitForStableCount(HIDDEN_COLUMN_ITEM_SELECTOR),
+      () => Array.from(document.querySelectorAll(HIDDEN_COLUMN_ITEM_SELECTOR)).map((item) => item.querySelector(".grid-hidden-header div")?.textContent.trim()).filter(Boolean)
+    ]);
+    if (!wasOpen) {
+      settingsButton.click();
+    }
+    return headers;
+  }
+  async function getElementMetadata() {
+    const el = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
+    if (!el) {
+      throw new Error(`No element found matching selector "${BINDER_ELEMENT_FOCUSED_SELECTOR}".`);
+    }
+    const title = el.querySelector(".inline-input.primary")?.textContent.trim() ?? "";
+    const icons = getBinderElementIcons(el);
+    const table = el.querySelector(".hierarchical-table");
+    const dataSource = table?.querySelector(".adt-external .data")?.textContent.trim();
+    const visibleHeaders = table ? getVisibleTableHeaders(table) : [];
+    const hiddenHeaders = table ? await getHiddenTableHeaders(table) : [];
+    const headers = ["Type", "Value"];
+    const rows = [
+      ...icons.map((icon) => ["Icon", icon]),
+      ...dataSource ? [["Data Source", dataSource]] : [],
+      ...visibleHeaders.map((header) => ["TableHeader", header]),
+      ...hiddenHeaders.map((header) => ["TableHeaderHidden", header])
+    ];
+    const csv = toCsv(rows, headers);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.${title || "element"}-metadata.csv`);
+    console.log(`Extracted metadata for "${title}": ${rows.length} row(s).`);
+    console.table(rows.map(([Type, Value]) => ({ Type, Value })));
+    return { title, rows };
+  }
+  window.extract = { ...window.extract, getToc, getTable, getFieldsTable, getAllTables, getHistoryRecords, getElementMetadata, openToolbarPopup, closePopup, runChain };
 })();
