@@ -1,12 +1,75 @@
-Field;Type;Column 3
-Name;Experiment Number: Number Sequence;Edit field
-Description;Text: Text;Edit field
-Project;GxP Projects (external-BioviaHub): List;Edit field, Delete field
-Department;GxP Departments: List;Edit field, Delete field
-Team;GxP Teams: List;Edit field, Delete field
-Site;GxP Sites: List;Edit field, Delete field
-GxP Status;Non-GxP Status: List;Edit field, Delete field
-Review Type;Non-GxP Review Type: List;Edit field, Delete field
-Development Phase;GxP Development Phase: List;Edit field, Delete field
-Restricted Access by Contract;ICD number: List;Edit field, Delete field
-Experiment Inactivity;Experiment Inactivity: List;Edit field, Delete field
+Field;Type;Attribute Name;Attribute Value
+Name;Experiment Number: Number Sequence;Field Label;Name
+Name;Experiment Number: Number Sequence;Attribute;Experiment Number
+Name;Experiment Number: Number Sequence;Read Only;TRUE
+Name;Experiment Number: Number Sequence;Required;TRUE
+Name;Experiment Number: Number Sequence;Trigger Event;On Experiment Creation
+Description;Text: Text;Field Label;Description
+Description;Text: Text;Attribute;Text
+Description;Text: Text;Default Value;R3.1.0
+Description;Text: Text;Read Only;FALSE
+Description;Text: Text;Required;TRUE
+Description;Text: Text;Trigger Event;On Experiment Creation
+Project;GxP Projects (external-BioviaHub): List;Field Label;Project
+Project;GxP Projects (external-BioviaHub): List;Attribute;GxP Projects (external-BioviaHub)
+Project;GxP Projects (external-BioviaHub): List;Multi Select;FALSE
+Project;GxP Projects (external-BioviaHub): List;Default Value;
+Project;GxP Projects (external-BioviaHub): List;Read Only;FALSE
+Project;GxP Projects (external-BioviaHub): List;Required;TRUE
+Project;GxP Projects (external-BioviaHub): List;Trigger Event;On Experiment Creation
+Department;GxP Departments: List;Field Label;Department
+Department;GxP Departments: List;Attribute;GxP Departments
+Department;GxP Departments: List;Multi Select;FALSE
+Department;GxP Departments: List;Default Value;Synthetics Development
+Department;GxP Departments: List;Read Only;FALSE
+Department;GxP Departments: List;Required;TRUE
+Department;GxP Departments: List;Trigger Event;On Experiment Creation
+Team;GxP Teams: List;Field Label;Team
+Team;GxP Teams: List;Attribute;GxP Teams
+Team;GxP Teams: List;Multi Select;FALSE
+Team;GxP Teams: List;Default Value;
+Team;GxP Teams: List;Read Only;FALSE
+Team;GxP Teams: List;Required;TRUE
+Team;GxP Teams: List;Trigger Event;On Experiment Creation
+Site;GxP Sites: List;Field Label;Site
+Site;GxP Sites: List;Attribute;GxP Sites
+Site;GxP Sites: List;Multi Select;FALSE
+Site;GxP Sites: List;Default Value;Beerse
+Site;GxP Sites: List;Read Only;FALSE
+Site;GxP Sites: List;Required;TRUE
+Site;GxP Sites: List;Trigger Event;On Experiment Creation
+GxP Status;Non-GxP Status: List;Field Label;GxP Status
+GxP Status;Non-GxP Status: List;Attribute;Non-GxP Status
+GxP Status;Non-GxP Status: List;Multi Select;FALSE
+GxP Status;Non-GxP Status: List;Default Value;DEV
+GxP Status;Non-GxP Status: List;Read Only;FALSE
+GxP Status;Non-GxP Status: List;Required;TRUE
+GxP Status;Non-GxP Status: List;Trigger Event;On Experiment Creation
+Review Type;Non-GxP Review Type: List;Field Label;Review Type
+Review Type;Non-GxP Review Type: List;Attribute;Non-GxP Review Type
+Review Type;Non-GxP Review Type: List;Multi Select;FALSE
+Review Type;Non-GxP Review Type: List;Default Value;
+Review Type;Non-GxP Review Type: List;Read Only;FALSE
+Review Type;Non-GxP Review Type: List;Required;TRUE
+Review Type;Non-GxP Review Type: List;Trigger Event;On Experiment Creation
+Development Phase;GxP Development Phase: List;Field Label;Development Phase
+Development Phase;GxP Development Phase: List;Attribute;GxP Development Phase
+Development Phase;GxP Development Phase: List;Multi Select;FALSE
+Development Phase;GxP Development Phase: List;Default Value;
+Development Phase;GxP Development Phase: List;Read Only;FALSE
+Development Phase;GxP Development Phase: List;Required;TRUE
+Development Phase;GxP Development Phase: List;Trigger Event;On Experiment Creation
+Restricted Access by Contract;ICD number: List;Field Label;Restricted Access by Contract
+Restricted Access by Contract;ICD number: List;Attribute;ICD number
+Restricted Access by Contract;ICD number: List;Multi Select;FALSE
+Restricted Access by Contract;ICD number: List;Default Value;No Contract
+Restricted Access by Contract;ICD number: List;Read Only;FALSE
+Restricted Access by Contract;ICD number: List;Required;TRUE
+Restricted Access by Contract;ICD number: List;Trigger Event;On Experiment Creation
+Experiment Inactivity;Experiment Inactivity: List;Field Label;Experiment Inactivity
+Experiment Inactivity;Experiment Inactivity: List;Attribute;Experiment Inactivity
+Experiment Inactivity;Experiment Inactivity: List;Multi Select;FALSE
+Experiment Inactivity;Experiment Inactivity: List;Default Value;
+Experiment Inactivity;Experiment Inactivity: List;Read Only;FALSE
+Experiment Inactivity;Experiment Inactivity: List;Required;FALSE
+Experiment Inactivity;Experiment Inactivity: List;Trigger Event;Select ...

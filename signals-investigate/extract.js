@@ -1,5 +1,42 @@
 (() => {
   // src/dom.js
+  function controlValue(control) {
+    if (!control) {
+      return "";
+    }
+    if (control.tagName === "SELECT") {
+      return control.selectedOptions[0]?.textContent.trim() ?? "";
+    }
+    if (control.type === "checkbox") {
+      return control.checked ? "TRUE" : "FALSE";
+    }
+    return control.value ?? "";
+  }
+  function parseFieldEditForm(form) {
+    const pairs = [];
+    const seenNames = /* @__PURE__ */ new Set();
+    Array.from(form.querySelectorAll("label")).forEach((label) => {
+      const name = label.textContent.replace(/\*/g, "").replace(/\(required\)/gi, "").replace(/\s+/g, " ").trim();
+      if (!name || seenNames.has(name)) {
+        return;
+      }
+      let control = label.htmlFor ? form.querySelector(`#${CSS.escape(label.htmlFor)}`) : null;
+      if (!control) {
+        const scope = label.closest(".mb-3") || label.parentElement;
+        control = scope?.querySelector("input, select");
+      }
+      if (!control) {
+        return;
+      }
+      seenNames.add(name);
+      pairs.push([name, controlValue(control)]);
+    });
+    const triggerSelect = form.querySelector("select.form-select");
+    if (triggerSelect) {
+      pairs.push(["Trigger Event", controlValue(triggerSelect)]);
+    }
+    return pairs;
+  }
   function extractTocData(root) {
     const toc = root.querySelector(".binder__toc");
     if (!toc) {
@@ -2292,9 +2329,39 @@
     const [, , rows] = await runChain([
       () => openToolbarPopup(link),
       () => waitForCondition(findNewTable, 1e4),
-      () => extractTable(findNewTable(), link),
+      () => link === "Fields" ? extractFieldsTableWithAttributes(findNewTable) : extractTable(findNewTable(), link),
       () => closePopup()
     ]);
+    return rows;
+  }
+  async function extractFieldsTableWithAttributes(findNewTable) {
+    const { headers: tableHeaders, rows: tableRows } = parseHtmlTable(findNewTable());
+    const fieldNameIndex = tableHeaders.indexOf("Field");
+    const typeIndex = tableHeaders.indexOf("Type");
+    const headers = ["Field", "Type", "Attribute Name", "Attribute Value"];
+    const rows = [];
+    for (let i = 0; i < tableRows.length; i++) {
+      const fieldName = tableRows[i][fieldNameIndex] ?? "";
+      const fieldType = tableRows[i][typeIndex] ?? "";
+      const tr = findNewTable().querySelectorAll("tbody tr")[i];
+      const editButton = tr?.querySelector('button[aria-label="Edit field"]');
+      if (!editButton) {
+        rows.push([fieldName, fieldType, "", ""]);
+        continue;
+      }
+      editButton.click();
+      const form = await waitForCondition(() => document.querySelector("form.fieldFormAttributes"), 1e4);
+      const attributePairs = parseFieldEditForm(form);
+      (attributePairs.length ? attributePairs : [["", ""]]).forEach(([name, value]) => {
+        rows.push([fieldName, fieldType, name, value]);
+      });
+      form.querySelector("#cancel")?.click();
+      await waitForCondition(findNewTable, 1e4);
+    }
+    const csv = toCsv(rows, headers);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.table-Fields.csv`);
+    console.log(`Extracted ${rows.length} row(s) from Fields table with attributes.`);
+    console.table(rows.map(([Field, Type, Name, Value]) => ({ Field, Type, "Attribute Name": Name, "Attribute Value": Value })));
     return rows;
   }
   var DEFAULT_POPUP_LABELS = ["Fields", "Properties"];
@@ -2384,7 +2451,8 @@
     if (!wasOpen) {
       settingsButton.click();
     }
-    const [, headers] = await runChain([
+    const [, , headers] = await runChain([
+      () => waitForCondition(() => document.querySelector(".dropdown-menu"), 5e3),
       () => waitForStableCount(HIDDEN_COLUMN_ITEM_SELECTOR),
       () => Array.from(document.querySelectorAll(HIDDEN_COLUMN_ITEM_SELECTOR)).map((item) => item.querySelector(".grid-hidden-header div")?.textContent.trim()).filter(Boolean)
     ]);

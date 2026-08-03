@@ -1,4 +1,4 @@
-import { extractTocData } from './dom.js';
+import { extractTocData, parseFieldEditForm } from './dom.js';
 import { toCsv } from './csv.js';
 import { downloadCsv, getUrlPrefix } from './download.js';
 import { openToolbarPopup, closePopup, waitForCondition } from './popup.js';
@@ -50,9 +50,53 @@ async function getFieldsTable(link) {
   const [, , rows] = await runChain([
     () => openToolbarPopup(link),
     () => waitForCondition(findNewTable, 10000),
-    () => extractTable(findNewTable(), link),
+    () => (link === 'Fields' ? extractFieldsTableWithAttributes(findNewTable) : extractTable(findNewTable(), link)),
     () => closePopup(),
   ]);
+  return rows;
+}
+
+// The app fully re-renders the Fields table after every "Edit field"/"Cancel" click, so rows must be
+// re-queried by index each iteration instead of keeping references that go stale across the re-render.
+// Monitored steps (implicit, driven by awaited waitForCondition calls): for each field row, click its
+// "Edit field" button, wait for the edit form to mount, read its attributes as name/value pairs, then
+// cancel back to the table before moving on to the next field.
+async function extractFieldsTableWithAttributes(findNewTable) {
+  const { headers: tableHeaders, rows: tableRows } = parseHtmlTable(findNewTable());
+  const fieldNameIndex = tableHeaders.indexOf('Field');
+  const typeIndex = tableHeaders.indexOf('Type');
+
+  const headers = ['Field', 'Type', 'Attribute Name', 'Attribute Value'];
+  const rows = [];
+
+  for (let i = 0; i < tableRows.length; i++) {
+    const fieldName = tableRows[i][fieldNameIndex] ?? '';
+    const fieldType = tableRows[i][typeIndex] ?? '';
+
+    const tr = findNewTable().querySelectorAll('tbody tr')[i];
+    const editButton = tr?.querySelector('button[aria-label="Edit field"]');
+    if (!editButton) {
+      rows.push([fieldName, fieldType, '', '']);
+      continue;
+    }
+
+    editButton.click();
+    const form = await waitForCondition(() => document.querySelector('form.fieldFormAttributes'), 10000);
+    const attributePairs = parseFieldEditForm(form);
+    (attributePairs.length ? attributePairs : [['', '']]).forEach(([name, value]) => {
+      rows.push([fieldName, fieldType, name, value]);
+    });
+
+    form.querySelector('#cancel')?.click();
+    await waitForCondition(findNewTable, 10000);
+  }
+
+  const csv = toCsv(rows, headers);
+  downloadCsv(csv, `${getUrlPrefix(window.location)}.table-Fields.csv`);
+
+  console.log(`Extracted ${rows.length} row(s) from Fields table with attributes.`);
+  console.table(rows.map(([Field, Type, Name, Value]) => ({ Field, Type, 'Attribute Name': Name, 'Attribute Value': Value })));
+
   return rows;
 }
 
