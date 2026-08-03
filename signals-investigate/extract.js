@@ -2306,6 +2306,133 @@
     console.table(rows.map(([Parent, Child]) => ({ Parent, Child })));
     return rows;
   }
+  function slugify(value) {
+    return String(value ?? "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") || "section";
+  }
+  function downloadBlob(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+  function cloneWithInlineStyles(node) {
+    const clone = node.cloneNode(true);
+    const sourceWalker = document.createTreeWalker(node, NodeFilter.SHOW_ELEMENT);
+    const cloneWalker = document.createTreeWalker(clone, NodeFilter.SHOW_ELEMENT);
+    while (sourceWalker.nextNode() && cloneWalker.nextNode()) {
+      const sourceEl = sourceWalker.currentNode;
+      const cloneEl = cloneWalker.currentNode;
+      const computed = getComputedStyle(sourceEl);
+      const styleText = Array.from(computed).map((prop) => `${prop}:${computed.getPropertyValue(prop)};`).join("");
+      cloneEl.setAttribute("style", styleText);
+    }
+    return clone;
+  }
+  async function focusedElementToPngBlob(element, scale = 2) {
+    const rect = element.getBoundingClientRect();
+    const width = Math.max(1, Math.ceil(rect.width));
+    const height = Math.max(1, Math.ceil(rect.height));
+    const clone = cloneWithInlineStyles(element);
+    const serialized = new XMLSerializer().serializeToString(clone);
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <foreignObject x="0" y="0" width="100%" height="100%">${serialized}</foreignObject>
+</svg>`;
+    const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+    const svgUrl = URL.createObjectURL(svgBlob);
+    try {
+      const image = await new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("Failed to render focused element to image."));
+        img.src = svgUrl;
+      });
+      const canvas = document.createElement("canvas");
+      canvas.width = width * scale;
+      canvas.height = height * scale;
+      const ctx = canvas.getContext("2d");
+      ctx.scale(scale, scale);
+      ctx.drawImage(image, 0, 0, width, height);
+      return await new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => {
+          if (blob) {
+            resolve(blob);
+            return;
+          }
+          reject(new Error("Failed to encode focused element image as PNG."));
+        }, "image/png");
+      });
+    } finally {
+      URL.revokeObjectURL(svgUrl);
+    }
+  }
+  function focusedElementToSvgBlob(element) {
+    const rect = element.getBoundingClientRect();
+    const width = Math.max(1, Math.ceil(rect.width));
+    const height = Math.max(1, Math.ceil(rect.height));
+    const clone = cloneWithInlineStyles(element);
+    const serialized = new XMLSerializer().serializeToString(clone);
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <foreignObject x="0" y="0" width="100%" height="100%">${serialized}</foreignObject>
+</svg>`;
+    return new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+  }
+  async function focusedElementToImageAsset(element, scale = 2) {
+    try {
+      const pngBlob = await focusedElementToPngBlob(element, scale);
+      return { blob: pngBlob, extension: "png" };
+    } catch (error) {
+      const svgBlob = focusedElementToSvgBlob(element);
+      return { blob: svgBlob, extension: "svg" };
+    }
+  }
+  async function exportFocusedElementImagesFromToc(options = {}) {
+    const {
+      maxChildren,
+      settleMs = 400,
+      imageScale = 2,
+      timeoutMs = 1e4
+    } = options;
+    const tocRows = extractTocData(document);
+    const childNames = Array.from(new Set(tocRows.map(([, child]) => child).filter(Boolean)));
+    const selectedChildren = Number.isInteger(maxChildren) && maxChildren > 0 ? childNames.slice(0, maxChildren) : childNames;
+    if (selectedChildren.length === 0) {
+      throw new Error("No TOC child sections found.");
+    }
+    const prefix = getUrlPrefix(window.location);
+    const manifestRows = [];
+    for (let i = 0; i < selectedChildren.length; i++) {
+      const childName = selectedChildren[i];
+      const childEl = Array.from(document.querySelectorAll(".binder__toc-element-name")).find((el) => el.textContent.trim() === childName);
+      if (!childEl) {
+        manifestRows.push([childName, "", "NOT_FOUND"]);
+        continue;
+      }
+      const clickTarget = childEl.closest('.binder__toc-element, [role="button"], button, a') || childEl;
+      clickTarget.click();
+      await waitForCondition(() => document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR), timeoutMs);
+      await new Promise((resolve) => setTimeout(resolve, settleMs));
+      const focused = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
+      if (!focused) {
+        manifestRows.push([childName, "", "NO_FOCUSED_ELEMENT"]);
+        continue;
+      }
+      const imageAsset = await focusedElementToImageAsset(focused, imageScale);
+      const filename = `${prefix}.focused-${String(i + 1).padStart(2, "0")}-${slugify(childName)}.${imageAsset.extension}`;
+      downloadBlob(imageAsset.blob, filename);
+      manifestRows.push([childName, filename, "OK"]);
+    }
+    const csv = toCsv(manifestRows, ["Child", "Image File", "Status"]);
+    downloadCsv(csv, `${prefix}.focused-elements.csv`);
+    console.log(`Exported ${manifestRows.length} focused-element image(s).`);
+    console.table(manifestRows.map(([Child, ImageFile, Status]) => ({ Child, ImageFile, Status })));
+    return manifestRows;
+  }
   function extractTable(table, tableName) {
     const { headers, rows } = parseHtmlTable(table);
     const csv = toCsv(rows, headers);
@@ -2485,5 +2612,20 @@
     console.table(rows.map(([Type, Value]) => ({ Type, Value })));
     return { title, rows };
   }
-  window.extract = { ...window.extract, getToc, getTable, getFieldsTable, getAllTables, getHistoryRecords, getElementMetadata, openToolbarPopup, closePopup, runChain };
+  window.extract = {
+    ...window.extract,
+    getToc,
+    getTable,
+    getFieldsTable,
+    getAllTables,
+    getHistoryRecords,
+    getElementMetadata,
+    exportFocusedElementImagesFromToc,
+    openToolbarPopup,
+    closePopup,
+    runChain
+  };
 })();
+
+
+extract.exportFocusedElementImagesFromToc()
