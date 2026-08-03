@@ -1,0 +1,33 @@
+Type;Value
+Icon;View full size
+Icon;Click to mark as mandatory
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+Data Source;GXP-BIOVIA Hub Equipment
+TableHeader;Lookup
+TableHeader;Equipment ID
+TableHeader;Equipment Name
+TableHeader;Compliance Status
+TableHeader;Equipment Type
+TableHeader;Calibration Due Date
+TableHeader;Comments
+TableHeaderHidden;Cleaning Due Date
+TableHeaderHidden;Column for Compliance Status calc.
+TableHeaderHidden;Description
+TableHeaderHidden;Equipment Class
+TableHeaderHidden;Equipment Location
+TableHeaderHidden;GUID
+TableHeaderHidden;GxP Level
+TableHeaderHidden;Imported On
+TableHeaderHidden;Library Ref
+TableHeaderHidden;Life Cycle State
+TableHeaderHidden;Metrology Notes
+TableHeaderHidden;P.M. Due Date
+TableHeaderHidden;Serial Number
+TableHeaderHidden;Status
+TableHeaderHidden;Verification Due Date
+TableHeaderHidden;Concatenate Status State GxP Level
+TableHeaderHidden;Manual Status

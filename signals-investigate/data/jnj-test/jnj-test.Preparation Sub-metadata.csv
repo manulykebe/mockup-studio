@@ -1,0 +1,33 @@
+Type;Value
+Icon;View full size
+Icon;Click to mark as mandatory
+Icon;GxP Preparation Reference Selector
+Icon;GxP Preparation Balance Measurement
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+Data Source;GxP Preparation Internal
+TableHeader;Reference
+TableHeader;Name
+TableHeader;Lot
+TableHeader;PbOEL
+TableHeader;Description
+TableHeader;Adjust To
+TableHeader;Planned Amt
+TableHeader;Actual Amt
+TableHeaderHidden;Ad Hoc Material
+TableHeaderHidden;Ad Hoc Lot No
+TableHeaderHidden;Equipment Class
+TableHeaderHidden;Actual Conc
+TableHeaderHidden;Actual Time
+TableHeaderHidden;Balance Data
+TableHeaderHidden;Corrected Conc
+TableHeaderHidden;Dilution Factor
+TableHeaderHidden;End Time
+TableHeaderHidden;Fit for GxP
+TableHeaderHidden;Mixing Technique
+TableHeaderHidden;Observation Comment
+TableHeaderHidden;Start Time
+TableHeaderHidden;Target Time

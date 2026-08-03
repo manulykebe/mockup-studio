@@ -1,0 +1,48 @@
+Type;Value
+Icon;View full size
+Icon;Click to mark as mandatory
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+Data Source;GXP-BIOVIA CISPro Container
+TableHeader;Container ID
+TableHeader;Trade Name
+TableHeader;Container Message
+TableHeader;Inventory Link
+TableHeader;Expiration Date
+TableHeader;Manufacturer
+TableHeader;Part Number
+TableHeader;Manufacturer Lot No
+TableHeader;Compound ID
+TableHeader;Grade
+TableHeader;PbOEL
+TableHeader;Role
+TableHeader;Purity
+TableHeader;Salt Base Factor
+TableHeader;Correction Factor
+TableHeader;Opened Date
+TableHeader;Imported On
+TableHeader;Storage Requirements
+TableHeader;Handling Instructions
+TableHeader;Comments
+TableHeaderHidden;Barcode
+TableHeaderHidden;CAS No
+TableHeaderHidden;Container Amt
+TableHeaderHidden;Container Amt Unit
+TableHeaderHidden;Container Location
+TableHeaderHidden;Density
+TableHeaderHidden;Disposed
+TableHeaderHidden;Formula
+TableHeaderHidden;Inventory Lot No
+TableHeaderHidden;Library Ref
+TableHeaderHidden;Lot Comment
+TableHeaderHidden;Material ID
+TableHeaderHidden;Material Master No
+TableHeaderHidden;Material Name
+TableHeaderHidden;Molecular Weight (g/mol)
+TableHeaderHidden;Open Expire Interval
+TableHeaderHidden;Preparation Date
+TableHeaderHidden;Structure
+TableHeaderHidden;Supplier

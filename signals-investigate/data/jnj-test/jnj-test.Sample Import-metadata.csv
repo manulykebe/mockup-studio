@@ -1,0 +1,53 @@
+Type;Value
+Icon;View full size
+Icon;Click to mark as mandatory
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+Data Source;GXP-BIOVIA Hub Samples
+TableHeader;Sample ID
+TableHeader;Sample Name
+TableHeader;Compound ID
+TableHeader;Lot Number
+TableHeader;Storage Requirements
+TableHeader;Handling Instructions
+TableHeader;PbOEL
+TableHeader;Sample Comment
+TableHeaderHidden;Comments
+TableHeaderHidden;Description
+TableHeaderHidden;Expiration Date
+TableHeaderHidden;Inventory Material Name
+TableHeaderHidden;Library Ref
+TableHeaderHidden;Location Coordinates
+TableHeaderHidden;Location Info
+TableHeaderHidden;Location Path
+TableHeaderHidden;Lot Info
+TableHeaderHidden;Manufacturer
+TableHeaderHidden;Manufacturer Lot
+TableHeaderHidden;Material Name
+TableHeaderHidden;Preparation Date
+TableHeaderHidden;Process Stage
+TableHeaderHidden;Project
+TableHeaderHidden;Protocol Reference
+TableHeaderHidden;Purpose
+TableHeaderHidden;Sample Amount
+TableHeaderHidden;Sample Amount Unit
+TableHeaderHidden;Sample Container Type
+TableHeaderHidden;Sample Cycle
+TableHeaderHidden;Sample Cycle Description
+TableHeaderHidden;Sample Status
+TableHeaderHidden;Sampling Location Path
+TableHeaderHidden;Sampling Point
+TableHeaderHidden;Sampling Time
+TableHeaderHidden;Sampling Time Unit
+TableHeaderHidden;Stability Humidity (%RH)
+TableHeaderHidden;Stability Orientation
+TableHeaderHidden;Stability Stress
+TableHeaderHidden;Stability Stress Condition
+TableHeaderHidden;Stability Temperature (C)
+TableHeaderHidden;Stability Time Point
+TableHeaderHidden;Stability Time Point Unit
+TableHeaderHidden;Study ID
+TableHeaderHidden;Study Start Date

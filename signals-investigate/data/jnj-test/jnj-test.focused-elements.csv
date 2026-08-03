@@ -1,0 +1,14 @@
+Child;JPG File;SVG File;Status
+Background;;jnj-test.background.svg;OK
+Journal;;jnj-test.journal.svg;OK
+Equipment Hub;;jnj-test.equipment-hub.svg;OK
+Method;;jnj-test.method.svg;OK
+Materials CISPro;;jnj-test.materials-cispro.svg;OK
+Task Plan;;jnj-test.task-plan.svg;OK
+Sample Create;;jnj-test.sample-create.svg;OK
+Sample Import;;jnj-test.sample-import.svg;OK
+Preparation Master;;jnj-test.preparation-master.svg;OK
+Preparation Sub;;jnj-test.preparation-sub.svg;OK
+Results;;jnj-test.results.svg;OK
+Conclusion;;jnj-test.conclusion.svg;OK
+Quick Guide;;jnj-test.quick-guide.svg;OK
