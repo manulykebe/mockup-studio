@@ -2332,7 +2332,7 @@
     }
     return clone;
   }
-  async function focusedElementToPngBlob(element, scale = 2) {
+  async function focusedElementToJpgBlob(element, scale = 2, quality = 0.92) {
     const rect = element.getBoundingClientRect();
     const width = Math.max(1, Math.ceil(rect.width));
     const height = Math.max(1, Math.ceil(rect.height));
@@ -2363,8 +2363,8 @@
             resolve(blob);
             return;
           }
-          reject(new Error("Failed to encode focused element image as PNG."));
-        }, "image/png");
+          reject(new Error("Failed to encode focused element image as JPG."));
+        }, "image/jpeg", quality);
       });
     } finally {
       URL.revokeObjectURL(svgUrl);
@@ -2384,8 +2384,8 @@
   }
   async function focusedElementToImageAsset(element, scale = 2) {
     try {
-      const pngBlob = await focusedElementToPngBlob(element, scale);
-      return { blob: pngBlob, extension: "png" };
+      const jpgBlob = await focusedElementToJpgBlob(element, scale);
+      return { blob: jpgBlob, extension: "jpg" };
     } catch (error) {
       const svgBlob = focusedElementToSvgBlob(element);
       return { blob: svgBlob, extension: "svg" };
@@ -2626,6 +2626,3 @@
     runChain
   };
 })();
-
-
-extract.exportFocusedElementImagesFromToc()

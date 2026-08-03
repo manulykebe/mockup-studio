@@ -52,7 +52,7 @@ function cloneWithInlineStyles(node) {
   return clone;
 }
 
-async function focusedElementToPngBlob(element, scale = 2) {
+async function focusedElementToJpgBlob(element, scale = 2, quality = 0.92) {
   const rect = element.getBoundingClientRect();
   const width = Math.max(1, Math.ceil(rect.width));
   const height = Math.max(1, Math.ceil(rect.height));
@@ -88,8 +88,8 @@ async function focusedElementToPngBlob(element, scale = 2) {
           resolve(blob);
           return;
         }
-        reject(new Error('Failed to encode focused element image as PNG.'));
-      }, 'image/png');
+        reject(new Error('Failed to encode focused element image as JPG.'));
+      }, 'image/jpeg', quality);
     });
   } finally {
     URL.revokeObjectURL(svgUrl);
@@ -112,15 +112,15 @@ function focusedElementToSvgBlob(element) {
 
 async function focusedElementToImageAsset(element, scale = 2) {
   try {
-    const pngBlob = await focusedElementToPngBlob(element, scale);
-    return { blob: pngBlob, extension: 'png' };
+    const jpgBlob = await focusedElementToJpgBlob(element, scale);
+    return { blob: jpgBlob, extension: 'jpg' };
   } catch (error) {
     const svgBlob = focusedElementToSvgBlob(element);
     return { blob: svgBlob, extension: 'svg' };
   }
 }
 
-// Iterates TOC child sections (from getToc-style rows), focuses each section, and downloads a PNG snapshot
+// Iterates TOC child sections (from getToc-style rows), focuses each section, and downloads a JPG snapshot
 // of the currently focused binder element for that section.
 async function exportFocusedElementImagesFromToc(options = {}) {
   const {
