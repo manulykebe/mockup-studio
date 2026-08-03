@@ -2330,6 +2330,13 @@
       const styleText = Array.from(computed).map((prop) => `${prop}:${computed.getPropertyValue(prop)};`).join("");
       cloneEl.setAttribute("style", styleText);
     }
+    clone.classList.remove("binder__element--focused");
+    const rootStyle = clone.getAttribute("style") || "";
+    clone.setAttribute("style", `${rootStyle};outline:none !important;border:none !important;box-shadow:none !important;background:#ffffff !important;`);
+    Array.from(clone.querySelectorAll("*")).forEach((el) => {
+      const style = el.getAttribute("style") || "";
+      el.setAttribute("style", `${style};outline:none !important;box-shadow:none !important;`);
+    });
     return clone;
   }
   async function focusedElementToJpgBlob(element, scale = 2, quality = 0.92) {
@@ -2340,6 +2347,7 @@
     const serialized = new XMLSerializer().serializeToString(clone);
     const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
   <foreignObject x="0" y="0" width="100%" height="100%">${serialized}</foreignObject>
 </svg>`;
     const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
@@ -2355,6 +2363,8 @@
       canvas.width = width * scale;
       canvas.height = height * scale;
       const ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scale, scale);
       ctx.drawImage(image, 0, 0, width, height);
       return await new Promise((resolve, reject) => {
@@ -2378,18 +2388,33 @@
     const serialized = new XMLSerializer().serializeToString(clone);
     const svg = `<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">
+  <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
   <foreignObject x="0" y="0" width="100%" height="100%">${serialized}</foreignObject>
 </svg>`;
     return new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
   }
-  async function focusedElementToImageAsset(element, scale = 2) {
+  async function focusedElementToImageAssets(element, scale = 2) {
+    const svgBlob = focusedElementToSvgBlob(element);
+    const assets = [{ blob: svgBlob, extension: "svg" }];
     try {
       const jpgBlob = await focusedElementToJpgBlob(element, scale);
-      return { blob: jpgBlob, extension: "jpg" };
+      assets.unshift({ blob: jpgBlob, extension: "jpg" });
     } catch (error) {
-      const svgBlob = focusedElementToSvgBlob(element);
-      return { blob: svgBlob, extension: "svg" };
     }
+    return assets;
+  }
+  function getUniqueBaseName(baseName, usedNames) {
+    if (!usedNames.has(baseName)) {
+      usedNames.add(baseName);
+      return baseName;
+    }
+    let n = 2;
+    while (usedNames.has(`${baseName}-${n}`)) {
+      n += 1;
+    }
+    const unique = `${baseName}-${n}`;
+    usedNames.add(unique);
+    return unique;
   }
   async function exportFocusedElementImagesFromToc(options = {}) {
     const {
@@ -2405,6 +2430,7 @@
       throw new Error("No TOC child sections found.");
     }
     const prefix = getUrlPrefix(window.location);
+    const usedBaseNames = /* @__PURE__ */ new Set();
     const manifestRows = [];
     for (let i = 0; i < selectedChildren.length; i++) {
       const childName = selectedChildren[i];
@@ -2419,18 +2445,23 @@
       await new Promise((resolve) => setTimeout(resolve, settleMs));
       const focused = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
       if (!focused) {
-        manifestRows.push([childName, "", "NO_FOCUSED_ELEMENT"]);
+        manifestRows.push([childName, "", "", "NO_FOCUSED_ELEMENT"]);
         continue;
       }
-      const imageAsset = await focusedElementToImageAsset(focused, imageScale);
-      const filename = `${prefix}.focused-${String(i + 1).padStart(2, "0")}-${slugify(childName)}.${imageAsset.extension}`;
-      downloadBlob(imageAsset.blob, filename);
-      manifestRows.push([childName, filename, "OK"]);
+      const baseName = getUniqueBaseName(`${prefix}.${slugify(childName)}`, usedBaseNames);
+      const imageAssets = await focusedElementToImageAssets(focused, imageScale);
+      const jpgFilename = imageAssets.find((asset) => asset.extension === "jpg") ? `${baseName}.jpg` : "";
+      const svgFilename = `${baseName}.svg`;
+      imageAssets.forEach((asset) => {
+        const filename = `${baseName}.${asset.extension}`;
+        downloadBlob(asset.blob, filename);
+      });
+      manifestRows.push([childName, jpgFilename, svgFilename, "OK"]);
     }
-    const csv = toCsv(manifestRows, ["Child", "Image File", "Status"]);
+    const csv = toCsv(manifestRows, ["Child", "JPG File", "SVG File", "Status"]);
     downloadCsv(csv, `${prefix}.focused-elements.csv`);
     console.log(`Exported ${manifestRows.length} focused-element image(s).`);
-    console.table(manifestRows.map(([Child, ImageFile, Status]) => ({ Child, ImageFile, Status })));
+    console.table(manifestRows.map(([Child, JpgFile, SvgFile, Status]) => ({ Child, JpgFile, SvgFile, Status })));
     return manifestRows;
   }
   function extractTable(table, tableName) {
