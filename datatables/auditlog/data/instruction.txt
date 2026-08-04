@@ -1,5 +1,15 @@
-see JGVT-2255.xml
-create a comprehensive description, focussing on versatility / generic character of datatables, 
-focus on sorting/paging/row based filtering.
-focus on easy addition of exporting (show message if subset is exported)
-focus on easy addition of advanced query builder
+As a user,
+I want to be able to interact with the experiment audit trail in the user interface in a flexible and efficient way so that I can review GxP audit information in a targeted and structured manner.
+
+I want to be able to sort records by column, navigate large result sets through paging and page-size controls, and quickly filter the visible rows to focus on the subset relevant to my review. The approach should be generic and reusable so that the same interaction pattern can be applied to other tabular datasets as well.
+
+I also want the solution to be easy to extend with export capabilities, including clear feedback when an export is based on a filtered subset of records. In addition, the foundation should support future enhancement with an advanced query builder for more complex searches and combinations of criteria.
+
+[Design notes]
+The solution shall be implemented as a plain JavaScript client-side component using standard HTML and JavaScript, with DataTables as the primary interactive table library. The implementation shall support a generic table initialization pattern that can be applied to any HTML table and shall not depend on a framework-specific architecture.
+
+The component shall provide built-in column sorting, global search, paging, and configurable page-size controls. Filtering shall be implemented at the row level so that users can narrow the visible dataset based on current values in the table. The solution shall support a reusable configuration model so that the same component can be applied to audit trails and other tabular views with minimal adaptation.
+
+Export functionality shall be designed as an extension point that can be enabled easily. When a user exports data after applying filters or narrowing the visible rows, the system shall display a clear message indicating that the export contains the currently displayed subset of records. The implementation shall allow future addition of advanced query builder capabilities through a modular configuration layer for multi-condition filtering and more complex search logic.
+
+[Test notes]
