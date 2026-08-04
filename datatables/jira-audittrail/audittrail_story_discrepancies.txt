@@ -1,0 +1,131 @@
+Audit Trail Story Discrepancies Overview
+======================================
+Source: XML issue content only
+Date: 2026-08-04
+
+Executive summary
+-----------------
+The XML stories describe a connected audit-trail initiative, but they do not read as one coherent requirement set. Instead, they show overlapping scope, inconsistent naming, different maturity levels, and several signs of story drift. The overall picture is that the program has grown in pieces: some stories define the user experience, others define reporting/export behavior, and still others focus on reliability or follow-up improvements.
+
+The biggest discrepancy is that the stories are not consistently aligned on what is being delivered:
+- some describe experiment audit trails,
+- some describe system audit trails,
+- some describe admin-interface audit logs,
+- and some describe web-user-interface downloads or export reliability.
+
+This makes the backlog feel fragmented rather than unified.
+
+1) Scope is inconsistent across the stories
+------------------------------------------
+The stories do not all target the same business capability.
+
+- Experiment-focused stories:
+  - JGVT-25: ad hoc experiment audit-trail report generation
+  - JGVT-2663: experiment audit-trail generation at signoff
+  - JGVT-2698: download of experiment audit-trail reports through a web UI
+  - JGVT-4245: improvement to include missing text/file actions in experiment audit trails
+
+- System-focused stories:
+  - JGVT-2269: system audit-trail ad hoc report generation
+  - JGVT-2569: system audit-trail report download through a web UI
+  - JGVT-3779: improvement to system audit-trail reporting for user-role-related audit data
+
+- Admin-interface stories:
+  - JGVT-2276: audit log filtering in the admin interface
+
+- UI/filtering stories:
+  - JGVT-2255: experiment audit-trail UI with filtering
+  - JGVT-2576: experiment audit-trail search functionality
+
+The issue set therefore mixes at least four distinct concepts: experiment reporting, system reporting, admin-interface audit log review, and UI interaction/filtering. These are related, but they are not the same feature.
+
+2) Naming and terminology are not standardized
+----------------------------------------------
+The stories reuse similar terms in different ways, which creates confusion.
+
+- "Audit Trail" and "Audit Log" are used interchangeably.
+- "Experiment audit trail" and "System audit trail" appear as separate domains, yet the stories sometimes refer to them as if they were the same capability.
+- "Report generation", "report download", "export", "filter", "search", "web UI", and "external action" are used across stories without a consistent product vocabulary.
+- Some stories refer to "audit trail report" while others talk about "audit log" or more general "audit trail" behavior.
+
+This inconsistency weakens the clarity of the overall backlog and makes it harder to understand the intended end state.
+
+3) The stories are at very different maturity levels
+---------------------------------------------------
+The XML content shows a clear mix of completed, unresolved, ready, open, and in-progress stories.
+
+- Completed or resolved:
+  - JGVT-25
+  - JGVT-2269
+  - JGVT-2569
+  - JGVT-2663
+  - JGVT-2698
+
+- Still unresolved or not yet progressed:
+  - JGVT-2255
+  - JGVT-2276
+  - JGVT-2576
+
+- In progress:
+  - JGVT-3779
+  - JGVT-4245
+  - JGVT-4355
+
+This mismatch suggests that the work was started in parallel and not fully aligned around one delivery roadmap. Some stories appear to be foundational, while others appear to be follow-up improvements that were created after the earlier ones were already completed.
+
+4) Priority and release alignment is inconsistent
+-----------------------------------------------
+The stories do not follow a single priority or release pattern.
+
+- Priorities range from Low to High.
+- Some stories are assigned to Release 2.0.0 or 3.0.0, while others are marked Release 3.1.0 or Release X.
+- Some stories are described as "nice to have" and others as "must have" or "must be reliable".
+
+This makes it hard to tell which items are foundational and which are optional enhancements.
+
+5) Acceptance criteria are not fully harmonized
+-----------------------------------------------
+The acceptance criteria differ significantly by story.
+
+- Some stories focus on UI behavior and filtering.
+- Some focus on report generation triggered by external actions.
+- Some focus on download functionality through web interfaces.
+- Some focus on reliability and error messaging in exports.
+- Some add new requirements such as missing text/file actions or user-role-based filtering.
+
+There is no single common definition of the expected outcome. The stories appear to describe different layers of the same larger feature, but the requirements are not consolidated into a single shared definition.
+
+6) Some stories appear to be superseded or overlapping
+------------------------------------------------------
+A few stories explicitly show signs of overlap or succession.
+
+- JGVT-2576 is described as a search-related story and is explicitly framed as a possible follow-up or superseded idea compared with the broader UI/filter story in JGVT-2255.
+- JGVT-3779 is positioned as an update to JGVT-2569.
+- JGVT-4245 is positioned as an update to JGVT-25 and JGVT-2663.
+- JGVT-4355 focuses on export reliability as a separate concern rather than as part of the original feature scope.
+
+These relationships suggest the backlog evolved through refinement and later corrections, but the current story set still reflects that evolution rather than a clean final state.
+
+7) Story-by-story quick view
+----------------------------
+- JGVT-2255: experiment audit-trail UI/filtering; described as nice-to-have; still unresolved/ready.
+- JGVT-2269: system audit-trail ad hoc report generation; completed.
+- JGVT-2276: audit log filtering in admin interface; unresolved/ready.
+- JGVT-25: experiment ad hoc report generation; completed.
+- JGVT-2569: system audit-trail report download via web UI; completed.
+- JGVT-2576: experiment audit-trail search; open and lower maturity.
+- JGVT-2663: experiment audit-trail generation at signoff; completed.
+- JGVT-2698: web UI download of experiment audit-trail reports; completed.
+- JGVT-3779: system audit-trail improvement for user-role tracking; in progress.
+- JGVT-4245: missing text/file actions in experiment audit trails; in progress.
+- JGVT-4355: export reliability and error reporting; in progress.
+
+Bottom line
+-----------
+The XML files show a strong thematic connection, but the stories are not fully consistent in scope, naming, lifecycle, or requirement detail. They read less like a single well-structured feature and more like a set of partially overlapping initiatives that were refined over time. The clearest discrepancy is that the backlog mixes experiment audit-trail reporting, system audit-trail reporting, admin log review, UI filtering/search, and export reliability as if they were all the same workstream.
+
+If these stories were to be consolidated, the most valuable next step would be to define one common target story for:
+1. the user experience,
+2. the report/export behavior,
+3. the system-audit-trail domain,
+4. and the reliability/validation requirements.

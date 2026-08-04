@@ -22,6 +22,7 @@ function extractIssueKey(item, href) {
 function getIssueEntries(containerSelector = '.issue-list', itemSelector = null) {
   const containers = Array.from(document.querySelectorAll(containerSelector));
   const entries = [];
+  const seenKeys = new Set();
 
   containers.forEach((container) => {
     let items = [];
@@ -44,8 +45,17 @@ function getIssueEntries(containerSelector = '.issue-list', itemSelector = null)
         return;
       }
 
+      const normalizedKey = issueKey.toUpperCase();
+      const isListLink = /\/browse\//i.test(href) && item.closest('.issue-list, li, tr, .splitview-issue, .issue-row');
+      const isLikelyIssueRow = /issue-link|splitview-issue-link|issue-summary|jira-issue/i.test((item.className || '').toString()) || isListLink;
+
+      if (!isLikelyIssueRow || seenKeys.has(normalizedKey)) {
+        return;
+      }
+
+      seenKeys.add(normalizedKey);
       entries.push({
-        issueKey,
+        issueKey: normalizedKey,
         summary,
         href
       });
