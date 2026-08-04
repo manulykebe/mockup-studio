@@ -1,0 +1,5 @@
+see JGVT-2255.xml
+create a comprehensive description, focussing on versatility / generic character of datatables, 
+focus on sorting/paging/row based filtering.
+focus on easy addition of exporting (show message if subset is exported)
+focus on easy addition of advanced query builder
