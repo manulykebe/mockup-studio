@@ -8,8 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/2.0.0/js/dataTables.dateTime.min.js"></script>
 
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" /> -->
-    <link rel="stylesheet" href="searchBuilder.dataTables.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/2.0.0/css/searchBuilder.dataTables.min.css" />
     <script src="https://cdn.datatables.net/searchbuilder/2.0.0/js/dataTables.searchBuilder.min.js"></script>
     <script src="https://cdn.datatables.net/searchbuilder/2.0.0/js/searchBuilder.dataTables.min.js"></script>
 
@@ -19,161 +18,121 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
-    <style>
-        #auditlog_wrapper .dt-buttons,
-        #auditlog_wrapper .dt-searchBuilder {
-            display: none;
-        }
-
-        #auditlog_wrapper .dt-buttons.visible,
-        #auditlog_wrapper .dt-searchBuilder.visible {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-    </style>
 </head>
 
 <body>
-    <div style="position: fixed; top: 16px; right: 16px; z-index: 1000; display: flex; flex-direction: column; gap: 8px; align-items: flex-end;">
-        <button id="toggle-datatable" type="button" style="padding: 10px 14px; border: none; border-radius: 6px; background: #0d6efd; color: white; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">Convert to DataTable</button>
-        <div id="datatable-tools" style="display: none; gap: 8px;">
-            <button id="toggle-export" type="button" style="padding: 8px 12px; border: none; border-radius: 6px; background: #198754; color: white; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">Add export</button>
-            <button id="toggle-searchbuilder" type="button" style="padding: 8px 12px; border: none; border-radius: 6px; background: #6f42c1; color: white; cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">Add search builder</button>
-        </div>
+    <div style="margin-bottom: 10px;">
+        <button id="open-in-new-window" type="button">Open in new window</button>
     </div>
-    <div style="margin-top: 72px;">
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var button = document.getElementById('toggle-datatable');
-                var tools = document.getElementById('datatable-tools');
-                var exportButton = document.getElementById('toggle-export');
-                var searchBuilderButton = document.getElementById('toggle-searchbuilder');
-                var dt = null;
-                var exportEnabled = false;
-                var searchBuilderEnabled = false;
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var openButton = document.getElementById('open-in-new-window');
+            if (openButton) {
+                openButton.addEventListener('click', function () {
+                    window.open(window.location.href, '_blank', 'noopener,noreferrer');
+                });
+            }
 
-                function updateFeatureVisibility() {
-                    var wrapper = document.getElementById('auditlog_wrapper');
-                    if (!wrapper) {
-                        return;
-                    }
+            if (window.DataTable) {
 
-                    var exportContainer = wrapper.querySelector('.dt-buttons');
-                    var searchBuilderContainer = wrapper.querySelector('.dt-searchBuilder');
-
-                    if (exportContainer) {
-                        exportContainer.classList.toggle('visible', exportEnabled);
-                    }
-
-                    if (searchBuilderContainer) {
-                        searchBuilderContainer.classList.toggle('visible', searchBuilderEnabled);
-                    }
-                }
-
-                function buildTable() {
-                    if (!window.DataTable) {
-                        console.error('DataTables failed to load.');
-                        return;
-                    }
-
-                    dt = new DataTable('#auditlog', {
-                        dom: 'QBfrtip',
-                        searchBuilder: true,
-                        buttons: [
-                            { extend: 'excelHtml5', text: 'Export Excel' },
-                            { extend: 'csvHtml5', text: 'Export CSV' },
-                            { extend: 'copyHtml5', text: 'Copy' }
-                        ],
-                        order: [[0, 'desc']],
-                        lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'All']],
-                        pageLength: 5,
-                        columnDefs: [
-                            {
-                                targets: 0,
-                                type: 'date'
-                            }
-                        ],
-                        layout: {
-                            bottomStart: 'pageLength',
-                            bottomEnd: 'paging'
+                new DataTable('#auditlog', {
+                    order: [[0, 'desc']],
+                    lengthMenu: [[5, 10, 25, 50, 100, -1], [5, 10, 25, 50, 100, 'All']],
+                    pageLength: 5,
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            type: 'date'
                         }
-                    });
-
-                    setTimeout(updateFeatureVisibility, 0);
-                }
-
-                function destroyTable() {
-                    if (dt) {
-                        dt.destroy();
-                        dt = null;
+                    ],
+                    layout: {
+                        top1: 'searchBuilder',
+                        topStart: {
+                            buttons: [
+                                {
+                                    extend: 'pdfHtml5',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    },
+                                    orientation: 'landscape',
+                                    pageSize: 'A4',
+                                    exportOptions: {
+                                        columns: ':visible'
+                                    },
+                                    customize: function(doc) {
+                                        doc.pageMargins = [5, 15, 5, 15];
+                                        doc.defaultStyle.fontSize = 6;
+                                        
+                                        if (doc.content && doc.content.length > 1 && doc.content[1].table) {
+                                            var table = doc.content[1].table;
+                                            
+                                            // Set specific column widths optimized for landscape A4
+                                            // Date, Time, User Name, User ID, Resource Type, Entity Name, Action, Change Type, Details, Old Value, New Value, Event ID
+                                            table.widths = [35, 30, 50, 75, 40, 70, 32, 45, 110, 55, 55, 95];
+                                            
+                                            // Make header bold and slightly larger
+                                            if (table.body && table.body.length > 0) {
+                                                table.body[0].forEach(function(cell) {
+                                                    cell.bold = true;
+                                                    cell.fontSize = 7;
+                                                    cell.fillColor = '#f0f0f0';
+                                                });
+                                            }
+                                            
+                                            table.layout = {
+                                                hLineWidth: function(i, node) { return 0.5; },
+                                                vLineWidth: function(i, node) { return 0.5; },
+                                                hLineColor: function(i, node) { return '#cccccc'; },
+                                                vLineColor: function(i, node) { return '#cccccc'; },
+                                                paddingLeft: function(i, node) { return 2; },
+                                                paddingRight: function(i, node) { return 2; },
+                                                paddingTop: function(i, node) { return 1; },
+                                                paddingBottom: function(i, node) { return 1; }
+                                            };
+                                        }
+                                    }
+                                },
+                                {
+                                    extend: 'copy',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'csv',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'excel',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                },
+                                {
+                                    extend: 'print',
+                                    title: function() {
+                                        var now = new Date();
+                                        return now.toISOString().replace(/:/g, '-').replace(/\..+/, '') + '-AuditLog';
+                                    }
+                                }
+                            ]
+                        },
+                        bottomStart: 'pageLength',
+                        bottomEnd: 'paging'
                     }
-                    exportEnabled = false;
-                    searchBuilderEnabled = false;
-                    if (exportButton) {
-                        exportButton.textContent = 'Add export';
-                    }
-                    if (searchBuilderButton) {
-                        searchBuilderButton.textContent = 'Add search builder';
-                    }
-                    updateFeatureVisibility();
-                }
-
-                if (button) {
-                    button.addEventListener('click', function () {
-                        if (!dt) {
-                            buildTable();
-                            if (tools) {
-                                tools.style.display = 'flex';
-                            }
-                            button.textContent = 'Back to plain table';
-                        } else {
-                            destroyTable();
-                            if (tools) {
-                                tools.style.display = 'none';
-                            }
-                            button.textContent = 'Convert to DataTable';
-                        }
-                    });
-                }
-
-                if (exportButton) {
-                    exportButton.addEventListener('click', function () {
-                        if (!dt) {
-                            return;
-                        }
-
-                        if (!exportEnabled) {
-                            exportEnabled = true;
-                            exportButton.textContent = 'Hide export';
-                        } else {
-                            exportButton.textContent = 'Add export';
-                            exportEnabled = false;
-                        }
-                        updateFeatureVisibility();
-                    });
-                }
-
-                if (searchBuilderButton) {
-                    searchBuilderButton.addEventListener('click', function () {
-                        if (!dt) {
-                            return;
-                        }
-
-                        if (!searchBuilderEnabled) {
-                            searchBuilderEnabled = true;
-                            searchBuilderButton.textContent = 'Hide search builder';
-                        } else {
-                            searchBuilderButton.textContent = 'Add search builder';
-                            searchBuilderEnabled = false;
-                        }
-                        updateFeatureVisibility();
-                    });
-                }
-            });
-        </script>
-        <table id="auditlog" style="width:100%; border-collapse: collapse;">
+                });
+            } else {
+                console.error('DataTables failed to load.');
+            }
+        });
+    </script>
+    <table id="auditlog" class="display" style="width:100%">
         <thead>
             <tr>
                 <th>Date</th>
@@ -3274,3 +3233,5 @@
 </body>
 
 </html>
+
+
