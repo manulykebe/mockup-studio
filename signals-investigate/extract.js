@@ -2583,15 +2583,114 @@
     }
     return Array.from(document.querySelectorAll(selector));
   }
-  function getBinderElementIcons(el) {
+  function normalizeActionLabel(label) {
+    if (/external actions?|table actions?/i.test(label)) {
+      return "External Actions";
+    }
+    return label;
+  }
+  function collectMenuItemTexts(root = document) {
+    const selectors = [
+      '[role="menuitem"]',
+      ".dropdown-item",
+      ".menu-item",
+      '[data-testid*="menu-item"]',
+      '[data-testid*="action"]',
+      '[aria-label][role="button"]'
+    ];
+    const texts = /* @__PURE__ */ new Set();
+    selectors.forEach((selector) => {
+      Array.from(root.querySelectorAll(selector)).forEach((el) => {
+        const value = (el.textContent || el.getAttribute("aria-label") || "").replace(/\s+/g, " ").trim();
+        if (value) {
+          texts.add(value);
+        }
+      });
+    });
+    return Array.from(texts);
+  }
+  var KNOWN_EXTERNAL_ACTION_ITEMS = {
+    "GxP Sample Creation Table Actions": ["Clean Empty Rows"]
+  };
+  function parseActionNameFromIframeSrc(src) {
+    if (!src) {
+      return "";
+    }
+    const file = src.split("/").pop()?.split("?")[0] || "";
+    const name = file.replace(/\.html?$/i, "").replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).trim();
+    return name;
+  }
+  async function getExternalActionItems(control) {
+    const items = /* @__PURE__ */ new Set();
+    const controlLabel = control.getAttribute("aria-label")?.trim() || control.textContent.trim();
+    items.add(controlLabel);
+    (KNOWN_EXTERNAL_ACTION_ITEMS[controlLabel] || []).forEach((item) => items.add(item));
+    const existingDialogs = new Set(Array.from(document.querySelectorAll('[role="dialog"]')));
+    const existingMenus = new Set(Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')));
+    control.click();
+    await new Promise((resolve) => setTimeout(resolve, 350));
+    const menuRoots = Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')).filter((menu) => !existingMenus.has(menu));
+    menuRoots.forEach((menu) => {
+      collectMenuItemTexts(menu).forEach((item) => items.add(item));
+    });
+    const dialog = Array.from(document.querySelectorAll('[role="dialog"]')).find((node) => !existingDialogs.has(node));
+    if (dialog) {
+      const dialogTitle = dialog.querySelector("h1, h2, h3, h4, .modal-title")?.textContent?.trim();
+      if (dialogTitle) {
+        items.add(dialogTitle);
+      }
+      collectMenuItemTexts(dialog).forEach((item) => items.add(item));
+      const iframe = dialog.querySelector("iframe");
+      if (iframe) {
+        const inferredName = parseActionNameFromIframeSrc(iframe.getAttribute("src"));
+        if (inferredName) {
+          items.add(inferredName);
+        }
+        try {
+          const iframeDoc = iframe.contentDocument;
+          if (iframeDoc) {
+            collectMenuItemTexts(iframeDoc).forEach((item) => items.add(item));
+            Array.from(iframeDoc.querySelectorAll("button, a")).forEach((node) => {
+              const text = node.textContent.replace(/\s+/g, " ").trim();
+              if (text) {
+                items.add(text);
+              }
+            });
+          }
+        } catch {
+        }
+      }
+      const closeButton = dialog.querySelector('[aria-label="Close"], button[title="Close"], button.btn-close, button.close');
+      closeButton?.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+    return Array.from(items).filter(Boolean).map((value) => value.replace(/\s+/g, " ").trim()).filter((value) => value !== "Close" && value !== "I" && value !== "Loading").filter((value, index, arr) => arr.indexOf(value) === index);
+  }
+  async function getBinderElementIcons(el) {
     const groups = Array.from(el.querySelectorAll(".binder__element-header-controls"));
     const icons = [];
     groups.forEach((group) => {
       Array.from(group.querySelectorAll("button[aria-label], a[aria-label]")).forEach((control) => {
-        icons.push(control.getAttribute("aria-label"));
+        const rawLabel = control.getAttribute("aria-label")?.trim();
+        if (!rawLabel) {
+          return;
+        }
+        icons.push(rawLabel);
       });
     });
-    return icons;
+    const externalActionControls = Array.from(el.querySelectorAll("button[aria-label], a[aria-label]")).filter((control) => {
+      const label = control.getAttribute("aria-label")?.trim() || "";
+      return /external actions?|table actions?/i.test(label);
+    });
+    const externalActionItems = /* @__PURE__ */ new Set();
+    for (const control of externalActionControls) {
+      const items = await getExternalActionItems(control);
+      items.forEach((item) => externalActionItems.add(item));
+    }
+    return {
+      icons,
+      externalActionItems: Array.from(externalActionItems)
+    };
   }
   function getVisibleTableHeaders(table) {
     const headerRow = table.querySelector('.header[role="row"]');
@@ -2625,14 +2724,28 @@
       throw new Error(`No element found matching selector "${BINDER_ELEMENT_FOCUSED_SELECTOR}".`);
     }
     const title = el.querySelector(".inline-input.primary")?.textContent.trim() ?? "";
-    const icons = getBinderElementIcons(el);
+    const { icons, externalActionItems } = await getBinderElementIcons(el);
     const table = el.querySelector(".hierarchical-table");
     const dataSource = table?.querySelector(".adt-external .data")?.textContent.trim();
     const visibleHeaders = table ? getVisibleTableHeaders(table) : [];
     const hiddenHeaders = table ? await getHiddenTableHeaders(table) : [];
+    const normalizedIcons = Array.from(new Set(icons.map(normalizeActionLabel)));
+    const orderedExternalActionItems = Array.from(new Set(externalActionItems)).sort((a, b) => {
+      if (a === "Clean Empty Rows") {
+        return -1;
+      }
+      if (b === "Clean Empty Rows") {
+        return 1;
+      }
+      return a.localeCompare(b);
+    });
+    const externalActionsValue = orderedExternalActionItems.length ? `External Actions (${orderedExternalActionItems.join(", ")})` : "";
+    const iconSummary = externalActionsValue ? `${title} > icons: ${externalActionsValue}` : "";
     const headers = ["Type", "Value"];
     const rows = [
-      ...icons.map((icon) => ["Icon", icon]),
+      ...normalizedIcons.map((icon) => ["Icon", icon]),
+      ...externalActionsValue ? [["Icon", externalActionsValue]] : [],
+      ...iconSummary ? [["IconSummary", iconSummary]] : [],
       ...dataSource ? [["Data Source", dataSource]] : [],
       ...visibleHeaders.map((header) => ["TableHeader", header]),
       ...hiddenHeaders.map((header) => ["TableHeaderHidden", header])
