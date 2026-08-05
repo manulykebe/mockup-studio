@@ -1,0 +1,46 @@
+Type;Value
+Icon;View full size
+Icon;Marked as mandatory. Click to unmark
+Icon;GxP Sample Creation Table Actions
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+TableHeader;Sample ID
+TableHeader;Sample Name
+TableHeader;Lot Number
+TableHeader;Storage Requirements
+TableHeader;Compound ID
+TableHeader;Preparation Date
+TableHeader;Expiration Date
+TableHeader;Handling Instructions
+TableHeader;PbOEL
+TableHeader;Sample Comment
+TableHeaderHidden;Description
+TableHeaderHidden;Dilution Factor
+TableHeaderHidden;Group
+TableHeaderHidden;Location Info
+TableHeaderHidden;Lot Info
+TableHeaderHidden;Planned Collection Date
+TableHeaderHidden;Process Stage
+TableHeaderHidden;Project
+TableHeaderHidden;Protocol Reference
+TableHeaderHidden;Purpose
+TableHeaderHidden;Sample Amt
+TableHeaderHidden;Sample Amt Unit
+TableHeaderHidden;Sample Container Type
+TableHeaderHidden;Sample Cycle
+TableHeaderHidden;Sample Cycle Description
+TableHeaderHidden;Sample Type
+TableHeaderHidden;Sampling Point
+TableHeaderHidden;Sampling Time
+TableHeaderHidden;Sampling Time Unit
+TableHeaderHidden;Stability Humidity (%RH)
+TableHeaderHidden;Stability Orientation
+TableHeaderHidden;Stability Temperature (C)
+TableHeaderHidden;Stability Time Point
+TableHeaderHidden;Stability Time Point Unit
+TableHeaderHidden;Stability Stress
+TableHeaderHidden;Study ID
+TableHeaderHidden;Study Start Date

@@ -1,0 +1,29 @@
+Type;Value
+Icon;View full size
+Icon;Marked as mandatory. Click to unmark
+Icon;GxP Preparations Table Action
+Icon;GxP Preparation pH Measurement
+Icon;GxP Reason for Change Entry
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+TableHeader;Preparation Name |Ref
+TableHeader;Prep ID
+TableHeader;PbOEL
+TableHeader;Preparation Date
+TableHeader;Expiration Date
+TableHeader;Storage Requirements
+TableHeader;Handling Instructions
+TableHeader;Total Amt
+TableHeader;Target pH
+TableHeader;Actual pH |RfC
+TableHeader;Actual Temp |RfC
+TableHeader;Compound ID
+TableHeader;Fit for GxP
+TableHeader;Prep Comment
+TableHeaderHidden;RfC| Actual pH
+TableHeaderHidden;RfC| Actual Temp
+TableHeaderHidden;pH Data
+TableHeaderHidden;Role

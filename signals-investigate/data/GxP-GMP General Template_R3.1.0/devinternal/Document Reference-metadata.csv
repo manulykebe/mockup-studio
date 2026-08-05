@@ -1,0 +1,19 @@
+Type;Value
+Icon;View full size
+Icon;Marked as mandatory. Click to unmark
+Icon;GxP Reason for Change Entry
+Icon;Download to .csv
+Icon;Import from .csv
+Icon;Export tab delimited to clipboard
+Icon;Copy Item
+Icon;Trash
+TableHeader;Doc Type |Ref
+TableHeader;Doc Number |RfC
+TableHeader;Doc Version |RfC
+TableHeader;Doc Followed as described?
+TableHeader;Exception description
+TableHeader;Comments
+TableHeaderHidden;RfC| Doc Number
+TableHeaderHidden;RfC| Doc Version
+TableHeaderHidden;Doc Title
+TableHeaderHidden;Doc Subtype
