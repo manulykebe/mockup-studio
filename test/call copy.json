@@ -1,0 +1,177 @@
+{
+    "fields": {
+        "3d0b9c1b-bb0e-4c80-ae92-a19f31736d66": {
+            "key": "3d0b9c1b-bb0e-4c80-ae92-a19f31736d66",
+            "title": "request number",
+            "type": "text",
+            "clearValueOnPaste": true,
+            "style": {
+                "width": 291
+            },
+            "isRequiredOnCompletion": true
+        },
+        "3b25eb95-9202-435b-864c-e5dbec3d4625": {
+            "key": "3b25eb95-9202-435b-864c-e5dbec3d4625",
+            "title": "Entry Complete",
+            "type": "boolean",
+            "clearValueOnPaste": true,
+            "style": {
+                "width": 30
+            },
+            "isRequiredOnCompletion": true
+        },
+        "eed6ed2d-d266-48ac-8bee-e8caa3a92d14": {
+            "key": "eed6ed2d-d266-48ac-8bee-e8caa3a92d14",
+            "title": "date calibration verified",
+            "type": "datetime",
+            "clearValueOnPaste": true,
+            "style": {
+                "width": 220
+            },
+            "isRequiredOnCompletion": true,
+            "autoCreated": true
+        },
+        "ff7a794c-8ea9-416e-a8fa-97c20b7c38a8": {
+            "key": "ff7a794c-8ea9-416e-a8fa-97c20b7c38a8",
+            "title": "text comments",
+            "type": "text",
+            "clearValueOnPaste": true,
+            "style": {
+                "width": 1000
+            }
+        },
+        "564c1ee0-379d-4078-ba41-21c8c161735f": {
+            "key": "564c1ee0-379d-4078-ba41-21c8c161735f",
+            "title": "try rich text",
+            "type": "text",
+            "clearValueOnPaste": true,
+            "requiresReasonOnChange": true,
+            "style": {
+                "width": 200,
+                "height": 60
+            },
+            "richText": true,
+            "isRequiredOnCompletion": false
+        },
+        "923e7dc0-2960-4b76-9db4-f9561586eba6": {
+            "key": "923e7dc0-2960-4b76-9db4-f9561586eba6",
+            "title": "more text",
+            "type": "text",
+            "clearValueOnPaste": true,
+            "requiresReasonOnChange": true,
+            "style": {
+                "width": 200,
+                "height": 60
+            },
+            "richText": true
+        },
+        "26c25ed3-2673-4038-82f2-420ff3414f58": {
+            "key": "26c25ed3-2673-4038-82f2-420ff3414f58",
+            "title": "compound api lookup",
+            "type": "attributeList",
+            "attributeListEid": "attribute:74",
+            "multiSelect": false,
+            "clearValueOnPaste": false,
+            "style": {
+                "width": 320
+            },
+            "showDescription": false,
+            "showIcon": false,
+            "parentId": ""
+        },
+        "ec70547f-e3c4-4257-be2f-8c3f6f73f9e3": {
+            "embeddedEid": "grid:878e6f80-c38d-4832-89b4-8e675c4ca3b5",
+            "key": "ec70547f-e3c4-4257-be2f-8c3f6f73f9e3",
+            "title": "URL table",
+            "type": "embeddedAdt",
+            "requiresReasonOnChange": true
+        },
+        "7bbf99ad-3771-4b9a-9a1c-6f331987ab91": {
+            "key": "7bbf99ad-3771-4b9a-9a1c-6f331987ab91",
+            "title": "mandatory with lock",
+            "type": "text",
+            "clearValueOnPaste": true,
+            "requiresReasonOnChange": true,
+            "style": {
+                "width": 120
+            },
+            "isRequiredOnCompletion": true
+        },
+        "741b63e1-46d0-4fc8-a905-faf7161f6dfa": {
+            "embeddedEid": "grid:60f2768d-54b8-4a11-9ff3-3e64138a5e80",
+            "key": "741b63e1-46d0-4fc8-a905-faf7161f6dfa",
+            "title": "table with lock",
+            "type": "embeddedAdt",
+            "requiresReasonOnChange": true
+        },
+        "7c74b9a9-0531-44fe-a249-d9a50a6abb89": {
+            "key": "7c74b9a9-0531-44fe-a249-d9a50a6abb89",
+            "title": "excel",
+            "type": "externalLink",
+            "clearValueOnPaste": true,
+            "requiresReasonOnChange": true,
+            "style": {
+                "width": 120
+            }
+        },
+        "fb729a84-ed43-4607-bcd3-8c7f88b936c1": {
+            "embeddedEid": "grid:19245d15-56cc-4e83-8637-9ac2be98649c",
+            "key": "fb729a84-ed43-4607-bcd3-8c7f88b936c1",
+            "title": "table with URLS",
+            "type": "embeddedAdt",
+            "requiresReasonOnChange": true
+        },
+        "f9ec8f46-6786-4732-9ff7-198b325e81e9": {
+            "key": "f9ec8f46-6786-4732-9ff7-198b325e81e9",
+            "title": "timestamp",
+            "type": "datetime",
+            "clearValueOnPaste": true,
+            "requiresReasonOnChange": true,
+            "style": {
+                "width": 220
+            },
+            "autoCreated": true
+        },
+        "8f0283ba-a795-4dd0-9a1a-7f00aed17c17": {
+            "key": "8f0283ba-a795-4dd0-9a1a-7f00aed17c17",
+            "title": "time 2",
+            "type": "datetime",
+            "clearValueOnPaste": true,
+            "style": {
+                "width": 220
+            },
+            "autoCreated": true
+        },
+        "b7f29f26-e787-4a26-b590-d918531f76c0": {
+            "embeddedEid": "grid:1de2b39a-5c5f-4e51-9ac2-dab86c96439c",
+            "key": "b7f29f26-e787-4a26-b590-d918531f76c0",
+            "title": "logbook table",
+            "type": "embeddedAdt"
+        }
+    },
+    "data": {
+        "7bbf99ad-3771-4b9a-9a1c-6f331987ab91": {
+            "user": "test"
+        },
+        "741b63e1-46d0-4fc8-a905-faf7161f6dfa": {},
+        "564c1ee0-379d-4078-ba41-21c8c161735f": {
+            "user": "<p>tested</p>"
+        },
+        "f9ec8f46-6786-4732-9ff7-198b325e81e9": {
+            "_action": "setCurrentUtc-m",
+            "auto": "2026-08-06T11:13",
+            "value": "2026-08-06T11:13",
+            "reason": "Additional information",
+            "comment": "",
+            "hasBeenEdited": true,
+            "passedValidations": true
+        },
+        "8f0283ba-a795-4dd0-9a1a-7f00aed17c17": {
+            "_action": "setCurrentUtc-m",
+            "auto": "2026-08-06T11:12",
+            "value": "2026-08-06T11:12",
+            "passedValidations": true
+        },
+        "b7f29f26-e787-4a26-b590-d918531f76c0": {}
+    }
+}

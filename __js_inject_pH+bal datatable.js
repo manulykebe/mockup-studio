@@ -239,8 +239,52 @@ function makeCollapsible() {
   });
 };
 
+function addLeftAndFourthColumns(table) {
+  if (!table) return;
+
+  // Iterate over all rows (includes thead/tbody rows)
+  const rows = Array.from(table.rows);
+
+  rows.forEach((row, rowIndex) => {
+    // Heuristic to detect header row: contains a <th> or is inside a THEAD
+    const isHeader =
+      row.querySelector('th') !== null ||
+      row.parentElement && row.parentElement.tagName === 'THEAD' ||
+      (rowIndex === 0 && row.cells.length && row.cells[0].tagName === 'TH');
+
+    // 1) Insert left-most column ("Table")
+    if (isHeader) {
+      const th = document.createElement('th');
+      th.textContent = 'Table';
+      row.insertBefore(th, row.firstChild);
+    } else {
+      const leftTd = row.insertCell(0);
+      // Optionally populate the new cell (example uses row number)
+      leftTd.textContent = String(rowIndex); // change as needed
+    }
+
+    // 2) Insert new column as the 4th column (index 3) after the left-most insertion
+    // For header rows use <th>, for body rows use <td>
+    const targetIndex = 3; // 0-based index: 0 is left-most "Table"
+    if (isHeader) {
+      const th2 = document.createElement('th');
+      th2.textContent = 'Fourth Column';
+      if (row.children.length > targetIndex) {
+        row.insertBefore(th2, row.children[targetIndex]);
+      } else {
+        row.appendChild(th2);
+      }
+    } else {
+      // insertCell will append if index >= current cell count
+      const td2 = row.insertCell(targetIndex);
+      td2.textContent = ''; // fill as needed
+    }
+  });
+}
 
 function convertTable() {
+
+  addLeftAndFourthColumns(); 
   loadJS('https://code.jquery.com/jquery-4.0.0.min.js')
   loadJS('https://cdn.datatables.net/2.3.8/css/dataTables.dataTables.min.css');
 
