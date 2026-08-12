@@ -1,0 +1,212 @@
+# Acceptance Criteria - Audit Trail Data Browsing and Export
+
+## Scope
+- Validate end-user behavior for browsing audit trail data in DataTables.
+- Validate custom query behavior through SearchBuilder.
+- Validate export behavior with and without active filters.
+
+## Preconditions (applies to all scenarios unless overridden)
+- Given backward compatibility is preserved and no regressions are introduced in the current System Audit Trail Report.
+- And the same source dataset is used for this page, where each original export tab is represented by the Source column.
+- And the Audit Trail page is reachable and DataTables initializes successfully.
+- And the dataset contains at least 50 records.
+- And the dataset includes values across all configured columns: Source, Date/Time, User Name, User ID, Entity Type, Entity Name, Action, Change Type, Details, Old Value, New Value, Event ID.
+
+## Section 1 - Regular DataTables Usage (Sorting, Filtering, Pagination)
+
+### Scenario 1.1 - Default table render
+Given the user opens the Audit Trail page.
+When the page finishes loading.
+Then the data table is visible with all configured columns.
+And the global search input is visible.
+And pagination controls are visible when total records exceed the current page size.
+And the total and filtered row count text is visible.
+
+### Scenario 1.2 - Sort ascending on a sortable column
+Given the table is loaded.
+When the user clicks a sortable column header once, for example Date/Time.
+Then the rows are sorted in ascending order for that column.
+And the sort indicator reflects ascending order.
+
+### Scenario 1.3 - Sort descending on a sortable column
+Given the table is currently sorted ascending for a column.
+When the user clicks the same column header again.
+Then the rows are sorted in descending order for that column.
+And the sort indicator reflects descending order.
+
+### Scenario 1.4 - Multi-step sorting consistency after paging
+Given the table is sorted by a column.
+When the user navigates to another page and then returns to the first page.
+Then the sort order remains applied.
+And row order is consistent with the selected sort direction.
+
+### Scenario 1.5 - Global text filtering returns matching rows
+Given the table is loaded.
+When the user enters a known token into the global search input, for example part of a User Name.
+Then only rows containing that token in any searchable column are displayed.
+And the filtered row count text reflects the reduced set.
+
+### Scenario 1.6 - Global text filtering with no matches
+Given the table is loaded.
+When the user enters text with no matches.
+Then no data rows are displayed.
+And the table displays its no-matching-records state.
+
+### Scenario 1.7 - Clearing global search restores full set
+Given a global search filter is active.
+When the user clears the search input.
+Then the full dataset is restored, subject to any other active filters.
+And pagination recalculates based on restored row count.
+
+### Scenario 1.8 - Pagination navigation
+Given total rows exceed one page.
+When the user clicks Next.
+Then the next page of rows is displayed.
+And the page indicator updates.
+When the user clicks Previous.
+Then the prior page is displayed.
+
+### Scenario 1.9 - Page size selector behavior (5, 10, 25, 50, All)
+Given the page size dropdown is visible.
+When the user selects 5, 10, 25, or 50.
+Then the table displays up to the selected number of rows per page.
+And pagination controls recalculate accordingly.
+When the user selects All.
+Then all filtered rows are displayed on a single page.
+And pagination controls reflect a single-page state.
+
+### Scenario 1.10 - Combined sorting, filtering, and pagination
+Given the table is sorted and globally filtered.
+When the user navigates across pages.
+Then both sort and filter criteria remain active.
+And only rows satisfying the filter participate in pagination.
+
+### Scenario 1.11 - Disabled sorting on non-sortable columns
+Given one or more columns are configured as non-sortable.
+When the user views the header of a non-sortable column.
+Then the sort indicator is shown in a disabled or greyed-out state.
+And the header does not show active ascending or descending sort state.
+When the user clicks the non-sortable column header.
+Then row order remains unchanged.
+And no sort state is applied to that column.
+
+## Section 2 - Custom SearchBuilder
+
+### Scenario 2.1 - SearchBuilder panel default state
+Given the page has loaded.
+When no user action has occurred on SearchBuilder.
+Then the SearchBuilder container is present.
+And the custom SearchBuilder panel is collapsed by default.
+And the toggle control indicates collapsed state.
+
+### Scenario 2.2 - Expand and collapse SearchBuilder panel
+Given the SearchBuilder panel is collapsed.
+When the user clicks the panel header toggle.
+Then the SearchBuilder condition editor becomes visible.
+And the toggle indicator updates to expanded state.
+When the user clicks the toggle again.
+Then the SearchBuilder condition editor is hidden.
+
+### Scenario 2.3 - Add single condition and apply
+Given the SearchBuilder editor is expanded.
+When the user adds one valid condition, for example Source equals Notebook.
+Then only rows satisfying that condition are displayed.
+And the filtered row count text updates.
+
+### Scenario 2.4 - Add multiple conditions with logical grouping
+Given the SearchBuilder editor is expanded.
+When the user creates multiple conditions with AND or OR logic.
+Then rows are filtered according to the defined logic tree.
+And no rows outside the defined logic are displayed.
+
+### Scenario 2.5 - Remove one condition from a multi-condition query
+Given multiple SearchBuilder conditions are active.
+When the user removes one condition.
+Then filtering recalculates immediately based on remaining conditions.
+And the row count text updates accordingly.
+
+### Scenario 2.6 - Clear all SearchBuilder conditions
+Given SearchBuilder conditions are active.
+When the user clicks Clear All, or an equivalent reset action.
+Then all SearchBuilder conditions are removed.
+And table results return to an unfiltered state except for any independent global search that remains active.
+
+### Scenario 2.7 - SearchBuilder with global search interaction
+Given one or more SearchBuilder conditions are active.
+When the user also applies global search text.
+Then the final row set satisfies both SearchBuilder logic and global search criteria.
+And removing either filter source recalculates results immediately.
+
+### Scenario 2.8 - SearchBuilder persistence during paging and sorting
+Given SearchBuilder conditions are active.
+When the user sorts a column or changes page.
+Then SearchBuilder conditions remain applied.
+And sorting and paging apply only to rows that meet SearchBuilder criteria.
+
+## Section 3 - Export Functionality (With and Without Filters)
+
+### Scenario 3.1 - Export controls available
+Given the table has loaded.
+When the user views the export control group.
+Then the expected export actions are visible: Copy, CSV, Excel, PDF, Print.
+
+### Scenario 3.2 - Export filename format
+Given the user initiates CSV, Excel, or PDF export.
+When the export file is generated.
+Then the filename matches this pattern: devinternal.{ISO8601-datetime}.system-audit-trail.{extension}.
+And the extension is not duplicated.
+
+### Scenario 3.3 - Export without any filters
+Given no global search and no SearchBuilder conditions are active.
+When the user exports to CSV, Excel, or PDF.
+Then exported content includes all rows in the dataset.
+And all visible columns are present in the exported output.
+
+### Scenario 3.4 - Export with global search only
+Given a global search filter is active and SearchBuilder has no active conditions.
+When the user exports to CSV, Excel, or PDF.
+Then exported content includes only rows matching global search.
+And excluded rows are not present in the exported output.
+
+### Scenario 3.5 - Export with SearchBuilder only
+Given SearchBuilder conditions are active and global search is empty.
+When the user exports to CSV, Excel, or PDF.
+Then exported content includes only rows matching SearchBuilder logic.
+And row count in export corresponds to filtered table rows.
+
+### Scenario 3.6 - Export with both global search and SearchBuilder
+Given global search and SearchBuilder filters are both active.
+When the user exports to CSV, Excel, or PDF.
+Then exported content includes only rows satisfying both filter mechanisms.
+
+### Scenario 3.7 - PDF orientation and width fit
+Given the user selects PDF export.
+When the PDF file is generated.
+Then the PDF uses landscape orientation.
+And all configured table columns are present in the PDF output.
+And column content is rendered without dropping rightmost columns.
+
+### Scenario 3.8 - Export after sorting
+Given the table is sorted by a chosen column.
+When the user exports to CSV, Excel, or PDF.
+Then exported row order reflects the current sort order of the filtered result set.
+
+### Scenario 3.9 - Export while viewing a non-first page
+Given pagination is active and the user is on page N where N is greater than 1.
+When the user exports data.
+Then export includes the full filtered dataset, not only the currently visible page rows.
+
+### Scenario 3.10 - Copy and Print reflect active filters
+Given global search and or SearchBuilder filters are active.
+When the user uses Copy or Print.
+Then copied and printed rows match the current filtered dataset.
+And rows excluded by active filters are not included.
+
+## Non-Functional Acceptance Checks
+
+### Scenario N1 - Stability during repeated user actions
+Given the page is loaded with a typical dataset.
+When the user performs sorting, filtering, paging, and exporting repeatedly.
+Then controls respond without JavaScript errors in the browser console.
+And interactions complete within acceptable response time for expected dataset size.
+    
