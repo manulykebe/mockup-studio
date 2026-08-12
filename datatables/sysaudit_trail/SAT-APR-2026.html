@@ -1,13 +1,20 @@
 <html>
 
 <head>
-    <!-- <link rel="stylesheet" href="https://cdn.datatables.net/3.0.1/css/dataTables.dataTables.css" /> -->
     <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/3.0.1/js/dataTables.js"></script>
 </head>
 
 <body>
+    <div style="margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+        <button id="copyBtn" type="button">Copy</button>
+        <button id="csvBtn" type="button">CSV</button>
+        <button id="excelBtn" type="button">Excel</button>
+        <button id="printBtn" type="button">Print</button>
+    </div>
+
     <table id="myTable">
         <thead>
             <th>Source</th>
@@ -3346,7 +3353,61 @@
 
     </table>
     <script>
-        const table = new DataTable('#myTable');
+        const table = new DataTable('#myTable', {
+            autoWidth: true,
+            columnDefs: [{ width: 'auto', targets: '_all' }],
+            dom: 'frtip'
+        });
+
+        function exportCsv() {
+            const rows = Array.from(document.querySelectorAll('#myTable tbody tr')).map(row =>
+                Array.from(row.children).map(cell => '"' + (cell.textContent || '').replace(/"/g, '""') + '"').join(',')
+            );
+            const csv = Array.from(document.querySelectorAll('#myTable thead th')).map(th => '"' + (th.textContent || '').replace(/"/g, '""') + '"').join(',') + '\n' + rows.join('\n');
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'audit-trail.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function exportExcel() {
+            const csv = Array.from(document.querySelectorAll('#myTable tr')).map(row =>
+                Array.from(row.children).map(cell => '"' + (cell.textContent || '').replace(/"/g, '""') + '"').join(',')
+            ).join('\n');
+            const blob = new Blob([csv], { type: 'application/vnd.ms-excel;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'audit-trail.xls';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function copyToClipboard() {
+            const csv = Array.from(document.querySelectorAll('#myTable tr')).map(row =>
+                Array.from(row.children).map(cell => (cell.textContent || '').trim()).join('\t')
+            ).join('\n');
+            navigator.clipboard.writeText(csv);
+        }
+
+        function printTable() {
+            const printWindow = window.open('', '', 'height=700,width=1200');
+            const html = '<html><head><title>Audit Trail</title>' +
+                '<style>table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:6px;text-align:left}</style>' +
+                '</head><body>' + document.querySelector('#myTable').outerHTML + '</body></html>';
+            printWindow.document.write(html);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+
+        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
+        document.getElementById('csvBtn').addEventListener('click', exportCsv);
+        document.getElementById('excelBtn').addEventListener('click', exportExcel);
+        document.getElementById('printBtn').addEventListener('click', printTable);
     </script>
 </body>
 
