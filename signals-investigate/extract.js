@@ -2756,6 +2756,25 @@
     console.table(rows.map(([Type, Value]) => ({ Type, Value })));
     return { title, rows };
   }
+  var SYSTEM_OBJECTS_SERVER = "https://devinternal.srppvt4s3r.revvitycloud.eu/";
+  var SYSTEM_OBJECTS_PATH = "snconfig/objects";
+  var SYSTEM_OBJECT_NAME_SELECTOR = "h4.entity-info-name span[title]";
+  function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
+    const targetUrl = `${server}${SYSTEM_OBJECTS_PATH}`;
+    if (!window.location.href.startsWith(targetUrl)) {
+      console.log(`Navigating to ${targetUrl} \u2014 run extract.listSystemObjects() again once the page has loaded.`);
+      window.location.href = targetUrl;
+      return null;
+    }
+    const nameEls = Array.from(document.querySelectorAll(SYSTEM_OBJECT_NAME_SELECTOR));
+    const names = Array.from(new Set(nameEls.map((el) => el.getAttribute("title")?.trim()).filter(Boolean)));
+    const rows = names.map((name) => [name]);
+    const csv = toCsv(rows, ["System Object"]);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.SystemObjects.csv`);
+    console.log(`Extracted ${rows.length} system object(s).`);
+    console.table(rows.map(([Name]) => ({ Name })));
+    return names;
+  }
   window.extract = {
     ...window.extract,
     getToc,
@@ -2765,6 +2784,7 @@
     getHistoryRecords,
     getElementMetadata,
     exportFocusedElementImagesFromToc,
+    listSystemObjects,
     openToolbarPopup,
     closePopup,
     runChain
