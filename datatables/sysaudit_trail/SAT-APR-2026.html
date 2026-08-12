@@ -1,18 +1,114 @@
 <html>
 
 <head>
-    <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/v/dt/dt-2.2.2/datatables.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.1/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/searchbuilder/1.8.1/css/searchBuilder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.5.4/css/dataTables.dateTime.min.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: Arial, sans-serif;
+        }
+
+        .dt-top-bar {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 8px;
+            box-sizing: border-box;
+        }
+
+        .dt-export-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            flex: 1 1 auto;
+        }
+
+        .dt-search-group {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            flex: 0 0 auto;
+            min-width: 220px;
+        }
+
+        .dt-search-builder-wrap {
+            width: 100%;
+            background: #f2f2f2;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+
+        .dt-search-builder-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            background: #e9e9e9;
+            border: none;
+            padding: 8px 12px;
+            font-weight: 600;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+
+        .dt-search-builder-content {
+            padding: 10px 12px 12px;
+            display: block;
+        }
+
+        .dt-search-builder-wrap.collapsed .dt-search-builder-content {
+            display: none;
+        }
+
+        .dt-search-builder-wrap .dt-searchBuilder {
+            width: 100%;
+        }
+
+        .dt-button {
+            padding: 4px 8px !important;
+            font-size: 12px !important;
+            line-height: 1.2 !important;
+            min-height: 28px !important;
+        }
+
+        .dataTables_filter {
+            margin: 0 !important;
+        }
+
+        .dataTables_filter input {
+            width: 220px;
+            max-width: 100%;
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.datatables.net/3.0.1/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/searchbuilder/1.8.1/js/dataTables.searchBuilder.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.5.4/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 
 <body>
-    <div style="margin-bottom: 12px; display: flex; gap: 8px; flex-wrap: wrap;">
-        <button id="copyBtn" type="button">Copy</button>
-        <button id="csvBtn" type="button">CSV</button>
-        <button id="excelBtn" type="button">Excel</button>
-        <button id="printBtn" type="button">Print</button>
+    <div class="dt-search-builder-wrap collapsed" id="dtSearchBuilderWrap">
+        <button class="dt-search-builder-header" type="button" aria-expanded="false" aria-controls="dtSearchBuilderContent">
+            <span>Custom Search Builder</span>
+            <span class="dt-search-toggle-icon">▸</span>
+        </button>
+        <div class="dt-search-builder-content" id="dtSearchBuilderContent"></div>
     </div>
 
     <table id="myTable">
@@ -3356,58 +3452,27 @@
         const table = new DataTable('#myTable', {
             autoWidth: true,
             columnDefs: [{ width: 'auto', targets: '_all' }],
-            dom: 'frtip'
+            searchBuilder: true,
+            dom: '<"dt-search-builder-wrap"Q><"dt-top-bar"<"dt-export-group"B><"dt-search-group"f>>rtip',
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            initComplete: function () {
+                const host = document.getElementById('dtSearchBuilderContent');
+                const builder = document.querySelector('.dt-searchBuilder');
+                if (builder && host) {
+                    host.appendChild(builder);
+                }
+            }
         });
 
-        function exportCsv() {
-            const rows = Array.from(document.querySelectorAll('#myTable tbody tr')).map(row =>
-                Array.from(row.children).map(cell => '"' + (cell.textContent || '').replace(/"/g, '""') + '"').join(',')
-            );
-            const csv = Array.from(document.querySelectorAll('#myTable thead th')).map(th => '"' + (th.textContent || '').replace(/"/g, '""') + '"').join(',') + '\n' + rows.join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'audit-trail.csv';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
+        const searchBuilderWrap = document.getElementById('dtSearchBuilderWrap');
+        const searchBuilderToggle = searchBuilderWrap.querySelector('.dt-search-builder-header');
+        const searchToggleIcon = searchBuilderToggle.querySelector('.dt-search-toggle-icon');
 
-        function exportExcel() {
-            const csv = Array.from(document.querySelectorAll('#myTable tr')).map(row =>
-                Array.from(row.children).map(cell => '"' + (cell.textContent || '').replace(/"/g, '""') + '"').join(',')
-            ).join('\n');
-            const blob = new Blob([csv], { type: 'application/vnd.ms-excel;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'audit-trail.xls';
-            a.click();
-            URL.revokeObjectURL(url);
-        }
-
-        function copyToClipboard() {
-            const csv = Array.from(document.querySelectorAll('#myTable tr')).map(row =>
-                Array.from(row.children).map(cell => (cell.textContent || '').trim()).join('\t')
-            ).join('\n');
-            navigator.clipboard.writeText(csv);
-        }
-
-        function printTable() {
-            const printWindow = window.open('', '', 'height=700,width=1200');
-            const html = '<html><head><title>Audit Trail</title>' +
-                '<style>table{border-collapse:collapse;width:100%}th,td{border:1px solid #999;padding:6px;text-align:left}</style>' +
-                '</head><body>' + document.querySelector('#myTable').outerHTML + '</body></html>';
-            printWindow.document.write(html);
-            printWindow.document.close();
-            printWindow.focus();
-            printWindow.print();
-        }
-
-        document.getElementById('copyBtn').addEventListener('click', copyToClipboard);
-        document.getElementById('csvBtn').addEventListener('click', exportCsv);
-        document.getElementById('excelBtn').addEventListener('click', exportExcel);
-        document.getElementById('printBtn').addEventListener('click', printTable);
+        searchBuilderToggle.addEventListener('click', function () {
+            const isCollapsed = searchBuilderWrap.classList.toggle('collapsed');
+            searchBuilderToggle.setAttribute('aria-expanded', String(!isCollapsed));
+            searchToggleIcon.textContent = isCollapsed ? '▸' : '▾';
+        });
     </script>
 </body>
 
