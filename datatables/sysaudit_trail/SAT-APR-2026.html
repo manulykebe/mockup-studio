@@ -39,6 +39,31 @@
             min-width: 220px;
         }
 
+        .dt-page-size {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            margin-left: auto;
+            min-width: 180px;
+        }
+
+        .dt-page-size .dataTables_length {
+            margin: 0;
+        }
+
+        .dt-page-size .dataTables_length label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-weight: 600;
+        }
+
+        .dt-page-size .dataTables_length select {
+            min-width: 80px;
+            padding: 4px 6px;
+        }
+
         .dt-search-builder-wrap {
             width: 100%;
             background: #f2f2f2;
@@ -97,6 +122,16 @@
             width: 220px;
             max-width: 100%;
         }
+
+        .dataTables_info {
+            margin-right: auto;
+        }
+
+        .dataTables_paginate {
+            display: flex;
+            justify-content: flex-end;
+            margin-left: auto;
+        }
     </style>
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -107,6 +142,8 @@
     <script src="https://cdn.datatables.net/searchbuilder/1.8.1/js/dataTables.searchBuilder.min.js"></script>
     <script src="https://cdn.datatables.net/datetime/1.5.4/js/dataTables.dateTime.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
 </head>
 
 <body>
@@ -3448,12 +3485,73 @@
 
     </table>
     <script>
+        function formatIsoDateTime(value) {
+            return value.toISOString().replace(/[-:.]/g, '');
+        }
+
+        function buildExportFilename() {
+            const now = new Date();
+            return 'devinternal.' + formatIsoDateTime(now) + '.system-audit-trail';
+        }
+
         const table = new DataTable('#myTable', {
             autoWidth: true,
             columnDefs: [{ width: 'auto', targets: '_all' }],
             searchBuilder: true,
-            dom: '<"dt-search-builder-wrap"Q><"dt-top-bar"<"dt-export-group"B><"dt-search-group"f>>rtip',
-            buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+            pageLength: 5,
+            lengthMenu: [5, 10, 25, 50, { label: 'All', value: -1 }],
+            dom: '<"dt-search-builder-wrap"Q><"dt-top-bar"<"dt-export-group"B><"dt-search-group"f><"dt-page-size"l>>rtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    filename: buildExportFilename
+                },
+                {
+                    extend: 'csv',
+                    filename: buildExportFilename
+                },
+                {
+                    extend: 'excel',
+                    filename: buildExportFilename
+                },
+                {
+                    extend: 'pdf',
+                    filename: buildExportFilename,
+                    orientation: 'landscape',
+                    pageSize: 'A4',
+                    customize: function (doc) {
+                        doc.pageMargins = [12, 12, 12, 12];
+                        doc.defaultStyle = {
+                            fontSize: 5,
+                            margin: [0, 0, 0, 0]
+                        };
+                        doc.styles = {
+                            tableHeader: {
+                                bold: true,
+                                fillColor: '#eeeeee',
+                                color: '#000000',
+                                fontSize: 5
+                            },
+                            table: {
+                                margin: [0, 0, 0, 0],
+                                fontSize: 5
+                            }
+                        };
+
+                        if (doc.content && doc.content[1] && doc.content[1].table) {
+                            const columnCount = doc.content[1].table.body[0].length;
+                            doc.content[1].table.widths = Array(columnCount).fill(0).map(function () {
+                                return (100 / columnCount) + '%';
+                            });
+                            doc.content[1].table.layout = 'lightHorizontalLines';
+                        }
+                    }
+                },
+                {
+                    extend: 'print',
+                    filename: buildExportFilename
+                }
+            ],
             initComplete: function () {
                 const searchBuilderWrap = document.querySelector('.dt-search-builder-wrap');
                 if (!searchBuilderWrap) return;
@@ -3479,9 +3577,14 @@
                     toggleIcon.textContent = isCollapsed ? '▸' : '▾';
                 });
 
-                searchBuilderWrap.classList.remove('collapsed');
-                header.setAttribute('aria-expanded', 'true');
-                toggleIcon.textContent = '▾';
+                const paginate = document.querySelector('.dataTables_paginate');
+                if (paginate) {
+                    paginate.style.marginLeft = 'auto';
+                }
+
+                searchBuilderWrap.classList.add('collapsed');
+                header.setAttribute('aria-expanded', 'false');
+                toggleIcon.textContent = '▸';
             }
         });
     </script>
