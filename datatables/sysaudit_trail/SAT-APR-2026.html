@@ -62,17 +62,24 @@
             box-sizing: border-box;
         }
 
-        .dt-search-builder-content {
-            padding: 10px 12px 12px;
-            display: block;
-        }
-
-        .dt-search-builder-wrap.collapsed .dt-search-builder-content {
-            display: none;
-        }
-
-        .dt-search-builder-wrap .dt-searchBuilder {
+        .dt-search-builder-wrap .dtsb-searchBuilder {
             width: 100%;
+            padding: 10px 12px 12px;
+            box-sizing: border-box;
+            display: block !important;
+        }
+
+        .dt-search-builder-wrap .dtsb-titleRow,
+        .dt-search-builder-wrap .dtsb-title {
+            display: none !important;
+        }
+
+        .dt-search-builder-wrap.collapsed .dtsb-searchBuilder {
+            display: none !important;
+        }
+
+        .dt-search-builder-wrap .dtsb-searchBuilder .dataTables_filter {
+            margin-top: 0;
         }
 
         .dt-button {
@@ -103,14 +110,6 @@
 </head>
 
 <body>
-    <div class="dt-search-builder-wrap collapsed" id="dtSearchBuilderWrap">
-        <button class="dt-search-builder-header" type="button" aria-expanded="false" aria-controls="dtSearchBuilderContent">
-            <span>Custom Search Builder</span>
-            <span class="dt-search-toggle-icon">▸</span>
-        </button>
-        <div class="dt-search-builder-content" id="dtSearchBuilderContent"></div>
-    </div>
-
     <table id="myTable">
         <thead>
             <th>Source</th>
@@ -3456,22 +3455,34 @@
             dom: '<"dt-search-builder-wrap"Q><"dt-top-bar"<"dt-export-group"B><"dt-search-group"f>>rtip',
             buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
             initComplete: function () {
-                const host = document.getElementById('dtSearchBuilderContent');
-                const builder = document.querySelector('.dt-searchBuilder');
-                if (builder && host) {
-                    host.appendChild(builder);
+                const searchBuilderWrap = document.querySelector('.dt-search-builder-wrap');
+                if (!searchBuilderWrap) return;
+
+                const builder = searchBuilderWrap.querySelector('.dtsb-searchBuilder');
+                if (!builder) return;
+
+                if (!searchBuilderWrap.querySelector('.dt-search-builder-header')) {
+                    const header = document.createElement('button');
+                    header.type = 'button';
+                    header.className = 'dt-search-builder-header';
+                    header.setAttribute('aria-expanded', 'true');
+                    header.innerHTML = '<span>Custom Search Builder</span><span class="dt-search-toggle-icon">▾</span>';
+                    searchBuilderWrap.insertBefore(header, builder);
                 }
+
+                const header = searchBuilderWrap.querySelector('.dt-search-builder-header');
+                const toggleIcon = header.querySelector('.dt-search-toggle-icon');
+
+                header.addEventListener('click', function () {
+                    const isCollapsed = searchBuilderWrap.classList.toggle('collapsed');
+                    header.setAttribute('aria-expanded', String(!isCollapsed));
+                    toggleIcon.textContent = isCollapsed ? '▸' : '▾';
+                });
+
+                searchBuilderWrap.classList.remove('collapsed');
+                header.setAttribute('aria-expanded', 'true');
+                toggleIcon.textContent = '▾';
             }
-        });
-
-        const searchBuilderWrap = document.getElementById('dtSearchBuilderWrap');
-        const searchBuilderToggle = searchBuilderWrap.querySelector('.dt-search-builder-header');
-        const searchToggleIcon = searchBuilderToggle.querySelector('.dt-search-toggle-icon');
-
-        searchBuilderToggle.addEventListener('click', function () {
-            const isCollapsed = searchBuilderWrap.classList.toggle('collapsed');
-            searchBuilderToggle.setAttribute('aria-expanded', String(!isCollapsed));
-            searchToggleIcon.textContent = isCollapsed ? '▸' : '▾';
         });
     </script>
 </body>
