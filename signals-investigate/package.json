@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "esbuild src/index.js --bundle --format=iife --outfile=extract.js"
+    "build": "esbuild src/index.js --bundle --format=iife  --minify --outfile=extract.js"
   },
   "devDependencies": {
     "esbuild": "^0.28.1"
   },
   "dependencies": {
     "async-monitor.js": "^1.2.1"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }

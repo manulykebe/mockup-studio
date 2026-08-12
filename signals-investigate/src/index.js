@@ -5,10 +5,19 @@ import { openToolbarPopup, closePopup, waitForCondition } from './popup.js';
 import { parseHtmlTable } from './table.js';
 import { runChain } from './monitor.js';
 
+function getTitleFromElement(element) {
+  if (!element || !(element instanceof Element)) {
+    return null;
+  }
+
+  return element.getAttribute('title') || element.title || null;
+}
+
 function getToc(root = document) {
   const rows = extractTocData(root);
   const csv = toCsv(rows, ['Parent', 'Child']);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}.binder-toc.csv`);
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#binder-toc.csv`);
 
   console.log(`Extracted ${rows.length} row(s).`);
   console.table(rows.map(([Parent, Child]) => ({ Parent, Child })));
@@ -198,8 +207,8 @@ async function exportFocusedElementImagesFromToc(options = {}) {
       manifestRows.push([childName, '', '', 'NO_FOCUSED_ELEMENT']);
       continue;
     }
-
-    const baseName = getUniqueBaseName(`${prefix}.${slugify(childName)}`, usedBaseNames);
+    const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+    const baseName = getUniqueBaseName(`${prefix}#${templateTitle}#${slugify(childName)}`, usedBaseNames);
     const imageAssets = await focusedElementToImageAssets(focused, imageScale);
     const jpgFilename = imageAssets.find((asset) => asset.extension === 'jpg')
       ? `${baseName}.jpg`
@@ -215,7 +224,8 @@ async function exportFocusedElementImagesFromToc(options = {}) {
   }
 
   const csv = toCsv(manifestRows, ['Child', 'JPG File', 'SVG File', 'Status']);
-  downloadCsv(csv, `${prefix}.focused-elements.csv`);
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  downloadCsv(csv, `${prefix}#${templateTitle}#focused-elements.csv`);
 
   console.log(`Exported ${manifestRows.length} focused-element image(s).`);
   console.table(manifestRows.map(([Child, JpgFile, SvgFile, Status]) => ({ Child, JpgFile, SvgFile, Status })));
@@ -228,7 +238,8 @@ function extractTable(table, tableName) {
   const { headers, rows } = parseHtmlTable(table);
   const csv = toCsv(rows, headers);
   const filenameSuffix = tableName ? `table-${tableName}` : 'table';
-  downloadCsv(csv, `${getUrlPrefix(window.location)}.${filenameSuffix}.csv`);
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${filenameSuffix}.csv`);
 
   console.log(`Extracted ${rows.length} row(s) from table.`);
   console.table(rows.map((row) => Object.fromEntries(headers.map((header, i) => [header || `Column ${i + 1}`, row[i]]))));
@@ -299,7 +310,9 @@ async function extractFieldsTableWithAttributes(findNewTable) {
   }
 
   const csv = toCsv(rows, headers);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}.table-Fields.csv`);
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#table-Fields.csv`);
 
   console.log(`Extracted ${rows.length} row(s) from Fields table with attributes.`);
   console.table(rows.map(([Field, Type, Name, Value]) => ({ Field, Type, 'Attribute Name': Name, 'Attribute Value': Value })));
@@ -310,7 +323,7 @@ async function extractFieldsTableWithAttributes(findNewTable) {
 const DEFAULT_POPUP_LABELS = ['Fields', 'Properties'];
 
 // Monitored chain: runs getFieldsTable for each popup label in sequence, returning its rows keyed by label.
-async function getAllTables(labels = DEFAULT_POPUP_LABELS) {
+async function getTables_Fields_Properties(labels = DEFAULT_POPUP_LABELS) {
   const results = await runChain(labels.map((label) => () => getFieldsTable(label)));
   return Object.fromEntries(labels.map((label, i) => [label, results[i]]));
 }
@@ -357,7 +370,8 @@ async function getHistoryRecords() {
       const rowEls = await loadAllRows(container, HISTORY_ROW_SELECTOR);
       const data = rowEls.map(parseHistoryRow);
       const csv = toCsv(data, headers);
-      downloadCsv(csv, `${getUrlPrefix(window.location)}.history.csv`);
+      const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+      downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#history.csv`);
 
       console.log(`Extracted ${data.length} row(s) from history.`);
       console.table(data.map((row) => Object.fromEntries(headers.map((header, i) => [header, row[i]]))));
@@ -572,7 +586,7 @@ async function getHiddenTableHeaders(table) {
 
 // Grabs metadata (title, header icons, and, if the element contains a hierarchical-table, its data
 // source plus visible/hidden column headers) from the currently focused binder element and exports it as CSV.
-async function getElementMetadata() {
+async function getSectionMetadata() {
   const el = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
   if (!el) {
     throw new Error(`No element found matching selector "${BINDER_ELEMENT_FOCUSED_SELECTOR}".`);
@@ -614,7 +628,8 @@ async function getElementMetadata() {
   ];
 
   const csv = toCsv(rows, headers);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}.${title || 'element'}-metadata.csv`);
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${title}-metadata.csv`);
 
   console.log(`Extracted metadata for "${title}": ${rows.length} row(s).`);
   console.table(rows.map(([Type, Value]) => ({ Type, Value })));
@@ -654,11 +669,11 @@ function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
 window.extract = {
   ...window.extract,
   getToc,
-  getTable,
+  // getTable,
   getFieldsTable,
-  getAllTables,
+  getTables_Fields_Properties,
   getHistoryRecords,
-  getElementMetadata,
+  getSectionMetadata,
   exportFocusedElementImagesFromToc,
   listSystemObjects,
   openToolbarPopup,
