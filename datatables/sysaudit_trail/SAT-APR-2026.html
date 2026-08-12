@@ -127,9 +127,11 @@
             margin-right: auto;
         }
 
+        .dt-paging,
         .dataTables_paginate {
             display: flex;
             justify-content: flex-end;
+            width: 100%;
             margin-left: auto;
         }
     </style>
@@ -3576,11 +3578,6 @@
                     header.setAttribute('aria-expanded', String(!isCollapsed));
                     toggleIcon.textContent = isCollapsed ? '▸' : '▾';
                 });
-
-                const paginate = document.querySelector('.dataTables_paginate');
-                if (paginate) {
-                    paginate.style.marginLeft = 'auto';
-                }
 
                 searchBuilderWrap.classList.add('collapsed');
                 header.setAttribute('aria-expanded', 'false');
