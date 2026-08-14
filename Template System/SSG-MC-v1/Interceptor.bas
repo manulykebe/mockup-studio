@@ -4,7 +4,7 @@ Public TargetLocalPath As String
 Sub DocumentNew()
     If Not thisIsAQualityDocument Then Exit Sub
     If ActiveDocument.Path = "" Then
-        DocumentSave
+        FileSave
     Else
         MsgBox "Dead end?"
     End If
@@ -107,6 +107,7 @@ Sub DocumentClose()
     Else
         LockDocument ActiveDocument
     End If
+    ActiveDocument.Save
 End Sub
 Sub FilePrint()
     Options.UpdateFieldsAtPrint = True
