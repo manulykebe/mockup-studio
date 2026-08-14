@@ -115,7 +115,10 @@ Private Sub cbSave_Click()
                 Exit Sub
             End If
             
-            DocumentBeheer.UnLockDocument
+            ' Every new document (including the very first save of a brand-new document,
+            ' which routes here via FileSave -> CreateVersion) must get its own unique
+            ' guid/password; RegenerateDocumentGuid rotates both in sync.
+            DocumentBeheer.RegenerateDocumentGuid ActiveDocument
             With ActiveDocument.BuiltInDocumentProperties
                 .Item("title").Value = Me.txtTitle.text
             End With

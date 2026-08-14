@@ -18,10 +18,6 @@ Sub ListAllCustomProperties(Optional whichDocument As Document)
         On Error GoTo 0
     Next
 End Sub
-Sub setGuid()
-    ActiveDocument.CustomDocumentProperties.Item("document_guid").Value = GeneratePureGuid
-End Sub
-
 Sub LockDocument(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
