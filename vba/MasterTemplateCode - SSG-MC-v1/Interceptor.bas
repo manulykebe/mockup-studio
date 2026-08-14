@@ -52,8 +52,10 @@ Sub DocumentOpen()
         Exit Sub
     End If
 
-    If getCustomDocumentProperty("document_status") = "Draft" Then
+    If LCase(getCustomDocumentProperty("document_status")) = "draft" Then
         UnLockDocument ActiveDocument
+    Else
+        LockDocument ActiveDocument
     End If
 End Sub
 
@@ -96,6 +98,15 @@ Function URLDecode(ByVal txt As String) As String
 End Function
 
 Sub DocumentClose()
+    If Not thisIsAQualityDocument Then Exit Sub
+
+    ' A closed file must always be password protected; Draft documents keep the
+    ' style-only lock (still editable next time), anything else is locked read-only.
+    If LCase(getCustomDocumentProperty("document_status")) = "draft" Then
+        UnLockDocument ActiveDocument
+    Else
+        LockDocument ActiveDocument
+    End If
 End Sub
 Sub FilePrint()
     Options.UpdateFieldsAtPrint = True

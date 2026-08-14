@@ -29,12 +29,11 @@ Private Sub cbSave_Click()
             End If
         
             Set targetDoc = Documents.Open(fileName:=targetPath, Visible:=True)
-            DocumentBeheer.UnLockDocument Documents.Item(targetDoc)
+            DocumentBeheer.RegenerateDocumentGuid targetDoc
             With targetDoc.BuiltInDocumentProperties
                 .Item("Title").Value = Me.txtTitle.text
             End With
             With targetDoc.CustomDocumentProperties
-                .Item("document_guid").Value = GeneratePureGuid
                 .Item("document_number").Value = Me.txtNumber.text
                 .Item("document_status").Value = Me.cbStatus.text
                 .Item("document_title").Value = Me.txtTitle.text
@@ -88,13 +87,12 @@ Private Sub cbSave_Click()
                 
                 Set targetDoc = Documents(targetPath)
                 targetDoc.Activate
-                DocumentBeheer.UnLockDocument Documents.Item(targetDoc)
+                DocumentBeheer.RegenerateDocumentGuid targetDoc
 
                 With targetDoc.BuiltInDocumentProperties
                     .Item("title").Value = Me.txtTitle.text
                 End With
                 With targetDoc.CustomDocumentProperties
-                    .Item("document_guid").Value = GeneratePureGuid
                     .Item("document_number").Value = Me.txtNumber.text
                     .Item("document_status").Value = Me.cbStatus.text
                     .Item("document_title").Value = Me.txtTitle.text
