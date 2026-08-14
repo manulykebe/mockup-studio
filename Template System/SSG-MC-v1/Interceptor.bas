@@ -99,15 +99,12 @@ End Function
 
 Sub DocumentClose()
     If Not thisIsAQualityDocument Then Exit Sub
-
-    ' A closed file must always be password protected; Draft documents keep the
-    ' style-only lock (still editable next time), anything else is locked read-only.
-    If LCase(getCustomDocumentProperty("document_status")) = "draft" Then
-        UnLockDocument ActiveDocument
+    If getCustomDocumentProperty("__close") <> "" Then
+        ActiveDocument.Saved = True
     Else
         LockDocument ActiveDocument
+        ActiveDocument.Save
     End If
-    ActiveDocument.Save
 End Sub
 Sub FilePrint()
     Options.UpdateFieldsAtPrint = True
@@ -136,9 +133,11 @@ Sub FileSave()
             ActiveDocument.Close SaveChanges:=False
             Exit Sub
         End If
-        If InStr(LCase(ActiveDocument.AttachedTemplate.FullName), LCase("\Master Template\")) > 0 Then
+        If getCustomDocumentProperty("document_type_code") = "MC" Or getCustomDocumentProperty("document_type_code") = "MT" Then
             MsgBox "You can't create a document from a master template." & vbCrLf & "This document will close..", vbCritical, gTemplateSystemName
+            setCustomDocumentProperty "__close", "y", ActiveDocument
             ActiveDocument.Close SaveChanges:=False
+            End
             Exit Sub
         End If
         Call CreateVersion
