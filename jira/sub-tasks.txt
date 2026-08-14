@@ -1,0 +1,7 @@
+Impact of change
+Development in DEV
+Demo
+Promote Configurations to TEST, if any
+Perform Functional Testing in TEST
+Perform Business Testing in TEST
+TQ review
