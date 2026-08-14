@@ -637,6 +637,34 @@ async function getSectionMetadata() {
   return { title, rows };
 }
 
+const SYSTEM_OBJECTS_SERVER = 'https://devinternal.srppvt4s3r.revvitycloud.eu/';
+const SYSTEM_OBJECTS_PATH = 'snconfig/objects';
+const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
+
+// Extracts the System Objects list (Configuration > System Objects, `${server}snconfig/objects`) into
+// CSV, reading each object's name from its `<span title>`. Navigates to the page first (and asks you to
+// re-run) if the browser isn't already there, since a full navigation would tear down this script.
+function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
+  const targetUrl = `${server}${SYSTEM_OBJECTS_PATH}`;
+  if (!window.location.href.startsWith(targetUrl)) {
+    console.log(`Navigating to ${targetUrl} — run extract.listSystemObjects() again once the page has loaded.`);
+    window.location.href = targetUrl;
+    return null;
+  }
+
+  const nameEls = Array.from(document.querySelectorAll(SYSTEM_OBJECT_NAME_SELECTOR));
+  const names = Array.from(new Set(nameEls.map((el) => el.getAttribute('title')?.trim()).filter(Boolean)));
+  const rows = names.map((name) => [name]);
+
+  const csv = toCsv(rows, ['System Object']);
+  downloadCsv(csv, `${getUrlPrefix(window.location)}.SystemObjects.csv`);
+
+  console.log(`Extracted ${rows.length} system object(s).`);
+  console.table(rows.map(([Name]) => ({ Name })));
+
+  return names;
+}
+
 // Expose for manual use in the console, e.g. extract.getToc(), extract.getTable(), or extract.openToolbarPopup('Fields').
 window.extract = {
   ...window.extract,
@@ -647,6 +675,8 @@ window.extract = {
   getHistoryRecords,
   getSectionMetadata,
   exportFocusedElementImagesFromToc,
-  // openToolbarPopup,
-  // closePopup,
+  listSystemObjects,
+  openToolbarPopup,
+  closePopup,
+  runChain,
 };

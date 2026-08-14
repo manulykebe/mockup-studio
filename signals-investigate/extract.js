@@ -9,5 +9,406 @@
 </svg>`,c=new Blob([l],{type:"image/svg+xml;charset=utf-8"}),f=URL.createObjectURL(c);try{let d=await new Promise((b,m)=>{let p=new Image;p.onload=()=>b(p),p.onerror=()=>m(new Error("Failed to render focused element to image.")),p.src=f}),u=document.createElement("canvas");u.width=i*t,u.height=r*t;let h=u.getContext("2d");return h.fillStyle="#ffffff",h.fillRect(0,0,u.width,u.height),h.scale(t,t),h.drawImage(d,0,0,i,r),await new Promise((b,m)=>{u.toBlob(p=>{if(p){b(p);return}m(new Error("Failed to encode focused element image as JPG."))},"image/jpeg",n)})}finally{URL.revokeObjectURL(f)}}function Ot(e){let t=e.getBoundingClientRect(),n=Math.max(1,Math.ceil(t.width)),o=Math.max(1,Math.ceil(t.height)),i=Y(e),r=new XMLSerializer().serializeToString(i),a=`<?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" width="${n}" height="${o}" viewBox="0 0 ${n} ${o}">
   <rect x="0" y="0" width="100%" height="100%" fill="#ffffff"/>
-  <foreignObject x="0" y="0" width="100%" height="100%">${r}</foreignObject>
-</svg>`;return new Blob([a],{type:"image/svg+xml;charset=utf-8"})}async function Rt(e,t=2){let o=[{blob:Ot(e),extension:"svg"}];try{let i=await St(e,t);o.unshift({blob:i,extension:"jpg"})}catch{}return o}function kt(e,t){if(!t.has(e))return t.add(e),e;let n=2;for(;t.has(`${e}-${n}`);)n+=1;let o=`${e}-${n}`;return t.add(o),o}async function Lt(e={}){let{maxChildren:t,settleMs:n=400,imageScale:o=2,timeoutMs:i=1e4}=e,r=j(document),a=Array.from(new Set(r.map(([,h])=>h).filter(Boolean))),s=Number.isInteger(t)&&t>0?a.slice(0,t):a;if(s.length===0)throw new Error("No TOC child sections found.");let l=A(window.location),c=new Set,f=[];for(let h=0;h<s.length;h++){let b=s[h],m=Array.from(document.querySelectorAll(".binder__toc-element-name")).find(v=>v.textContent.trim()===b);if(!m){f.push([b,"","NOT_FOUND"]);continue}(m.closest('.binder__toc-element, [role="button"], button, a')||m).click(),await x(()=>document.querySelector(L),i),await new Promise(v=>setTimeout(v,n));let g=document.querySelector(L);if(!g){f.push([b,"","","NO_FOCUSED_ELEMENT"]);continue}let _=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK",S=kt(`${l}#${_}#${xt(b)}`,c),U=await Rt(g,o),tt=U.find(v=>v.extension==="jpg")?`${S}.jpg`:"",et=`${S}.svg`;U.forEach(v=>{let nt=`${S}.${v.extension}`;Et(v.blob,nt)}),f.push([b,tt,et,"OK"])}let d=T(f,["Child","JPG File","SVG File","Status"]),u=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK";return C(d,`${l}#${u}#focused-elements.csv`),console.log(`Exported ${f.length} focused-element image(s).`),console.table(f.map(([h,b,m,p])=>({Child:h,JpgFile:b,SvgFile:m,Status:p}))),f}function jt(e,t){let{headers:n,rows:o}=I(e),i=T(o,n),r=t?`table-${t}`:"table",a=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK";return C(i,`${A(window.location)}#${a}#${r}.csv`),console.log(`Extracted ${o.length} row(s) from table.`),console.table(o.map(s=>Object.fromEntries(n.map((l,c)=>[l||`Column ${c+1}`,s[c]])))),o}async function Z(e){let t=new Set(document.querySelectorAll("table")),n=()=>Array.from(document.querySelectorAll("table")).find(i=>!t.has(i)),[,,o]=await R([()=>P(e),()=>x(n,1e4),()=>e==="Fields"?Pt(n):jt(n(),e),()=>q()]);return o}async function Pt(e){let{headers:t,rows:n}=I(e()),o=t.indexOf("Field"),i=t.indexOf("Type"),r=["Field","Type","Attribute Name","Attribute Value"],a=[];for(let c=0;c<n.length;c++){let f=n[c][o]??"",d=n[c][i]??"",h=e().querySelectorAll("tbody tr")[c]?.querySelector('button[aria-label="Edit field"]');if(!h){a.push([f,d,"",""]);continue}h.click();let b=await x(()=>document.querySelector("form.fieldFormAttributes"),1e4),m=B(b);(m.length?m:[["",""]]).forEach(([p,g])=>{a.push([f,d,p,g])}),b.querySelector("#cancel")?.click(),await x(e,1e4)}let s=T(a,r),l=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK";return C(s,`${A(window.location)}#${l}#table-Fields.csv`),console.log(`Extracted ${a.length} row(s) from Fields table with attributes.`),console.table(a.map(([c,f,d,u])=>({Field:c,Type:f,"Attribute Name":d,"Attribute Value":u}))),a}var qt=["Fields","Properties"];async function It(e=qt){let t=await R(e.map(n=>()=>Z(n)));return Object.fromEntries(e.map((n,o)=>[n,t[o]]))}var K=".history-list",Q=".record-browser-row";async function Ft(e,t,n=15e3){let o=Date.now(),i=-1,r=0;for(;Date.now()-o<n&&r<2;){let a=e.querySelectorAll(t).length;r=a===i?r+1:0,i=a,e.scrollTop=e.scrollHeight,e.dispatchEvent(new Event("scroll",{bubbles:!0})),await new Promise(s=>setTimeout(s,600))}return Array.from(e.querySelectorAll(t))}function $t(e){let t=e.querySelector(".user-info-name")?.textContent.trim()??"",n=e.querySelector(".history-cell.name .smaller")?.textContent.trim()??"",o=e.querySelector(".history-cell.description")?.textContent.trim()??"",i=e.querySelector(".history-cell.date")?.textContent.trim()??"";return[t,n,o,i]}async function Mt(){let e=["Name","Email","Description","Date"],[,,t]=await R([()=>P("History"),()=>x(()=>document.querySelector(`${K} ${Q}`),1e4),async()=>{let n=document.querySelector(K),i=(await Ft(n,Q)).map($t),r=T(i,e),a=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK";return C(r,`${A(window.location)}#${a}#history.csv`),console.log(`Extracted ${i.length} row(s) from history.`),console.table(i.map(s=>Object.fromEntries(e.map((l,c)=>[l,s[c]])))),i},()=>q()]);return t}var L=".binder__element.binder__element--focused",X='[data-testid^="dropdown-item-unhide-column-"]';async function Ut(e,t=5e3){let n=Date.now(),o=-1,i=0;for(;Date.now()-n<t&&i<2;){let r=document.querySelectorAll(e).length;i=r===o?i+1:0,o=r,await new Promise(a=>setTimeout(a,250))}return Array.from(document.querySelectorAll(e))}function Nt(e){return/external actions?|table actions?/i.test(e)?"External Actions":e}function M(e=document){let t=['[role="menuitem"]',".dropdown-item",".menu-item",'[data-testid*="menu-item"]','[data-testid*="action"]','[aria-label][role="button"]'],n=new Set;return t.forEach(o=>{Array.from(e.querySelectorAll(o)).forEach(i=>{let r=(i.textContent||i.getAttribute("aria-label")||"").replace(/\s+/g," ").trim();r&&n.add(r)})}),Array.from(n)}var Bt={"GxP Sample Creation Table Actions":["Clean Empty Rows"]};function Dt(e){return e?(e.split("/").pop()?.split("?")[0]||"").replace(/\.html?$/i,"").replace(/[-_]+/g," ").replace(/\b\w/g,o=>o.toUpperCase()).trim():""}async function Gt(e){let t=new Set,n=e.getAttribute("aria-label")?.trim()||e.textContent.trim();t.add(n),(Bt[n]||[]).forEach(s=>t.add(s));let o=new Set(Array.from(document.querySelectorAll('[role="dialog"]'))),i=new Set(Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')));e.click(),await new Promise(s=>setTimeout(s,350)),Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')).filter(s=>!i.has(s)).forEach(s=>{M(s).forEach(l=>t.add(l))});let a=Array.from(document.querySelectorAll('[role="dialog"]')).find(s=>!o.has(s));if(a){let s=a.querySelector("h1, h2, h3, h4, .modal-title")?.textContent?.trim();s&&t.add(s),M(a).forEach(f=>t.add(f));let l=a.querySelector("iframe");if(l){let f=Dt(l.getAttribute("src"));f&&t.add(f);try{let d=l.contentDocument;d&&(M(d).forEach(u=>t.add(u)),Array.from(d.querySelectorAll("button, a")).forEach(u=>{let h=u.textContent.replace(/\s+/g," ").trim();h&&t.add(h)}))}catch{}}a.querySelector('[aria-label="Close"], button[title="Close"], button.btn-close, button.close')?.click(),await new Promise(f=>setTimeout(f,200))}return Array.from(t).filter(Boolean).map(s=>s.replace(/\s+/g," ").trim()).filter(s=>s!=="Close"&&s!=="I"&&s!=="Loading").filter((s,l,c)=>c.indexOf(s)===l)}async function Ht(e){let t=Array.from(e.querySelectorAll(".binder__element-header-controls")),n=[];t.forEach(r=>{Array.from(r.querySelectorAll("button[aria-label], a[aria-label]")).forEach(a=>{let s=a.getAttribute("aria-label")?.trim();s&&n.push(s)})});let o=Array.from(e.querySelectorAll("button[aria-label], a[aria-label]")).filter(r=>{let a=r.getAttribute("aria-label")?.trim()||"";return/external actions?|table actions?/i.test(a)}),i=new Set;for(let r of o)(await Gt(r)).forEach(s=>i.add(s));return{icons:n,externalActionItems:Array.from(i)}}function Wt(e){let t=e.querySelector('.header[role="row"]');return t?Array.from(t.querySelectorAll('[role="columnheader"]')).map(n=>n.textContent.trim()).filter(Boolean):[]}async function Vt(e){let t=e.querySelector('button[aria-label="Table Settings"]');if(!t)return[];let n=!!document.querySelector(".dropdown-menu");n||t.click();let[,,o]=await R([()=>x(()=>document.querySelector(".dropdown-menu"),5e3),()=>Ut(X),()=>Array.from(document.querySelectorAll(X)).map(i=>i.querySelector(".grid-hidden-header div")?.textContent.trim()).filter(Boolean)]);return n||t.click(),o}async function zt(){let e=document.querySelector(L);if(!e)throw new Error(`No element found matching selector "${L}".`);let t=e.querySelector(".inline-input.primary")?.textContent.trim()??"",{icons:n,externalActionItems:o}=await Ht(e),i=e.querySelector(".hierarchical-table"),r=i?.querySelector(".adt-external .data")?.textContent.trim(),a=i?Wt(i):[],s=i?await Vt(i):[],l=Array.from(new Set(n.map(Nt))),c=Array.from(new Set(o)).sort((p,g)=>p==="Clean Empty Rows"?-1:g==="Clean Empty Rows"?1:p.localeCompare(g)),f=c.length?`External Actions (${c.join(", ")})`:"",d=f?`${t} > icons: ${f}`:"",u=["Type","Value"],h=[...l.map(p=>["Icon",p]),...f?[["Icon",f]]:[],...d?[["IconSummary",d]]:[],...r?[["Data Source",r]]:[],...a.map(p=>["TableHeader",p]),...s.map(p=>["TableHeaderHidden",p])],b=T(h,u),m=E(document.getElementsByClassName("inline-input ms-1 toolbar__name text-primary")[0])||"TemplateUNK";return C(b,`${A(window.location)}#${m}#${t}-metadata.csv`),console.log(`Extracted metadata for "${t}": ${h.length} row(s).`),console.table(h.map(([p,g])=>({Type:p,Value:g}))),{title:t,rows:h}}window.extract={...window.extract,getToc:At,getFieldsTable:Z,getTables_Fields_Properties:It,getHistoryRecords:Mt,getSectionMetadata:zt,exportFocusedElementImagesFromToc:Lt};})();
+  <foreignObject x="0" y="0" width="100%" height="100%">${serialized}</foreignObject>
+</svg>`;
+    return new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+  }
+  async function focusedElementToImageAssets(element, scale = 2) {
+    const svgBlob = focusedElementToSvgBlob(element);
+    const assets = [{ blob: svgBlob, extension: "svg" }];
+    try {
+      const jpgBlob = await focusedElementToJpgBlob(element, scale);
+      assets.unshift({ blob: jpgBlob, extension: "jpg" });
+    } catch (error) {
+    }
+    return assets;
+  }
+  function getUniqueBaseName(baseName, usedNames) {
+    if (!usedNames.has(baseName)) {
+      usedNames.add(baseName);
+      return baseName;
+    }
+    let n = 2;
+    while (usedNames.has(`${baseName}-${n}`)) {
+      n += 1;
+    }
+    const unique = `${baseName}-${n}`;
+    usedNames.add(unique);
+    return unique;
+  }
+  async function exportFocusedElementImagesFromToc(options = {}) {
+    const {
+      maxChildren,
+      settleMs = 400,
+      imageScale = 2,
+      timeoutMs = 1e4
+    } = options;
+    const tocRows = extractTocData(document);
+    const childNames = Array.from(new Set(tocRows.map(([, child]) => child).filter(Boolean)));
+    const selectedChildren = Number.isInteger(maxChildren) && maxChildren > 0 ? childNames.slice(0, maxChildren) : childNames;
+    if (selectedChildren.length === 0) {
+      throw new Error("No TOC child sections found.");
+    }
+    const prefix = getUrlPrefix(window.location);
+    const usedBaseNames = /* @__PURE__ */ new Set();
+    const manifestRows = [];
+    for (let i = 0; i < selectedChildren.length; i++) {
+      const childName = selectedChildren[i];
+      const childEl = Array.from(document.querySelectorAll(".binder__toc-element-name")).find((el) => el.textContent.trim() === childName);
+      if (!childEl) {
+        manifestRows.push([childName, "", "NOT_FOUND"]);
+        continue;
+      }
+      const clickTarget = childEl.closest('.binder__toc-element, [role="button"], button, a') || childEl;
+      clickTarget.click();
+      await waitForCondition(() => document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR), timeoutMs);
+      await new Promise((resolve) => setTimeout(resolve, settleMs));
+      const focused = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
+      if (!focused) {
+        manifestRows.push([childName, "", "", "NO_FOCUSED_ELEMENT"]);
+        continue;
+      }
+      const baseName = getUniqueBaseName(`${prefix}.${slugify(childName)}`, usedBaseNames);
+      const imageAssets = await focusedElementToImageAssets(focused, imageScale);
+      const jpgFilename = imageAssets.find((asset) => asset.extension === "jpg") ? `${baseName}.jpg` : "";
+      const svgFilename = `${baseName}.svg`;
+      imageAssets.forEach((asset) => {
+        const filename = `${baseName}.${asset.extension}`;
+        downloadBlob(asset.blob, filename);
+      });
+      manifestRows.push([childName, jpgFilename, svgFilename, "OK"]);
+    }
+    const csv = toCsv(manifestRows, ["Child", "JPG File", "SVG File", "Status"]);
+    downloadCsv(csv, `${prefix}.focused-elements.csv`);
+    console.log(`Exported ${manifestRows.length} focused-element image(s).`);
+    console.table(manifestRows.map(([Child, JpgFile, SvgFile, Status]) => ({ Child, JpgFile, SvgFile, Status })));
+    return manifestRows;
+  }
+  function extractTable(table, tableName) {
+    const { headers, rows } = parseHtmlTable(table);
+    const csv = toCsv(rows, headers);
+    const filenameSuffix = tableName ? `table-${tableName}` : "table";
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.${filenameSuffix}.csv`);
+    console.log(`Extracted ${rows.length} row(s) from table.`);
+    console.table(rows.map((row) => Object.fromEntries(headers.map((header, i) => [header || `Column ${i + 1}`, row[i]]))));
+    return rows;
+  }
+  function getTable(selector = "table", tableName) {
+    const tables = Array.from(document.querySelectorAll(selector));
+    const table = tables[tables.length - 1];
+    if (!table) {
+      throw new Error(`No element found matching selector "${selector}".`);
+    }
+    return extractTable(table, tableName);
+  }
+  async function getFieldsTable(link) {
+    const existingTables = new Set(document.querySelectorAll("table"));
+    const findNewTable = () => Array.from(document.querySelectorAll("table")).find((table) => !existingTables.has(table));
+    const [, , rows] = await runChain([
+      () => openToolbarPopup(link),
+      () => waitForCondition(findNewTable, 1e4),
+      () => link === "Fields" ? extractFieldsTableWithAttributes(findNewTable) : extractTable(findNewTable(), link),
+      () => closePopup()
+    ]);
+    return rows;
+  }
+  async function extractFieldsTableWithAttributes(findNewTable) {
+    const { headers: tableHeaders, rows: tableRows } = parseHtmlTable(findNewTable());
+    const fieldNameIndex = tableHeaders.indexOf("Field");
+    const typeIndex = tableHeaders.indexOf("Type");
+    const headers = ["Field", "Type", "Attribute Name", "Attribute Value"];
+    const rows = [];
+    for (let i = 0; i < tableRows.length; i++) {
+      const fieldName = tableRows[i][fieldNameIndex] ?? "";
+      const fieldType = tableRows[i][typeIndex] ?? "";
+      const tr = findNewTable().querySelectorAll("tbody tr")[i];
+      const editButton = tr?.querySelector('button[aria-label="Edit field"]');
+      if (!editButton) {
+        rows.push([fieldName, fieldType, "", ""]);
+        continue;
+      }
+      editButton.click();
+      const form = await waitForCondition(() => document.querySelector("form.fieldFormAttributes"), 1e4);
+      const attributePairs = parseFieldEditForm(form);
+      (attributePairs.length ? attributePairs : [["", ""]]).forEach(([name, value]) => {
+        rows.push([fieldName, fieldType, name, value]);
+      });
+      form.querySelector("#cancel")?.click();
+      await waitForCondition(findNewTable, 1e4);
+    }
+    const csv = toCsv(rows, headers);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.table-Fields.csv`);
+    console.log(`Extracted ${rows.length} row(s) from Fields table with attributes.`);
+    console.table(rows.map(([Field, Type, Name, Value]) => ({ Field, Type, "Attribute Name": Name, "Attribute Value": Value })));
+    return rows;
+  }
+  var DEFAULT_POPUP_LABELS = ["Fields", "Properties"];
+  async function getAllTables(labels = DEFAULT_POPUP_LABELS) {
+    const results = await runChain(labels.map((label) => () => getFieldsTable(label)));
+    return Object.fromEntries(labels.map((label, i) => [label, results[i]]));
+  }
+  var HISTORY_LIST_SELECTOR = ".history-list";
+  var HISTORY_ROW_SELECTOR = ".record-browser-row";
+  async function loadAllRows(container, rowSelector, timeoutMs = 15e3) {
+    const start = Date.now();
+    let lastCount = -1;
+    let stableRounds = 0;
+    while (Date.now() - start < timeoutMs && stableRounds < 2) {
+      const count = container.querySelectorAll(rowSelector).length;
+      stableRounds = count === lastCount ? stableRounds + 1 : 0;
+      lastCount = count;
+      container.scrollTop = container.scrollHeight;
+      container.dispatchEvent(new Event("scroll", { bubbles: true }));
+      await new Promise((resolve) => setTimeout(resolve, 600));
+    }
+    return Array.from(container.querySelectorAll(rowSelector));
+  }
+  function parseHistoryRow(row) {
+    const name = row.querySelector(".user-info-name")?.textContent.trim() ?? "";
+    const email = row.querySelector(".history-cell.name .smaller")?.textContent.trim() ?? "";
+    const description = row.querySelector(".history-cell.description")?.textContent.trim() ?? "";
+    const date = row.querySelector(".history-cell.date")?.textContent.trim() ?? "";
+    return [name, email, description, date];
+  }
+  async function getHistoryRecords() {
+    const headers = ["Name", "Email", "Description", "Date"];
+    const [, , rows] = await runChain([
+      () => openToolbarPopup("History"),
+      () => waitForCondition(() => document.querySelector(`${HISTORY_LIST_SELECTOR} ${HISTORY_ROW_SELECTOR}`), 1e4),
+      async () => {
+        const container = document.querySelector(HISTORY_LIST_SELECTOR);
+        const rowEls = await loadAllRows(container, HISTORY_ROW_SELECTOR);
+        const data = rowEls.map(parseHistoryRow);
+        const csv = toCsv(data, headers);
+        downloadCsv(csv, `${getUrlPrefix(window.location)}.history.csv`);
+        console.log(`Extracted ${data.length} row(s) from history.`);
+        console.table(data.map((row) => Object.fromEntries(headers.map((header, i) => [header, row[i]]))));
+        return data;
+      },
+      () => closePopup()
+    ]);
+    return rows;
+  }
+  var BINDER_ELEMENT_FOCUSED_SELECTOR = ".binder__element.binder__element--focused";
+  var HIDDEN_COLUMN_ITEM_SELECTOR = '[data-testid^="dropdown-item-unhide-column-"]';
+  async function waitForStableCount(selector, timeoutMs = 5e3) {
+    const start = Date.now();
+    let lastCount = -1;
+    let stableRounds = 0;
+    while (Date.now() - start < timeoutMs && stableRounds < 2) {
+      const count = document.querySelectorAll(selector).length;
+      stableRounds = count === lastCount ? stableRounds + 1 : 0;
+      lastCount = count;
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
+    return Array.from(document.querySelectorAll(selector));
+  }
+  function normalizeActionLabel(label) {
+    if (/external actions?|table actions?/i.test(label)) {
+      return "External Actions";
+    }
+    return label;
+  }
+  function collectMenuItemTexts(root = document) {
+    const selectors = [
+      '[role="menuitem"]',
+      ".dropdown-item",
+      ".menu-item",
+      '[data-testid*="menu-item"]',
+      '[data-testid*="action"]',
+      '[aria-label][role="button"]'
+    ];
+    const texts = /* @__PURE__ */ new Set();
+    selectors.forEach((selector) => {
+      Array.from(root.querySelectorAll(selector)).forEach((el) => {
+        const value = (el.textContent || el.getAttribute("aria-label") || "").replace(/\s+/g, " ").trim();
+        if (value) {
+          texts.add(value);
+        }
+      });
+    });
+    return Array.from(texts);
+  }
+  var KNOWN_EXTERNAL_ACTION_ITEMS = {
+    "GxP Sample Creation Table Actions": ["Clean Empty Rows"]
+  };
+  function parseActionNameFromIframeSrc(src) {
+    if (!src) {
+      return "";
+    }
+    const file = src.split("/").pop()?.split("?")[0] || "";
+    const name = file.replace(/\.html?$/i, "").replace(/[-_]+/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()).trim();
+    return name;
+  }
+  async function getExternalActionItems(control) {
+    const items = /* @__PURE__ */ new Set();
+    const controlLabel = control.getAttribute("aria-label")?.trim() || control.textContent.trim();
+    items.add(controlLabel);
+    (KNOWN_EXTERNAL_ACTION_ITEMS[controlLabel] || []).forEach((item) => items.add(item));
+    const existingDialogs = new Set(Array.from(document.querySelectorAll('[role="dialog"]')));
+    const existingMenus = new Set(Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')));
+    control.click();
+    await new Promise((resolve) => setTimeout(resolve, 350));
+    const menuRoots = Array.from(document.querySelectorAll('[role="menu"], .dropdown-menu, .menu, .menu-list')).filter((menu) => !existingMenus.has(menu));
+    menuRoots.forEach((menu) => {
+      collectMenuItemTexts(menu).forEach((item) => items.add(item));
+    });
+    const dialog = Array.from(document.querySelectorAll('[role="dialog"]')).find((node) => !existingDialogs.has(node));
+    if (dialog) {
+      const dialogTitle = dialog.querySelector("h1, h2, h3, h4, .modal-title")?.textContent?.trim();
+      if (dialogTitle) {
+        items.add(dialogTitle);
+      }
+      collectMenuItemTexts(dialog).forEach((item) => items.add(item));
+      const iframe = dialog.querySelector("iframe");
+      if (iframe) {
+        const inferredName = parseActionNameFromIframeSrc(iframe.getAttribute("src"));
+        if (inferredName) {
+          items.add(inferredName);
+        }
+        try {
+          const iframeDoc = iframe.contentDocument;
+          if (iframeDoc) {
+            collectMenuItemTexts(iframeDoc).forEach((item) => items.add(item));
+            Array.from(iframeDoc.querySelectorAll("button, a")).forEach((node) => {
+              const text = node.textContent.replace(/\s+/g, " ").trim();
+              if (text) {
+                items.add(text);
+              }
+            });
+          }
+        } catch {
+        }
+      }
+      const closeButton = dialog.querySelector('[aria-label="Close"], button[title="Close"], button.btn-close, button.close');
+      closeButton?.click();
+      await new Promise((resolve) => setTimeout(resolve, 200));
+    }
+    return Array.from(items).filter(Boolean).map((value) => value.replace(/\s+/g, " ").trim()).filter((value) => value !== "Close" && value !== "I" && value !== "Loading").filter((value, index, arr) => arr.indexOf(value) === index);
+  }
+  async function getBinderElementIcons(el) {
+    const groups = Array.from(el.querySelectorAll(".binder__element-header-controls"));
+    const icons = [];
+    groups.forEach((group) => {
+      Array.from(group.querySelectorAll("button[aria-label], a[aria-label]")).forEach((control) => {
+        const rawLabel = control.getAttribute("aria-label")?.trim();
+        if (!rawLabel) {
+          return;
+        }
+        icons.push(rawLabel);
+      });
+    });
+    const externalActionControls = Array.from(el.querySelectorAll("button[aria-label], a[aria-label]")).filter((control) => {
+      const label = control.getAttribute("aria-label")?.trim() || "";
+      return /external actions?|table actions?/i.test(label);
+    });
+    const externalActionItems = /* @__PURE__ */ new Set();
+    for (const control of externalActionControls) {
+      const items = await getExternalActionItems(control);
+      items.forEach((item) => externalActionItems.add(item));
+    }
+    return {
+      icons,
+      externalActionItems: Array.from(externalActionItems)
+    };
+  }
+  function getVisibleTableHeaders(table) {
+    const headerRow = table.querySelector('.header[role="row"]');
+    if (!headerRow) {
+      return [];
+    }
+    return Array.from(headerRow.querySelectorAll('[role="columnheader"]')).map((cell) => cell.textContent.trim()).filter(Boolean);
+  }
+  async function getHiddenTableHeaders(table) {
+    const settingsButton = table.querySelector('button[aria-label="Table Settings"]');
+    if (!settingsButton) {
+      return [];
+    }
+    const wasOpen = !!document.querySelector(".dropdown-menu");
+    if (!wasOpen) {
+      settingsButton.click();
+    }
+    const [, , headers] = await runChain([
+      () => waitForCondition(() => document.querySelector(".dropdown-menu"), 5e3),
+      () => waitForStableCount(HIDDEN_COLUMN_ITEM_SELECTOR),
+      () => Array.from(document.querySelectorAll(HIDDEN_COLUMN_ITEM_SELECTOR)).map((item) => item.querySelector(".grid-hidden-header div")?.textContent.trim()).filter(Boolean)
+    ]);
+    if (!wasOpen) {
+      settingsButton.click();
+    }
+    return headers;
+  }
+  async function getElementMetadata() {
+    const el = document.querySelector(BINDER_ELEMENT_FOCUSED_SELECTOR);
+    if (!el) {
+      throw new Error(`No element found matching selector "${BINDER_ELEMENT_FOCUSED_SELECTOR}".`);
+    }
+    const title = el.querySelector(".inline-input.primary")?.textContent.trim() ?? "";
+    const { icons, externalActionItems } = await getBinderElementIcons(el);
+    const table = el.querySelector(".hierarchical-table");
+    const dataSource = table?.querySelector(".adt-external .data")?.textContent.trim();
+    const visibleHeaders = table ? getVisibleTableHeaders(table) : [];
+    const hiddenHeaders = table ? await getHiddenTableHeaders(table) : [];
+    const normalizedIcons = Array.from(new Set(icons.map(normalizeActionLabel)));
+    const orderedExternalActionItems = Array.from(new Set(externalActionItems)).sort((a, b) => {
+      if (a === "Clean Empty Rows") {
+        return -1;
+      }
+      if (b === "Clean Empty Rows") {
+        return 1;
+      }
+      return a.localeCompare(b);
+    });
+    const externalActionsValue = orderedExternalActionItems.length ? `External Actions (${orderedExternalActionItems.join(", ")})` : "";
+    const iconSummary = externalActionsValue ? `${title} > icons: ${externalActionsValue}` : "";
+    const headers = ["Type", "Value"];
+    const rows = [
+      ...normalizedIcons.map((icon) => ["Icon", icon]),
+      ...externalActionsValue ? [["Icon", externalActionsValue]] : [],
+      ...iconSummary ? [["IconSummary", iconSummary]] : [],
+      ...dataSource ? [["Data Source", dataSource]] : [],
+      ...visibleHeaders.map((header) => ["TableHeader", header]),
+      ...hiddenHeaders.map((header) => ["TableHeaderHidden", header])
+    ];
+    const csv = toCsv(rows, headers);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.${title || "element"}-metadata.csv`);
+    console.log(`Extracted metadata for "${title}": ${rows.length} row(s).`);
+    console.table(rows.map(([Type, Value]) => ({ Type, Value })));
+    return { title, rows };
+  }
+  var SYSTEM_OBJECTS_SERVER = "https://devinternal.srppvt4s3r.revvitycloud.eu/";
+  var SYSTEM_OBJECTS_PATH = "snconfig/objects";
+  var SYSTEM_OBJECT_NAME_SELECTOR = "h4.entity-info-name span[title]";
+  function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
+    const targetUrl = `${server}${SYSTEM_OBJECTS_PATH}`;
+    if (!window.location.href.startsWith(targetUrl)) {
+      console.log(`Navigating to ${targetUrl} — run extract.listSystemObjects() again once the page has loaded.`);
+      window.location.href = targetUrl;
+      return null;
+    }
+    const nameEls = Array.from(document.querySelectorAll(SYSTEM_OBJECT_NAME_SELECTOR));
+    const names = Array.from(new Set(nameEls.map((el) => el.getAttribute("title")?.trim()).filter(Boolean)));
+    const rows = names.map((name) => [name]);
+    const csv = toCsv(rows, ["System Object"]);
+    downloadCsv(csv, `${getUrlPrefix(window.location)}.SystemObjects.csv`);
+    console.log(`Extracted ${rows.length} system object(s).`);
+    console.table(rows.map(([Name]) => ({ Name })));
+    return names;
+  }
+  window.extract = {
+    ...window.extract,
+    getToc,
+    getTable,
+    getFieldsTable,
+    getAllTables,
+    getTables_Fields_Properties: getAllTables,
+    getHistoryRecords,
+    getElementMetadata,
+    getSectionMetadata: getElementMetadata,
+    exportFocusedElementImagesFromToc,
+    listSystemObjects,
+    openToolbarPopup,
+    closePopup,
+    runChain
+  };
+})();
