@@ -9,8 +9,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = True
 Private Sub Document_Close()
     If Not IsSSGReferenceSet Then
-        Debug.Assert False
-
         MsgBox "Template Reference Missing", vbApplicationModal + vbCritical, "Error"
         Exit Sub
     End If
