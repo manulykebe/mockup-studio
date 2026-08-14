@@ -70,7 +70,7 @@ Sub OnApproveClick(control As IRibbonControl)
         .Item("document_effective_date").Value = Format(Now + 1, "dd/mmm/yyyy")
     End With
     Call UpdateAllFields
-    Call LockDocument
+    Call LockDocument(ActiveDocument)
     ActiveDocument.Save
     Call UpdateRibbon
 End Sub
@@ -150,6 +150,7 @@ Public Sub OnSubscriptCommand(control As IRibbonControl)
     ToggleCharacterStyle "Subscript"
 End Sub
 Public Sub OnClearFormattingCommand(control As IRibbonControl)
+    Debug.Assert False
     RunClearFormatting
 End Sub
 

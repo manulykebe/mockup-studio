@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} frmDocumentManagement 
    Caption         =   "Document Management"
-   ClientHeight    =   4800
-   ClientLeft      =   110
-   ClientTop       =   450
-   ClientWidth     =   8060
+   ClientHeight    =   4770
+   ClientLeft      =   70
+   ClientTop       =   300
+   ClientWidth     =   8010
    OleObjectBlob   =   "frmDocumentManagement.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -13,7 +13,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Private Sub cbSave_Click()
     Dim mapPad As String, bronPad As String, targetPath As String
     Dim targetDoc As Document
@@ -25,16 +24,12 @@ Private Sub cbSave_Click()
             mapPad = folderQRegulate & "Templates\" & Me.txtCompanyCode.text & "-" & Me.txtTypeCode.text & "\"
             bronPad = ActiveDocument.FullName
             targetPath = Me.txtTargetFullPath.text
-            
-            DocumentBeheer.Unprotect Documents.Item(bronPad)
-            
             If KopieerBestand(bronPad, targetPath) = False Then
                 Exit Sub
             End If
         
             Set targetDoc = Documents.Open(fileName:=targetPath, Visible:=True)
-            DocumentBeheer.Unprotect targetDoc
-            
+            DocumentBeheer.UnLockDocument Documents.Item(targetDoc)
             With targetDoc.BuiltInDocumentProperties
                 .Item("Title").Value = Me.txtTitle.text
             End With
@@ -56,7 +51,6 @@ Private Sub cbSave_Click()
                  .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                  .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
             End With
-            DocumentBeheer.UnLockDocument targetDoc
             Call UpdateAllFields(targetDoc)
             
             Call text.ReplaceSection( _
@@ -70,13 +64,36 @@ Private Sub cbSave_Click()
             Application.Documents(bronPad).Close SaveChanges:=False
             
         Case "Create new version"
+            If ActiveDocument.CustomDocumentProperties.Item("document_status").Value <> "Approved" Then
+                MsgBox "Only approved documents can be increased.", vbApplicationModal + vbCritical
+                Exit Sub
+            End If
             bIsWordTemplate = InStr(ActiveDocument.FullName, ".dot") > 0
             If bIsWordTemplate Then
-                DocumentBeheer.Unprotect
-                With ActiveDocument.BuiltInDocumentProperties
+            
+                targetPath = Me.txtTargetFullPath.text
+                'Call MakeSureDirectoryPathExists(targetPath)
+                If Dir(targetPath) = "" Then
+                    On Error Resume Next
+                    ActiveDocument.SaveAs2 targetPath
+                    If Err.Number Then
+                        Debug.Print Err.Description
+                        Debug.Assert False
+                    End If
+                    On Error GoTo 0
+                Else
+                    MsgBox "This document already exists!", vbCritical, gTemplateSystemName
+                    Exit Sub
+                End If
+                
+                Set targetDoc = Documents(targetPath)
+                targetDoc.Activate
+                DocumentBeheer.UnLockDocument Documents.Item(targetDoc)
+
+                With targetDoc.BuiltInDocumentProperties
                     .Item("title").Value = Me.txtTitle.text
                 End With
-                With ActiveDocument.CustomDocumentProperties
+                With targetDoc.CustomDocumentProperties
                     .Item("document_guid").Value = GeneratePureGuid
                     .Item("document_number").Value = Me.txtNumber.text
                     .Item("document_status").Value = Me.cbStatus.text
@@ -84,29 +101,22 @@ Private Sub cbSave_Click()
                     .Item("document_type_sequence").Value = Me.txtSequence.text
                     .Item("document_version").Value = Me.txtVersion.text
                 End With
-                With ActiveDocument.CustomDocumentProperties
+                With targetDoc.CustomDocumentProperties
                      .Item("document_owner").Value = textIfEnabled(Me.txtOwner.text, CBool(Me.cbOwner.Value))
                      .Item("document_author").Value = textIfEnabled(Me.txtAuthor.text, CBool(Me.cbAuthor.Value))
                      .Item("document_reviewer").Value = textIfEnabled(Me.txtReviewer.text, CBool(Me.cbReviewer.Value))
                      .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                      .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
                 End With
-                DocumentBeheer.UnLockDocument
-                Call UpdateAllFields(targetDoc)
-                
-                targetPath = Me.txtTargetFullPath.text
-                'Call MakeSureDirectoryPathExists(targetPath)
-                If Dir(targetPath) = "" Then
-                    ActiveDocument.SaveAs2 targetPath
-                Else
-                    MsgBox "This document already exists!", vbCritical, gTemplateSystemName
-                End If
                 
                 Unload Me
+                
+                Call UpdateAllFields(targetDoc)
+
                 Exit Sub
             End If
             
-            DocumentBeheer.Unprotect
+            DocumentBeheer.UnLockDocument
             With ActiveDocument.BuiltInDocumentProperties
                 .Item("title").Value = Me.txtTitle.text
             End With
@@ -125,7 +135,6 @@ Private Sub cbSave_Click()
                  .Item("document_approver").Value = textIfEnabled(Me.txtApprover.text, CBool(Me.cbApprover.Value))
                  .Item("document_managementapprover").Value = textIfEnabled(Me.txtManagementApprover.text, CBool(Me.cbManagementApprover.Value))
             End With
-            DocumentBeheer.UnLockDocument
             Call UpdateAllFields(targetDoc)
             
                 
@@ -157,8 +166,6 @@ Function textIfEnabled(text As String, enabled As Boolean)
     textIfEnabled = text
     End If
 End Function
-
-
 
 Private Sub txtNumber_Change()
     Dim targetPath As String
@@ -274,11 +281,9 @@ Private Sub UserForm_Activate()
             .enabled = True
         End With
     End With
-    Me.Caption = Me.txtMode.text
     Select Case Me.txtMode.text
         Case "Create new template"
             With Me
-                .txtGuid.text = ""
                 With .txtType
                     .BackStyle = fmBackStyleOpaque
                     .enabled = True
@@ -306,8 +311,6 @@ Private Sub UserForm_Activate()
             End With
         Case "Create new version"
             With Me
-                .txtGuid.text = ""
-            
                 With .txtType
                     .text = getCustomDocumentProperty("document_type")
                 End With

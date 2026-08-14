@@ -2,17 +2,29 @@ Attribute VB_Name = "Interceptor"
 Option Explicit
 Public TargetLocalPath As String
 Sub DocumentNew()
+    If Not thisIsAQualityDocument Then Exit Sub
+    If ActiveDocument.Path = "" Then
+        DocumentSave
+    Else
+        MsgBox "Dead end?"
+    End If
 End Sub
 Sub DocumentOpen()
     Application.ScreenUpdating = False
     If Not thisIsAQualityDocument Then Exit Sub
     
-    Dim doc As Document, i As Integer
+    Dim doc As Document
     Set doc = ActiveDocument
     
-    Dim docPath As String, bestMatchPath As String, moreRecentDocs As Variant
+    Dim docPath As String, bestMatchPath As String
     docPath = doc.FullName
-    Dim highVersion As Integer, currVersion As Integer
+    Dim highVersion As Integer
+    'Check for latest approved version
+    highVersion = FileManagement.GetHighestVersionOfFile(docPath, bestMatchPath:=bestMatchPath)
+    If CInt(highVersion) > CInt(getCustomDocumentProperty("document_version")) Then
+            MsgBox "Use the most recent version!" & vbCrLf & bestMatchPath
+    End If
+    Application.ScreenUpdating = False
 
     If InStr(1, docPath, "://steria.sharepoint.com", vbTextCompare) > 0 Then
         Dim localPath As String
@@ -39,44 +51,10 @@ Sub DocumentOpen()
         On Error GoTo 0
         Exit Sub
     End If
-    
-    'Check for latest approved version
-    currVersion = CInt(getCustomDocumentProperty("document_version"))
-    highVersion = CInt(FileManagement.GetHighestVersionOfFile(docPath, allMatchesRecent:=moreRecentDocs))
-    If highVersion > currVersion Then
-        Application.ScreenUpdating = False
-        'a more recent file is available
-        For i = UBound(moreRecentDocs) To LBound(moreRecentDocs) Step -1
-            bestMatchPath = moreRecentDocs(i)
-            If bestMatchPath = "" Then Exit For
-            Documents.Open fileName:=bestMatchPath, Visible:=True
-            Documents(bestMatchPath).Activate
-            If Documents(bestMatchPath).CustomDocumentProperties("document_status") = "Approved" Then
-                With Documents(bestMatchPath)
-                    .Activate
-                End With
-                Documents(docPath).Close SaveChanges:=False
-                Documents(bestMatchPath).Activate
-                
-                MsgBox "Use the most recent approved version!" & vbCrLf & bestMatchPath
-                Application.ScreenUpdating = True
-                Exit Sub
-            Else
-                Documents(bestMatchPath).Close SaveChanges:=False
-                Documents(docPath).Activate
-            End If
-        Next
-'        If getCustomDocumentProperty("document_status") = "Draft" Then
-'            UnLockDocument ActiveDocument
-'        End If
-'        Application.ScreenUpdating = True
-'        Exit Sub
-    End If
+
     If getCustomDocumentProperty("document_status") = "Draft" Then
         UnLockDocument ActiveDocument
     End If
-    Application.ScreenUpdating = True
-
 End Sub
 
 
