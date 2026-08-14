@@ -27,9 +27,7 @@ Function KopieerBestand(bronPad As String, targetPath As String) As Boolean
     End If
     
 End Function
-Function GetHighestVersionOfFile(targetPath As String, _
-                                Optional ByRef bestMatchPath As String, _
-                                Optional ByRef allMatchesRecent As Variant) As String
+Function GetHighestVersionOfFile(targetPath As String, Optional ByRef bestMatchPath As String) As String
     GetHighestVersionOfFile = 0
     If targetPath = "" Then
         Exit Function
@@ -44,13 +42,10 @@ Function GetHighestVersionOfFile(targetPath As String, _
     
     Dim RegEx As Object
     Dim matches As Object
-    Dim currentVersion As Double, thisVersion As Double
+    Dim currentVersion As Double
     Dim maxVersion As Double
     
-    Dim sallMatches As String
-    
     Set fso = CreateObject("Scripting.FileSystemObject")
-    thisVersion = getCustomDocumentProperty("document_version")
     
     ' 1. Controleer of het initiële bestand bestaat. Zo niet, retourneer het origineel.
     If Not fso.FileExists(targetPath) Then
@@ -88,9 +83,7 @@ Function GetHighestVersionOfFile(targetPath As String, _
             Set matches = RegEx.Execute(file.Name)
             ' Haal het versienummer op uit de eerste RegEx-groep en converteer naar een getal
             currentVersion = CDbl(matches(0).SubMatches(0))
-            If thisVersion < currentVersion Then
-                sallMatches = sallMatches + "," + folderPath + "\" + file.Name
-            End If
+            
             ' Controleer of dit de hoogste versie tot nu toe is
             If currentVersion > maxVersion Then
                 maxVersion = currentVersion
@@ -101,8 +94,6 @@ Function GetHighestVersionOfFile(targetPath As String, _
     
     ' Retourneer het pad naar de hoogste versie
     'GetHighestVersionPath = bestMatchPath
-    allMatchesRecent = Split(sallMatches, ",")
     GetHighestVersionOfFile = maxVersion
-    
 End Function
 

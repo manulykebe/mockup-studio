@@ -2,17 +2,29 @@ Attribute VB_Name = "Interceptor"
 Option Explicit
 Public TargetLocalPath As String
 Sub DocumentNew()
+    If Not thisIsAQualityDocument Then Exit Sub
+    If ActiveDocument.Path = "" Then
+        FileSave
+    Else
+        MsgBox "Dead end?"
+    End If
 End Sub
 Sub DocumentOpen()
     Application.ScreenUpdating = False
     If Not thisIsAQualityDocument Then Exit Sub
     
-    Dim doc As Document, i As Integer
+    Dim doc As Document
     Set doc = ActiveDocument
     
-    Dim docPath As String, bestMatchPath As String, moreRecentDocs As Variant
+    Dim docPath As String, bestMatchPath As String
     docPath = doc.FullName
-    Dim highVersion As Integer, currVersion As Integer
+    Dim highVersion As Integer
+    'Check for latest approved version
+    highVersion = FileManagement.GetHighestVersionOfFile(docPath, bestMatchPath:=bestMatchPath)
+    If CInt(highVersion) > CInt(getCustomDocumentProperty("document_version")) Then
+            MsgBox "Use the most recent version!" & vbCrLf & bestMatchPath
+    End If
+    Application.ScreenUpdating = False
 
     If InStr(1, docPath, "://steria.sharepoint.com", vbTextCompare) > 0 Then
         Dim localPath As String
@@ -39,44 +51,12 @@ Sub DocumentOpen()
         On Error GoTo 0
         Exit Sub
     End If
-    
-    'Check for latest approved version
-    currVersion = CInt(getCustomDocumentProperty("document_version"))
-    highVersion = CInt(FileManagement.GetHighestVersionOfFile(docPath, allMatchesRecent:=moreRecentDocs))
-    If highVersion > currVersion Then
-        Application.ScreenUpdating = False
-        'a more recent file is available
-        For i = UBound(moreRecentDocs) To LBound(moreRecentDocs) Step -1
-            bestMatchPath = moreRecentDocs(i)
-            If bestMatchPath = "" Then Exit For
-            Documents.Open fileName:=bestMatchPath, Visible:=True
-            Documents(bestMatchPath).Activate
-            If Documents(bestMatchPath).CustomDocumentProperties("document_status") = "Approved" Then
-                With Documents(bestMatchPath)
-                    .Activate
-                End With
-                Documents(docPath).Close SaveChanges:=False
-                Documents(bestMatchPath).Activate
-                
-                MsgBox "Use the most recent approved version!" & vbCrLf & bestMatchPath
-                Application.ScreenUpdating = True
-                Exit Sub
-            Else
-                Documents(bestMatchPath).Close SaveChanges:=False
-                Documents(docPath).Activate
-            End If
-        Next
-'        If getCustomDocumentProperty("document_status") = "Draft" Then
-'            UnLockDocument ActiveDocument
-'        End If
-'        Application.ScreenUpdating = True
-'        Exit Sub
-    End If
-    If getCustomDocumentProperty("document_status") = "Draft" Then
-        UnLockDocument ActiveDocument
-    End If
-    Application.ScreenUpdating = True
 
+    If LCase(getCustomDocumentProperty("document_status")) = "draft" Then
+        UnLockDocument ActiveDocument
+    Else
+        LockDocument ActiveDocument
+    End If
 End Sub
 
 
@@ -118,6 +98,13 @@ Function URLDecode(ByVal txt As String) As String
 End Function
 
 Sub DocumentClose()
+    If Not thisIsAQualityDocument Then Exit Sub
+    If getCustomDocumentProperty("__close") <> "" Then
+        ActiveDocument.Saved = True
+    Else
+        LockDocument ActiveDocument
+        ActiveDocument.Save
+    End If
 End Sub
 Sub FilePrint()
     Options.UpdateFieldsAtPrint = True
@@ -146,9 +133,11 @@ Sub FileSave()
             ActiveDocument.Close SaveChanges:=False
             Exit Sub
         End If
-        If InStr(LCase(ActiveDocument.AttachedTemplate.FullName), LCase("\Master Template\")) > 0 Then
+        If getCustomDocumentProperty("document_type_code") = "MC" Or getCustomDocumentProperty("document_type_code") = "MT" Then
             MsgBox "You can't create a document from a master template." & vbCrLf & "This document will close..", vbCritical, gTemplateSystemName
+            setCustomDocumentProperty "__close", "y", ActiveDocument
             ActiveDocument.Close SaveChanges:=False
+            End
             Exit Sub
         End If
         Call CreateVersion

@@ -1,11 +1,10 @@
 Attribute VB_Name = "DocumentBeheer"
-
 Sub ListAllCustomProperties(Optional whichDocument As Document)
     Dim prop As DocumentProperty
     If whichDocument Is Nothing Then
         Set whichDocument = ActiveDocument
     End If
-    ' Controleer of er überhaupt aangepaste eigenschappen zijn
+    ' Controleer of er ï¿½berhaupt aangepaste eigenschappen zijn
     If whichDocument.CustomDocumentProperties.Count = 0 Then
         MsgBox "Dit document bevat geen aangepaste eigenschappen.", vbInformation
         Exit Sub
@@ -19,60 +18,65 @@ Sub ListAllCustomProperties(Optional whichDocument As Document)
         On Error GoTo 0
     Next
 End Sub
-Sub setGuid()
-    ActiveDocument.CustomDocumentProperties.Item("document_guid").Value = GeneratePureGuid
-End Sub
-
 Sub LockDocument(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    If CStr(getCustomDocumentProperty("document_status", targetDoc)) = "Draft" Then Exit Sub
-    ' Check if already protected to avoid errors
-    If targetDoc.ProtectionType = wdNoProtection Then
-        ' Enforces read-only mode, bypassing field updates and general editing
-        targetDoc.Protect Type:=wdAllowOnlyReading, _
-                    NoReset:=False, _
-                    Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), _
-                    EnforceStyleLock:=True
-        'MsgBox "Document is now locked.", vbInformation
-    Else
-        'MsgBox "Document is already protected.", vbExclamation
-    End If
+    ' ProtectionType reports wdNoProtection even when a style-only (EnforceStyleLock) password
+    ' protection is active, so it can't be used to detect an already-protected document.
+    ' Always attempt to remove any existing protection first; a harmless error is raised
+    ' (and ignored) if the document wasn't protected at all.
+    On Error Resume Next
+    targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
+    On Error GoTo 0
+    ' Enforces read-only mode, bypassing field updates and general editing
+    targetDoc.Protect Type:=wdAllowOnlyReading, _
+                NoReset:=False, _
+                Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), _
+                EnforceStyleLock:=True
 End Sub
 Sub LockDocumentSections(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    ' Check if already protected to avoid errors
-    If targetDoc.ProtectionType <> wdAllowOnlyFormFields Then
-        targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
-        ' Enforces read-only mode, bypassing field updates and general editing
-        targetDoc.Protect Type:=wdAllowOnlyFormFields, _
-                    NoReset:=False, _
-                    Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), _
-                    EnforceStyleLock:=True
-        MsgBox "Styles are now locked.", vbInformation
-    End If
+    On Error Resume Next
+    targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
+    On Error GoTo 0
+    ' Enforces read-only mode, bypassing field updates and general editing
+    targetDoc.Protect Type:=wdAllowOnlyFormFields, _
+                NoReset:=False, _
+                Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), _
+                EnforceStyleLock:=True
 End Sub
 Sub UnLockDocument(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    ' EnforceStyleLock-only protection still reports wdNoProtection, so always attempt to unprotect
     On Error Resume Next
     targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
     On Error GoTo 0
+    ' Content stays editable, but formatting/styles remain enforced and password-locked
     targetDoc.Protect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), Type:=wdNoProtection, EnforceStyleLock:=True
 End Sub
-Sub Unprotect(Optional ByRef targetDoc As Document)
+
+' Regenerates document_guid and keeps the document's protection password in sync with it.
+' Must be used instead of setting document_guid directly on a document that may be protected -
+' otherwise the saved protection password (the OLD guid) permanently desyncs from the stored
+' document_guid property (the NEW guid), causing "password is invalid" on the next open.
+Sub RegenerateDocumentGuid(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    ' EnforceStyleLock-only protection still reports wdNoProtection, so always attempt to unprotect
+    Dim oldGuid As String
+    oldGuid = CStr(getCustomDocumentProperty("document_guid", targetDoc))
+
     On Error Resume Next
-    targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
+    targetDoc.Unprotect Password:=oldGuid
     On Error GoTo 0
+
+    targetDoc.CustomDocumentProperties.Item("document_guid").Value = GeneratePureGuid
+
+    targetDoc.Protect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), Type:=wdNoProtection, EnforceStyleLock:=True
 End Sub
 Sub UpdateAllFields(Optional ByRef targetDoc As Document)
     Dim storyRange As Range
@@ -122,5 +126,3 @@ Function thisIsAQualityDocument() As Boolean
     bFoundCustomDocumentProperty = findCustomDocumentProperty("document_guid")
     thisIsAQualityDocument = bFoundCustomDocumentProperty
 End Function
-
-
