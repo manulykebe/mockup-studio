@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>JGVT-4462 - Acceptance Criteria</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; max-width: 900px; margin: 2em auto; color: #172b4d; }
+  h1 { font-size: 1.1em; }
+  .meta { color: #6b778c; font-size: 0.9em; margin-bottom: 1.5em; }
+  ul.alternate { list-style-type: square; }
+</style>
+</head>
+<body>
+
+<h1><a href="https://jira.jnj.com/browse/JGVT-4462">JGVT-4462</a> - Reports_Audit Trail: Experiment Audit Trail - User Interface - Export Buttons - Acceptance Criteria</h1>
+<p class="meta">Scope: applicable only to Experiments using a <b>GxP-GMP template</b> (Release 3.0.0 and Release 3.1.0).</p>
+
+<!-- ===== Jira-compliant content below (copy into Acceptance Criteria field) ===== -->
+
+<p><b>Preconditions</b></p>
+<ul class="alternate" type="square">
+  <li>Given the user has an active Signals session</li>
+  <li>And the user opens an Experiment Audit Trail page containing data</li>
+</ul>
+
+<p><b>1) Export options</b></p>
+<p><b>Given</b> the user is viewing an Experiment Audit Trail page containing data<br/>
+<b>When</b> the user views the available actions<br/>
+<b>Then</b> the user can see Copy, CSV, Excel, PDF and Print controls</p>
+
+<p><b>2) Export content</b></p>
+<p><b>Given</b> the user is viewing an Experiment Audit Trail page containing data<br/>
+<b>When</b> the user selects an export control<br/>
+<b>Then</b> the complete audit trail dataset is copied, downloaded or printed in the user's selected format<br/>
+<b>And</b> the output includes all records, not only the current page</p>
+
+<p><b>3) Filtered export</b></p>
+<p><b>Given</b> the user has applied a filter to the audit trail<br/>
+<b>When</b> the user selects an export control<br/>
+<b>Then</b> the output contains all records matching the user's filter<br/>
+<b>And</b> the user is informed that the output is a filtered subset</p>
+
+<p><b>4) File name</b></p>
+<p><b>Given</b> the user is viewing an Experiment Audit Trail page containing data<br/>
+<b>When</b> the user exports to CSV, Excel or PDF<br/>
+<b>Then</b> the file is named <b>{environment}.{experiment}.iso8601(creation date).experiment-audit-trail.{ext}</b><br/>
+<b>And</b> <b>{ext}</b> is csv, xlsx or pdf</p>
+
+<p><b>5) No data</b></p>
+<p><b>Given</b> the user is viewing an Experiment Audit Trail page with no audit trail data<br/>
+<b>When</b> the user views the available actions<br/>
+<b>Then</b> the export controls are disabled or unavailable</p>
+
+
+<p><b>As a user,</b></p>
+
+<p>
+I want to export the Experiment Audit Trail in different formats,
+so that I can save, share, print, or further process the audit information.
+</p>
+
+<p>
+The export options shall be available from the Experiment Audit Trail page
+and shall support Copy, CSV, Excel, PDF, and Print.
+When the audit trail is filtered, the export shall contain the records
+matching the active filter.
+</p>
+
+<p><b>Scope</b></p>
+<ul>
+  <li>Provide Copy, CSV, Excel, PDF, and Print export options.</li>
+  <li>Export all records when no filter is active.</li>
+  <li>Export only the matching records when a filter is active.</li>
+  <li>Inform the user when the export contains a filtered subset.</li>
+  <li>Use the filename format:
+    {environment}.{experiment}.iso8601(creation date).experiment-audit-trail.{ext}
+  </li>
+</ul>
+
+<p><b>Out of scope</b></p>
+<ul>
+  <li>Custom Search Builder functionality.</li>
+  <li>Changes to sorting, pagination, or general table filtering.</li>
+  <li>Changes to the audit trail data source.</li>
+</ul>
+
+</body>
+</html>
