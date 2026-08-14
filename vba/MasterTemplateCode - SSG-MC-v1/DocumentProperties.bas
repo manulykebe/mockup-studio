@@ -69,6 +69,21 @@ Sub setCustomDocumentProperty(propertyName As String, propertyValue As Variant, 
         Value:=propertyValue
 End Sub
 
+Sub ListAllDocumentVariables(Optional ByRef targetDocument As Document)
+    Dim docVar As Variable
+    
+    ' Check if any variables exist first
+    If ActiveDocument.Variables.Count = 0 Then
+        MsgBox "No document variables found in this document.", vbInformation
+        Exit Sub
+    End If
+    
+    Debug.Print "--- DOCUMENT VARIABLES LIST ---"
+    For Each docVar In ActiveDocument.Variables
+        Debug.Print "Name: " & docVar.Name & " | Value: " & docVar.Value
+    Next docVar
+    Debug.Print "-------------------------------"
+End Sub
 Sub ClearAllDocumentVariables()
     Dim i As Long
     Dim varCount As Long

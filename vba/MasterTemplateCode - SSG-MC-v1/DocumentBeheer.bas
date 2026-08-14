@@ -1,5 +1,4 @@
 Attribute VB_Name = "DocumentBeheer"
-
 Sub ListAllCustomProperties(Optional whichDocument As Document)
     Dim prop As DocumentProperty
     If whichDocument Is Nothing Then
@@ -27,7 +26,6 @@ Sub LockDocument(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    If CStr(getCustomDocumentProperty("document_status", targetDoc)) = "Draft" Then Exit Sub
     ' Check if already protected to avoid errors
     If targetDoc.ProtectionType = wdNoProtection Then
         ' Enforces read-only mode, bypassing field updates and general editing
@@ -52,27 +50,18 @@ Sub LockDocumentSections(Optional ByRef targetDoc As Document)
                     NoReset:=False, _
                     Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), _
                     EnforceStyleLock:=True
-        MsgBox "Styles are now locked.", vbInformation
     End If
 End Sub
 Sub UnLockDocument(Optional ByRef targetDoc As Document)
     If targetDoc Is Nothing Then
         Set targetDoc = ActiveDocument
     End If
-    ' EnforceStyleLock-only protection still reports wdNoProtection, so always attempt to unprotect
-    On Error Resume Next
-    targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
-    On Error GoTo 0
-    targetDoc.Protect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), Type:=wdNoProtection, EnforceStyleLock:=True
-End Sub
-Sub Unprotect(Optional ByRef targetDoc As Document)
-    If targetDoc Is Nothing Then
-        Set targetDoc = ActiveDocument
+    ' Check if already protected to avoid errors
+    If targetDoc.ProtectionType <> wdNoProtection Then
+        ' Enforces read-only mode, bypassing field updates and general editing
+        targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
     End If
-    ' EnforceStyleLock-only protection still reports wdNoProtection, so always attempt to unprotect
-    On Error Resume Next
-    targetDoc.Unprotect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc))
-    On Error GoTo 0
+    targetDoc.Protect Password:=CStr(getCustomDocumentProperty("document_guid", targetDoc)), Type:=wdNoProtection, EnforceStyleLock:=True
 End Sub
 Sub UpdateAllFields(Optional ByRef targetDoc As Document)
     Dim storyRange As Range
@@ -122,5 +111,3 @@ Function thisIsAQualityDocument() As Boolean
     bFoundCustomDocumentProperty = findCustomDocumentProperty("document_guid")
     thisIsAQualityDocument = bFoundCustomDocumentProperty
 End Function
-
-
