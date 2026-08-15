@@ -150,6 +150,18 @@ Public Sub OnSubscriptCommand(control As IRibbonControl)
     ToggleCharacterStyle "Subscript"
 End Sub
 
+Public Sub OnFormatTablesClick_Enabled(control As IRibbonControl, ByRef returnedVal)
+    returnedVal = (Selection.Tables.Count > 0)
+End Sub
+
+Public Sub OnFormatTablesClick(control As IRibbonControl)
+    Dim countTables As Long
+    countTables = FormatSelectedTables()
+    If countTables > 0 Then
+        MsgBox countTables & " table(s) formatted.", vbInformation
+    End If
+End Sub
+
 Public Sub OnCleanTextDocumentCommand(control As IRibbonControl)
     ReplaceDoubleSpacingAndParagraphMarksRecursively
 End Sub

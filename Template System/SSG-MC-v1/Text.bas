@@ -37,18 +37,10 @@ Public Sub ReplaceDoubleSpacingAndParagraphMarksRecursively()
         patternCount = UBound(patterns) - LBound(patterns) + 1
         
         For i = 0 To patternCount - 1
-            If ReplaceAllInRange(rng, CStr(patterns(i)(0)), CStr(patterns(i)(1)), False) Then
+            If ReplaceAllInRange(rng, CStr(patterns(i)(0)), CStr(patterns(i)(1))) Then
                 changed = True
             End If
         Next i
-
-        If ReplaceAllInRange(rng, "^p^p", "^p", True) Then
-            changed = True
-        End If
-
-        If ReplaceAllInRange(rng, "^m^m", "^m", True) Then
-            changed = True
-        End If
     Loop While changed
 End Sub
 
@@ -79,30 +71,32 @@ Public Sub ReplaceDoubleSpacingAndParagraphMarksInSelectionRecursively()
         patternCount = UBound(patterns) - LBound(patterns) + 1
         
         For i = 0 To patternCount - 1
-            If ReplaceAllInRange(rng, CStr(patterns(i)(0)), CStr(patterns(i)(1)), False) Then
+            If ReplaceAllInRange(rng, CStr(patterns(i)(0)), CStr(patterns(i)(1))) Then
                 changed = True
             End If
         Next i
-
-        If ReplaceAllInRange(rng, "^p^p", "^p", True) Then
-            changed = True
-        End If
-
-        If ReplaceAllInRange(rng, "^m^m", "^m", True) Then
-            changed = True
-        End If
     Loop While changed
 End Sub
 
-Private Function ReplaceAllInRange(ByVal rng As Range, ByVal findText As String, ByVal replacementText As String, ByVal matchWildcards As Boolean) As Boolean
+Private Function ReplaceAllInRange(ByVal rng As Range, ByVal findText As String, ByVal replacementText As String) As Boolean
     Dim foundValue As Boolean
+    
+    If Len(findText) = 0 Then
+        ReplaceAllInRange = False
+        Exit Function
+    End If
+    
+    If InStr(1, rng.Text, findText, vbTextCompare) = 0 Then
+        ReplaceAllInRange = False
+        Exit Function
+    End If
     
     With rng.Find
         .ClearFormatting
         .Replacement.ClearFormatting
         .Text = findText
         .Replacement.Text = replacementText
-        .MatchWildcards = matchWildcards
+        .MatchWildcards = False
         .Forward = True
         .Wrap = wdFindContinue
         .Execute Replace:=wdReplaceAll
