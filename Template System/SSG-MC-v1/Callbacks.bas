@@ -149,6 +149,15 @@ End Sub
 Public Sub OnSubscriptCommand(control As IRibbonControl)
     ToggleCharacterStyle "Subscript"
 End Sub
+
+Public Sub OnCleanTextDocumentCommand(control As IRibbonControl)
+    ReplaceDoubleSpacingAndParagraphMarksRecursively
+End Sub
+
+Public Sub OnCleanTextSelectionCommand(control As IRibbonControl)
+    ReplaceDoubleSpacingAndParagraphMarksInSelectionRecursively
+End Sub
+
 Public Sub OnClearFormattingCommand(control As IRibbonControl)
     Debug.Assert False
     RunClearFormatting
