@@ -13,7 +13,6 @@ Public Function FormatSelectedTables() As Long
         Set tbl = Selection.Tables(i)
 
         With tbl.Range
-            '.ClearFormatting
             .Paragraphs.Style = ActiveDocument.Styles("No Spacing")
         End With
 
@@ -42,4 +41,5 @@ Public Sub FormatSelectedTablesCallback()
     countTables = FormatSelectedTables()
     MsgBox countTables & " table(s) formatted.", vbInformation
 End Sub
+
 

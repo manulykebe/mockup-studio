@@ -162,16 +162,42 @@ Public Sub OnFormatTablesClick(control As IRibbonControl)
     End If
 End Sub
 
-Public Sub OnCleanTextDocumentCommand(control As IRibbonControl)
-    ReplaceDoubleSpacingAndParagraphMarksRecursively
-End Sub
-
-Public Sub OnCleanTextSelectionCommand(control As IRibbonControl)
-    ReplaceDoubleSpacingAndParagraphMarksInSelectionRecursively
-End Sub
-
 Public Sub OnClearFormattingCommand(control As IRibbonControl)
-    Debug.Assert False
     RunClearFormatting
 End Sub
+
+
+
+'Callback for btnCleanTextDocument getEnabled
+Sub OnCleanTextDocumentCommand_Enabled(control As IRibbonControl, ByRef returnedVal)
+    returnedVal = False
+End Sub
+
+'Callback for btnCleanTextDocument getVisible
+Sub OnCleanTextDocumentCommand_Visible(control As IRibbonControl, ByRef returnedVal)
+    returnedVal = False
+End Sub
+
+'Callback for btnCleanTextDocument onAction
+Sub OnCleanTextDocumentCommand(control As IRibbonControl)
+    'ReplaceDoubleSpacingAndParagraphMarksRecursively
+End Sub
+
+'Callback for btnCleanTextSelection getEnabled
+Sub OnCleanTextSelectionCommand_Enabled(control As IRibbonControl, ByRef returnedVal)
+    returnedVal = False
+End Sub
+
+'Callback for btnCleanTextSelection getVisible
+Sub OnCleanTextSelectionCommand_Visible(control As IRibbonControl, ByRef returnedVal)
+    returnedVal = False
+End Sub
+
+'Callback for btnCleanTextSelection onAction
+Sub OnCleanTextSelectionCommand(control As IRibbonControl)
+    'ReplaceDoubleSpacingAndParagraphMarksInSelectionRecursively
+End Sub
+
+
+
 
