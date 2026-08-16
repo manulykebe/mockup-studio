@@ -3,16 +3,12 @@ Public MyRibbon As IRibbonUI
 Sub UpdateRibbon()
     If Not MyRibbon Is Nothing Then
         MyRibbon.Invalidate
-    Else
-        MsgBox "Error: cannot access ribbon.", vbCritical
     End If
 End Sub
 
 Sub UpdateRibbonControl(ControlID As String)
     If Not MyRibbon Is Nothing Then
         MyRibbon.InvalidateControl ControlID
-    Else
-        MsgBox "Error: cannot access ribbon.", vbCritical
     End If
 End Sub
 
