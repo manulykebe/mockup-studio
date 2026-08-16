@@ -23,7 +23,7 @@ Public Sub ReplaceDoubleSpacingAndParagraphMarksRecursively()
     Dim patterns As Variant
     
     Set rng = ActiveDocument.Content
-    patterns = Array(_
+    patterns = Array( _
         Array("  ", " "), _
         Array(vbTab & vbTab, vbTab), _
         Array(" ^p", "^p"), _
@@ -51,13 +51,13 @@ Public Sub ReplaceDoubleSpacingAndParagraphMarksInSelectionRecursively()
     Dim i As Long
     Dim patterns As Variant
     
-    If Selection.Range.Text = vbNullString Then
+    If Selection.Range.text = vbNullString Then
         MsgBox "Selecteer eerst een tekstblok om te opschonen.", vbExclamation
         Exit Sub
     End If
     
     Set rng = Selection.Range
-    patterns = Array(_
+    patterns = Array( _
         Array("  ", " "), _
         Array(vbTab & vbTab, vbTab), _
         Array(" ^p", "^p"), _
@@ -86,7 +86,7 @@ Private Function ReplaceAllInRange(ByVal rng As Range, ByVal findText As String,
         Exit Function
     End If
     
-    If InStr(1, rng.Text, findText, vbTextCompare) = 0 Then
+    If InStr(1, rng.text, findText, vbTextCompare) = 0 Then
         ReplaceAllInRange = False
         Exit Function
     End If
@@ -94,9 +94,9 @@ Private Function ReplaceAllInRange(ByVal rng As Range, ByVal findText As String,
     With rng.Find
         .ClearFormatting
         .Replacement.ClearFormatting
-        .Text = findText
-        .Replacement.Text = replacementText
-        .MatchWildcards = False
+        .text = findText
+        .Replacement.text = replacementText
+        .matchWildcards = False
         .Forward = True
         .Wrap = wdFindContinue
         .Execute Replace:=wdReplaceAll
@@ -133,7 +133,7 @@ Sub ReplaceSection(oldTextPartial As String, newText As String)
                 .Replacement.ClearFormatting
                 .text = txt
                 .Replacement.text = newText
-                .MatchWildcards = True
+                .matchWildcards = True
                 .Forward = True
                 .Wrap = wdFindStop
                 .Format = True
@@ -151,4 +151,6 @@ Sub ReplaceSection(oldTextPartial As String, newText As String)
         MsgBox "De tekst '" & oldTextPartial & "' werd in geen enkele sectie gevonden.", vbExclamation
     End If
 End Sub
+
+
 

@@ -56,8 +56,7 @@ Private Sub cbSave_Click()
             
             Call text.ReplaceSection( _
                     "Use this template as starting point to create a new template:", _
-                    "Use this template as starting point to create a new document:" & vbCr & _
-                    "Go to the ribbon and select the ""Sopra Steria"" menu. Hit ""Create new document"". Complete the relevant metadata fields. Press ""F9"" to manually update metadata fields in this document.")
+                    "")
             targetDoc.Save
             
             Unload Me
