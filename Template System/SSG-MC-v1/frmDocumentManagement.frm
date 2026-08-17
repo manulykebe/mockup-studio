@@ -56,8 +56,7 @@ Private Sub cbSave_Click()
             
             Call text.ReplaceSection( _
                     "Use this template as starting point to create a new template:", _
-                    "Use this template as starting point to create a new document:" & vbCr & _
-                    "Go to the ribbon and select the ""Sopra Steria"" menu. Hit ""Create new document"". Complete the relevant metadata fields. Press ""F9"" to manually update metadata fields in this document.")
+                    "")
             targetDoc.Save
             
             Unload Me
@@ -171,35 +170,32 @@ Function textIfEnabled(text As String, enabled As Boolean)
 End Function
 
 Private Sub txtNumber_Change()
-    Dim targetPath As String
+    Dim probePath As String, targetPath As String, ext As String
     Me.txtTargetFullPath.text = ""
     Select Case Me.txtMode
     Case "Create new template"
         mapPad = folderQRegulate & "Templates\" & Me.txtCompanyCode.text & "-" & Me.txtTypeCode.text & "\"
-        targetPath = mapPad & Me.txtNumber.text & "-v" & Me.txtVersion & ".dotm"
+        ext = "dotm"
     Case "Create new version"
         bIsWordTemplate = InStr(ActiveDocument.FullName, ".dot") > 0
         If bIsWordTemplate Then
             mapPad = ActiveDocument.AttachedTemplate.Path & "\"
-            targetPath = mapPad & Me.txtNumber.text & "-v" & Me.txtVersion.text & ".dotm"
+            ext = "dotm"
         Else
-            If ActiveDocument.Path = "" Then
-                mapPad = folderQRegulate & Me.txtCompanyCode.text & "-" & Me.txtTypeCode & "\" & Me.txtNumber.text & "\"
-                targetPath = mapPad & Me.txtNumber.text & "-v" & Me.txtVersion.text & ".docx"
-            Else
-                mapPad = folderQRegulate & Me.txtCompanyCode.text & "-" & Me.txtTypeCode & "\" & Me.txtNumber.text & "\"
-                targetPath = mapPad & Me.txtNumber.text & "-v" & Me.txtVersion.text & ".docx"
-            End If
+            mapPad = folderQRegulate & Me.txtCompanyCode.text & "-" & Me.txtTypeCode & "\" & Me.txtNumber.text & "\"
+            ext = "docx"
         End If
     End Select
+    If mapPad = "" Or Me.txtNumber.text = "" Then Exit Sub
+
+    ' Probe with a fixed "-v1" name so the folder/base-name lookup below does not depend
+    ' on whatever (possibly stale) version is currently shown; this is what let changing
+    ' document_type_code leave the version number unrefreshed.
+    probePath = mapPad & Me.txtNumber.text & "-v1." & ext
+    Me.txtVersion.text = CDbl(FileManagement.GetHighestVersionOfFile(probePath)) + 1
+
+    targetPath = mapPad & Me.txtNumber.text & "-v" & Me.txtVersion.text & "." & ext
     Me.txtTargetFullPath.text = targetPath
-    
-    '
-    'targetPath looks like "C:\Sopra Steria\Q-Regulate\Templates\SSG-SOP\SSG-SOP-v1.dotm",where -v is the version.
-    'if targetPath exists, find the highest version in the parent folder
-    If targetPath <> "" And Dir(PathName:=targetPath) <> "" Then
-        Me.txtVersion.text = CDbl(FileManagement.GetHighestVersionOfFile(targetPath)) + 1
-    End If
 End Sub
 
 Private Sub txtSequence_Change()

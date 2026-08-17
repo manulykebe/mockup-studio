@@ -47,14 +47,16 @@ Function GetHighestVersionOfFile(targetPath As String, Optional ByRef bestMatchP
     
     Set fso = CreateObject("Scripting.FileSystemObject")
     
-    ' 1. Controleer of het initiële bestand bestaat. Zo niet, retourneer het origineel.
-    If Not fso.FileExists(targetPath) Then
+    ' 2. Haal maplocatie, bestandsnaam en extensie op
+    folderPath = fso.GetParentFolderName(targetPath)
+    
+    ' 1. Controleer of de map bestaat. Zo niet, is er nog geen enkele versie aanwezig.
+    ' (targetPath zelf hoeft niet te bestaan; het dient enkel om de basisnaam af te leiden.)
+    If Not fso.FolderExists(folderPath) Then
         GetHighestVersionOfFile = 0
         Exit Function
     End If
-    
-    ' 2. Haal maplocatie, bestandsnaam en extensie op
-    folderPath = fso.GetParentFolderName(targetPath)
+
     fileName = fso.GetFileName(targetPath)
     ext = fso.GetExtensionName(targetPath)
     
@@ -92,8 +94,12 @@ Function GetHighestVersionOfFile(targetPath As String, Optional ByRef bestMatchP
         End If
     Next file
     
-    ' Retourneer het pad naar de hoogste versie
+    ' Retourneer het pad naar de hoogste versie (geen match gevonden = geen bestaande versie)
     'GetHighestVersionPath = bestMatchPath
-    GetHighestVersionOfFile = maxVersion
+    If maxVersion < 0 Then
+        GetHighestVersionOfFile = 0
+    Else
+        GetHighestVersionOfFile = maxVersion
+    End If
 End Function
 

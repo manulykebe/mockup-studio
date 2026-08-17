@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Q-Regulate Master Template Manual</title>
+  <style>
+    :root {
+      --ink: #17212b;
+      --muted: #5f6f7d;
+      --line: #d8e1e8;
+      --paper: #ffffff;
+      --wash: #f3f7f9;
+      --navy: #12344d;
+      --blue: #176b87;
+      --teal: #0f8b8d;
+      --gold: #d99528;
+      --red: #a63d40;
+      --green: #28734b;
+      --shadow: 0 12px 34px rgba(18, 52, 77, .09);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--wash);
+      font: 16px/1.65 Georgia, "Times New Roman", serif;
+    }
+    a { color: var(--blue); }
+    a:hover { color: var(--navy); }
+    .shell { display: grid; grid-template-columns: 270px minmax(0, 1fr); min-height: 100vh; }
+    .sidebar {
+      position: sticky; top: 0; height: 100vh; overflow: auto;
+      padding: 30px 22px; color: #eaf3f7; background: var(--navy);
+    }
+    .brand { margin-bottom: 28px; }
+    .brand-mark {
+      display: inline-grid; place-items: center; width: 42px; height: 42px;
+      margin-bottom: 14px; color: var(--navy); background: #f4c76b;
+      font: 700 20px/1 "Trebuchet MS", sans-serif; border-radius: 7px;
+    }
+    .brand h1 { margin: 0; color: #fff; font: 700 24px/1.1 "Trebuchet MS", sans-serif; letter-spacing: 0; }
+    .brand p { margin: 9px 0 0; color: #b8ced8; font: 14px/1.45 "Trebuchet MS", sans-serif; }
+    .toc-title { margin: 24px 0 8px; color: #f4c76b; text-transform: uppercase; font: 700 11px/1.2 "Trebuchet MS", sans-serif; letter-spacing: 0; }
+    .toc { margin: 0; padding: 0; list-style: none; font: 14px/1.35 "Trebuchet MS", sans-serif; }
+    .toc li { margin: 3px 0; }
+    .toc a { display: block; padding: 5px 8px; color: #d7e7ec; text-decoration: none; border-left: 2px solid transparent; }
+    .toc a:hover { color: #fff; border-left-color: #f4c76b; background: rgba(255,255,255,.07); }
+    .content { min-width: 0; }
+    .hero {
+      padding: 76px clamp(28px, 8vw, 120px) 66px; color: #fff;
+      background: linear-gradient(135deg, #12344d 0%, #176b87 58%, #0f8b8d 100%);
+    }
+    .eyebrow { margin: 0 0 12px; color: #f4c76b; text-transform: uppercase; font: 700 12px/1.2 "Trebuchet MS", sans-serif; letter-spacing: 0; }
+    .hero h2 { max-width: 850px; margin: 0; font: 700 clamp(38px, 6vw, 72px)/.98 "Trebuchet MS", sans-serif; letter-spacing: 0; }
+    .hero .lead { max-width: 760px; margin: 24px 0 0; color: #e7f2f5; font-size: 20px; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; font: 13px "Trebuchet MS", sans-serif; }
+    .pill { padding: 7px 11px; color: #fff; border: 1px solid rgba(255,255,255,.35); border-radius: 999px; }
+    main { max-width: 1120px; margin: 0 auto; padding: 34px clamp(24px, 6vw, 88px) 80px; }
+    section { margin: 0 0 58px; scroll-margin-top: 24px; }
+    h3 { margin: 0 0 17px; color: var(--navy); font: 700 31px/1.15 "Trebuchet MS", sans-serif; }
+    h4 { margin: 30px 0 9px; color: var(--blue); font: 700 20px/1.25 "Trebuchet MS", sans-serif; }
+    p { margin: 0 0 15px; }
+    .intro { max-width: 850px; font-size: 18px; }
+    .notice, .warning, .success {
+      margin: 20px 0; padding: 16px 19px; border-left: 5px solid var(--blue); background: var(--paper); box-shadow: var(--shadow);
+    }
+    .warning { border-left-color: var(--gold); }
+    .success { border-left-color: var(--green); }
+    .notice strong, .warning strong, .success strong { display: block; margin-bottom: 3px; font: 700 14px "Trebuchet MS", sans-serif; text-transform: uppercase; letter-spacing: 0; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
+    .card { padding: 20px; background: var(--paper); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .card h4 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .steps { counter-reset: step; display: grid; gap: 12px; margin: 20px 0; }
+    .step { position: relative; padding: 17px 20px 17px 62px; background: var(--paper); border: 1px solid var(--line); }
+    .step::before { counter-increment: step; content: counter(step); position: absolute; left: 18px; top: 17px; display: grid; place-items: center; width: 28px; height: 28px; color: #fff; background: var(--teal); border-radius: 50%; font: 700 15px "Trebuchet MS", sans-serif; }
+    .step strong { display: block; color: var(--navy); font: 700 16px "Trebuchet MS", sans-serif; }
+    table { width: 100%; margin: 18px 0 22px; border-collapse: collapse; background: var(--paper); box-shadow: var(--shadow); font-size: 15px; }
+    caption { padding: 0 0 8px; color: var(--navy); text-align: left; font: 700 14px "Trebuchet MS", sans-serif; }
+    th, td { padding: 11px 13px; border: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { color: var(--navy); background: #e8f1f4; font: 700 13px "Trebuchet MS", sans-serif; }
+    code, kbd { padding: 2px 5px; color: #173c4d; background: #e8f1f4; border-radius: 3px; font: 13px/1.35 Consolas, "Courier New", monospace; }
+    pre { overflow: auto; margin: 18px 0; padding: 17px 19px; color: #e8f1f4; background: #17212b; border-left: 4px solid var(--gold); font: 13px/1.55 Consolas, "Courier New", monospace; }
+    ul, ol { padding-left: 23px; }
+    li { margin: 5px 0; }
+    .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 22px 0; }
+    .flow div { position: relative; min-height: 100px; padding: 17px 14px; color: #fff; background: var(--navy); border-right: 1px solid rgba(255,255,255,.35); font: 700 14px/1.3 "Trebuchet MS", sans-serif; }
+    .flow div:nth-child(2) { background: var(--blue); }
+    .flow div:nth-child(3) { background: var(--teal); }
+    .flow div:nth-child(4) { background: var(--green); }
+    .flow span { display: block; margin-top: 7px; color: #e2f2f4; font: 13px/1.4 Georgia, serif; }
+    .footer { margin-top: 50px; padding-top: 20px; color: var(--muted); border-top: 1px solid var(--line); font-size: 14px; }
+    @media (max-width: 820px) {
+      .shell { display: block; }
+      .sidebar { position: relative; height: auto; }
+      .toc { columns: 2; }
+      .hero { padding-top: 48px; }
+      .grid, .flow { grid-template-columns: 1fr; }
+      .flow div { min-height: auto; border-right: 0; border-bottom: 1px solid rgba(255,255,255,.35); }
+    }
+    @media print {
+      body { background: #fff; }
+      .shell { display: block; }
+      .sidebar { position: static; height: auto; color: #000; background: #fff; border-bottom: 2px solid #000; }
+      .brand h1, .brand p, .toc a { color: #000; }
+      .brand-mark { border: 1px solid #000; }
+      .toc-title { color: #000; }
+      .toc { columns: 3; }
+      .hero { padding: 34px 0; color: #000; background: #fff; border-bottom: 2px solid #000; }
+      .hero h2, .hero .lead { color: #000; }
+      .hero-meta { color: #000; }
+      .pill { color: #000; border-color: #000; }
+      main { padding: 24px 0; }
+      .card, table, .notice, .warning, .success { box-shadow: none; }
+      a { color: #000; text-decoration: underline; }
+      section { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Manual navigation">
+      <div class="brand">
+        <div class="brand-mark">QR</div>
+        <h1>Q-Regulate</h1>
+        <p>Master Template<br>Operations and administration manual</p>
+      </div>
+      <div class="toc-title">Contents</div>
+      <ol class="toc">
+        <li><a href="#overview">1. Overview</a></li>
+        <li><a href="#concepts">2. Core concepts</a></li>
+        <li><a href="#requirements">3. Requirements</a></li>
+        <li><a href="#installation">4. Installation</a></li>
+        <li><a href="#metadata">5. Metadata</a></li>
+        <li><a href="#lifecycle">6. Document lifecycle</a></li>
+        <li><a href="#workflows">7. User workflows</a></li>
+        <li><a href="#versioning">8. Versioning and paths</a></li>
+        <li><a href="#formatting">9. Editing tools</a></li>
+        <li><a href="#administration">10. Administration</a></li>
+        <li><a href="#troubleshooting">11. Troubleshooting</a></li>
+        <li><a href="#reference">12. Technical reference</a></li>
+      </ol>
+    </aside>
+
+    <div class="content">
+      <header class="hero">
+        <p class="eyebrow">Master Template Manual</p>
+        <h2>Controlled Word templates for Q-Regulate</h2>
+        <p class="lead">A practical guide to installing, using, approving, versioning, and maintaining the Word Master Template implemented by the <code>SSG-MC-v1</code> VBA project.</p>
+        <div class="hero-meta">
+          <span class="pill">Audience: users and administrators</span>
+          <span class="pill">Platform: Microsoft Word on Windows</span>
+          <span class="pill">Storage model: local junction / Q-Documents</span>
+        </div>
+      </header>
+
+      <main>
+        <section id="overview">
+          <h3>1. Overview</h3>
+          <p class="intro">Q-Regulate is a controlled Word Master Template. It attaches metadata to templates and documents, exposes document-management actions in a custom <strong>Sopra Steria</strong> ribbon tab, protects approved documents, and creates new versions rather than allowing approved files to be overwritten.</p>
+          <div class="grid">
+            <article class="card"><h4>What it controls</h4><p>Document identity, type, numbering, sequence, status, version, ownership, approval roles, field updates, and file naming.</p></article>
+            <article class="card"><h4>What it does not replace</h4><p>It does not replace SharePoint permissions, backup, records retention, or the organisation's approval policy. Those remain operational responsibilities.</p></article>
+            <article class="card"><h4>Primary source</h4><p>The reusable code is in <code>Master Template/SSG-MC-v1</code>. The Master Template is under <code>Master Template/SSG-MT-v1</code> (where versioning applies).</p></article>
+            <article class="card"><h4>Recognition rule</h4><p>A document is treated as a Q-Regulate document when it contains the custom property <code>document_guid</code>.</p></article>
+          </div>
+          <div class="notice"><strong>Terminology</strong>In this manual, “template” means a Word <code>.dotm</code> or <code>.dotx</code> file, while “document” means a working or approved <code>.docx</code> file created from a template.</div>
+        </section>
+
+        <section id="concepts">
+          <h3>2. Core concepts</h3>
+          <h4>Template roles</h4>
+          <table>
+            <caption>Special document type codes</caption>
+            <thead><tr><th>Code</th><th>Meaning</th><th>System behavior</th></tr></thead>
+            <tbody>
+              <tr><td><code>MT</code></td><td>Master Template</td><td>Can create new templates. It is reserved and cannot be used as an ordinary document type.</td></tr>
+              <tr><td><code>MC</code></td><td>Master Code Template</td><td>Contains the reusable VBA implementation and is referenced by the Master Template.</td></tr>
+              <tr><td>Other code</td><td>Ordinary controlled type</td><td>Used for operational templates and documents. Codes are limited to three alphanumeric characters and are forced to uppercase while typing.</td></tr>
+            </tbody>
+          </table>
+          <h4>Status model</h4>
+          <table>
+            <caption>Available status values</caption>
+            <thead><tr><th>Status</th><th>Meaning</th><th>Effect</th></tr></thead>
+            <tbody>
+              <tr><td><code>Draft</code></td><td>Being prepared or revised</td><td>Content is editable. The Metadata command is available. Opening the document removes read-only protection while keeping style enforcement.</td></tr>
+              <tr><td><code>Approved</code></td><td>Released for use</td><td>The Approve button is no longer available, Create new version becomes available, and the document is protected for reading.</td></tr>
+              <tr><td><code>Obsolete</code></td><td>No longer current</td><td>Available as a status value; organisational procedures should define when it is assigned.</td></tr>
+            </tbody>
+          </table>
+          <div class="warning"><strong>Important</strong>Approval is a status transition implemented by the ribbon. It is not a substitute for a documented business approval decision. Apply the organisation's approval policy before pressing <code>Approve</code>.</div>
+        </section>
+
+        <section id="requirements">
+          <h3>3. Requirements</h3>
+          <ul>
+            <li>Microsoft Word on Windows with macro execution permitted for the trusted template location.</li>
+            <li>Access to the Q-Regulate storage location and permission to read and write its files.</li>
+            <li>The local path <code>C:\Sopra Steria\Q-Regulate\</code> available to the code. The implementation uses this path as its fixed root.</li>
+            <li>For reference repair, access to the VBA project object model must be enabled in Word's macro security settings.</li>
+            <li>For production use, the expected document library folder must be available at <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents</code>.</li>
+          </ul>
+          <div class="notice"><strong>Security boundary</strong>Only enable “Trust access to the VBA project object model” when required by the administrator. It is needed by the reference-maintenance macro, not by ordinary document editing.</div>
+        </section>
+
+        <section id="installation">
+          <h3>4. Installation and environment setup</h3>
+          <h4>Synchronize with SharePoint</h4>
+          <p>Synchronize the Q-Regulate SharePoint document library with your local computer before using the template system. Open the <a href="https://steria.sharepoint.com/sites/Qregulate/QDocuments/Forms/AllItems.aspx">Q-Regulate document library</a> in SharePoint and make sure the library is available in Windows Explorer at <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents</code>.</p>
+          <p>As a regular user, complete this one-time setup:</p>
+          <div class="steps">
+            <div class="step"><strong>Open the Master Code Template folder.</strong>In Windows Explorer, open <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents\Master Template\SSG-MC</code>.</div>
+            <div class="step"><strong>Run <code>junction.bat</code>.</strong>Double-click the file. If Windows displays a security warning, select <code>Run</code> to continue.</div>
+            <div class="step"><strong>Select production.</strong>Enter <code>1</code> when the script asks for your choice.</div>
+            <div class="step"><strong>Confirm the result.</strong>A successful setting of the working path is shown in yellow. Contact the template system owner if an error occurs.</div>
+          </div>
+
+          <h4>Switch the Q-Regulate junction</h4>
+          <p>The supplied <code>junction.bat</code> switches <code>C:\Sopra Steria\Q-Regulate</code> between the production Q-Documents folder and a development folder. Run it from an elevated command prompt if Windows requires administrator rights to create or remove the junction.</p>
+          <div class="steps">
+            <div class="step"><strong>Confirm the production folder exists.</strong>The script expects <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents</code>. If it is missing, the script stops.</div>
+            <div class="step"><strong>Run <code>junction.bat</code>.</strong> It displays the active location and offers production, development, or removal.</div>
+            <div class="step"><strong>Select the target.</strong> Choose <code>1</code> for production or <code>2</code> for <code>C:\Sopra Steria\Q-Regulate (dev)</code>.</div>
+            <div class="step"><strong>Verify the active location.</strong> The script highlights the current junction target. Never develop directly against production content.</div>
+          </div>
+          <h4>Install the template reference</h4>
+          <p>The Master Template must reference the Master Code Template project under the reference name <code>MasterTemplateCode</code>. The maintenance macro <code>VoegSjabloonReferentieToe</code> first removes broken references and then adds:</p>
+          <pre>C:\Sopra Steria\Q-Regulate\Master Template\SSG-MC\SSG-MC-v1.dotm</pre>
+          <p>After adding or repairing the reference, close and reopen the Master Template. The Master Template's document events check that the reference exists before forwarding open, new, and close events.</p>
+          <div class="warning"><strong>Reference failure</strong>If the Master Template reports “Template Reference Missing”, check the junction target, confirm that <code>SSG-MC-v1.dotm</code> exists at the expected path, enable VBA project-model access if the repair macro needs it, and run the reference repair macro.</div>
+        </section>
+
+        <section id="metadata">
+          <h3>5. Metadata and field values</h3>
+          <p>Metadata is stored in Word custom document properties. Fields in the document are refreshed after important operations through <code>UpdateAllFields</code>, which updates stories, tables of contents, and the built-in title property.</p>
+          <table>
+            <caption>Core custom properties</caption>
+            <thead><tr><th>Property</th><th>Purpose</th><th>Typical value</th></tr></thead>
+            <tbody>
+              <tr><td><code>document_guid</code></td><td>Identifies a controlled document and is also used as the document protection password.</td><td>Generated GUID</td></tr>
+              <tr><td><code>document_company</code></td><td>Display name of the company or organisation.</td><td>Company name</td></tr>
+              <tr><td><code>document_company_code</code></td><td>Short company code used in numbering and paths.</td><td><code>SSG</code></td></tr>
+              <tr><td><code>document_type</code></td><td>Readable document or template type.</td><td><code>Standard Operating Procedure</code></td></tr>
+              <tr><td><code>document_type_code</code></td><td>Short type code used in numbering and folder names.</td><td><code>SOP</code></td></tr>
+              <tr><td><code>document_type_sequence</code></td><td>Numeric sequence for ordinary documents.</td><td><code>004</code></td></tr>
+              <tr><td><code>document_number</code></td><td>Stable document number.</td><td><code>SSG-SOP-004</code></td></tr>
+              <tr><td><code>document_title</code></td><td>Displayed document title and Word built-in title.</td><td>Human-readable title</td></tr>
+              <tr><td><code>document_status</code></td><td>Lifecycle state.</td><td><code>Draft</code>, <code>Approved</code>, or <code>Obsolete</code></td></tr>
+              <tr><td><code>document_version</code></td><td>Version encoded in the filename and displayed fields.</td><td><code>1</code>, <code>2</code>, or <code>1.1</code></td></tr>
+              <tr><td><code>document_template</code></td><td>Name of the source template used to create the document.</td><td>Template name</td></tr>
+              <tr><td><code>document_owner</code>, <code>document_author</code>, <code>document_reviewer</code>, <code>document_approver</code>, <code>document_managementapprover</code></td><td>People or roles responsible for the document. Each can be enabled or left blank in the form.</td><td>User or role name</td></tr>
+              <tr><td><code>document_effective_date</code></td><td>Date assigned during approval.</td><td>Next day in <code>dd/mmm/yyyy</code> format</td></tr>
+              <tr><td><code>__close</code></td><td>Internal close flag used when the system must close a document without normal save handling.</td><td><code>y</code></td></tr>
+            </tbody>
+          </table>
+          <h4>Numbering rules</h4>
+          <ul>
+            <li>For Word templates, the number is normally <code>company-code + "-" + type-code</code>, for example <code>SSG-SOP</code>.</li>
+            <li>For ordinary documents, the number is normally <code>company-code + "-" + type-code + "-" + three-digit sequence</code>, for example <code>SSG-SOP-004</code>.</li>
+            <li>Changing the type code recalculates the number. The version lookup then scans the matching folder and base filename, so the version refreshes for the new type.</li>
+          </ul>
+        </section>
+
+        <section id="lifecycle">
+          <h3>6. Document lifecycle</h3>
+          <div class="flow">
+            <div>Draft<span>Editable content and metadata.</span></div>
+            <div>Approve<span>Assigns Approved and effective date.</span></div>
+            <div>Read-only<span>Approved file is protected.</span></div>
+            <div>New version<span>Creates a new draft file.</span></div>
+          </div>
+          <h4>Open</h4>
+          <p>When a controlled document opens, the system compares its version with the highest matching version found in its parent folder. If a newer version exists, Word displays a warning with the path to the newest match. Drafts are unlocked for editing; non-drafts are protected for reading.</p>
+          <h4>New document</h4>
+          <p>Creating a new document routes through the save interceptor. On first save, the source must be approved and must not have type code <code>MT</code> or <code>MC</code>. The document-management form collects its sequence, metadata, and initial version before saving it to the controlled path.</p>
+          <h4>Approve</h4>
+          <p>For a draft, choose <strong>Sopra Steria &gt; Approve</strong>. The system sets <code>document_status</code> to <code>Approved</code>, sets <code>document_effective_date</code> to the next day, updates fields, applies read-only protection, saves, and refreshes the ribbon.</p>
+          <h4>Close</h4>
+          <p>Controlled documents are locked and saved on close unless the internal <code>__close</code> flag has been set. This keeps approved documents protected when leaving Word.</p>
+        </section>
+
+        <section id="workflows">
+          <h3>7. User workflows</h3>
+          <h4>Create a new controlled document</h4>
+          <div class="steps">
+            <div class="step"><strong>Open an approved ordinary template.</strong> Do not start from an <code>MT</code> or <code>MC</code> master template.</div>
+            <div class="step"><strong>Enter content while the document is Draft.</strong> Use the template's styles and metadata fields.</div>
+            <div class="step"><strong>Save for the first time.</strong> The system opens the Document Management form. Enter or confirm the sequence, title, and responsible roles.</div>
+            <div class="step"><strong>Review the generated number, version, and target path.</strong> The filename uses the document number and <code>-v</code> version suffix.</div>
+            <div class="step"><strong>Approve when the business review is complete.</strong> The document becomes read-only and can no longer be saved over directly.</div>
+          </div>
+          <h4>Create a new version</h4>
+          <div class="steps">
+            <div class="step"><strong>Open the current approved file.</strong> The Create new version command is enabled only for approved documents.</div>
+            <div class="step"><strong>Choose <strong>Sopra Steria &gt; Create new version</strong>.</strong> The form reads the existing metadata and calculates the next version from matching files.</div>
+            <div class="step"><strong>Update the title, sequence where permitted, and role fields.</strong> A new document GUID is generated and protection is kept in sync with it.</div>
+            <div class="step"><strong>Save the new file.</strong> The system refuses to overwrite an existing target file. The new version starts as <code>Draft</code>.</div>
+            <div class="step"><strong>Review and approve the new version.</strong> Repeat the approval step after the revision is complete.</div>
+          </div>
+          <h4>Create a new template from the Master Template</h4>
+          <div class="steps">
+            <div class="step"><strong>Open an approved Master Template.</strong> The Create new template button is enabled when the active document's type code is <code>MT</code>.</div>
+            <div class="step"><strong>Choose <strong>Sopra Steria &gt; Create new template</strong>.</strong> Enter the readable type and its short code. Codes <code>MT</code> and <code>MC</code> are reserved.</div>
+            <div class="step"><strong>Confirm the generated target.</strong> New templates are copied to <code>C:\Sopra Steria\Q-Regulate\Templates\&lt;company-code&gt;-&lt;type-code&gt;\</code> and use a <code>.dotm</code> extension.</div>
+            <div class="step"><strong>Review the copied template.</strong> The system regenerates its GUID, writes metadata, updates fields, removes the starter instruction section, and saves it.</div>
+          </div>
+          <h4>Update metadata</h4>
+          <p>For a draft, choose <strong>Sopra Steria &gt; Metadata</strong>. Edit the enabled owner, author, reviewer, approver, management approver, or title fields and save. Metadata is intended for draft documents. The special username <code>evanneste</code> receives elevated metadata availability according to the ribbon callback.</p>
+        </section>
+
+        <section id="versioning">
+          <h3>8. Versioning, filenames, and storage</h3>
+          <h4>Filename patterns</h4>
+          <table>
+            <caption>Paths generated by the form</caption>
+            <thead><tr><th>Object</th><th>Directory pattern</th><th>Filename pattern</th></tr></thead>
+            <tbody>
+              <tr><td>New template</td><td><code>C:\Sopra Steria\Q-Regulate\Templates\COMPANY-TYPE\</code></td><td><code>NUMBER-vVERSION.dotm</code></td></tr>
+              <tr><td>New ordinary document</td><td><code>C:\Sopra Steria\Q-Regulate\COMPANY-TYPE\NUMBER\</code></td><td><code>NUMBER-vVERSION.docx</code></td></tr>
+              <tr><td>New version of a Word template</td><td>Folder of the attached template</td><td><code>NUMBER-vVERSION.dotm</code></td></tr>
+            </tbody>
+          </table>
+          <p>Examples:</p>
+          <pre>C:\Sopra Steria\Q-Regulate\Templates\SSG-SOP\SSG-SOP-v1.dotm
+C:\Sopra Steria\Q-Regulate\SSG-SOP\SSG-SOP-004\SSG-SOP-004-v2.docx</pre>
+          <h4>How the highest version is found</h4>
+          <p><code>GetHighestVersionOfFile</code> scans the parent folder and matches files with the same base name and extension using the pattern <code>BASE-vX.ext</code> or <code>BASE-vX.Y.ext</code>. It returns the highest numeric version and the form uses that value plus one. If the folder or matching files do not exist, the starting value is <code>1</code>.</p>
+          <div class="warning"><strong>Keep versions together</strong>Do not rename a version file independently of its metadata, move it to a different naming structure, or mix unrelated files in the same base-name folder. The open-time “latest version” check depends on this convention.</div>
+        </section>
+
+        <section id="formatting">
+          <h3>9. Editing and formatting tools</h3>
+          <p>The Home tab replaces parts of Word's standard formatting surface with style-oriented controls. The custom controls apply Word styles rather than direct character formatting.</p>
+          <table>
+            <caption>Style controls</caption>
+            <thead><tr><th>Control</th><th>Style applied</th><th>Behavior</th></tr></thead>
+            <tbody>
+              <tr><td>Bold</td><td><code>Strong</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Italic</td><td><code>Emphasis</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Underline</td><td><code>Underlined</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Strike</td><td><code>Strikethrough</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Superscript</td><td><code>Superscript</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Subscript</td><td><code>Subscript</code></td><td>Toggles the style on the selection.</td></tr>
+              <tr><td>Clear Format</td><td><code>Normal</code></td><td>Toggles the paragraph style back to Normal.</td></tr>
+            </tbody>
+          </table>
+          <h4>Format selected tables</h4>
+          <p>The table-formatting command is enabled when the selection contains at least one table. It applies <code>Plain Table 1</code>, sets the first row as a heading row, enables row banding, applies No Spacing to table paragraphs, and autofits the table to its content and window.</p>
+          <div class="notice"><strong>Style dependency</strong>The formatting code expects the named Word styles <code>Strong</code>, <code>Emphasis</code>, <code>Underlined</code>, <code>Strikethrough</code>, <code>Superscript</code>, <code>Subscript</code>, <code>Normal</code>, <code>No Spacing</code>, and <code>Plain Table 1</code>. Do not delete or rename them in a controlled template.</div>
+        </section>
+
+        <section id="administration">
+          <h3>10. Administration and maintenance</h3>
+          <h4>Safe promotion procedure</h4>
+          <ol>
+            <li>Switch the junction to the development location.</li>
+            <li>Make and test changes against copies of templates and documents.</li>
+            <li>Verify open, new, save, approve, new-version, print, field-update, and close behavior.</li>
+            <li>Check that the Master Template still has the <code>MasterTemplateCode</code> reference.</li>
+            <li>Switch the junction to production only during a controlled deployment window.</li>
+            <li>Keep a backup of the previous template and code-template files before replacement.</li>
+          </ol>
+          <h4>Reference and diagnostics macros</h4>
+          <table>
+            <caption>Useful maintenance entry points</caption>
+            <thead><tr><th>Macro</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td><code>VoegSjabloonReferentieToe</code></td><td>Removes broken VBA references and adds the Master Code Template reference if it is missing.</td></tr>
+              <tr><td><code>VerwijderOngeldigeVerwijzingen</code></td><td>Removes broken VBA project references.</td></tr>
+              <tr><td><code>ListAllCustomProperties</code></td><td>Prints custom property names to the Immediate window.</td></tr>
+              <tr><td><code>getAllCustomDocumentProperties</code></td><td>Prints custom property names for a document.</td></tr>
+              <tr><td><code>ListAllReferences</code></td><td>Prints reference names, paths, GUIDs, and broken status.</td></tr>
+            </tbody>
+          </table>
+          <h4>Backups and recovery</h4>
+          <ul>
+            <li>Back up the production Q-Documents location and the complete Master Template package.</li>
+            <li>Preserve approved files as immutable records; create a new version for changes.</li>
+            <li>If a GUID or protection password becomes inconsistent, work from a known-good copy and use the controlled GUID regeneration path. Do not edit <code>document_guid</code> directly on a protected document.</li>
+            <li>When testing version behavior, use a separate development junction so generated files cannot be mistaken for production records.</li>
+          </ul>
+        </section>
+
+        <section id="troubleshooting">
+          <h3>11. Troubleshooting</h3>
+          <table>
+            <caption>Symptoms and corrective actions</caption>
+            <thead><tr><th>Symptom</th><th>Likely cause</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>The Sopra Steria tab is missing.</td><td>Macros did not run, the code template is not loaded, or the document is not recognized as controlled.</td><td>Confirm the file is a macro-enabled template/document, reopen Word, check the reference, and confirm <code>document_guid</code> exists.</td></tr>
+              <tr><td>“Template Reference Missing”.</td><td>The Master Template cannot find the <code>MasterTemplateCode</code> reference.</td><td>Check the junction and expected file path, enable VBA project access if needed, then run <code>VoegSjabloonReferentieToe</code>.</td></tr>
+              <tr><td>Approve is disabled.</td><td>The current status is not <code>Draft</code>.</td><td>Open the Metadata form while the document is editable and verify the status property.</td></tr>
+              <tr><td>Create new version is disabled.</td><td>The current status is not <code>Approved</code>.</td><td>Only approved documents can create a new version. Check <code>document_status</code>.</td></tr>
+              <tr><td>First save closes the document.</td><td>The source is not approved, or its type code is <code>MT</code> or <code>MC</code>.</td><td>Start from an approved ordinary template. Master templates are not document sources.</td></tr>
+              <tr><td>Version does not increment.</td><td>The folder, base filename, extension, or version suffix does not follow the expected convention.</td><td>Check that files are in the correct folder and named <code>BASE-vNUMBER.ext</code>. The lookup is case-insensitive but not convention-independent.</td></tr>
+              <tr><td>Changing the type code gives the old version.</td><td>The target number or folder did not refresh, or old code is running.</td><td>Confirm the current <code>SSG-MC-v1</code> code uses the fixed <code>-v1</code> probe path and scans the parent folder before rebuilding the target path.</td></tr>
+              <tr><td>Approved document cannot be edited.</td><td>Read-only protection is working as designed.</td><td>Create a new version. Do not remove protection by changing the file manually.</td></tr>
+              <tr><td>Fields show old metadata.</td><td>Fields were not updated, or the field is not linked to a supported property.</td><td>Use Word's field update command or run the system's update path, then check the field code and custom property name.</td></tr>
+              <tr><td>Print behavior is unexpected.</td><td>The system intercepts print preview/print and quick print.</td><td>Use the custom print commands and verify <code>Options.UpdateFieldsAtPrint</code> and hidden-text settings if diagnosing output.</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="reference">
+          <h3>12. Technical reference</h3>
+          <h4>Source modules</h4>
+          <table>
+            <caption>Responsibilities in <code>SSG-MC-v1</code></caption>
+            <thead><tr><th>Module</th><th>Responsibility</th></tr></thead>
+            <tbody>
+              <tr><td><code>AutoOpen.bas</code></td><td>Startup context and style-toggle helpers.</td></tr>
+              <tr><td><code>Callbacks.bas</code></td><td>Ribbon callbacks, command enablement, approval, metadata, version, and formatting actions.</td></tr>
+              <tr><td><code>Definitions.bas</code></td><td>Fixed Q-Regulate root path and system name.</td></tr>
+              <tr><td><code>DocumentBeheer.bas</code></td><td>Protection, GUID regeneration, field updates, version creation entry point, and controlled-document detection.</td></tr>
+              <tr><td><code>DocumentProperties.bas</code></td><td>Read, write, enumerate, and inspect custom properties and VBA references.</td></tr>
+              <tr><td><code>FileManagement.bas</code></td><td>Copying files, creating directories, and finding the highest matching version.</td></tr>
+              <tr><td><code>Formatting.bas</code></td><td>Selected-table formatting.</td></tr>
+              <tr><td><code>Forms.bas</code></td><td>Alphanumeric uppercase validation for type and company codes.</td></tr>
+              <tr><td><code>frmDocumentManagement.frm</code></td><td>User form for new templates, new versions, and metadata updates.</td></tr>
+              <tr><td><code>Interceptor.bas</code></td><td>Open, new, close, save, Save As, and print interception; SharePoint URL conversion.</td></tr>
+              <tr><td><code>RegEx.bas</code></td><td>Escapes filenames before version matching.</td></tr>
+              <tr><td><code>Text.bas</code></td><td>Text replacement and section replacement helpers.</td></tr>
+              <tr><td><code>GUID.bas</code></td><td>Windows API GUID generation.</td></tr>
+              <tr><td><code>VBE.bas</code></td><td>Broken-reference cleanup and Master Code Template reference installation.</td></tr>
+            </tbody>
+          </table>
+          <h4>Important implementation notes</h4>
+          <ul>
+            <li>The storage root is hard-coded as <code>C:\Sopra Steria\Q-Regulate\</code>; changing it requires a coordinated code change in the relevant modules and deployment script.</li>
+            <li>SharePoint URLs containing <code>sites\Qregulate\QDocuments\</code> are converted to the local Q-Regulate root. URL decoding currently handles <code>%20</code> spaces.</li>
+            <li>Protection uses the document GUID as its password. GUID regeneration must unprotect, replace the property, and re-protect in one operation.</li>
+            <li>The standard Word print commands are intercepted so fields are updated at print time and hidden text is excluded.</li>
+            <li>Some cleaning macros are present in the source but their ribbon controls are intentionally hidden and disabled in the current ribbon XML.</li>
+            <li>The code is VBA and uses Windows APIs and Office object-model types. This manual therefore describes a Windows Word deployment, not a cross-platform Office deployment.</li>
+          </ul>
+          <div class="success"><strong>Operational principle</strong>Approved files are outputs, not working copies. Revise through a new draft version, preserve the approved file, review the new content, and approve the replacement deliberately.</div>
+          <div class="footer">Manual prepared from the implementation currently present in <code>Master Template</code>. Review this page after changing ribbon XML, storage paths, metadata names, status rules, or the VBA reference model.</div>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
