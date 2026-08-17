@@ -210,7 +210,15 @@
         <section id="installation">
           <h3>4. Installation and environment setup</h3>
           <h4>Synchronize with SharePoint</h4>
-          
+          <p>Synchronize the Q-Regulate SharePoint document library with your local computer before using the template system. Open the <a href="https://steria.sharepoint.com/sites/Qregulate/QDocuments/Forms/AllItems.aspx">Q-Regulate document library</a> in SharePoint and make sure the library is available in Windows Explorer at <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents</code>.</p>
+          <p>As a regular user, complete this one-time setup:</p>
+          <div class="steps">
+            <div class="step"><strong>Open the Master Code Template folder.</strong>In Windows Explorer, open <code>C:\Users\&lt;username&gt;\Sopra Steria\Q-Regulate - Q-Documents\Master Template\SSG-MC</code>.</div>
+            <div class="step"><strong>Run <code>junction.bat</code>.</strong>Double-click the file. If Windows displays a security warning, select <code>Run</code> to continue.</div>
+            <div class="step"><strong>Select production.</strong>Enter <code>1</code> when the script asks for your choice.</div>
+            <div class="step"><strong>Confirm the result.</strong>A successful setting of the working path is shown in yellow. Contact the template system owner if an error occurs.</div>
+          </div>
+
           <h4>Switch the Q-Regulate junction</h4>
           <p>The supplied <code>junction.bat</code> switches <code>C:\Sopra Steria\Q-Regulate</code> between the production Q-Documents folder and a development folder. Run it from an elevated command prompt if Windows requires administrator rights to create or remove the junction.</p>
           <div class="steps">
