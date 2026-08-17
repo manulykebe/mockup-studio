@@ -27,8 +27,7 @@ href=3D"JGVT-4410ImpactanalysispHInterfaceUX_files/filelist.xml">
 '>
 
 <p style=3D'margin:0in;font-family:"Calibri Light";font-size:20.0pt'><span
-lang=3Dfr-BE>JGVT-4410 </span><span lang=3Dnl-BE>Impact analysis: </span><s=
-pan
+lang=3Dfr-BE>JGVT-4410 </span><span lang=3Dnl-BE>Impact analysis: </span><span
 lang=3Dfr-BE>pH Interface: UX</span><span lang=3Dnl-BE> </span></p>
 
 </div>
@@ -52,9 +51,6 @@ n'>
 <h1 style=3D'margin:0in;font-family:Calibri;font-size:16.0pt;color:#1E4E79'
 lang=3Dnl-BE>Request : </h1>
 
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
-
 <div style=3D'direction:ltr'>
 
 <table border=3D1 cellpadding=3D0 cellspacing=3D0 valign=3Dtop style=3D'dir=
@@ -72,6 +68,7 @@ dth:
   vertical-align:top;width:1.7215in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>Wim Vermeulen</p>
   </td>
  </tr>
  <tr>
@@ -85,6 +82,7 @@ dth:
   vertical-align:top;width:1.7215in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>12/DEC</p>
   </td>
  </tr>
  <tr>
@@ -97,6 +95,7 @@ dth:
   vertical-align:top;width:1.7215in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>Wim Vermeulen</p>
   </td>
  </tr>
  <tr>
@@ -110,6 +109,7 @@ dth:
   vertical-align:top;width:1.7215in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>ONGOING</p>
   </td>
  </tr>
  <tr>
@@ -123,6 +123,7 @@ dth:
   vertical-align:top;width:1.702in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>ONGOING</p>
   </td>
  </tr>
  <tr>
@@ -136,6 +137,7 @@ dth:
   vertical-align:top;width:1.7215in;padding:2.0pt 3.0pt 2.0pt 3.0pt'>
   <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE=
 >&nbsp;</p>
+  <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>JGVT-4410</p>
   </td>
  </tr>
  <tr>
@@ -154,26 +156,17 @@ dth:
 
 </div>
 
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
-
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Regulatory Requirement</h3>
-
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A - underlying functionality does not change, only cosmetic changes in the interface.</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Situation</h3>
-
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dfr-BE>The page feels cluttered and unnecessarily long. Important actions such as Measure and Remeasure are located too far down, forcing users to scroll to access them.</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Signals System</h3>
-
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <div style=3D'direction:ltr'>
 
@@ -251,17 +244,16 @@ dth:
 
 </div>
 
-<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
-nbsp;</p>
-
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Input/Output data</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>=
 &nbsp;</h3>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Acceptance Criteria</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
@@ -271,42 +263,49 @@ nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact Current Team</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on other Signals Users</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Testing</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Developers</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Data Lake</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Impact on Backwards compatibility</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>N/A</p>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt' lang=3Dnl-BE>=
 &nbsp;</h3>
 
 <h3 style=3D'margin:0in;font-family:Calibri;font-size:12.0pt;color:#5B9BD5'
 lang=3Dnl-BE>Conclusion</h3>
+<p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>No impact on templates, no backwards compatibility issues expected. Only cosmetic changes in the interface to improve UX.</p>
 
 <p style=3D'margin:0in;font-family:Calibri;font-size:11.0pt' lang=3Dnl-BE>&=
 nbsp;</p>
