@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>JGVT-2276 Acceptance Criteria</title></head>
+<body>
+
+<p><b>Preconditions</b></p>
+<ul>
+	<li>Given the user has an active Signals session</li>
+	<li>And the user has admin rights</li>
+	<li>And the user navigates to the System Audit Trail page</li>
+</ul>
+
+<p><b>1a) System audit trail search - button</b></p>
+
+<p><b>Given</b> the user has admin rights and navigates to the System Audit Trail page<br/>
+<b>When</b> the user selects a Month and Year from the dropdown lists (e.g. August, 2026) and clicks "Search"<br/>
+<b>Then</b> a button "Browse Audit Trail" to display the audit trail table becomes available for the selected month/year.</p>
+
+<p><b>1b) System audit trail data is available - audit trail table</b></p>
+
+<p><b>Given</b> the button to display the audit trail table is available<br/>
+<b>When</b> the user clicks the button "Browse Audit Trail"<br/>
+<b>Then</b> a table with the audit trail data is displayed with columns: Source, Date/Time, User Name, User ID, Entity Type, Entity Name, Action, Change Type, Details, Old Value, New Value, Event ID<br/>
+<b>And</b> the "Source" column identifies the originating category of the record (e.g. Notebook, Attributes, ADO, External Action, Data Source, System Group, Materials Definition, Roles, SO Properties, Security Policy, Templates, System Settings, Global Numbering, Users)<br/>
+<b>And</b> a global search field is displayed above the table<br/>
+<b>And</b> sortable column headers show sorting arrows<br/>
+<b>And</b> pagination controls (page numbers, previous/next, page-size selector) are displayed below the table<br/>
+<b>And</b> the content of the table is identical to the export (Excel, PDF).</p>
+
+<p><b>2a) Search - matching records found</b></p>
+
+<p><b>Given</b> the audit trail table is displayed with data<br/>
+<b>When</b> the user enters a search term that matches one or more rows<br/>
+<b>Then</b> only the rows matching the search term are displayed<br/>
+<b>And</b> the record count and pagination reflect the filtered result set.</p>
+
+<p><b>2b) Search - no matching records</b></p>
+
+<p><b>Given</b> the audit trail table is displayed with data<br/>
+<b>When</b> the user enters a search term that matches no row<br/>
+<b>Then</b> a notification "No matching records found" is displayed.</p>
+
+<p><b>3a) Sorting - ascending / descending per column</b></p>
+
+<p><b>Given</b> the audit trail table is displayed with data<br/>
+<b>When</b> the user clicks a sortable column header<br/>
+<b>Then</b> the table is sorted ascending by that column, indicated by the sort arrow<br/>
+<b>When</b> the user clicks the same column header again<br/>
+<b>Then</b> the table is sorted descending by that column, indicated by the sort arrow.</p>
+
+<p><b>3b) Sorting - multi-column</b></p>
+
+<p><b>Given</b> the audit trail table is already sorted by one column<br/>
+<b>When</b> the user shift-clicks a second sortable column header<br/>
+<b>Then</b> the table is sorted first by the initial column and then by the second column, both indicated by sort arrows.</p>
+
+<p><b>4a) Pagination - user page-size options</b></p>
+
+<p><b>Given</b> the audit trail table contains more rows than the current page size<br/>
+<b>When</b> the user selects a different page-size option from the page-size selector<br/>
+<b>Then</b> the table displays the selected number of rows per page<br/>
+<b>And</b> the pagination controls update accordingly.</p>
+
+<p><b>4b) Pagination - default page size</b></p>
+
+<p><b>Given</b> the audit trail table contains more rows than the current page size<br/>
+<b>When</b> the user opens the System Audit Trail page for the first time<br/>
+<b>Then</b> no page-size selection has been made<br/>
+<b>Then</b> the table displays the default page size of 25 rows.</p>
+
+<p><b>5) System audit trail data is not available</b></p>
+
+<p><b>Given</b> no system audit trail report is generated or available (ad hoc or via signoff) for the selected period<br/>
+<b>When</b> the user opens the System Audit Trail page, selects a Month and Year from the dropdown lists (e.g. August, 2026) and clicks "Search"<br/>
+<b>Then</b> a message is displayed to inform the user no audit trail data is available for the selected period.</p>
+
+<p><b>6) Access restricted to administrators</b></p>
+
+<p><b>Given</b> the user does not have admin rights<br/>
+<b>When</b> the user attempts to navigate to the System Audit Trail page<br/>
+<b>Then</b> the page and its contents are not accessible to the user.</p>
+
+</body>
+</html>

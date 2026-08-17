@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>JGVT-4525 Acceptance Criteria</title></head>
+<body>
+
+<p><b>Preconditions</b></p>
+<ul>
+	<li>Given the user has an active Signals session</li>
+	<li>And the user has admin rights</li>
+	<li>And the user opens a System Audit Trail page for a selected Month and Year containing data</li>
+</ul>
+
+<p><b>1) Export options</b></p>
+
+<p><b>Given</b> the user is viewing a System Audit Trail page containing data<br/>
+<b>When</b> the user views the available actions<br/>
+<b>Then</b> the user can see Copy (to clipboard as RTF), CSV, Excel, PDF controls.</p>
+
+<p><b>2) Export content</b></p>
+
+<p><b>Given</b> the user is viewing a System Audit Trail page containing data<br/>
+<b>When</b> the user selects an export control<br/>
+<b>Then</b> the complete audit trail dataset for the selected month/year is copied or downloaded in the user's selected format<br/>
+<b>And</b> the output includes all records across all categories (Notebook, Attributes, ADO, External Action, Data Source, System Group, Materials Definition, Roles, SO Properties, Security Policy, Templates, System Settings, Global Numbering, Users), not only the current page<br/>
+<b>And</b> the output includes the "Source" column identifying the originating category of each record<br/>
+<b>And</b> the exported content is identical to the audit trail table displayed on screen.</p>
+
+<p><b>3) Filtered export</b></p>
+
+<p><b>Given</b> the user has applied a filter to the audit trail<br/>
+<b>When</b> the user selects an export control<br/>
+<b>Then</b> the output contains all records matching the user's filter<br/>
+<b>And</b> the user is informed that the output is a filtered subset.</p>
+
+<p><b>4) File name</b></p>
+
+<p><b>Given</b> the user is viewing a System Audit Trail page containing data for a selected Month and Year<br/>
+<b>When</b> the user exports to CSV, Excel or PDF<br/>
+<b>Then</b> the file is named {environment}.{yyyyMM}.system-audit-trail.iso8601(creation date).{ext}, (e.g. devinternal.202608.system-audit-trail.20260813T123456125+02:30.pdf)<br/>
+<b>And</b> {ext} is csv, xlsx or pdf.</p>
+
+<p><b>5) Access restricted to administrators</b></p>
+
+<p><b>Given</b> the user does not have admin rights<br/>
+<b>When</b> the user attempts to access the System Audit Trail export options<br/>
+<b>Then</b> the export controls and underlying data are not available to the user.</p>
+
+</body>
+</html>
