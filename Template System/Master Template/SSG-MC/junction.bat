@@ -16,6 +16,7 @@ set "LINK_PATH=c:\Sopra Steria\Q-Regulate"
 set "TARGET_DOCS=C:\Users\%USERNAME%\Sopra Steria\Q-Regulate - Q-Documents"
 set "TARGET_DEV=C:\Sopra Steria\Q-Regulate (dev)"
 
+if not exist "c:\Sopra Steria" mkdir "c:\Sopra Steria"
 
 :: Check if the directory exists
 if not exist "%TARGET_DOCS%" goto :ERROR_EXIT
