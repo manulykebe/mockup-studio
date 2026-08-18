@@ -849,6 +849,151 @@ async function exportRolesToCsv(options = {}) {
   return roleRows;
 }
 
+function readPrivilegeMatrixFromTable(table, objectName = 'Unknown Object') {
+  if (!table) {
+    return [];
+  }
+
+  const headerCells = Array.from(
+    table.querySelectorAll('thead th, thead td, [role="columnheader"]')
+  );
+  const rowHeaderCells = headerCells.length
+    ? headerCells
+    : Array.from(table.querySelectorAll('tr:first-child th, tr:first-child td'));
+
+  const headers = rowHeaderCells
+    .map((cell) => cell.textContent.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  if (!headers.length || !headers.some((header) => /role name/i.test(header))) {
+    return [];
+  }
+
+  const roleNameIndex = headers.findIndex((header) => /role name/i.test(header));
+  const privilegeHeaders = headers
+    .map((header, index) => ({ header, index }))
+    .filter(({ header, index }) => index !== roleNameIndex && !/role name/i.test(header));
+  const rows = [];
+
+  const dataRows = Array.from(table.querySelectorAll('tbody tr, tr'))
+    .filter((tr) => {
+      const text = (tr.textContent || '').replace(/\s+/g, ' ').trim();
+      return !!text && !/^role name$/i.test(text);
+    });
+
+  dataRows.forEach((tr, roleOrderIndex) => {
+    const cells = Array.from(tr.querySelectorAll('th, td'));
+    if (!cells.length) {
+      return;
+    }
+
+    const roleIndex = roleOrderIndex + 1;
+
+    const roleCell = cells[roleNameIndex] || null;
+    const roleText = roleCell
+      ? (
+          roleCell.querySelector('.long-role-name, .role-name, [title], .truncate')?.textContent
+          || roleCell.textContent
+          || ''
+        )
+      : '';
+    const roleName = normalizeRoleName(roleText);
+    if (!roleName || /^role name$/i.test(roleName)) {
+      return;
+    }
+
+    privilegeHeaders.forEach(({ header, index }, privilegeOrderIndex) => {
+      const cell = cells[index] || null;
+      if (!cell) {
+        return;
+      }
+
+      const privilegeName = header.trim();
+      if (!privilegeName) {
+        return;
+      }
+
+      const checkbox = cell.querySelector('input[type="checkbox"]');
+      const normalizedValue = checkbox
+        ? (checkbox.checked ? '1' : '0')
+        : /^(1|true|yes|on|enabled|allow)$/i.test((cell.textContent || '').trim())
+          ? '1'
+          : '0';
+
+      rows.push([objectName, String(roleIndex), roleName, String(privilegeOrderIndex + 1), privilegeName, normalizedValue]);
+    });
+  });
+
+  return rows;
+}
+
+// Exports object privileges (from /snconfig/objects/{objectName}/privileges pages) into CSV,
+// similar to exportRolesToCsv but for privilege/role matrix pages specific to individual objects.
+// Reads the table, extracts role names and their privilege checkboxes, then downloads as CSV.
+// Object name is extracted from role="presentation" element containing "Privileges" text.
+async function exportPrivilegesToCsv(options = {}) {
+  const {
+    includeZeroValues = true,
+  } = options;
+
+  const environment = window.location.hostname.split('.')[0] || 'unknown';
+
+  // Find the table first
+  const table = document.querySelector('table');
+  if (!table) {
+    throw new Error('No privileges table found on this page.');
+  }
+
+  // Extract object name from the title element that immediately precedes the table
+  let objectName = 'Unknown Object';
+  
+  // Search through siblings of table and its parents for a title element
+  let searchElement = table;
+  while (searchElement && searchElement.parentElement) {
+    const parent = searchElement.parentElement;
+    const siblings = Array.from(parent.children);
+    const searchIndex = siblings.indexOf(searchElement);
+    
+    // Look at preceding siblings
+    for (let i = searchIndex - 1; i >= 0; i--) {
+      const sibling = siblings[i];
+      const text = (sibling.innerText || sibling.textContent || '').replace(/\s+/g, ' ').trim();
+      
+      // Match elements with text ending in "Privileges" but not exactly "Privileges" alone
+      if (text && text.endsWith('Privileges') && text !== 'Privileges' && text.length > 10) {
+        objectName = text;
+        break;
+      }
+    }
+    
+    if (objectName !== 'Unknown Object') break;
+    searchElement = parent;
+  }
+
+  const rows = readPrivilegeMatrixFromTable(table, objectName);
+
+  if (!rows.length) {
+    throw new Error('No privilege rows found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+  }
+
+  const filtered = rows.filter((row) => includeZeroValues || row[row.length - 1] === '1')
+    .map((row) => [environment, objectName, row[1], row[2], row[3], row[4], row[5]]);
+
+  if (!filtered.length) {
+    throw new Error('No privilege rows with value 1 found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+  }
+
+  const csv = toCsv(filtered, ['Environment', 'Object', 'Role Index', 'Role', 'Privilege Index', 'Privilege', 'Value']);
+  const timestamp = formatIsoDateTimeLocal();
+  const filename = `${getUrlPrefix(window.location)}#${objectName}-privileges#${timestamp}.csv`;
+  downloadCsv(csv, filename);
+
+  console.log(`Extracted ${filtered.length} privilege row(s) for ${objectName}.`);
+
+  return filtered;
+}
+
+
 const SYSTEM_OBJECTS_SERVER = 'https://devinternal.srppvt4s3r.revvitycloud.eu/';
 const SYSTEM_OBJECTS_PATH = 'snconfig/objects';
 const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
@@ -889,6 +1034,7 @@ window.extract = {
   getSectionMetadata,
   exportFocusedElementImagesFromToc,
   exportRolesToCsv,
+  exportPrivilegesToCsv,
   listSystemObjects,
   openToolbarPopup,
   closePopup,
