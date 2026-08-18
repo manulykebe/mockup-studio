@@ -677,11 +677,19 @@ function readRoleMatrixFromTable(table, tabLabel = 'Unknown Tab') {
     .filter(({ header, index }) => index !== roleNameIndex && !/role name|action/i.test(header));
   const rows = [];
 
-  Array.from(table.querySelectorAll('tbody tr, tr')).forEach((tr, roleOrderIndex) => {
+  const dataRows = Array.from(table.querySelectorAll('tbody tr, tr'))
+    .filter((tr) => {
+      const text = (tr.textContent || '').replace(/\s+/g, ' ').trim();
+      return !!text && !/^role name$/i.test(text) && !/action/i.test(text);
+    });
+
+  dataRows.forEach((tr, roleOrderIndex) => {
     const cells = Array.from(tr.querySelectorAll('th, td'));
     if (!cells.length) {
       return;
     }
+
+    const roleIndex = roleOrderIndex + 1;
 
     const roleCell = cells[roleNameIndex] || null;
     const roleText = roleCell
@@ -720,7 +728,7 @@ function readRoleMatrixFromTable(table, tabLabel = 'Unknown Tab') {
             ? '0'
             : '1';
 
-      rows.push([tabLabel, String(roleOrderIndex + 1), roleName, String(permissionOrderIndex + 1), permissionName, normalizedValue]);
+      rows.push([tabLabel, String(roleIndex), roleName, String(permissionOrderIndex + 1), permissionName, normalizedValue]);
     });
   });
 
@@ -752,7 +760,13 @@ function getTabPanelForTab(tabButton) {
   return tabButton.closest('[role="tabpanel"], .tab-pane');
 }
 
-function exportRolesToCsv() {
+function exportRolesToCsv(options = {}) {
+  const {
+    includeZeroValues = false,
+  } = options;
+
+  const environment = window.location.hostname.split('.')[0] || 'unknown';
+
   const tabButtons = Array.from(document.querySelectorAll('.nav.nav-tabs [role="tab"], .nav-tabs .nav-link, .nav-tabs button, .nav-tabs a'))
     .filter((button) => {
       const text = (button.textContent || '').replace(/\s+/g, ' ').trim();
@@ -768,7 +782,7 @@ function exportRolesToCsv() {
       const table = panel?.querySelector('table') || document.querySelector('table');
       const rows = readRoleMatrixFromTable(table, tabLabel);
       if (rows.length) {
-        roleRows.push(...rows);
+        roleRows.push(...rows.filter((row) => includeZeroValues || row[row.length - 1] === '1').map((row) => [environment, ...row]));
       }
     });
   }
@@ -778,20 +792,19 @@ function exportRolesToCsv() {
     tables.forEach((table) => {
       const rows = readRoleMatrixFromTable(table, 'Current Tab');
       if (rows.length) {
-        roleRows.push(...rows);
+        roleRows.push(...rows.filter((row) => includeZeroValues || row[row.length - 1] === '1').map((row) => [environment, ...row]));
       }
     });
   }
 
   if (!roleRows.length) {
-    throw new Error('No role-permission table found under the tabs.');
+    throw new Error('No role-permission rows with value 1 found. Use extract.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
-  const csv = toCsv(roleRows, ['Tab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#roles.csv`);
+  const csv = toCsv(roleRows, ['Environment', 'Tab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#user-roles.csv`);
 
   console.log(`Extracted ${roleRows.length} role-permission row(s).`);
-  console.table(roleRows.map(([Tab, RoleIndex, Role, PermissionIndex, Permission, Value]) => ({ Tab, 'Role Index': RoleIndex, Role, 'Permission Index': PermissionIndex, Permission, Value })));
 
   return roleRows;
 }
