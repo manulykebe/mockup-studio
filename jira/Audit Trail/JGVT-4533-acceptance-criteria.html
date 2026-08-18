@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>JGVT-4533 Acceptance Criteria</title></head>
+<body>
+
+<p><b>Preconditions</b></p>
+<ul>
+	<li>Given the user has an active Signals session</li>
+	<li>And the user has admin rights</li>
+	<li>And the user opens a System Audit Trail page containing data</li>
+</ul>
+
+<p><b>1) Custom Search Builder is available</b></p>
+
+<p><b>Given</b> the user is viewing a System Audit Trail page containing data<br/>
+<b>When</b> the user views the available search options<br/>
+<b>Then</b> the user can open the Custom Search Builder.</p>
+
+<p><b>2) Add a search condition</b></p>
+
+<p><b>Given</b> the user has opened the Custom Search Builder<br/>
+<b>When</b> the user selects an audit trail field, an operator and a value (or values for ranges)<br/>
+<b>Then</b> the selected search condition is displayed in the builder<br/>
+<b>And</b> the user can add conditions for the audit trail fields Source, Date/Time, User Name, User ID, Entity Type, Entity Name, Action, Change Type, Details, Old Value, New Value and Event ID.</p>
+
+<p><b>3) Apply combined search conditions</b></p>
+
+<p><b>Given</b> the user has added two or more search conditions<br/>
+<b>When</b> the user combines the conditions with AND or OR and applies the search<br/>
+<b>Then</b> the audit trail table displays the records matching the configured conditions<br/>
+<b>And</b> the result count and pagination reflect the filtered result set.</p>
+
+<p><b>4) Clear the Custom Search Builder</b></p>
+
+<p><b>Given</b> the user has applied Custom Search Builder conditions<br/>
+<b>When</b> the user clears or removes all the conditions<br/>
+<b>Then</b> the audit trail table displays the unfiltered records again.</p>
+
+<p><b>5) No matching records</b></p>
+
+<p><b>Given</b> the user has applied Custom Search Builder conditions that match no records<br/>
+<b>When</b> the user applies the search<br/>
+<b>Then</b> no audit trail records are displayed<br/>
+<b>And</b> the user is informed that no matching records were found.</p>
+
+<p><b>6) Access restricted to administrators</b></p>
+
+<p><b>Given</b> the user does not have admin rights<br/>
+<b>When</b> the user attempts to access the System Audit Trail Custom Search Builder<br/>
+<b>Then</b> the feature and underlying data are not available to the user.</p>
+
+</body>
+</html>
