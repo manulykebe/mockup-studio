@@ -760,6 +760,11 @@ function getTabPanelForTab(tabButton) {
   return tabButton.closest('[role="tabpanel"], .tab-pane');
 }
 
+function formatIsoDateTimeLocal(date = new Date()) {
+  const pad = (value) => String(value).padStart(2, '0');
+  return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
+}
+
 function exportRolesToCsv(options = {}) {
   const {
     includeZeroValues = false,
@@ -802,7 +807,8 @@ function exportRolesToCsv(options = {}) {
   }
 
   const csv = toCsv(roleRows, ['Environment', 'Tab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#user-roles.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#user-roles#${timestamp}.csv`);
 
   console.log(`Extracted ${roleRows.length} role-permission row(s).`);
 
