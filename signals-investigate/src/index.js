@@ -637,6 +637,165 @@ async function getSectionMetadata() {
   return { title, rows };
 }
 
+function normalizeRoleName(value) {
+  const text = String(value ?? '').replace(/\s+/g, ' ').trim();
+  if (!text) {
+    return '';
+  }
+
+  const repeated = text.match(/^(.*?)(?:\s*\1)+$/);
+  if (repeated && repeated[1]) {
+    return repeated[1].trim();
+  }
+
+  return text;
+}
+
+function readRoleMatrixFromTable(table, tabLabel = 'Unknown Tab') {
+  if (!table) {
+    return [];
+  }
+
+  const headerCells = Array.from(
+    table.querySelectorAll('thead th, thead td, [role="columnheader"]')
+  );
+  const rowHeaderCells = headerCells.length
+    ? headerCells
+    : Array.from(table.querySelectorAll('tr:first-child th, tr:first-child td'));
+
+  const headers = rowHeaderCells
+    .map((cell) => cell.textContent.replace(/\s+/g, ' ').trim())
+    .filter(Boolean);
+
+  if (!headers.length || !headers.some((header) => /role name/i.test(header))) {
+    return [];
+  }
+
+  const roleNameIndex = headers.findIndex((header) => /role name/i.test(header));
+  const permissionHeaders = headers
+    .map((header, index) => ({ header, index }))
+    .filter(({ header, index }) => index !== roleNameIndex && !/role name|action/i.test(header));
+  const rows = [];
+
+  Array.from(table.querySelectorAll('tbody tr, tr')).forEach((tr, roleOrderIndex) => {
+    const cells = Array.from(tr.querySelectorAll('th, td'));
+    if (!cells.length) {
+      return;
+    }
+
+    const roleCell = cells[roleNameIndex] || null;
+    const roleText = roleCell
+      ? (
+          roleCell.querySelector('.long-role-name, .role-name, [title], .truncate')?.textContent
+          || roleCell.textContent
+          || ''
+        )
+      : '';
+    const roleName = normalizeRoleName(roleText);
+    if (!roleName || /^role name$/i.test(roleName) || /action/i.test(roleName)) {
+      return;
+    }
+
+    permissionHeaders.forEach(({ header, index }, permissionOrderIndex) => {
+      const cell = cells[index] || null;
+      if (!cell) {
+        return;
+      }
+
+      const permissionName = header.trim();
+      if (!permissionName) {
+        return;
+      }
+
+      const checkbox = cell.querySelector('input[type="checkbox"]');
+      const value = checkbox
+        ? (checkbox.checked ? '1' : '0')
+        : (cell.textContent || '').replace(/\s+/g, ' ').trim();
+
+      const normalizedValue = checkbox
+        ? (checkbox.checked ? '1' : '0')
+        : /^(1|true|yes|on|enabled|allow)$/i.test(value)
+          ? '1'
+          : /^(0|false|no|off|disabled|deny|none|-|—|\s*)$/i.test(value)
+            ? '0'
+            : '1';
+
+      rows.push([tabLabel, String(roleOrderIndex + 1), roleName, String(permissionOrderIndex + 1), permissionName, normalizedValue]);
+    });
+  });
+
+  return rows;
+}
+
+function getTabPanelForTab(tabButton) {
+  if (!tabButton) {
+    return null;
+  }
+
+  const panelId = tabButton.getAttribute('aria-controls') || tabButton.getAttribute('data-bs-target') || tabButton.getAttribute('href')?.replace(/^#/, '');
+  if (panelId) {
+    const panelById = document.getElementById(panelId);
+    if (panelById) {
+      return panelById;
+    }
+  }
+
+  const tablist = tabButton.closest('[role="tablist"], .nav-tabs');
+  if (tablist && tablist.parentElement) {
+    const siblings = Array.from(tablist.parentElement.children);
+    const index = siblings.indexOf(tablist);
+    if (index >= 0 && siblings[index + 1]) {
+      return siblings[index + 1];
+    }
+  }
+
+  return tabButton.closest('[role="tabpanel"], .tab-pane');
+}
+
+function exportRolesToCsv() {
+  const tabButtons = Array.from(document.querySelectorAll('.nav.nav-tabs [role="tab"], .nav-tabs .nav-link, .nav-tabs button, .nav-tabs a'))
+    .filter((button) => {
+      const text = (button.textContent || '').replace(/\s+/g, ' ').trim();
+      return !!text;
+    });
+
+  const roleRows = [];
+
+  if (tabButtons.length) {
+    tabButtons.forEach((button) => {
+      const tabLabel = (button.textContent || '').replace(/\s+/g, ' ').trim();
+      const panel = getTabPanelForTab(button);
+      const table = panel?.querySelector('table') || document.querySelector('table');
+      const rows = readRoleMatrixFromTable(table, tabLabel);
+      if (rows.length) {
+        roleRows.push(...rows);
+      }
+    });
+  }
+
+  if (!roleRows.length) {
+    const tables = Array.from(document.querySelectorAll('table'));
+    tables.forEach((table) => {
+      const rows = readRoleMatrixFromTable(table, 'Current Tab');
+      if (rows.length) {
+        roleRows.push(...rows);
+      }
+    });
+  }
+
+  if (!roleRows.length) {
+    throw new Error('No role-permission table found under the tabs.');
+  }
+
+  const csv = toCsv(roleRows, ['Tab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#roles.csv`);
+
+  console.log(`Extracted ${roleRows.length} role-permission row(s).`);
+  console.table(roleRows.map(([Tab, RoleIndex, Role, PermissionIndex, Permission, Value]) => ({ Tab, 'Role Index': RoleIndex, Role, 'Permission Index': PermissionIndex, Permission, Value })));
+
+  return roleRows;
+}
+
 const SYSTEM_OBJECTS_SERVER = 'https://devinternal.srppvt4s3r.revvitycloud.eu/';
 const SYSTEM_OBJECTS_PATH = 'snconfig/objects';
 const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
@@ -675,6 +834,7 @@ window.extract = {
   getHistoryRecords,
   getSectionMetadata,
   exportFocusedElementImagesFromToc,
+  exportRolesToCsv,
   listSystemObjects,
   openToolbarPopup,
   closePopup,
