@@ -17,7 +17,8 @@ function getToc(root = document) {
   const rows = extractTocData(root);
   const csv = toCsv(rows, ['Parent', 'Child']);
   const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#binder-toc.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#binder-toc#${timestamp}.csv`);
 
   console.log(`Extracted ${rows.length} row(s).`);
   console.table(rows.map(([Parent, Child]) => ({ Parent, Child })));
@@ -225,7 +226,8 @@ async function exportFocusedElementImagesFromToc(options = {}) {
 
   const csv = toCsv(manifestRows, ['Child', 'JPG File', 'SVG File', 'Status']);
   const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
-  downloadCsv(csv, `${prefix}#${templateTitle}#focused-elements.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${prefix}#${templateTitle}#focused-elements#${timestamp}.csv`);
 
   console.log(`Exported ${manifestRows.length} focused-element image(s).`);
   console.table(manifestRows.map(([Child, JpgFile, SvgFile, Status]) => ({ Child, JpgFile, SvgFile, Status })));
@@ -239,7 +241,8 @@ function extractTable(table, tableName) {
   const csv = toCsv(rows, headers);
   const filenameSuffix = tableName ? `table-${tableName}` : 'table';
   const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${filenameSuffix}.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${filenameSuffix}#${timestamp}.csv`);
 
   console.log(`Extracted ${rows.length} row(s) from table.`);
   console.table(rows.map((row) => Object.fromEntries(headers.map((header, i) => [header || `Column ${i + 1}`, row[i]]))));
@@ -311,8 +314,9 @@ async function extractFieldsTableWithAttributes(findNewTable) {
 
   const csv = toCsv(rows, headers);
   const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  const timestamp = formatIsoDateTimeLocal();
 
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#table-Fields.csv`);
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#table-Fields#${timestamp}.csv`);
 
   console.log(`Extracted ${rows.length} row(s) from Fields table with attributes.`);
   console.table(rows.map(([Field, Type, Name, Value]) => ({ Field, Type, 'Attribute Name': Name, 'Attribute Value': Value })));
@@ -371,7 +375,8 @@ async function getHistoryRecords() {
       const data = rowEls.map(parseHistoryRow);
       const csv = toCsv(data, headers);
       const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
-      downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#history.csv`);
+      const timestamp = formatIsoDateTimeLocal();
+      downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#history#${timestamp}.csv`);
 
       console.log(`Extracted ${data.length} row(s) from history.`);
       console.table(data.map((row) => Object.fromEntries(headers.map((header, i) => [header, row[i]]))));
@@ -629,7 +634,8 @@ async function getSectionMetadata() {
 
   const csv = toCsv(rows, headers);
   const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
-  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${title}-metadata.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#${templateTitle}#${title}-metadata#${timestamp}.csv`);
 
   console.log(`Extracted metadata for "${title}": ${rows.length} row(s).`);
   console.table(rows.map(([Type, Value]) => ({ Type, Value })));
@@ -835,7 +841,8 @@ function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
   const rows = names.map((name) => [name]);
 
   const csv = toCsv(rows, ['System Object']);
-  downloadCsv(csv, `${getUrlPrefix(window.location)}.SystemObjects.csv`);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#SystemObjects#${timestamp}.csv`);
 
   console.log(`Extracted ${rows.length} system object(s).`);
   console.table(rows.map(([Name]) => ({ Name })));
