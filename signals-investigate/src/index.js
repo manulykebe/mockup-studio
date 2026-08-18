@@ -771,9 +771,9 @@ function formatIsoDateTimeLocal(date = new Date()) {
   return `${date.getFullYear()}${pad(date.getMonth() + 1)}${pad(date.getDate())}T${pad(date.getHours())}${pad(date.getMinutes())}${pad(date.getSeconds())}`;
 }
 
-function exportRolesToCsv(options = {}) {
+async function exportRolesToCsv(options = {}) {
   const {
-    includeZeroValues = false,
+    includeZeroValues = true,
   } = options;
 
   const environment = window.location.hostname.split('.')[0] || 'unknown';
@@ -786,16 +786,44 @@ function exportRolesToCsv(options = {}) {
 
   const roleRows = [];
 
+  const getSubTabs = (panel) => {
+    if (!panel) {
+      return [];
+    }
+
+    return Array.from(panel.querySelectorAll('.nav-item button, .nav-item a, [role="tab"], .nav-link'))
+      .map((button) => ({
+        button,
+        text: (button.textContent || '').replace(/\s+/g, ' ').trim(),
+      }))
+      .filter(({ text }) => !!text && !/delete role/i.test(text));
+  };
+
   if (tabButtons.length) {
-    tabButtons.forEach((button) => {
+    for (const button of tabButtons) {
       const tabLabel = (button.textContent || '').replace(/\s+/g, ' ').trim();
       const panel = getTabPanelForTab(button);
-      const table = panel?.querySelector('table') || document.querySelector('table');
-      const rows = readRoleMatrixFromTable(table, tabLabel);
-      if (rows.length) {
-        roleRows.push(...rows.filter((row) => includeZeroValues || row[row.length - 1] === '1').map((row) => [environment, ...row]));
+      const subTabs = getSubTabs(panel);
+
+      const tabsToProcess = subTabs.length ? subTabs : [{ button: null, text: '' }];
+
+      for (const { button: subTabButton, text: subTabLabel } of tabsToProcess) {
+        if (subTabButton) {
+          subTabButton.click();
+          await new Promise((resolve) => setTimeout(resolve, 150));
+        }
+
+        const table = panel?.querySelector('table') || document.querySelector('table');
+        const rows = readRoleMatrixFromTable(table, tabLabel);
+        if (rows.length) {
+          const filtered = rows.filter((row) => includeZeroValues || row[row.length - 1] === '1')
+            .map((row) => [environment, tabLabel, subTabLabel || '', row[1], row[2], row[3], row[4], row[5]]);
+          if (filtered.length) {
+            roleRows.push(...filtered);
+          }
+        }
       }
-    });
+    }
   }
 
   if (!roleRows.length) {
@@ -803,7 +831,7 @@ function exportRolesToCsv(options = {}) {
     tables.forEach((table) => {
       const rows = readRoleMatrixFromTable(table, 'Current Tab');
       if (rows.length) {
-        roleRows.push(...rows.filter((row) => includeZeroValues || row[row.length - 1] === '1').map((row) => [environment, ...row]));
+        roleRows.push(...rows.filter((row) => includeZeroValues || row[row.length - 1] === '1').map((row) => [environment, 'Current Tab', '', row[1], row[2], row[3], row[4], row[5]]));
       }
     });
   }
@@ -812,7 +840,7 @@ function exportRolesToCsv(options = {}) {
     throw new Error('No role-permission rows with value 1 found. Use extract.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
-  const csv = toCsv(roleRows, ['Environment', 'Tab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
+  const csv = toCsv(roleRows, ['Environment', 'Tab', 'SubTab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
   const timestamp = formatIsoDateTimeLocal();
   downloadCsv(csv, `${getUrlPrefix(window.location)}#user-roles#${timestamp}.csv`);
 
