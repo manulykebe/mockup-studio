@@ -20,7 +20,6 @@
       "matches": [ "\u003Call_urls>" ]
    },
    "host_permissions": [ "\u003Call_urls>" ],
-   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoIf5OE2tPcQk8Rggma1DXE6UxqDl/uD18FSYv6I57ckpcmWV/4mZeQsD8Er7QLdbIIQKB75yOam9L2T6aZpp1mfUEy+QIir32qaR8NcF7zkTBJD8zV2zMcCI4c0gzaxurtjAq8SrmpvZIHzcOt2w0bu+GrZaT1HKOxnlPTxoLos/tk0rDBHwwBsd/GfZfVx4l1o0a3hGUHeGr00gVVClpg+O8sOjSgabrocYxiTH3BhXKth5x0lxZLQbZI5Om4xTeYUwyzECW1cYv09oCoToTr9Dj7wz4ve/Nke3sbLtJe8XMXItPTpQLSvXZRTiAGVAboFpEh6zE1jLTGNU1NHP5QIDAQAB",
    "manifest_version": 3,
    "name": "Signals Reporter",
    "options_page": "options.html",
