@@ -3,8 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title data-i18n="edit_script">JS注入器 - 编辑脚本</title>
-	<!-- 引入CodeMirror -->
+	<title data-i18n="edit_script">JS Injector - Edit Script</title>
+	<!-- Load CodeMirror -->
 	<link rel="stylesheet" href="lib/codemirror/codemirror.min.css">
 	<link rel="stylesheet" href="lib/codemirror/monokai.min.css">
 	<link rel="stylesheet" href="lib/codemirror/default.min.css">
@@ -34,7 +34,7 @@
 			--transition: all 0.2s ease;
 		}
 
-		/* 暗黑模式变量 */
+		/* Dark mode variables */
 		[data-theme="dark"] {
 			--primary-color: #8ab4f8;
 			--primary-hover: #aecbfa;
@@ -88,7 +88,7 @@
 			color: var(--text-color);
 		}
 
-		/* 修改CodeMirror样式 */
+		/* Customize CodeMirror styles */
 		.CodeMirror {
 			height: 400px;
 			font-size: 14px;
@@ -157,7 +157,7 @@
 			color: var(--text-color);
 		}
 
-		/* 代码编辑器工具栏 */
+		/* Code editor toolbar */
 		.editor-toolbar {
 			display: flex;
 			gap: 5px;
@@ -182,7 +182,7 @@
 			box-shadow: var(--shadow-sm);
 		}
 
-		/* Toast 通知样式 */
+		/* Toast notification styles */
 		#toast-container {
 			position: fixed;
 			top: 20px;
@@ -230,7 +230,7 @@
 			background-color: var(--primary-color);
 		}
 
-		/* 语言切换按钮 */
+		/* Language switch button */
 		.lang-toggle {
 			margin-left: 10px;
 			font-size: 14px;
@@ -253,7 +253,7 @@
 </head>
 
 <body>
-	<h1 id="page-title" data-i18n="add_script">添加脚本</h1>
+	<h1 id="page-title" data-i18n="add_script">Add Script</h1>
 
 	<div class="container">
 		<div class="form-group">
@@ -287,7 +287,7 @@
 					</span>
 				</button>
 			</div>
-			<!-- 将textarea替换为div，用于初始化CodeMirror -->
+			<!-- Replace the textarea with a div for CodeMirror initialization -->
 			<div id="code-editor"></div>
 			<textarea id="code" style="display: none;" data-i18n-placeholder="enter_js_code"
 				placeholder="// 在此输入要注入的JavaScript代码"></textarea>
@@ -318,7 +318,7 @@
 		</div>
 	</div>
 
-	<!-- Toast通知容器 -->
+	<!-- Toast notification container -->
 	<div id="toast-container"></div>
 
 	<script type="module" src="editor.js"></script>

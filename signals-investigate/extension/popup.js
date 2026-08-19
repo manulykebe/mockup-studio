@@ -2,7 +2,7 @@
 import { i18n, translator } from './i18n/index.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
-  // 获取DOM元素
+  // Get DOM elements
   const currentDomainEl = document.getElementById('current-domain');
   const scriptStatusEl = document.getElementById('script-status');
   const addScriptBtn = document.getElementById('add-script');
@@ -36,14 +36,14 @@ document.addEventListener('DOMContentLoaded', async function() {
   let isEditMode = true; // 默认为编辑模式
   let isEditingName = false;
   let isScriptEnabled = false;
-  let isDarkMode = false; // 暗黑模式状态
+  let isDarkMode = false; // Dark mode state
   let editor = null; // 将编辑器变量提升到顶层作用域
   
-  // 初始化主题
+  // Initialize the theme
   initTheme();
   
-  // 初始化UI为编辑模式
-  // 更新编辑按钮为保存图标
+  // Initialize the UI in edit mode
+  // Change the edit button to a save icon
   toggleEditBtn.innerHTML = '<span>✓</span>';
   toggleEditBtn.title = i18n.t('save_edit');
   
@@ -52,18 +52,18 @@ document.addEventListener('DOMContentLoaded', async function() {
     codeStatus.textContent = i18n.t('edit_mode');
   }
   
-  // 等待i18n初始化完成 
+  // Wait for i18n initialization
   await waitForI18nInit();
   
-  // 初始化页面翻译
+  // Initialize page translations
   translator.translatePage();
   
-  // 初始化语言切换按钮
+  // Initialize the language switch button
   initLangToggle();
   
-  // 初始化主题
+  // Initialize the theme
   function initTheme() {
-    // 从本地存储中获取主题设置
+    // Get the theme setting from local storage
     chrome.storage.local.get('darkMode', (data) => {
       isDarkMode = data.darkMode === true;
       applyTheme(isDarkMode);
@@ -104,15 +104,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       toggleThemeBtn.title = isDarkMode ? i18n.t('light_theme_title') : i18n.t('dark_theme_title');
     }
     
-    // 保存主题设置
+    // Save the theme setting
     chrome.storage.local.set({ darkMode: isDarkMode });
   }
   
-  // 初始化CodeMirror编辑器
+  // Initialize the CodeMirror editor
   editor = CodeMirror(codeEditorDiv, {
     value: '',
     mode: 'javascript',
-    theme: isDarkMode ? 'monokai' : 'default', // 根据当前主题设置编辑器主题
+    theme: isDarkMode ? 'monokai' : 'default', // Set the editor theme to match the current theme
     lineNumbers: true,
     tabSize: 2,
     indentWithTabs: false,
@@ -138,7 +138,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     const statusIndicator = scriptStatusEl.querySelector('.status-indicator');
     
     // 从状态文本中移除"状态: "前缀
-    const displayText = statusText.replace('状态: ', '');
+    const displayText = statusText.replace('Status: ', '');
     scriptStatusEl.textContent = displayText;
     scriptStatusEl.insertAdjacentElement('afterbegin', statusIndicator);
     
@@ -178,10 +178,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     editor.setValue(script.code || '');
     emptyState.classList.add('hidden');
     codeEditorDiv.style.display = '';
-    editor.refresh(); // 刷新编辑器以确保正确显示
-    setEditMode(true); // 默认设置为编辑模式，而不是只读
+    editor.refresh(); // Refresh the editor to ensure correct rendering
+    setEditMode(true); // Default to edit mode instead of read-only mode
     
-    // 确保保存按钮可见
+    // Ensure the save button is visible
     saveScriptBtn.classList.remove('hidden');
   }
   
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveScriptBtn.classList.add('hidden');
   }
   
-  // 设置编辑模式
+  // Set the edit mode
   function setEditMode(enabled) {
     isEditMode = enabled;
     editor.setOption('readOnly', !enabled);
@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 刷新当前页面
+  // Refresh the current page
   function refreshPage() {
     if (!currentTabId) {
       showToast(i18n.t('refresh_error'), 'error');
@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     try {
-      // 使用chrome.tabs.reload刷新当前页面
+      // Use chrome.tabs.reload to refresh the current page
       chrome.tabs.reload(currentTabId);
       showToast(i18n.t('refresh_in_progress'), 'info');
       
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         window.close();
       }, 1000);
     } catch (error) {
-      console.error('刷新页面时出错:', error);
+      console.error('Error refreshing page:', error);
       showToast(i18n.t('refresh_failed') + ': ' + error.message, 'error');
     }
   }
@@ -237,26 +237,26 @@ document.addEventListener('DOMContentLoaded', async function() {
   // 切换编辑名称
   function toggleEditName() {
     if (isEditingName) {
-      // 保存名称
+      // Save the name
       const newName = scriptNameInput.value.trim();
       if (newName) {
         currentScript.name = newName;
         codeTitle.textContent = newName;
         
-        // 如果是编辑模式，保存名称到脚本对象，但不保存到存储
+        // In edit mode, save the name to the script object but not to storage
         if (!isEditMode) {
-          // 不在编辑模式时，直接保存到存储
+          // Outside edit mode, save directly to storage
           saveScriptName(newName);
         }
       }
       
-      // 隐藏输入框，显示标题
+      // Hide the input and show the title
       scriptNameInput.classList.add('hidden');
       codeTitle.classList.remove('hidden');
       editNameBtn.innerHTML = '<span>✏️</span>';
       isEditingName = false;
     } else {
-      // 显示输入框，隐藏标题
+      // Show the input and hide the title
       scriptNameInput.value = currentScript.name || i18n.t('unnamed_script');
       scriptNameInput.classList.remove('hidden');
       codeTitle.classList.add('hidden');
@@ -267,36 +267,36 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 保存脚本名称
+  // Save the script name
   async function saveScriptName(newName) {
     if (!currentScript || !matchedScriptId) return;
     
     try {
-      // 获取当前所有脚本
+      // Get all current scripts
       const data = await chrome.storage.local.get('scripts');
       const scripts = data.scripts || {};
       
-      // 更新脚本名称
+      // Update the script name
       if (scripts[matchedScriptId]) {
         scripts[matchedScriptId].name = newName;
         
-        // 保存回存储
+        // Save back to storage
         await chrome.storage.local.set({ scripts });
         
         showToast(i18n.t('name_updated'), 'success');
       }
     } catch (error) {
-      console.error('保存脚本名称时出错:', error);
+      console.error('Error saving script name:', error);
       showToast(i18n.t('name_update_failed') + ': ' + error.message, 'error');
     }
   }
   
-  // 保存脚本
+  // Save the script
   async function saveScript() {
     if (!currentScript) return;
     
     try {
-      // 如果正在编辑名称，先保存名称
+      // Save the name first when it is being edited
       if (isEditingName) {
         toggleEditName();
       }
@@ -349,14 +349,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
         
         if (isScriptEnabled) {
-          // 脚本应当保存在激活列表中
+          // The script belongs in the active list
           if (scriptInDisabled) {
             // 如果脚本在禁用列表中，移动到激活列表
             delete disabledScripts[matchedScriptId];
           }
           scripts[matchedScriptId] = scriptData;
         } else {
-          // 脚本应当保存在禁用列表中
+          // The script belongs in the disabled list
           if (scriptInActive) {
             // 如果脚本在激活列表中，移动到禁用列表
             delete scripts[matchedScriptId];
@@ -365,21 +365,21 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       }
       
-      // 保存回存储
+      // Save back to storage
       await chrome.storage.local.set({ 
         scripts: scripts,
         _disabledScripts: disabledScripts 
       });
       
-      // 保持在编辑模式，而不是切换到只读模式
-      // 但重置当前脚本对象以保存更新后的代码
+      // Stay in edit mode instead of switching to read-only mode
+      // Reset the current script object with the updated code
       currentScript = scriptData;
       
-      // 显示保存成功状态
+      // Show the save success state
       showToast(i18n.t('save_success'), 'success');
       
     } catch (error) {
-      console.error('保存脚本时出错:', error);
+      console.error('Error saving script:', error);
       showToast(i18n.t('save_failed') + ': ' + error.message, 'error');
     }
   }
@@ -395,7 +395,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     );
     
     if (!matchedScriptId || matchedScriptId.startsWith('temp_')) {
-      // 如果是新脚本或未保存的脚本，只更新UI状态
+      // For a new or unsaved script, update only the UI state
       return;
     }
     
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           scripts[matchedScriptId] = disabledScripts[matchedScriptId];
           // 从禁用列表中移除
           delete disabledScripts[matchedScriptId];
-          // 保存更改
+          // Save the changes
           await chrome.storage.local.set({ 
             'scripts': scripts,
             '_disabledScripts': disabledScripts
@@ -427,16 +427,16 @@ document.addEventListener('DOMContentLoaded', async function() {
       } else {
         // 禁用脚本 - 移动到_disabledScripts中
         if (scripts[matchedScriptId]) {
-          // 获取禁用脚本存储
+          // Get disabled-script storage
           const disabledData = await chrome.storage.local.get('_disabledScripts');
           const disabledScripts = disabledData._disabledScripts || {};
           
-          // 保存到禁用存储
+          // Save to disabled-script storage
           disabledScripts[matchedScriptId] = scripts[matchedScriptId];
           // 从active scripts中移除
           delete scripts[matchedScriptId];
           
-          // 保存更改
+          // Save the changes
           await chrome.storage.local.set({ 
             'scripts': scripts,
             '_disabledScripts': disabledScripts
@@ -444,10 +444,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       }
       
-      // 立即刷新页面以应用更改
+      // Refresh the page immediately to apply the changes
       refreshPage();
     } catch (error) {
-      console.error('更新脚本状态时出错:', error);
+      console.error('Error updating script status:', error);
       showToast(i18n.t('status_update_failed') + ': ' + error.message, 'error');
     }
   }
@@ -559,7 +559,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
       
     } catch (error) {
-      console.error('处理当前标签页时出错:', error);
+      console.error('Error processing the current tab:', error);
       currentDomainEl.textContent = i18n.t('error');
       updateStatusDisplay(false, i18n.t('load_error'));
       disableSiteButtons(addScriptBtn, editScriptBtn);
@@ -567,7 +567,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
   
-  // 添加脚本按钮
+  // Add script button
   addScriptBtn.addEventListener('click', function() {
     chrome.tabs.create({url: `editor.html?domain=${encodeURIComponent(currentDomain)}`});
   });
@@ -584,7 +584,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     chrome.tabs.create({url: 'manager.html'});
   });
   
-  // 选项按钮
+  // Options button
   optionsBtn.addEventListener('click', function() {
     chrome.tabs.create({url: 'options.html'});
   });
@@ -621,7 +621,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     editor.refresh();
     setEditMode(true);
     
-    // 显示保存按钮
+    // Show the save button
     saveScriptBtn.classList.remove('hidden');
     
     // 更新状态
@@ -636,7 +636,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       return;
     }
     
-    // 始终执行保存操作，不再切换模式
+    // Always save instead of switching modes
     saveScript();
   });
   
@@ -647,12 +647,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   }
   
-  // 刷新页面按钮
+  // Refresh page button
   refreshPageBtn.addEventListener('click', function() {
     refreshPage();
   });
   
-  // 保存脚本按钮
+  // Save script button
   saveScriptBtn.addEventListener('click', function() {
     saveScript();
   });
@@ -663,7 +663,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     toggleEditName();
   });
   
-  // 名称输入框回车保存
+  // Save the name when Enter is pressed
   scriptNameInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') {
       toggleEditName();
@@ -677,29 +677,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     setToggleSwitchState(false); // 禁用切换开关
   }
   
-  // 暗黑模式切换按钮
+  // Dark mode toggle button
   toggleThemeBtn.addEventListener('click', function() {
     toggleTheme();
   });
   
-  // 等待i18n初始化完成的函数
+  // Wait for i18n initialization
   async function waitForI18nInit() {
     // 如果已经有language存储，直接返回
     const result = await chrome.storage.local.get('language');
     if (!result.language) {
-      // 如果没有language存储，等待100ms确保i18n初始化完成
+      // If no language is stored, wait 100 ms for i18n initialization
       return new Promise(resolve => setTimeout(resolve, 100));
     }
     return Promise.resolve();
   }
   
-  // 初始化语言切换按钮
+  // Initialize the language switch button
   function initLangToggle() {
     const langToggle = document.getElementById('lang-toggle');
     
     // 更新语言显示
     async function updateLangDisplay() {
-      // 直接从存储中获取当前语言设置，确保获取的是最新的
+      // Read the current language directly from storage to get the latest value
       const result = await chrome.storage.local.get('language');
       const currentLang = result.language || 'en';
       
@@ -722,7 +722,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       // 切换语言
       const newLang = currentLang === 'en' ? 'nl' : 'en';
       
-      // 设置新语言
+      // Set the new language
       i18n.setLanguage(newLang);
       
       // 更新显示

@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateAutocompleteButtonText();
   }
   
-  // 初始化主题
+  // Initialize the theme
   async function initTheme() {
     return new Promise((resolve) => {
       // Get the theme setting from local storage
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Apply the theme now that the editor has been initialized
   applyTheme(isDarkMode);
   
-  // 切换主题
+  // Toggle the theme
   function toggleTheme() {
     isDarkMode = !isDarkMode;
     
@@ -309,7 +309,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       
       return lines.join('\n');
     } catch (e) {
-      console.error('格式化代码时出错:', e);
+      console.error('Error formatting code:', e);
       showToast(i18n.t('format_error'), 'error');
       return code; // Return the original code
     }
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'manager.html';
       }, 1500);
     } catch (error) {
-      console.error('保存脚本时出错:', error);
+      console.error('Error saving script:', error);
       showToast(i18n.t('save_error') + ': ' + error.message, 'error');
     }
   });
@@ -508,7 +508,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           }, 1500);
         }
       } catch (error) {
-        console.error('删除脚本时出错:', error);
+        console.error('Error deleting script:', error);
         showToast(i18n.t('delete_error') + ': ' + error.message, 'error');
       }
     }
@@ -545,7 +545,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         deleteButton.style.display = 'flex';
       }
     } catch (error) {
-      console.error('加载脚本时出错:', error);
+      console.error('Error loading script:', error);
       showToast(i18n.t('load_script_error') + ': ' + error.message, 'error');
     }
   }

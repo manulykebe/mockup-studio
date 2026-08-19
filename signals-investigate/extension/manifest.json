@@ -15,7 +15,7 @@
    "content_security_policy": {
       "extension_pages": "script-src 'self'; object-src 'self'"
    },
-   "description": "Inject js on any website Run JavaScript code",
+   "description": "Revvitty Signals: Reporting and Investigating Settings",
    "externally_connectable": {
       "matches": [ "\u003Call_urls>" ]
    },

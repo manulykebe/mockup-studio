@@ -1,11 +1,11 @@
-// 导入模块
+// Import modules
 import i18n from './i18n.js';
 import translator from './translator.js';
 
-// 初始化翻译器
+// Initialize the translator
 translator.applyTranslations();
 
-// 导出模块
+// Export modules
 export {
   i18n,
   translator

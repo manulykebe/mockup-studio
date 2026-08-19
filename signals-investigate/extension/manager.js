@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 			filteredScripts = { ...scripts };
 			renderScriptsList();
 		} catch (error) {
-			console.error('加载脚本时出错:', error);
+			console.error('Error loading scripts:', error);
 			showError(i18n.t('load_scripts_failed'));
 		}
 	}
@@ -127,7 +127,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 						await chrome.storage.local.set({ scripts });
 						loadScripts();
 					} catch (error) {
-						console.error('删除脚本时出错:', error);
+						console.error('Error deleting script:', error);
 						alert(i18n.t('delete_script_failed'));
 					}
 				}

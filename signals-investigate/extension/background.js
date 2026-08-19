@@ -149,7 +149,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 						if (event.data.success) {
 							resolve(true);
 						} else {
-							reject(new Error(event.data.error || '执行失败'));
+							reject(new Error(event.data.error || 'Execution failed'));
 						}
 					}
 				};
@@ -167,7 +167,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 				// Set a timeout
 				setTimeout(() => {
 					window.removeEventListener('message', messageHandler);
-					reject(new Error('执行超时'));
+					  reject(new Error('Execution timed out'));
 				}, 10000);
 			});
 		};
@@ -177,7 +177,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 			await loadExecutorScript();
 			return { success: true, method: 'executor' };
 		} catch (executorError) {
-			console.warn('使用executor脚本执行失败:', executorError);
+			console.warn('Executor script execution failed:', executorError);
 
 			// Try executing with the helper script
 			const loadHelperScript = () => {
@@ -205,7 +205,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 					return { success: true, method: 'helper' };
 				}
 			} catch (helperError) {
-				console.warn('使用辅助脚本执行失败:', helperError);
+				console.warn('Helper script execution failed:', helperError);
 			}
 
 			// Finally, try the Blob URL method
@@ -215,9 +215,9 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
           (function() {
             try {
               ${scriptInfo.code}
-              console.log('[JS注入器] 脚本执行成功');
+			  console.log('[JS Injector] Script execution succeeded');
             } catch (error) {
-              console.error('[JS注入器] 脚本执行错误:', error);
+			  console.error('[JS Injector] Script execution failed:', error);
             }
           })();
         `);
@@ -306,9 +306,9 @@ async function fallbackInjection(tabId, scriptInfo) {
             (function() {
               try {
                 ${codeToExecute}
-                console.log('[JS注入器] "${scriptName}" 执行成功');
+				console.log('[JS Injector] "${scriptName}" execution succeeded');
               } catch(err) {
-                console.error('[JS注入器] "${scriptName}" 执行错误:', err);
+				console.error('[JS Injector] "${scriptName}" execution failed:', err);
               }
             })();
           `;
@@ -359,10 +359,10 @@ async function strictCSPFallback(tabId, scriptInfo) {
               export default async function() {
                 try {
                   ${code}
-                  console.log('[JS注入器] "${name}" (ES模块方式) 执行成功');
+				  console.log('[JS Injector] "${name}" (ES module) execution succeeded');
                   return true;
                 } catch(err) {
-                  console.error('[JS注入器] "${name}" (ES模块方式) 执行错误:', err);
+				  console.error('[JS Injector] "${name}" (ES module) execution failed:', err);
                   return false;
                 }
               }
@@ -383,7 +383,7 @@ async function strictCSPFallback(tabId, scriptInfo) {
 
 						return result;
 					} catch (error) {
-						console.warn('ES模块方式执行失败:', error);
+						console.warn('ES module execution failed:', error);
 						return false;
 					}
 				};
@@ -416,9 +416,9 @@ async function strictCSPFallback(tabId, scriptInfo) {
 						return new Promise((resolve) => {
 							worker.onmessage = function (e) {
 								if (e.data.success) {
-									console.log('[JS注入器] "${name}" (Worker方式) 执行成功');
+									  console.log('[JS Injector] "${name}" (Worker) execution succeeded');
 								} else {
-									console.error('[JS注入器] "${name}" (Worker方式) 执行错误:', e.data.error);
+									  console.error('[JS Injector] "${name}" (Worker) execution failed:', e.data.error);
 								}
 
 								// Terminate the Worker and clean up
@@ -438,7 +438,7 @@ async function strictCSPFallback(tabId, scriptInfo) {
 							}, 5000);
 						});
 					} catch (error) {
-						console.warn('Worker方式执行失败:', error);
+						console.warn('Worker execution failed:', error);
 						return false;
 					}
 				};
@@ -460,7 +460,7 @@ async function strictCSPFallback(tabId, scriptInfo) {
                     ${code}
                     window.parent.postMessage({ type: 'js-injector-result', success: true }, '*');
                   } catch(err) {
-                    console.error('执行错误:', err);
+					console.error('Execution failed:', err);
                     window.parent.postMessage({ 
                       type: 'js-injector-result', 
                       success: false, 
@@ -487,9 +487,9 @@ async function strictCSPFallback(tabId, scriptInfo) {
 									document.body.removeChild(iframe);
 
 									if (event.data.success) {
-										console.log('[JS注入器] "${name}" (iframe方式) 执行成功');
+										console.log('[JS Injector] "${name}" (iframe) execution succeeded');
 									} else {
-										console.error('[JS注入器] "${name}" (iframe方式) 执行错误:',
+										console.error('[JS Injector] "${name}" (iframe) execution failed:',
 											event.data.error);
 									}
 
@@ -510,7 +510,7 @@ async function strictCSPFallback(tabId, scriptInfo) {
 							}, 5000);
 						});
 					} catch (error) {
-						console.warn('iframe方式执行失败:', error);
+						console.warn('iframe execution failed:', error);
 						return false;
 					}
 				};

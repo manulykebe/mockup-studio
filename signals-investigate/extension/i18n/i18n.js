@@ -16,14 +16,14 @@ class I18n {
     // 当前语言
     this.currentLanguage = this.defaultLanguage;
     
-    // 初始化
+    // Initialize
     this.init();
   }
   
-  // 初始化语言设置
+  // Initialize language settings
   async init() {
     try {
-      // 从存储中获取语言设置
+      // Get the language setting from storage
       const result = await chrome.storage.local.get('language');
       
       if (result.language) {
@@ -34,41 +34,41 @@ class I18n {
           chrome.storage.local.set({ language });
         }
       } else {
-        // 没有设置过语言，设置并保存默认语言(英文)
+        // No language is set; use and save the default language (English)
         this.setLanguage(this.defaultLanguage);
         chrome.storage.local.set({ language: this.defaultLanguage });
       }
     } catch (error) {
-      console.error('初始化语言设置失败:', error);
+      console.error('Failed to initialize language settings:', error);
       // 使用默认语言
       this.setLanguage(this.defaultLanguage);
-      // 尝试保存设置
+      // Try to save the setting
       try {
         chrome.storage.local.set({ language: this.defaultLanguage });
       } catch (e) {
-        console.error('保存默认语言设置失败:', e);
+        console.error('Failed to save the default language setting:', e);
       }
     }
   }
   
-  // 根据浏览器设置选择语言
+  // Select a language based on browser settings
   setLanguageByBrowser() {
     const browserLang = navigator.language.toLowerCase().split('-')[0];
     
-    // 检查是否支持该语言
+    // Check whether the language is supported
     if (this.languages[browserLang]) {
       this.setLanguage(browserLang);
     } else {
-      // 不支持则使用默认语言
+      // Use the default language when unsupported
       this.setLanguage(this.defaultLanguage);
     }
   }
   
-  // 设置当前语言
+  // Set the current language
   setLanguage(lang) {
     if (this.languages[lang]) {
       this.currentLanguage = lang;
-      // 保存语言设置到存储
+      // Save the language setting to storage
       chrome.storage.local.set({ language: lang });
       // 通知语言变更
       this.notifyLanguageChange();

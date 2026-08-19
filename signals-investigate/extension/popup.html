@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title data-i18n="extension_name">JS注入器</title>
-  <!-- 引入CodeMirror -->
+  <!-- Load CodeMirror -->
   <link rel="stylesheet" href="lib/codemirror/codemirror.min.css">
   <link rel="stylesheet" href="lib/codemirror/monokai.min.css">
   <script src="lib/codemirror/codemirror.min.js"></script>
@@ -32,7 +32,7 @@
       --transition: all 0.2s ease;
     }
     
-    /* 暗黑模式变量 */
+    /* Dark mode variables */
     [data-theme="dark"] {
       --primary-color: #8ab4f8;
       --primary-hover: #aecbfa;
@@ -93,7 +93,7 @@
       height: 22px;
     }
     
-    /* 语言切换按钮 */
+    /* Language switch button */
     .lang-toggle {
       position: absolute;
       right: 10px;
@@ -348,7 +348,7 @@
       position: relative;
     }
     
-    /* CodeMirror样式覆盖 */
+    /* CodeMirror style overrides */
     .CodeMirror {
       height: 100%;
       font-size: 12px;
@@ -487,7 +487,7 @@
       opacity: 0.7;
     }
     
-    /* Toast通知样式 */
+    /* Toast notification styles */
     #toast-container {
       position: fixed;
       top: 12px;
@@ -536,7 +536,7 @@
       background-color: var(--primary-color);
     }
     
-    /* 开关样式 */
+    /* Toggle styles */
     .switch {
       position: relative;
       display: inline-block;
@@ -592,7 +592,7 @@
       border-radius: 50%;
     }
     
-    /* 文字按钮样式 */
+    /* Text button styles */
     .text-button {
       background-color: transparent;
       color: var(--primary-color);
@@ -646,7 +646,7 @@
       border: 1px solid var(--border-color);
     }
     
-    /* 小型开关样式 */
+    /* Small toggle styles */
     .switch[style*="width: 26px"] .slider:before {
       height: 10px;
       width: 10px;
@@ -658,7 +658,7 @@
       transform: translateX(12px);
     }
     
-    /* 禁用状态的开关样式 */
+    /* Disabled toggle styles */
     .switch[data-disabled="true"] {
       opacity: 0.5;
       pointer-events: none;
@@ -679,20 +679,20 @@
   <div class="site-header">
     <div class="site-header-row">
       <h2 style="display: flex; align-items: center; font-size: 12px;">
-        <span data-i18n="current_site">当前网站</span>
+        <span data-i18n="current_site">Current Site</span>
         <span style="margin-left: 5px; font-size: 10px; color: var(--secondary-text); font-weight: normal;" id="script-status">
           <span class="status-indicator" style="width: 6px; height: 6px;"></span><span data-i18n="not_injected">未注入</span>
         </span>
       </h2>
       <div class="action-buttons">
-        <button id="add-script" class="text-button" style="height: 18px; padding: 1px 4px;" title="为当前网站添加新脚本" data-i18n="add" data-i18n-title="add_script_title">添加</button>
+        <button id="add-script" class="text-button" style="height: 18px; padding: 1px 4px;" title="Add a new script for the current site" data-i18n="add" data-i18n-title="add_script_title">Add</button>
         <button id="edit-script" class="text-button" style="height: 18px; padding: 1px 4px;" title="在编辑器页面编辑" data-i18n="edit" data-i18n-title="edit_script_title">编辑</button>
       </div>
     </div>
     
     <div class="site-info">
       <div class="domain-container" style="margin-top: 2px; height: 22px;">
-        <div id="current-domain" style="padding: 2px 8px; font-size: 11px;">加载中...</div>
+        <div id="current-domain" style="padding: 2px 8px; font-size: 11px;">Loading...</div>
       </div>
       
       <div class="status-row" style="margin-top: 2px;">
@@ -721,11 +721,11 @@
       </div>
     </div>
     <div class="code-editor" id="code-editor">
-      <!-- CodeMirror将在这里初始化 -->
+      <!-- CodeMirror is initialized here -->
     </div>
     <div id="empty-state" class="empty-state">
       <div class="empty-state-icon">📝</div>
-      <div style="color: var(--text-color); font-weight: 500; margin-bottom: 5px;" data-i18n="no_script_for_site">当前网站没有注入脚本</div>
+      <div style="color: var(--text-color); font-weight: 500; margin-bottom: 5px;" data-i18n="no_script_for_site">No script injected for the current site</div>
       <div style="margin-bottom: 20px;" data-i18n="click_to_add">点击右上角 + 按钮添加</div>
       <button id="create-script" class="primary-action">
         <span style="display: flex; align-items: center; gap: 3px;">
@@ -734,11 +734,11 @@
       </button>
     </div>
     <div class="tools-container">
-      <span id="code-status" style="font-size: 12px; color: var(--secondary-text);" data-i18n="read_only_mode">只读模式</span>
+      <span id="code-status" style="font-size: 12px; color: var(--secondary-text);" data-i18n="read_only_mode">Read Only Mode</span>
       <div style="flex-grow: 1"></div>
-      <button id="refresh-page" class="secondary-btn" title="刷新当前页面预览效果" data-i18n-title="refresh_page_preview">
+      <button id="refresh-page" class="secondary-btn" title="Refresh the current page to preview the effect" data-i18n-title="refresh_page_preview">
         <span style="display: flex; align-items: center; gap: 3px;">
-          <span style="font-size: 13px;">↻</span><span data-i18n="refresh">刷新</span>
+          <span style="font-size: 13px;">↻</span><span data-i18n="refresh">Refresh</span>
         </span>
       </button>
     </div>
@@ -751,15 +751,15 @@
       </span>
     </button>
     <div class="secondary-actions">
-      <button id="manage-scripts" class="secondary-btn" data-i18n="manage_scripts">脚本管理</button>
-      <button id="options" class="secondary-btn" data-i18n="options">选项</button>
-      <button id="toggle-theme" class="icon-button" title="切换暗黑模式" data-i18n-title="toggle_dark_mode">
+      <button id="manage-scripts" class="secondary-btn" data-i18n="manage_scripts">Manage Scripts</button>
+      <button id="options" class="secondary-btn" data-i18n="options">Options</button>
+      <button id="toggle-theme" class="icon-button" title="Toggle dark mode" data-i18n-title="toggle_dark_mode">
         <span>🌓</span>
       </button>
     </div>
   </div>
 
-  <!-- Toast通知容器 -->
+  <!-- Toast notification container -->
   <div id="toast-container"></div>
   
   <script type="module" src="popup.js"></script>

@@ -1,50 +1,70 @@
 
 // https://devinternal.srppvt4s3r.revvitycloud.eu/elements/entity/ado-10:a00fe1fd-e114-41a0-913e-59e0f6afc9b3?focus=ado-10:19b7b57f-9cdc-4827-a92e-0639e0502242
 
-if (document.readyState !== 'loading') {
-	init();
+const targetSelector = '.binder__content-page-progress--non-blocking';
+const signalsReadySelector = '#btn-add-element-content';
+const initialWaitMs = 5000;
+
+if (document.readyState === 'loading') {
+	document.addEventListener('DOMContentLoaded', () => {
+		setTimeout(waitForSignalsReady, initialWaitMs);
+	}, { once: true });
 } else {
-	document.addEventListener('DOMContentLoaded', init);
+	setTimeout(waitForSignalsReady, initialWaitMs);
 }
 
-function init() {
-	console.log('DOM Ready');
-	const targetClass = 'binder__content-page-progress--non-blocking';
+function waitForSignalsReady() {
+	const root = document.documentElement;
+	if (!root) return;
 
-	// Find the element currently on the page
-	const element = document.querySelector(`.${targetClass}`);
+	let targetSeen = Boolean(document.querySelector(targetSelector));
+	let hasRun = false;
 
-	// Exit if the element does not exist at load time
-	if (!element) return;
+	const runOnce = () => {
+		if (hasRun) return;
+		hasRun = true;
+		observer.disconnect();
+		myFunction();
+	};
 
-	// Watch the parent node or body for removed elements
-	const observer = new MutationObserver((mutations, obs) => {
-		for (const mutation of mutations) {
-			for (const removedNode of mutation.removedNodes) {
-				// Check if the removed node is our target or contains it
-				if (
-					removedNode.nodeType === Node.ELEMENT_NODE &&
-					(removedNode.classList.contains(targetClass) ||
-						removedNode.querySelector(`.${targetClass}`))
-				) {
-					// Run your function here
-					myFunction();
+	const isLoadingVisible = () => {
+		return [...document.querySelectorAll(targetSelector)].some(element => {
+			const style = getComputedStyle(element);
+			const rect = element.getBoundingClientRect();
+			return style.display !== 'none' &&
+				style.visibility !== 'hidden' &&
+				style.opacity !== '0' &&
+				rect.width > 0 &&
+				rect.height > 0;
+		});
+	};
 
-					// Stop observing once found and removed
-					obs.disconnect();
-					return;
-				}
-			}
+	const checkReady = () => {
+		if (isLoadingVisible()) {
+			targetSeen = true;
+			return;
 		}
+
+		if (targetSeen && document.querySelector(signalsReadySelector)) {
+			runOnce();
+		}
+	};
+
+	const observer = new MutationObserver((mutations) => {
+		if (targetSeen || mutations.length > 0) checkReady();
 	});
 
-	// Start observing the document body
-	observer.observe(document.body, {
+	observer.observe(root, {
 		childList: true,
 		subtree: true,
+		attributes: true,
+		attributeFilter: ['class', 'style', 'hidden', 'aria-busy'],
 	});
+
+	// Handle pages that were already loaded before the snippet was injected.
+	checkReady();
 }
 
 function myFunction() {
-	console.log('The element was removed!');
+	alert('The element was removed!');
 }

@@ -4,11 +4,11 @@ import i18n from './i18n.js';
 // DOM翻译器
 class DOMTranslator {
   constructor() {
-    // 初始化监听器
+    // Initialize the listener
     this.initEventListeners();
   }
   
-  // 初始化事件监听器
+  // Initialize event listeners
   initEventListeners() {
     // 监听语言变更事件
     document.addEventListener('languageChanged', () => {

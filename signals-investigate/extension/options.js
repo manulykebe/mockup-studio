@@ -1,8 +1,8 @@
-// 导入i18n模块
+// Import the i18n module
 import { i18n, translator } from './i18n/index.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // 获取DOM元素
+  // Get DOM elements
   const exportDataButton = document.getElementById('export-data');
   const importDataButton = document.getElementById('import-data');
   const importFileInput = document.getElementById('import-file');
@@ -11,94 +11,94 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeStatus = document.getElementById('theme-status');
   const languageSelect = document.getElementById('language-select');
   
-  // 初始化主题
+  // Initialize the theme
   initTheme();
   
-  // 初始化语言选择器
+  // Initialize the language selector
   initLanguageSelector();
   
-  // 初始化页面翻译
+  // Initialize page translations
   translator.translatePage();
   
-  // 初始化语言选择器
+  // Initialize the language selector
   function initLanguageSelector() {
-    // 获取当前语言设置
+    // Get the current language setting
     chrome.storage.local.get('language', (data) => {
       const currentLanguage = data.language || 'en';
       
-      // 设置选择器默认值
+      // Set the selector's default value
       languageSelect.value = currentLanguage;
       
-      // 监听选择变化
+      // Listen for selector changes
       languageSelect.addEventListener('change', handleLanguageChange);
     });
   }
   
-  // 处理语言变更
+  // Handle language changes
   function handleLanguageChange() {
     const selectedLanguage = languageSelect.value;
     
-    // 保存语言设置
+    // Save the language setting
     chrome.storage.local.set({ language: selectedLanguage });
     
-    // 根据选择设置语言
+    // Apply the selected language
     if (selectedLanguage === 'auto') {
       i18n.setLanguageByBrowser();
     } else {
       i18n.setLanguage(selectedLanguage);
     }
     
-    // 显示消息
+    // Show a message
     showMessage(i18n.t('language_changed'), 'success');
   }
   
-  // 导出数据
+  // Export data
   exportDataButton.addEventListener('click', async () => {
     try {
-      // 获取所有脚本数据
+      // Get all script data
       const data = await chrome.storage.local.get('scripts');
       const scripts = data.scripts || {};
       
-      // 创建数据对象
+      // Create the data object
       const exportData = {
         version: 1,
         scripts,
         exportDate: Date.now()
       };
       
-      // 转换为JSON字符串
+      // Convert to a JSON string
       const jsonString = JSON.stringify(exportData, null, 2);
       
-      // 创建下载链接
+      // Create a download link
       const blob = new Blob([jsonString], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `js-injector-backup-${new Date().toISOString().slice(0, 10)}.json`;
       
-      // 模拟点击下载
+      // Trigger the download
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       
-      // 释放URL对象
+      // Release the URL object
       setTimeout(() => {
         URL.revokeObjectURL(url);
       }, 100);
       
       showMessage(i18n.t('data_export_success'), 'success');
     } catch (error) {
-      console.error('导出数据时出错:', error);
+      console.error('Error exporting data:', error);
       showMessage(i18n.t('data_export_failed'), 'error');
     }
   });
   
-  // 导入数据按钮点击事件
+  // Import data button event
   importDataButton.addEventListener('click', () => {
     importFileInput.click();
   });
   
-  // 处理文件选择
+  // Handle file selection
   importFileInput.addEventListener('change', async (event) => {
     const file = event.target.files[0];
     
@@ -107,65 +107,65 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     try {
-      // 读取文件内容
+      // Read the file contents
       const fileContent = await readFileAsText(file);
       const importData = JSON.parse(fileContent);
       
-      // 验证数据格式
+      // Validate the data format
       if (!importData.scripts || typeof importData.scripts !== 'object') {
         throw new Error(i18n.t('invalid_data_format'));
       }
       
-      // 确认导入
+      // Confirm the import
       if (confirm(i18n.t('import_confirmation'))) {
-        // 保存导入的脚本
+        // Save the imported scripts
         await chrome.storage.local.set({ scripts: importData.scripts });
         showMessage(i18n.t('data_import_success'), 'success');
       }
     } catch (error) {
-      console.error('导入失败:', error);
+      console.error('Import failed:', error);
       showMessage(`${i18n.t('data_import_failed')} ${error.message}`, 'error');
     }
     
-    // 重置文件输入
+    // Reset the file input
     importFileInput.value = '';
   });
   
-  // 清除所有数据
+  // Clear all data
   clearDataButton.addEventListener('click', async () => {
     if (confirm(i18n.t('clear_data_confirmation'))) {
       try {
         await chrome.storage.local.set({ scripts: {} });
         showMessage(i18n.t('clear_data_success'), 'success');
       } catch (error) {
-        console.error('清除数据时出错:', error);
+        console.error('Error clearing data:', error);
         showMessage(i18n.t('clear_data_failed'), 'error');
       }
     }
   });
   
-  // 显示消息
+  // Show a message
   function showMessage(message, type) {
-    // 移除任何已存在的消息
+    // Remove any existing messages
     const existingMessages = document.querySelectorAll('.message');
     existingMessages.forEach(msg => msg.remove());
     
-    // 创建消息元素
+    // Create the message element
     const messageElement = document.createElement('div');
     messageElement.className = `message ${type}`;
     messageElement.textContent = message;
     
-    // 添加到页面
+    // Add it to the page
     document.body.appendChild(messageElement);
     
-    // 3秒后自动移除
+    // Remove it automatically after 3 seconds
     setTimeout(() => {
       messageElement.style.opacity = '0';
       setTimeout(() => messageElement.remove(), 500);
     }, 3000);
   }
   
-  // 读取文件为文本
+  // Read the file as text
   function readFileAsText(file) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -175,23 +175,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
   
-  // 初始化主题
+  // Initialize the theme
   function initTheme() {
-    // 从本地存储中获取主题设置
+    // Get the theme setting from local storage
     chrome.storage.local.get('darkMode', (data) => {
       const isDarkMode = data.darkMode === true;
       applyTheme(isDarkMode);
       
-      // 更新开关状态
+      // Update the switch state
       themeToggleSwitch.checked = isDarkMode;
       updateThemeStatusText(isDarkMode);
     });
     
-    // 添加主题切换事件监听
+    // Add the theme toggle listener
     themeToggleSwitch.addEventListener('change', toggleTheme);
   }
   
-  // 应用主题
+  // Apply the theme
   function applyTheme(isDark) {
     if (isDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
@@ -200,23 +200,23 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
   
-  // 更新主题状态文本
+  // Update the theme status text
   function updateThemeStatusText(isDarkMode) {
     themeStatus.textContent = isDarkMode ? i18n.t('on') : i18n.t('off');
     themeStatus.setAttribute('data-i18n', isDarkMode ? 'on' : 'off');
   }
   
-  // 切换主题
+  // Toggle the theme
   function toggleTheme() {
     const isDarkMode = themeToggleSwitch.checked;
     
-    // 应用主题
+    // Apply the theme
     applyTheme(isDarkMode);
     
-    // 更新状态文本
+    // Update the status text
     updateThemeStatusText(isDarkMode);
     
-    // 保存主题设置
+    // Save the theme setting
     chrome.storage.local.set({ darkMode: isDarkMode });
   }
 }); 
