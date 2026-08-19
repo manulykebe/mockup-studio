@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       // 更新切换按钮状态
       if (toggleThemeBtn) {
         toggleThemeBtn.innerHTML = isDarkMode ? '<span>☀️</span>' : '<span>🌙</span>';
-        toggleThemeBtn.title = isDarkMode ? '切换到亮色模式' : '切换到暗色模式';
+        toggleThemeBtn.title = isDarkMode ? i18n.t('light_theme_title') : i18n.t('dark_theme_title');
       }
     });
   }
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // 更新切换按钮状态
     if (toggleThemeBtn) {
       toggleThemeBtn.innerHTML = isDarkMode ? '<span>☀️</span>' : '<span>🌙</span>';
-      toggleThemeBtn.title = isDarkMode ? '切换到亮色模式' : '切换到暗色模式';
+      toggleThemeBtn.title = isDarkMode ? i18n.t('light_theme_title') : i18n.t('dark_theme_title');
     }
     
     // 保存主题设置
@@ -173,8 +173,8 @@ document.addEventListener('DOMContentLoaded', async function() {
   function showCode(script) {
     currentScript = script;
     codeContainer.classList.remove('hidden');
-    codeTitle.textContent = script.name || '未命名脚本';
-    scriptNameInput.value = script.name || '未命名脚本';
+    codeTitle.textContent = script.name || i18n.t('unnamed_script');
+    scriptNameInput.value = script.name || i18n.t('unnamed_script');
     editor.setValue(script.code || '');
     emptyState.classList.add('hidden');
     codeEditorDiv.style.display = '';
@@ -257,7 +257,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       isEditingName = false;
     } else {
       // 显示输入框，隐藏标题
-      scriptNameInput.value = currentScript.name || '未命名脚本';
+      scriptNameInput.value = currentScript.name || i18n.t('unnamed_script');
       scriptNameInput.classList.remove('hidden');
       codeTitle.classList.add('hidden');
       scriptNameInput.focus();
@@ -703,8 +703,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       const result = await chrome.storage.local.get('language');
       const currentLang = result.language || 'en';
       
-      const langText = currentLang === 'zh' ? '中文' : 'English';
-      const langIcon = currentLang === 'zh' ? '🇨🇳' : '🇺🇸';
+      const langText = currentLang === 'nl' ? i18n.t('language_label_dutch') : i18n.t('language_label_english');
+      const langIcon = currentLang === 'nl' ? '🇳🇱' : '🇺🇸';
       langToggle.innerHTML = `<span style="display: flex; align-items: center; gap: 4px;">
         <span style="font-size: 14px;">${langIcon}</span><span>${langText}</span>
       </span>`;
@@ -720,7 +720,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       const currentLang = result.language || 'en';
       
       // 切换语言
-      const newLang = currentLang === 'en' ? 'zh' : 'en';
+      const newLang = currentLang === 'en' ? 'nl' : 'en';
       
       // 设置新语言
       i18n.setLanguage(newLang);
@@ -729,7 +729,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       updateLangDisplay();
       
       // 显示提示
-      showToast(newLang === 'en' ? 'Switched to English' : '已切换到中文', 'info');
+      showToast(newLang === 'en' ? i18n.t('language_switched_to_english') : i18n.t('language_switched_to_dutch'), 'info');
     });
   }
   

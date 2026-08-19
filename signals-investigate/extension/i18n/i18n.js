@@ -1,13 +1,13 @@
 // 导入语言文件
 import en from './en.js';
-import zh from './zh.js';
+import nl from './nl.js';
 
 class I18n {
   constructor() {
     // 可用的语言
     this.languages = {
       en: en,
-      zh: zh
+      nl: nl
     };
     
     // 默认语言
@@ -27,8 +27,12 @@ class I18n {
       const result = await chrome.storage.local.get('language');
       
       if (result.language) {
-        // 如果有存储的语言设置，则使用它
-        this.setLanguage(result.language);
+        // Migrate the previous Chinese locale to Dutch.
+        const language = result.language === 'zh' ? 'nl' : result.language;
+        this.setLanguage(language);
+        if (language !== result.language) {
+          chrome.storage.local.set({ language });
+        }
       } else {
         // 没有设置过语言，设置并保存默认语言(英文)
         this.setLanguage(this.defaultLanguage);

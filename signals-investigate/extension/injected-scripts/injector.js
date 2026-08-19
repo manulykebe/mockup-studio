@@ -1,55 +1,60 @@
 /**
- * JS注入器 - 通用注入脚本
+ * JS injector - generic injection script
  * 
- * 此脚本通过web_accessible_resources机制加载，用于在网页中执行自定义JavaScript代码
+ * This script is loaded through web_accessible_resources to execute custom JavaScript in a page.
  */
 
-// 全局命名空间，避免污染页面环境
+const scriptParams = new URLSearchParams(new URL(document.currentScript.src).search);
+const successMessage = scriptParams.get('success') || 'Script execution succeeded';
+const errorMessage = scriptParams.get('error') || 'Script execution failed';
+const loadedMessage = scriptParams.get('loaded') || 'Injection core script loaded';
+
+// Global namespace to avoid polluting the page environment
 window._JSInjector = window._JSInjector || {
-  // 唯一ID，避免冲突
+  // Unique ID to avoid collisions
   id: 'js-injector-' + Date.now(),
   
-  // 版本信息
+  // Version information
   version: '1.0',
   
-  // 执行的脚本历史
+  // Execution history
   executedScripts: [],
   
-  // 已创建的Blob URLs (需要在不使用时释放)
+  // Created Blob URLs (release them when no longer needed)
   blobUrls: [],
   
-  // 通过Blob URL执行函数 - 避免内联脚本和eval
+  // Execute through a Blob URL to avoid inline scripts and eval
   executeViaBlob: function(code, scriptName) {
     try {
-      // 创建一个带有包装的脚本Blob
+      // Create a wrapped script Blob
       const wrappedCode = `
         try {
           ${code}
-          console.log('[JS注入器] "${scriptName || '未命名脚本'}" 执行成功');
+          console.log('[JS Injector] "${scriptName || 'Unnamed script'}" ${successMessage}');
         } catch(err) {
-          console.error('[JS注入器] "${scriptName || '未命名脚本'}" 执行错误:', err);
+          console.error('[JS Injector] "${scriptName || 'Unnamed script'}" ${errorMessage}:', err);
         }
       `;
       
-      // 创建Blob对象
+      // Create the Blob object
       const blob = new Blob([wrappedCode], { type: 'application/javascript' });
       
-      // 创建Blob URL
+      // Create the Blob URL
       const blobUrl = URL.createObjectURL(blob);
       
-      // 存储创建的URL以便后续清理
+      // Store the URL for later cleanup
       this.blobUrls.push(blobUrl);
       
-      // 创建脚本元素并设置src为Blob URL
+      // Create a script element with the Blob URL as its source
       const script = document.createElement('script');
       script.src = blobUrl;
       script.setAttribute('data-js-injector', this.id);
       script.setAttribute('data-script-name', scriptName || 'unnamed-script');
       
-      // 添加到文档中执行
+      // Add it to the document for execution
       document.head.appendChild(script);
       
-      // 记录执行信息
+      // Record execution details
       this.executedScripts.push({
         name: scriptName || 'unnamed-script',
         timestamp: Date.now(),
@@ -59,7 +64,7 @@ window._JSInjector = window._JSInjector || {
       
       return true;
     } catch (error) {
-      console.error('[JS注入器] 执行错误:', error);
+      console.error('[JS Injector] ${errorMessage}:', error);
       
       this.executedScripts.push({
         name: scriptName || 'unnamed-script',
@@ -73,36 +78,35 @@ window._JSInjector = window._JSInjector || {
     }
   },
   
-  // 释放所有创建的Blob URLs
+  // Release all created Blob URLs
   releaseBlobs: function() {
     this.blobUrls.forEach(url => {
       try {
         URL.revokeObjectURL(url);
       } catch (e) {
-        console.error('[JS注入器] 释放Blob URL失败:', e);
+        console.error('[JS Injector] Failed to release Blob URL:', e);
       }
     });
     this.blobUrls = [];
   },
   
-  // 主要的注入函数
+  // Main injection function
   injectScript: function(code, scriptName) {
-    // 使用Blob URL方法注入
+    // Inject using the Blob URL method
     return this.executeViaBlob(code, scriptName);
   },
   
-  // 页面卸载时清理资源
+  // Clean up resources when the page unloads
   cleanup: function() {
     this.releaseBlobs();
   }
 };
 
-// 添加页面卸载事件监听器以清理资源
+// Clean up resources when the page unloads
 window.addEventListener('beforeunload', function() {
   if (window._JSInjector) {
     window._JSInjector.cleanup();
   }
 });
 
-// 通知扩展脚本已加载
-console.log('[JS注入器] 注入核心脚本已加载，版本:', window._JSInjector.version); 
+console.log(`[JS Injector] ${loadedMessage}, version:`, window._JSInjector.version);

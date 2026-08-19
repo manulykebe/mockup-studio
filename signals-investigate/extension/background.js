@@ -47,8 +47,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 						}
 
 						// Get resource URLs in advance (in the background script, not the injected script)
-						const injectorUrl = chrome.runtime.getURL('injected-scripts/injector.js');
-						const executorUrl = chrome.runtime.getURL('injected-scripts/executor.js');
+						const injectorUrl = `${chrome.runtime.getURL('injected-scripts/injector.js')}?success=${encodeURIComponent(t('script_execution_succeeded'))}&error=${encodeURIComponent(t('script_execution_failed'))}&loaded=${encodeURIComponent(t('injector_loaded'))}`;
+						const executorUrl = `${chrome.runtime.getURL('injected-scripts/executor.js')}?success=${encodeURIComponent(t('script_execution_succeeded'))}&error=${encodeURIComponent(t('script_execution_failed'))}&loaded=${encodeURIComponent(t('executor_loaded'))}`;
 
 						// Use the content-script injection mode
 						injectWithContentScript(tabId, scripts[key])
@@ -97,7 +97,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 // Inject through a content script - this is the most reliable method and bypasses most CSP restrictions
 async function injectWithContentScript(tabId, scriptInfo) {
 	// Get the full URLs for extension resources
-	const injectorUrl = chrome.runtime.getURL('injected-scripts/injector.js');
+	const injectorUrl = `${chrome.runtime.getURL('injected-scripts/injector.js')}?success=${encodeURIComponent(t('script_execution_succeeded'))}&error=${encodeURIComponent(t('script_execution_failed'))}&loaded=${encodeURIComponent(t('injector_loaded'))}`;
 	const executorUrl = chrome.runtime.getURL('injected-scripts/executor.js');
 
 	// First, try injecting directly as a content script
@@ -159,7 +159,8 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 
 				// Create the script element
 				const script = document.createElement('script');
-				script.src = `${executorUrl}?id=${scriptId}&t=${Date.now()}`;
+				const separator = executorUrl.includes('?') ? '&' : '?';
+				script.src = `${executorUrl}${separator}id=${scriptId}&t=${Date.now()}`;
 				script.setAttribute('data-js-injector', 'executor');
 				document.head.appendChild(script);
 
@@ -188,7 +189,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 
 					const helperScript = document.createElement('script');
 					helperScript.onload = () => resolve(true);
-					helperScript.onerror = (e) => reject(new Error('加载辅助脚本失败: ' + e.message));
+					  helperScript.onerror = (e) => reject(new Error(`${t('helper_script_load_failed')} ${e.message}`));
 					helperScript.src = injectorUrl;
 					document.head.appendChild(helperScript);
 				});
@@ -338,7 +339,7 @@ async function fallbackInjection(tabId, scriptInfo) {
 				return false;
 			}
 		},
-		args: [scriptInfo.code, scriptInfo.name || '未命名脚本']
+		args: [scriptInfo.code, scriptInfo.name || t('unnamed_script')]
 	}).catch(error => {
 		console.error(t('fallback_execution_failed'), error);
 	});
@@ -528,7 +529,7 @@ async function strictCSPFallback(tabId, scriptInfo) {
 				return false;
 			}
 		},
-		args: [scriptInfo.code, scriptInfo.name || '未命名脚本']
+		args: [scriptInfo.code, scriptInfo.name || t('unnamed_script')]
 	}).catch(error => {
 		console.error(t('strict_csp_execution_failed'), error);
 	});

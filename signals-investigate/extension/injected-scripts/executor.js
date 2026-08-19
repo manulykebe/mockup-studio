@@ -1,56 +1,61 @@
 /**
- * JS注入器 - 脚本执行器
+ * JS injector - script executor
  * 
- * 这个文件可以通过URL加载，避免内联脚本的CSP限制
- * 参数通过URL查询参数传递
+ * This file can be loaded by URL to avoid inline-script CSP restrictions.
+ * Parameters are passed through URL query parameters.
  */
 
 (function() {
-  // 获取URL中的参数
+  // Get parameters from the URL
   const getScriptParams = () => {
-    const params = new URLSearchParams(document.currentScript.src.split('?')[1] || '');
+    const params = new URLSearchParams(new URL(document.currentScript.src).search);
     return {
       id: params.get('id') || '',
-      name: params.get('name') || '未命名脚本'
+      name: params.get('name') || 'Unnamed script',
+      successMessage: params.get('success') || 'Script execution succeeded',
+      errorMessage: params.get('error') || 'Script execution failed',
+      loadedMessage: params.get('loaded') || 'Executor script loaded'
     };
   };
-  
-  // 记录执行信息到控制台
+
+  const scriptParams = getScriptParams();
+
+  // Log execution details to the console
   const logExecution = (name, success, error) => {
     if (success) {
-      console.log(`[JS注入器] "${name}" 执行成功`);
+      console.log(`[JS Injector] "${name}" ${scriptParams.successMessage}`);
     } else {
-      console.error(`[JS注入器] "${name}" 执行错误:`, error);
+      console.error(`[JS Injector] "${name}" ${scriptParams.errorMessage}:`, error);
     }
   };
-  
-  // 监听消息事件，用于接收要执行的代码
+
+  // Listen for messages containing code to execute
   window.addEventListener('message', function(event) {
-    // 确保消息来自于同一窗口
+    // Ensure the message comes from this window
     if (event.source !== window) return;
     
-    // 验证消息是否来自JS注入器
+    // Verify that the message is from the JS injector
     if (event.data && event.data.type === 'js-injector-execute') {
       try {
         const { code, name, id } = event.data;
         
-        // 立即执行代码
+        // Execute the code immediately
         (new Function(code))();
         
-        // 记录成功执行
+        // Log successful execution
         logExecution(name, true);
         
-        // 通知执行完成
+        // Notify the caller that execution is complete
         window.postMessage({
           type: 'js-injector-executed',
           id: id,
           success: true
         }, '*');
       } catch (error) {
-        // 记录执行错误
+        // Log the execution error
         logExecution(event.data.name, false, error);
         
-        // 通知执行错误
+        // Notify the caller about the execution error
         window.postMessage({
           type: 'js-injector-executed',
           id: event.data.id,
@@ -61,16 +66,13 @@
     }
   });
   
-  // 如果脚本带有直接代码参数，则立即执行
-  const scriptParams = getScriptParams();
+  // Notify the caller when the script is ready
   if (scriptParams.id) {
-    // 通知已准备好执行
     window.postMessage({
       type: 'js-injector-ready',
       id: scriptParams.id
     }, '*');
   }
   
-  // 通知脚本已加载
-  console.log('[JS注入器] 执行器脚本已加载');
+  console.log(`[JS Injector] ${scriptParams.loadedMessage}`);
 })(); 

@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
       
       // 验证数据格式
       if (!importData.scripts || typeof importData.scripts !== 'object') {
-        throw new Error('无效的数据格式');
+        throw new Error(i18n.t('invalid_data_format'));
       }
       
       // 确认导入

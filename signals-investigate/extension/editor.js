@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   langToggle.innerHTML = `<span style="display: flex; align-items: center; gap: 4px;">
     <span style="font-size: 18px;">🌐</span><span data-i18n="language">语言</span>
   </span>`;
-  langToggle.title = 'Switch Language / 切换语言';
+  langToggle.title = `${i18n.t('language_label_english')} / ${i18n.t('language_label_dutch')}`;
   langToggle.className = 'lang-toggle';
   
   // Replace the original title content with a container
@@ -67,11 +67,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Get the current language
     const currentLang = i18n.getLanguage();
     // Toggle the language
-    const newLang = currentLang === 'en' ? 'zh' : 'en';
+    const newLang = currentLang === 'en' ? 'nl' : 'en';
     // Set the new language
     i18n.setLanguage(newLang);
     // Show a notification
-    showToast(newLang === 'en' ? 'Switched to English' : '已切换到中文', 'info');
+    showToast(newLang === 'en' ? i18n.t('language_switched_to_english') : i18n.t('language_switched_to_dutch'), 'info');
     
     // Update the autocomplete button text
     updateAutocompleteButtonText();

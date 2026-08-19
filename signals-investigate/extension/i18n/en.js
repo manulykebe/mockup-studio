@@ -61,7 +61,7 @@ const en = {
   language_description: "Select the language for the extension interface.",
   language_auto: "Auto (Follow Browser)",
   language_en: "English",
-  language_zh: "中文",
+  language_nl: "Dutch",
   language_changed: "Language changed successfully",
   
   // Toast Notifications
@@ -171,6 +171,31 @@ const en = {
   fallback_execution_failed: "Fallback injection execution failed:",
   strict_csp_injection_failed: "Strict-CSP-compatible injection failed:",
   strict_csp_execution_failed: "Strict-CSP-compatible injection execution failed:"
+  ,invalid_data_format: "Invalid data format"
+  ,language_label_english: "English"
+  ,language_label_dutch: "Dutch"
+  ,language_switched_to_english: "Switched to English"
+  ,language_switched_to_dutch: "Switched to Dutch"
+  ,light_theme_title: "Switch to light theme"
+  ,dark_theme_title: "Switch to dark theme"
+  ,script_execution_succeeded: "Script execution succeeded"
+  ,script_execution_failed: "Script execution failed"
+  ,script_execution_timed_out: "Script execution timed out"
+  ,executor_loaded: "Executor script loaded"
+  ,injector_loaded: "Injection core script loaded"
+  ,sync_initializing: "Initializing synchronization..."
+  ,sync_in_progress: "Synchronizing data..."
+  ,sync_succeeded: "Data synchronization succeeded"
+  ,sync_failed: "Data synchronization failed"
+  ,sync_settings_updated: "Synchronization settings updated:"
+  ,automatic_sync_failed: "Automatic synchronization failed:"
+  ,unsupported_sync_provider: "Unsupported synchronization provider:"
+  ,cloud_to_local_sync: "Cloud data is newer; synchronizing from cloud to local"
+  ,local_to_cloud_sync: "Local data is newer or this is the first synchronization; synchronizing from local to cloud"
+  ,sync_data_too_large: "Data exceeds the Chrome Sync storage limit; synchronizing only disabled scripts"
+  ,sync_save_failed: "Failed to save to Chrome Sync storage:"
+  ,sync_quota_fallback: "QUOTA_BYTES limit exceeded; synchronizing only disabled scripts"
+  ,sync_interval_set: "Automatic synchronization interval:"
 };
 
 export default en; 
