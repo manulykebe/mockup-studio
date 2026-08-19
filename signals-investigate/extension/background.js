@@ -13,12 +13,27 @@ const secondaryInjectSuccessMessage = () => t('secondary_injection_succeeded');
 
 const defaultScriptName = () => t('unnamed_script');
 const skipDisabledScriptMessage = () => t('skip_disabled_script');
+const signalsGateHost = 'revvitycloud.eu';
+const signalsGatePath = 'snippets/executeWhenSignalsIsLoaded.js';
+const activeInjectionUrls = new Map();
 // Listen for tab update events
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+	if (changeInfo.status === 'loading') {
+		activeInjectionUrls.delete(tabId);
+		return;
+	}
+
 	// When the page has finished loading
 	if (changeInfo.status === 'complete' && tab.url) {
+		if (activeInjectionUrls.get(tabId) === tab.url) {
+			return;
+		}
+
+		activeInjectionUrls.set(tabId, tab.url);
+
 		// Ensure this is an HTTP or HTTPS URL
 		if (!tab.url.startsWith('http://') && !tab.url.startsWith('https://')) {
+			activeInjectionUrls.delete(tabId);
 			return; // Not a web page; do not inject
 		}
 
@@ -28,8 +43,9 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 			let domain = url.hostname;
 
 			// Get all injection scripts from storage
-			chrome.storage.local.get('scripts', (data) => {
+			chrome.storage.local.get('scripts', async (data) => {
 				const scripts = data.scripts || {};
+				const matchingScripts = [];
 
 				// Check whether the current domain has a matching injection script
 				for (const key in scripts) {
@@ -42,50 +58,23 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 						// Inject only enabled scripts
 						if (!isEnabled) {
-							console.log(`${skipDisabledScriptMessage()}: ${scripts[key].name || defaultScriptName()} (${scripts[key].domain})`);
+							// console.log(`${skipDisabledScriptMessage()}: ${scripts[key].name || defaultScriptName()} (${scripts[key].domain})`);
 							continue; // Skip disabled scripts
 						}
 
-						// Get resource URLs in advance (in the background script, not the injected script)
-						const injectorUrl = `${chrome.runtime.getURL('injected-scripts/injector.js')}?success=${encodeURIComponent(t('script_execution_succeeded'))}&error=${encodeURIComponent(t('script_execution_failed'))}&loaded=${encodeURIComponent(t('injector_loaded'))}`;
-						const executorUrl = `${chrome.runtime.getURL('injected-scripts/executor.js')}?success=${encodeURIComponent(t('script_execution_succeeded'))}&error=${encodeURIComponent(t('script_execution_failed'))}&loaded=${encodeURIComponent(t('executor_loaded'))}`;
+						if (scripts[key].name === 'executeWhenSignalsIsLoaded.js') {
+							continue;
+						}
 
-						// Use the content-script injection mode
-						injectWithContentScript(tabId, scripts[key])
-							.then(result => {
-								console.log(injectionSuccessMessage(), result);
-							})
-							.catch(error => {
-								console.error(injectionFailureAlert(), error);
-								// Try fallback method 1: helper script
-								injectHelperScript(tabId)
-									.then(() => injectUserScript(tabId, scripts[key]))
-									.then(result => {
-										console.log(secondaryInjectSuccessMessage(), result);
-									})
-									.catch(err => {
-										console.error(secondaryInjectFailureAlert(), err);
-										// Try fallback method 2: Blob URL
-										fallbackInjection(tabId, scripts[key])
-											.then(result => {
-												console.log(tertiaryInjectSuccessMessage(), result);
-											})
-											.catch(err2 => {
-												console.error(tertiaryInjectFailureAlert(), err2);
-												// Finally, try the strict-CSP-compatible injection method
-												strictCSPFallback(tabId, scripts[key])
-													.then(result => {
-														console.log(strictCSPInjectMessage() + (result ? t('injection_succeeded_suffix') : t('injection_failed_suffix')));
-													})
-													.catch(finalError => {
-														console.error(allInjectFailureAlert(), finalError);
-													});
-											});
-									});
-							});
-
-						break;
+						matchingScripts.push(scripts[key]);
 					}
+				}
+
+				if (matchingScripts.length > 0 || domain.endsWith(signalsGateHost)) {
+					injectScriptsInOrder(tabId, matchingScripts, domain)
+						.catch(error => console.error(allInjectFailureAlert(), error));
+				} else {
+					activeInjectionUrls.delete(tabId);
 				}
 			});
 		} catch (error) {
@@ -93,6 +82,82 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		}
 	}
 });
+
+async function injectScriptsInOrder(tabId, scripts, domain) {
+	if (domain.endsWith(signalsGateHost)) {
+		const gateResponse = await fetch(chrome.runtime.getURL(signalsGatePath));
+		if (!gateResponse.ok) {
+			throw new Error(`Failed to load ${signalsGatePath}: ${gateResponse.status}`);
+		}
+
+		const gateScript = {
+			name: 'executeWhenSignalsIsLoaded.js',
+			code: await gateResponse.text()
+		};
+
+		await injectScriptWithFallback(tabId, gateScript);
+		await waitForSignalsReady(tabId);
+	}
+
+	for (const script of scripts) {
+		await injectScriptWithFallback(tabId, script);
+	}
+}
+
+async function injectScriptWithFallback(tabId, scriptInfo) {
+	try {
+		const result = await injectWithContentScript(tabId, scriptInfo);
+		// console.log(injectionSuccessMessage(), result);
+		return result;
+	} catch (error) {
+		console.error(injectionFailureAlert(), error);
+	}
+
+	try {
+		const result = await injectHelperScript(tabId).then(() => injectUserScript(tabId, scriptInfo));
+		// console.log(secondaryInjectSuccessMessage(), result);
+		return result;
+	} catch (error) {
+		console.error(secondaryInjectFailureAlert(), error);
+	}
+
+	try {
+		const result = await fallbackInjection(tabId, scriptInfo);
+		// console.log(tertiaryInjectSuccessMessage(), result);
+		return result;
+	} catch (error) {
+		console.error(tertiaryInjectFailureAlert(), error);
+	}
+
+	const result = await strictCSPFallback(tabId, scriptInfo);
+	// console.log(strictCSPInjectMessage() + (result ? t('injection_succeeded_suffix') : t('injection_failed_suffix')));
+	return result;
+}
+
+async function waitForSignalsReady(tabId) {
+	return chrome.scripting.executeScript({
+		target: { tabId },
+		world: 'MAIN',
+		func: () => new Promise((resolve, reject) => {
+			if (window.__signalsPageReady) {
+				resolve(true);
+				return;
+			}
+
+			const eventName = 'signals-page-ready';
+			const handleReady = () => {
+				window.removeEventListener(eventName, handleReady);
+				resolve(true);
+			};
+
+			window.addEventListener(eventName, handleReady, { once: true });
+			setTimeout(() => {
+				window.removeEventListener(eventName, handleReady);
+				reject(new Error('Timed out waiting for Signals to finish loading'));
+			}, 120000);
+		})
+	});
+}
 
 // Inject through a content script - this is the most reliable method and bypasses most CSP restrictions
 async function injectWithContentScript(tabId, scriptInfo) {
@@ -136,7 +201,7 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
 						window.postMessage({
 							type: 'js-injector-execute',
 							id: scriptId,
-							name: scriptInfo.name || defaultScriptName,
+							name: scriptInfo.name || 'Unnamed script',
 							code: scriptInfo.code
 						}, '*');
 					}
@@ -215,9 +280,9 @@ async function triggerInjection(scriptInfo, injectorUrl, executorUrl) {
           (function() {
             try {
               ${scriptInfo.code}
-			  console.log('[JS Injector] Script execution succeeded');
+			  // console.log('Script execution succeeded');
             } catch (error) {
-			  console.error('[JS Injector] Script execution failed:', error);
+			  console.error('Script execution failed:', error);
             }
           })();
         `);
@@ -306,9 +371,9 @@ async function fallbackInjection(tabId, scriptInfo) {
             (function() {
               try {
                 ${codeToExecute}
-				console.log('[JS Injector] "${scriptName}" execution succeeded');
+				// console.log('"${scriptName}" execution succeeded');
               } catch(err) {
-				console.error('[JS Injector] "${scriptName}" execution failed:', err);
+				console.error('"${scriptName}" execution failed:', err);
               }
             })();
           `;
@@ -359,10 +424,10 @@ async function strictCSPFallback(tabId, scriptInfo) {
               export default async function() {
                 try {
                   ${code}
-				  console.log('[JS Injector] "${name}" (ES module) execution succeeded');
+				  // console.log('"${name}" (ES module) execution succeeded');
                   return true;
                 } catch(err) {
-				  console.error('[JS Injector] "${name}" (ES module) execution failed:', err);
+				  console.error('"${name}" (ES module) execution failed:', err);
                   return false;
                 }
               }
@@ -416,9 +481,9 @@ async function strictCSPFallback(tabId, scriptInfo) {
 						return new Promise((resolve) => {
 							worker.onmessage = function (e) {
 								if (e.data.success) {
-									  console.log('[JS Injector] "${name}" (Worker) execution succeeded');
+									  // console.log('"${name}" (Worker) execution succeeded');
 								} else {
-									  console.error('[JS Injector] "${name}" (Worker) execution failed:', e.data.error);
+									  console.error('"${name}" (Worker) execution failed:', e.data.error);
 								}
 
 								// Terminate the Worker and clean up
@@ -487,9 +552,9 @@ async function strictCSPFallback(tabId, scriptInfo) {
 									document.body.removeChild(iframe);
 
 									if (event.data.success) {
-										console.log('[JS Injector] "${name}" (iframe) execution succeeded');
+										// console.log('"${name}" (iframe) execution succeeded');
 									} else {
-										console.error('[JS Injector] "${name}" (iframe) execution failed:',
+										console.error('"${name}" (iframe) execution failed:',
 											event.data.error);
 									}
 

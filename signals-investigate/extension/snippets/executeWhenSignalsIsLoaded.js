@@ -66,5 +66,6 @@ function waitForSignalsReady() {
 }
 
 function myFunction() {
-	alert('The element was removed!');
+	window.__signalsPageReady = true;
+	window.dispatchEvent(new Event('signals-page-ready'));
 }

@@ -12,7 +12,7 @@ let syncIntervalId = null;
 const DEFAULT_SYNC_INTERVAL = 10 * 60 * 1000;
 
 async function initSync() {
-  console.log(t('sync_initializing'));
+  // console.log(t('sync_initializing'));
 
   const settings = await getSyncSettings();
   autoSyncEnabled = settings.autoSync;
@@ -44,7 +44,7 @@ async function initSync() {
 }
 
 function handleSyncSettingsUpdate(settings) {
-  console.log(t('sync_settings_updated'), settings);
+  // console.log(t('sync_settings_updated'), settings);
   autoSyncEnabled = settings.autoSync;
 
   if (syncIntervalId) {
@@ -59,7 +59,7 @@ function handleSyncSettingsUpdate(settings) {
 
 function startAutoSync(interval = DEFAULT_SYNC_INTERVAL) {
   const syncInterval = Math.max(interval, 60000);
-  console.log(`${t('sync_interval_set')} ${syncInterval}ms`);
+  // console.log(`${t('sync_interval_set')} ${syncInterval}ms`);
 
   syncIntervalId = setInterval(() => {
     syncData().catch(error => {
@@ -103,7 +103,7 @@ async function getSyncStatus() {
 }
 
 async function syncData() {
-  console.log(t('sync_in_progress'));
+  // console.log(t('sync_in_progress'));
 
   try {
     const settings = await getSyncSettings();
@@ -117,7 +117,7 @@ async function syncData() {
     }
 
     await saveSyncSettings({ lastSyncTime: Date.now() });
-    console.log(t('sync_succeeded'), result);
+    // console.log(t('sync_succeeded'), result);
     return result;
   } catch (error) {
     console.error(t('sync_failed'), error);
@@ -139,7 +139,7 @@ async function syncWithChromeSync() {
   let mergedDisabledScripts = [];
 
   if (cloudTimestamp > localTimestamp) {
-    console.log(t('cloud_to_local_sync'));
+    // console.log(t('cloud_to_local_sync'));
     mergeResult.direction = 'cloud_to_local';
     mergedScripts = { ...(localData.scripts || {}), ...(cloudData.scripts || {}) };
 
@@ -155,7 +155,7 @@ async function syncWithChromeSync() {
       lastSyncTimestamp: Date.now()
     });
   } else {
-    console.log(t('local_to_cloud_sync'));
+    // console.log(t('local_to_cloud_sync'));
     mergeResult.direction = 'local_to_cloud';
     mergedScripts = localData.scripts || {};
     mergedDisabledScripts = localData.disabled_scripts || [];

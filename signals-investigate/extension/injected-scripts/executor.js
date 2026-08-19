@@ -23,19 +23,22 @@
   // Log execution details to the console
   const logExecution = (name, success, error) => {
     if (success) {
-      console.log(`[JS Injector] "${name}" ${scriptParams.successMessage}`);
+      // console.log(`"${name}" ${scriptParams.successMessage}`);
     } else {
-      console.error(`[JS Injector] "${name}" ${scriptParams.errorMessage}:`, error);
+      console.error(`"${name}" ${scriptParams.errorMessage}:`, error);
     }
   };
 
   // Listen for messages containing code to execute
-  window.addEventListener('message', function(event) {
+  const messageHandler = function(event) {
     // Ensure the message comes from this window
     if (event.source !== window) return;
-    
-    // Verify that the message is from the JS injector
-    if (event.data && event.data.type === 'js-injector-execute') {
+
+    // Verify that the message is from the JS injector and targets this executor instance
+    if (event.data && event.data.type === 'js-injector-execute' && event.data.id === scriptParams.id) {
+      // Each executor instance executes exactly one script
+      window.removeEventListener('message', messageHandler);
+
       try {
         const { code, name, id } = event.data;
         
@@ -64,7 +67,9 @@
         }, '*');
       }
     }
-  });
+  };
+
+  window.addEventListener('message', messageHandler);
   
   // Notify the caller when the script is ready
   if (scriptParams.id) {
@@ -74,5 +79,5 @@
     }, '*');
   }
   
-  console.log(`[JS Injector] ${scriptParams.loadedMessage}`);
+  // console.log(`${scriptParams.loadedMessage}`);
 })(); 

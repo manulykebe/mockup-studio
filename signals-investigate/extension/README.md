@@ -1,128 +1,128 @@
-# JS注入器 Chrome扩展
+# Signals Inspector Chrome Extension
 
-一个允许您在任意网站注入自定义JavaScript代码的Chrome浏览器扩展。
+A Chrome browser extension that lets you inject custom JavaScript code into any website.
 
-## 功能特点
+## Features
 
-- 在任意网站上注入自定义JavaScript代码
-- 支持按域名管理脚本
-- 支持通配符匹配子域名
-- 提供脚本管理界面，可添加、编辑和删除脚本
-- 支持导入/导出脚本数据进行备份
-- 兼容各种内容安全策略(CSP)限制的网站
+- Inject custom JavaScript code on any website
+- Manage scripts by domain
+- Support wildcard matching for subdomains
+- Provide a script management interface to add, edit, and delete scripts
+- Support importing/exporting script data for backup
+- Compatible with websites under various Content Security Policy (CSP) restrictions
 
-## 使用场景
+## Use Cases
 
-### 开发调试
-- 在不修改网站源代码的情况下测试JavaScript功能
-- 快速原型设计和功能验证
-- 调试第三方网站上的问题
+### Development and Debugging
+- Test JavaScript functionality without modifying the website source code
+- Rapid prototyping and feature validation
+- Debug issues on third-party websites
 
-### 网站增强
-- 添加自定义按钮、菜单或功能到常用网站
-- 改进网站用户界面和用户体验
-- 自动填充表单或自动执行重复操作
+### Website Enhancement
+- Add custom buttons, menus, or features to frequently used websites
+- Improve website UI and user experience
+- Auto-fill forms or automate repetitive actions
 
-### 数据抓取和分析
-- 提取网页中的特定数据
-- 为网站添加分析功能
-- 执行自定义数据处理
+### Data Scraping and Analysis
+- Extract specific data from web pages
+- Add analytics features to websites
+- Perform custom data processing
 
-### 个人定制
-- 隐藏网站上不需要的元素
-- 调整网站样式和布局
-- 创建自定义快捷键和功能
+### Personal Customization
+- Hide unwanted elements on websites
+- Adjust website styles and layout
+- Create custom shortcuts and features
 
-### 学习和教育
-- 学习JavaScript和DOM操作
-- 测试不同脚本的执行效果
-- 理解网站的工作原理
+### Learning and Education
+- Learn JavaScript and DOM manipulation
+- Test how different scripts execute
+- Understand how websites work
 
-## 安装说明
+## Installation
 
-### 从Chrome网上应用店安装（未上架时不适用）
+### Install from the Chrome Web Store (not applicable until published)
 
-1. 访问Chrome网上应用店
-2. 搜索"JS注入器"
-3. 点击"添加到Chrome"按钮
+1. Visit the Chrome Web Store
+2. Search for "Signals Inspector"
+3. Click the "Add to Chrome" button
 
-### 手动安装（开发者模式）
+### Manual Installation (Developer Mode)
 
-1. 下载或克隆此代码库到本地
-2. 打开Chrome浏览器，进入扩展管理页面：`chrome://extensions/`
-3. 在右上角启用"开发者模式"
-4. 点击"加载已解压的扩展程序"
-5. 选择包含此项目文件的文件夹
-6. 扩展将被安装到您的浏览器中
+1. Download or clone this repository locally
+2. Open Chrome and go to the extensions management page: `chrome://extensions/`
+3. Enable "Developer mode" in the top-right corner
+4. Click "Load unpacked"
+5. Select the folder containing this project's files
+6. The extension will be installed in your browser
 
-## 使用说明
+## Usage
 
-### 添加新脚本
+### Adding a New Script
 
-1. 点击浏览器工具栏中的JS注入器图标
-2. 当您访问网站时，点击"为当前网站添加脚本"
-3. 在弹出的编辑页面中:
-   - 域名字段会自动填充当前网站的域名
-   - 输入脚本名称
-   - 在代码编辑器中输入您想要注入的JavaScript代码
-   - 点击"保存"按钮
+1. Click the Signals Inspector icon in the browser toolbar
+2. While visiting a website, click "Add script for current site"
+3. On the editor page that opens:
+   - The domain field is automatically filled with the current website's domain
+   - Enter a script name
+   - Enter the JavaScript code you want to inject in the code editor
+   - Click the "Save" button
 
-### 管理脚本
+### Managing Scripts
 
-1. 点击浏览器工具栏中的JS注入器图标
-2. 点击"管理所有脚本"
-3. 在管理页面中，您可以:
-   - 查看所有已添加的脚本
-   - 搜索脚本
-   - 编辑现有脚本
-   - 删除不需要的脚本
+1. Click the Signals Inspector icon in the browser toolbar
+2. Click "Manage all scripts"
+3. On the management page, you can:
+   - View all added scripts
+   - Search scripts
+   - Edit existing scripts
+   - Delete scripts you no longer need
 
-### 导入/导出数据
+### Importing/Exporting Data
 
-1. 点击浏览器工具栏中的JS注入器图标
-2. 点击"选项"
-3. 在选项页面中:
-   - 点击"导出数据"下载包含所有脚本的JSON文件
-   - 点击"导入数据"选择之前导出的JSON文件
+1. Click the Signals Inspector icon in the browser toolbar
+2. Click "Options"
+3. On the options page:
+   - Click "Export Data" to download a JSON file containing all scripts
+   - Click "Import Data" to select a previously exported JSON file
 
-## 兼容性说明
+## Compatibility Notes
 
-### 内容安全策略(CSP)限制
+### Content Security Policy (CSP) Restrictions
 
-一些网站实施了严格的内容安全策略(Content Security Policy)，这可能会限制脚本注入的能力。JS注入器使用多种方法来尝试绕过这些限制：
+Some websites enforce a strict Content Security Policy, which can limit script injection capabilities. Signals Inspector uses multiple methods to try to work around these restrictions:
 
-1. 脚本标签注入方法 - 通过创建`<script>`标签来执行代码
-2. 辅助脚本方法 - 使用web_accessible_resources机制加载辅助脚本
-3. Blob URL方法 - 创建blob URL避免内联脚本限制
-4. ES模块方法 - 使用动态import()导入模块
-5. Worker方法 - 在Web Worker中执行代码
-6. iframe数据URL方法 - 在隔离环境中执行代码
+1. Script tag injection - executes code by creating a `<script>` tag
+2. Helper script method - loads a helper script using the web_accessible_resources mechanism
+3. Blob URL method - creates a Blob URL to avoid inline script restrictions
+4. ES module method - uses dynamic `import()` to import a module
+5. Worker method - executes code inside a Web Worker
+6. iframe data URL method - executes code in an isolated environment
 
-尽管如此，某些具有极其严格CSP的网站可能仍然无法注入脚本。在这种情况下，您可能需要:
+Even so, some websites with extremely strict CSPs may still block script injection. In that case, you may need to:
 
-- 尝试简化您的脚本
-- 使用DOM操作而不是直接执行JavaScript
-- 考虑使用其他扩展或方法
+- Try simplifying your script
+- Use DOM manipulation instead of directly executing JavaScript
+- Consider using another extension or method
 
-## 注意事项
+## Notes
 
-- 注入的JavaScript代码在目标网站的上下文中运行，请谨慎编写代码，避免破坏网站功能
-- 恶意使用此扩展可能违反某些网站的服务条款
-- 此扩展仅供学习和开发测试使用
-- 对于具有严格安全策略的网站，脚本注入可能不起作用
+- Injected JavaScript code runs in the context of the target website; write your code carefully to avoid breaking website functionality
+- Malicious use of this extension may violate the terms of service of some websites
+- This extension is intended for learning and development/testing purposes only
+- Script injection may not work on websites with strict security policies
 
-## 图标替换
+## Icon Replacement
 
-目前扩展使用了占位符图标文件。您需要用真实的PNG图标替换以下文件:
+The extension currently uses placeholder icon files. You need to replace the following files with real PNG icons:
 
-- images/icon16.png (16x16像素)
-- images/icon48.png (48x48像素)
-- images/icon128.png (128x128像素)
+- images/icon16.png (16x16 pixels)
+- images/icon48.png (48x48 pixels)
+- images/icon128.png (128x128 pixels)
 
-## 作者
+## Author
 
 **Todd** - [https://github.com/todd](https://github.com/todd)
 
-## 许可证
+## License
 
 [MIT License](LICENSE)

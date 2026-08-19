@@ -30,9 +30,9 @@ window._JSInjector = window._JSInjector || {
       const wrappedCode = `
         try {
           ${code}
-          console.log('[JS Injector] "${scriptName || 'Unnamed script'}" ${successMessage}');
+          // console.log('"${scriptName || 'Unnamed script'}" ${successMessage}');
         } catch(err) {
-          console.error('[JS Injector] "${scriptName || 'Unnamed script'}" ${errorMessage}:', err);
+          console.error('"${scriptName || 'Unnamed script'}" ${errorMessage}:', err);
         }
       `;
       
@@ -64,7 +64,7 @@ window._JSInjector = window._JSInjector || {
       
       return true;
     } catch (error) {
-      console.error('[JS Injector] ${errorMessage}:', error);
+      console.error('${errorMessage}:', error);
       
       this.executedScripts.push({
         name: scriptName || 'unnamed-script',
@@ -84,7 +84,7 @@ window._JSInjector = window._JSInjector || {
       try {
         URL.revokeObjectURL(url);
       } catch (e) {
-        console.error('[JS Injector] Failed to release Blob URL:', e);
+        console.error('Failed to release Blob URL:', e);
       }
     });
     this.blobUrls = [];
@@ -109,4 +109,4 @@ window.addEventListener('beforeunload', function() {
   }
 });
 
-console.log(`[JS Injector] ${loadedMessage}, version:`, window._JSInjector.version);
+// console.log(`${loadedMessage}, version:`, window._JSInjector.version);

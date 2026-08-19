@@ -15,13 +15,13 @@
    "content_security_policy": {
       "extension_pages": "script-src 'self'; object-src 'self'"
    },
-   "description": "Revvitty Signals: Reporting and Investigating Settings",
+   "description": "Signals Inspector",
    "externally_connectable": {
       "matches": [ "\u003Call_urls>" ]
    },
    "host_permissions": [ "\u003Call_urls>" ],
    "manifest_version": 3,
-   "name": "Signals Reporter",
+   "name": "Signals Inspector",
    "options_page": "options.html",
    "permissions": [ "storage", "activeTab", "scripting" ],
    "update_url": "https://clients2.google.com/service/update2/crx",
