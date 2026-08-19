@@ -1,7 +1,7 @@
-// 导入i18n实例
+// Import the i18n instance
 import i18n from './i18n.js';
 
-// DOM翻译器
+// DOM translator
 class DOMTranslator {
   constructor() {
     // Initialize the listener
@@ -10,25 +10,25 @@ class DOMTranslator {
   
   // Initialize event listeners
   initEventListeners() {
-    // 监听语言变更事件
+    // Listen for language change events
     document.addEventListener('languageChanged', () => {
       this.translatePage();
     });
   }
   
-  // 翻译整个页面
+  // Translate the entire page
   translatePage() {
-    // 翻译所有带有data-i18n属性的元素
+    // Translate all elements with a data-i18n attribute
     this.translateElements(document.querySelectorAll('[data-i18n]'));
     
-    // 翻译所有带有data-i18n-title属性的元素的title属性
+    // Translate the title attribute of all elements with a data-i18n-title attribute
     this.translateAttributes(document.querySelectorAll('[data-i18n-title]'), 'title');
     
-    // 翻译所有带有data-i18n-placeholder属性的元素的placeholder属性
+    // Translate the placeholder attribute of all elements with a data-i18n-placeholder attribute
     this.translateAttributes(document.querySelectorAll('[data-i18n-placeholder]'), 'placeholder');
   }
   
-  // 翻译元素内容
+  // Translate element content
   translateElements(elements) {
     elements.forEach(element => {
       const key = element.getAttribute('data-i18n');
@@ -38,7 +38,7 @@ class DOMTranslator {
     });
   }
   
-  // 翻译元素属性
+  // Translate element attributes
   translateAttributes(elements, attributeName) {
     elements.forEach(element => {
       const key = element.getAttribute(`data-i18n-${attributeName}`);
@@ -48,7 +48,7 @@ class DOMTranslator {
     });
   }
   
-  // 应用所有初始翻译
+  // Apply all initial translations
   applyTranslations() {
     document.addEventListener('DOMContentLoaded', () => {
       this.translatePage();
@@ -56,8 +56,8 @@ class DOMTranslator {
   }
 }
 
-// 创建单例实例
+// Create a singleton instance
 const translator = new DOMTranslator();
 
-// 导出实例
+// Export the instance
 export default translator; 

@@ -1,7 +1,7 @@
-// 语言包
+// Language definitions
 const languages = {
   'zh': {
-    // 通用
+    // Common
     'save': '保存',
     'return': '返回',
     'cancel': '取消',
@@ -10,7 +10,7 @@ const languages = {
     'yes': '是',
     'no': '否',
     
-    // 编辑器页面
+    // Editor page
     'add_script': '添加脚本',
     'edit_script': '编辑脚本',
     'website_domain': '网站域名',
@@ -27,7 +27,7 @@ const languages = {
     'note_title': '注意:',
     'note_content': '注入的JavaScript代码将在目标网站的上下文中运行。请谨慎编写代码，避免破坏网站功能。',
     
-    // 提示消息
+    // Toast messages
     'please_enter_domain': '请输入网站域名',
     'please_enter_name': '请输入脚本名称',
     'please_enter_code': '请输入JavaScript代码',
@@ -48,7 +48,7 @@ const languages = {
     'data_restored': '已恢复原始数据',
     'form_cleared': '已清空表单',
     
-    // 设置
+    // Settings
     'language': '语言',
     'language_zh': '中文',
     'language_en': '英文',
@@ -112,15 +112,15 @@ const languages = {
   }
 };
 
-// 语言工具函数
+// Language utility functions
 const i18n = {
-  // 当前语言
+  // Current language
   currentLang: 'zh',
   
-  // 初始化语言
+  // Initialize the language
   init: async function() {
     try {
-      // 从存储中获取语言设置
+      // Get the language setting from storage
       const data = await chrome.storage.local.get('settings');
       const settings = data.settings || {};
       this.currentLang = settings.language || 'zh';
@@ -131,12 +131,12 @@ const i18n = {
     return this.currentLang;
   },
   
-  // 设置语言
+  // Set the language
   setLanguage: async function(lang) {
     if (languages[lang]) {
       this.currentLang = lang;
       
-      // 保存语言设置
+      // Save the language setting
       try {
         const data = await chrome.storage.local.get('settings');
         const settings = data.settings || {};
@@ -151,12 +151,12 @@ const i18n = {
     return false;
   },
   
-  // 获取当前语言的翻译
+  // Get a translation for the current language
   get: function(key, params) {
     const translations = languages[this.currentLang] || languages['zh'];
     let text = translations[key] || key;
     
-    // 如果有参数，替换文本中的占位符
+    // If parameters are provided, replace placeholders in the text
     if (params) {
       for (const paramKey in params) {
         text = text.replace(`{${paramKey}}`, params[paramKey]);
@@ -166,7 +166,7 @@ const i18n = {
     return text;
   },
   
-  // 获取可用的语言列表
+  // Get the list of available languages
   getLanguages: function() {
     return Object.keys(languages).map(code => ({
       code,
@@ -175,5 +175,5 @@ const i18n = {
   }
 };
 
-// 导出
+// Export
 window.i18n = i18n; 

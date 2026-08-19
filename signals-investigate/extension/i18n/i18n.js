@@ -1,19 +1,19 @@
-// 导入语言文件
+// Import language files
 import en from './en.js';
 import nl from './nl.js';
 
 class I18n {
   constructor() {
-    // 可用的语言
+    // Available languages
     this.languages = {
       en: en,
       nl: nl
     };
     
-    // 默认语言
+    // Default language
     this.defaultLanguage = 'en';
     
-    // 当前语言
+    // Current language
     this.currentLanguage = this.defaultLanguage;
     
     // Initialize
@@ -40,7 +40,7 @@ class I18n {
       }
     } catch (error) {
       console.error('Failed to initialize language settings:', error);
-      // 使用默认语言
+      // Use the default language
       this.setLanguage(this.defaultLanguage);
       // Try to save the setting
       try {
@@ -70,19 +70,19 @@ class I18n {
       this.currentLanguage = lang;
       // Save the language setting to storage
       chrome.storage.local.set({ language: lang });
-      // 通知语言变更
+      // Notify listeners of the language change
       this.notifyLanguageChange();
       return true;
     }
     return false;
   }
   
-  // 获取当前语言
+  // Get the current language
   getLanguage() {
     return this.currentLanguage;
   }
   
-  // 获取翻译文本
+  // Get translated text
   translate(key) {
     const langData = this.languages[this.currentLanguage];
     
@@ -90,7 +90,7 @@ class I18n {
       return langData[key];
     }
     
-    // 如果当前语言没有该翻译，尝试从默认语言获取
+    // If the current language has no translation, try the default language
     if (this.currentLanguage !== this.defaultLanguage) {
       const defaultLangData = this.languages[this.defaultLanguage];
       if (defaultLangData && defaultLangData[key]) {
@@ -98,38 +98,38 @@ class I18n {
       }
     }
     
-    // 如果没有找到翻译，返回键名
+    // If no translation is found, return the key
     return key;
   }
   
-  // t方法作为translate的别名
+  // Use t as an alias for translate
   t(key) {
     return this.translate(key);
   }
   
-  // 通知语言变更
+  // Notify listeners of the language change
   notifyLanguageChange() {
     if (typeof document === 'undefined') {
       return;
     }
 
-    // 创建自定义事件
+    // Create a custom event
     const event = new CustomEvent('languageChanged', {
       detail: { language: this.currentLanguage }
     });
     
-    // 触发事件
+    // Dispatch the event
     document.dispatchEvent(event);
   }
   
-  // 获取所有可用语言
+  // Get all available languages
   getAvailableLanguages() {
     return Object.keys(this.languages);
   }
 }
 
-// 创建单例实例
+// Create a singleton instance
 const i18n = new I18n();
 
-// 导出实例
+// Export the instance
 export default i18n; 

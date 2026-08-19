@@ -1,4 +1,4 @@
-// 导入i18n模块
+// Import the i18n module
 import { i18n, translator } from './i18n/index.js';
 
 document.addEventListener('DOMContentLoaded', async function() {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   const toggleThemeBtn = document.getElementById('toggle-theme');
   const langToggleBtn = document.getElementById('lang-toggle');
   
-  // 代码编辑器相关元素
+  // Code editor elements
   const codeContainer = document.getElementById('code-container');
   const codeEditorDiv = document.getElementById('code-editor');
   const codeTitle = document.getElementById('code-title');
@@ -27,17 +27,17 @@ document.addEventListener('DOMContentLoaded', async function() {
   const createScriptBtn = document.getElementById('create-script');
   const toastContainer = document.getElementById('toast-container');
   
-  // 获取当前标签页的URL
+  // Get the current tab URL
   let currentDomain = '';
   let currentTabId = null;
   let currentTabUrl = '';
   let matchedScriptId = null;
   let currentScript = null;
-  let isEditMode = true; // 默认为编辑模式
+  let isEditMode = true; // Default to edit mode
   let isEditingName = false;
   let isScriptEnabled = false;
   let isDarkMode = false; // Dark mode state
-  let editor = null; // 将编辑器变量提升到顶层作用域
+  let editor = null; // Keep the editor variable in the outer scope
   
   // Initialize the theme
   initTheme();
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   toggleEditBtn.innerHTML = '<span>✓</span>';
   toggleEditBtn.title = i18n.t('save_edit');
   
-  // 更新状态文本
+  // Update the status text
   if (codeStatus) {
     codeStatus.textContent = i18n.t('edit_mode');
   }
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       isDarkMode = data.darkMode === true;
       applyTheme(isDarkMode);
       
-      // 更新切换按钮状态
+      // Update the toggle button state
       if (toggleThemeBtn) {
         toggleThemeBtn.innerHTML = isDarkMode ? '<span>☀️</span>' : '<span>🌙</span>';
         toggleThemeBtn.title = isDarkMode ? i18n.t('light_theme_title') : i18n.t('dark_theme_title');
@@ -76,29 +76,29 @@ document.addEventListener('DOMContentLoaded', async function() {
     });
   }
   
-  // 应用主题
+  // Apply the theme
   function applyTheme(isDark) {
     if (isDark) {
       document.documentElement.setAttribute('data-theme', 'dark');
       if (editor) {
-        editor.setOption('theme', 'monokai'); // 暗色主题
+        editor.setOption('theme', 'monokai'); // Dark theme
       }
     } else {
       document.documentElement.removeAttribute('data-theme');
       if (editor) {
-        editor.setOption('theme', 'default'); // 亮色主题
+        editor.setOption('theme', 'default'); // Light theme
       }
     }
   }
   
-  // 切换主题
+  // Toggle the theme
   function toggleTheme() {
     isDarkMode = !isDarkMode;
     
-    // 应用主题
+    // Apply the theme
     applyTheme(isDarkMode);
     
-    // 更新切换按钮状态
+    // Update the toggle button state
     if (toggleThemeBtn) {
       toggleThemeBtn.innerHTML = isDarkMode ? '<span>☀️</span>' : '<span>🌙</span>';
       toggleThemeBtn.title = isDarkMode ? i18n.t('light_theme_title') : i18n.t('dark_theme_title');
@@ -119,10 +119,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     indentUnit: 2,
     matchBrackets: true,
     autoCloseBrackets: true,
-    readOnly: false, // 默认为可编辑模式，不再是只读
-    lineWrapping: false, // 不换行，保持代码整洁
-    scrollbarStyle: 'native', // 使用原生滚动条样式
-    viewportMargin: Infinity, // 允许视口外的内容渲染
+    readOnly: false, // Default to editable mode instead of read-only mode
+    lineWrapping: false, // Keep code tidy by disabling line wrapping
+    scrollbarStyle: 'native', // Use the native scrollbar style
+    viewportMargin: Infinity, // Render content outside the viewport
     extraKeys: {
       'Ctrl-Space': 'autocomplete',
       'Tab': function(cm) {
@@ -132,17 +132,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
   
-  // 更新状态显示
+  // Update the status display
   function updateStatusDisplay(isActive, statusText) {
-    // 更新文本内容，保留状态指示器
+    // Update the text while preserving the status indicator
     const statusIndicator = scriptStatusEl.querySelector('.status-indicator');
     
-    // 从状态文本中移除"状态: "前缀
+    // Remove the "Status: " prefix from the status text
     const displayText = statusText.replace('Status: ', '');
     scriptStatusEl.textContent = displayText;
     scriptStatusEl.insertAdjacentElement('afterbegin', statusIndicator);
     
-    // 更新状态类
+    // Update the status classes
     if (isActive) {
       scriptStatusEl.classList.add('status-active');
       scriptStatusEl.classList.remove('status-inactive');
@@ -156,7 +156,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 启用或禁用切换开关
+  // Enable or disable the toggle switch
   function setToggleSwitchState(enabled) {
     toggleInjectionSwitch.disabled = !enabled;
     const switchLabel = toggleInjectionSwitch.closest('.switch');
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 显示代码
+  // Show the code
   function showCode(script) {
     currentScript = script;
     codeContainer.classList.remove('hidden');
@@ -185,7 +185,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveScriptBtn.classList.remove('hidden');
   }
   
-  // 显示空状态
+  // Show the empty state
   function showEmptyState() {
     currentScript = null;
     codeContainer.classList.remove('hidden');
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       chrome.tabs.reload(currentTabId);
       showToast(i18n.t('refresh_in_progress'), 'info');
       
-      // 延迟关闭popup窗口
+      // Close the popup after a short delay
       setTimeout(() => {
         window.close();
       }, 1000);
@@ -234,7 +234,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 切换编辑名称
+  // Toggle name editing
   function toggleEditName() {
     if (isEditingName) {
       // Save the name
@@ -301,18 +301,18 @@ document.addEventListener('DOMContentLoaded', async function() {
         toggleEditName();
       }
       
-      // 获取当前所有脚本和禁用脚本
+      // Get all active and disabled scripts
       const data = await chrome.storage.local.get(['scripts', '_disabledScripts']);
       const scripts = data.scripts || {};
       const disabledScripts = data._disabledScripts || {};
       
-      // 检查是否是新脚本（临时ID）
+      // Check whether this is a new script with a temporary ID
       const isNewScript = matchedScriptId.startsWith('temp_');
       
-      // 获取当前时间
+      // Get the current time
       const currentTime = Date.now();
       
-      // 准备脚本数据
+      // Prepare the script data
       const scriptData = {
         domain: currentDomain,
         name: currentScript.name,
@@ -322,26 +322,26 @@ document.addEventListener('DOMContentLoaded', async function() {
       };
       
       if (isNewScript) {
-        // 为新脚本创建一个真实的ID
+        // Create a real ID for the new script
         const realId = 'script_' + currentTime;
         matchedScriptId = realId;
         
-        // 根据启用状态决定存储位置
+        // Choose the storage location based on the enabled state
         if (isScriptEnabled) {
           scripts[realId] = scriptData;
         } else {
           disabledScripts[realId] = scriptData;
         }
         
-        // 更新状态
+        // Update the state
         updateStatusDisplay(isScriptEnabled, isScriptEnabled ? i18n.t('status_injected') : i18n.t('status_disabled'));
         editScriptBtn.disabled = false;
       } else {
-        // 更新现有脚本 - 首先确定脚本在哪个存储中
+        // Update the existing script by first determining its storage location
         const scriptInActive = scripts[matchedScriptId] !== undefined;
         const scriptInDisabled = disabledScripts[matchedScriptId] !== undefined;
         
-        // 保留原始创建时间
+        // Preserve the original creation time
         if (scriptInActive && scripts[matchedScriptId].createdAt) {
           scriptData.createdAt = scripts[matchedScriptId].createdAt;
         } else if (scriptInDisabled && disabledScripts[matchedScriptId].createdAt) {
@@ -351,14 +351,14 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (isScriptEnabled) {
           // The script belongs in the active list
           if (scriptInDisabled) {
-            // 如果脚本在禁用列表中，移动到激活列表
+            // Move the script to the active list if it is disabled
             delete disabledScripts[matchedScriptId];
           }
           scripts[matchedScriptId] = scriptData;
         } else {
           // The script belongs in the disabled list
           if (scriptInActive) {
-            // 如果脚本在激活列表中，移动到禁用列表
+            // Move the script to the disabled list if it is active
             delete scripts[matchedScriptId];
           }
           disabledScripts[matchedScriptId] = scriptData;
@@ -384,11 +384,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 切换脚本启用状态
+  // Toggle the script enabled state
   async function toggleScriptEnabled(enabled) {
     isScriptEnabled = enabled;
     
-    // 更新状态显示
+    // Update the status display
     updateStatusDisplay(
       enabled, 
       enabled ? i18n.t('status_injected') : i18n.t('status_disabled')
@@ -400,19 +400,19 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     try {
-      // 获取当前所有脚本
+      // Get all scripts
       const data = await chrome.storage.local.get('scripts');
       const scripts = data.scripts || {};
       
       if (enabled) {
-        // 启用脚本 - 如果存在于_disabledScripts中，则恢复
+        // Enable the script and restore it if it exists in _disabledScripts
         const disabledData = await chrome.storage.local.get('_disabledScripts');
         const disabledScripts = disabledData._disabledScripts || {};
         
         if (disabledScripts[matchedScriptId]) {
-          // 恢复被禁用的脚本
+          // Restore the disabled script
           scripts[matchedScriptId] = disabledScripts[matchedScriptId];
-          // 从禁用列表中移除
+          // Remove it from the disabled list
           delete disabledScripts[matchedScriptId];
           // Save the changes
           await chrome.storage.local.set({ 
@@ -420,12 +420,12 @@ document.addEventListener('DOMContentLoaded', async function() {
             '_disabledScripts': disabledScripts
           });
         } else if (scripts[matchedScriptId]) {
-          // 脚本已经在启用列表中，只需标记为启用
+          // The script is already active; just mark it as enabled
           scripts[matchedScriptId].enabled = true;
           await chrome.storage.local.set({ 'scripts': scripts });
         }
       } else {
-        // 禁用脚本 - 移动到_disabledScripts中
+        // Disable the script by moving it to _disabledScripts
         if (scripts[matchedScriptId]) {
           // Get disabled-script storage
           const disabledData = await chrome.storage.local.get('_disabledScripts');
@@ -433,7 +433,7 @@ document.addEventListener('DOMContentLoaded', async function() {
           
           // Save to disabled-script storage
           disabledScripts[matchedScriptId] = scripts[matchedScriptId];
-          // 从active scripts中移除
+          // Remove it from the active scripts
           delete scripts[matchedScriptId];
           
           // Save the changes
@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   }
   
-  // 获取当前标签
+  // Get the current tab
   chrome.tabs.query({active: true, currentWindow: true}, async function(tabs) {
     if (tabs.length === 0) {
       currentDomainEl.textContent = i18n.t('no_available_tabs');
@@ -466,7 +466,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     currentTabId = currentTab.id;
     currentTabUrl = currentTab.url;
     
-    // 检查URL是否有效
+    // Check whether the URL is valid
     if (!currentTabUrl || !currentTabUrl.startsWith('http')) {
       currentDomainEl.textContent = i18n.t('not_a_web_page');
       updateStatusDisplay(false, i18n.t('use_script_injection_function'));
@@ -476,33 +476,33 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
     
     try {
-      // 从URL中提取域名
+      // Extract the domain from the URL
       const url = new URL(currentTabUrl);
       currentDomain = url.hostname;
       currentDomainEl.textContent = currentDomain;
       
-      // 先检查活动脚本
+      // Check active scripts first
       const data = await chrome.storage.local.get(['scripts', '_disabledScripts']);
       const scripts = data.scripts || {};
       const disabledScripts = data._disabledScripts || {};
       
-      // 查找匹配的活动脚本
+      // Find a matching active script
       let exactMatch = false;
       let foundInDisabled = false;
       
-      // 首先在活动脚本中查找
+      // Search active scripts first
       Object.keys(scripts).forEach(id => {
         const script = scripts[id];
         const scriptDomain = script.domain;
         
-        // 检查是否是通配符域名（例如 *.example.com）
+        // Check whether this is a wildcard domain, such as *.example.com
         if (scriptDomain.startsWith('*.') && currentDomain.endsWith(scriptDomain.substring(1))) {
           if (!exactMatch) {
             matchedScriptId = id;
             isScriptEnabled = true;
           }
         } 
-        // 精确匹配
+        // Exact match
         else if (scriptDomain === currentDomain) {
           matchedScriptId = id;
           isScriptEnabled = true;
@@ -510,13 +510,13 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
       });
       
-      // 如果在活动脚本中未找到，则在禁用脚本中查找
+      // If no active script is found, search disabled scripts
       if (!matchedScriptId) {
         Object.keys(disabledScripts).forEach(id => {
           const script = disabledScripts[id];
           const scriptDomain = script.domain;
           
-          // 检查是否是通配符域名（例如 *.example.com）
+          // Check whether this is a wildcard domain, such as *.example.com
           if (scriptDomain.startsWith('*.') && currentDomain.endsWith(scriptDomain.substring(1))) {
             if (!exactMatch && !foundInDisabled) {
               matchedScriptId = id;
@@ -524,7 +524,7 @@ document.addEventListener('DOMContentLoaded', async function() {
               foundInDisabled = true;
             }
           } 
-          // 精确匹配
+          // Exact match
           else if (scriptDomain === currentDomain) {
             matchedScriptId = id;
             isScriptEnabled = false;
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
       }
       
-      // 更新UI
+      // Update the UI
       if (matchedScriptId) {
         updateStatusDisplay(
           isScriptEnabled, 
@@ -542,9 +542,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         );
         editScriptBtn.disabled = false;
         addScriptBtn.disabled = false;
-        setToggleSwitchState(true); // 启用开关
+        setToggleSwitchState(true); // Enable the switch
         
-        // 显示脚本代码 - 无论是活动脚本还是禁用脚本
+        // Show the script code regardless of whether it is active or disabled
         const scriptToShow = isScriptEnabled ? 
                             scripts[matchedScriptId] : 
                             disabledScripts[matchedScriptId];
@@ -554,7 +554,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         updateStatusDisplay(false, i18n.t('status_not_injected'));
         editScriptBtn.disabled = true;
         addScriptBtn.disabled = false;
-        setToggleSwitchState(false); // 禁用开关
+        setToggleSwitchState(false); // Disable the switch
         showEmptyState();
       }
       
@@ -572,14 +572,14 @@ document.addEventListener('DOMContentLoaded', async function() {
     chrome.tabs.create({url: `editor.html?domain=${encodeURIComponent(currentDomain)}`});
   });
   
-  // 编辑脚本按钮
+  // Edit script button
   editScriptBtn.addEventListener('click', function() {
     if (matchedScriptId) {
       chrome.tabs.create({url: `editor.html?id=${matchedScriptId}`});
     }
   });
   
-  // 管理脚本按钮
+  // Manage scripts button
   manageScriptsBtn.addEventListener('click', function() {
     chrome.tabs.create({url: 'manager.html'});
   });
@@ -589,17 +589,17 @@ document.addEventListener('DOMContentLoaded', async function() {
     chrome.tabs.create({url: 'options.html'});
   });
   
-  // 开关控制
+  // Switch control
   toggleInjectionSwitch.addEventListener('change', function() {
     toggleScriptEnabled(this.checked);
   });
   
-  // 创建新脚本
+  // Create a new script
   function createNewScript() {
-    // 获取当前时间戳
+    // Get the current timestamp
     const currentTime = Date.now();
     
-    // 创建一个新的空脚本
+    // Create a new empty script
     currentScript = {
       domain: currentDomain,
       name: i18n.t('script_name') + currentDomain,
@@ -609,10 +609,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       updatedAt: currentTime
     };
     
-    // 创建一个临时ID
+    // Create a temporary ID
     matchedScriptId = 'temp_' + currentTime;
     
-    // 显示编辑器并进入编辑模式
+    // Show the editor and enter edit mode
     emptyState.classList.add('hidden');
     codeEditorDiv.style.display = '';
     codeTitle.textContent = currentScript.name;
@@ -624,12 +624,12 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Show the save button
     saveScriptBtn.classList.remove('hidden');
     
-    // 更新状态
+    // Update the state
     isScriptEnabled = true;
     updateStatusDisplay(true, i18n.t('status_injected'));
   }
   
-  // 切换编辑模式
+  // Toggle edit mode
   toggleEditBtn.addEventListener('click', function() {
     if (!currentScript) {
       createNewScript();
@@ -640,7 +640,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveScript();
   });
   
-  // 创建脚本按钮
+  // Create script button
   if (createScriptBtn) {
     createScriptBtn.addEventListener('click', function() {
       createNewScript();
@@ -657,7 +657,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     saveScript();
   });
   
-  // 编辑名称按钮
+  // Edit name button
   editNameBtn.addEventListener('click', function() {
     if (!currentScript) return;
     toggleEditName();
@@ -670,11 +670,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
   
-  // 禁用特定于网站的按钮
+  // Disable website-specific buttons
   function disableSiteButtons(addButton, editButton) {
     addButton.disabled = true;
     editButton.disabled = true;
-    setToggleSwitchState(false); // 禁用切换开关
+    setToggleSwitchState(false); // Disable the toggle switch
   }
   
   // Dark mode toggle button
@@ -684,7 +684,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   
   // Wait for i18n initialization
   async function waitForI18nInit() {
-    // 如果已经有language存储，直接返回
+    // Return if a language setting already exists
     const result = await chrome.storage.local.get('language');
     if (!result.language) {
       // If no language is stored, wait 100 ms for i18n initialization
@@ -697,7 +697,7 @@ document.addEventListener('DOMContentLoaded', async function() {
   function initLangToggle() {
     const langToggle = document.getElementById('lang-toggle');
     
-    // 更新语言显示
+    // Update the language display
     async function updateLangDisplay() {
       // Read the current language directly from storage to get the latest value
       const result = await chrome.storage.local.get('language');
@@ -710,32 +710,32 @@ document.addEventListener('DOMContentLoaded', async function() {
       </span>`;
     }
     
-    // 初始更新语言显示
+    // Update the language display initially
     updateLangDisplay();
     
-    // 切换语言事件
+    // Language toggle event
     langToggle.addEventListener('click', async () => {
-      // 获取当前语言
+      // Get the current language
       const result = await chrome.storage.local.get('language');
       const currentLang = result.language || 'en';
       
-      // 切换语言
+      // Toggle the language
       const newLang = currentLang === 'en' ? 'nl' : 'en';
       
       // Set the new language
       i18n.setLanguage(newLang);
       
-      // 更新显示
+      // Update the display
       updateLangDisplay();
       
-      // 显示提示
+      // Show a toast
       showToast(newLang === 'en' ? i18n.t('language_switched_to_english') : i18n.t('language_switched_to_dutch'), 'info');
     });
   }
   
-  // Toast通知系统
+  // Toast notification system
   function showToast(message, type = 'info', duration = 2000) {
-    // 清除之前的toast
+    // Clear previous toasts
     const existingToasts = document.querySelectorAll('.toast');
     existingToasts.forEach(t => {
       if (t.classList.contains('show')) {
@@ -746,20 +746,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     });
     
-    // 创建toast元素
+    // Create the toast element
     const toast = document.createElement('div');
     toast.className = `toast toast-${type}`;
     toast.textContent = message;
     
-    // 添加到容器
+    // Add it to the container
     toastContainer.appendChild(toast);
     
-    // 触发动画
+    // Trigger the animation
     setTimeout(() => {
       toast.classList.add('show');
     }, 10);
     
-    // 自动消失
+    // Dismiss automatically
     setTimeout(() => {
       toast.classList.remove('show');
       
