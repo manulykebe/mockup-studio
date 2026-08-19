@@ -3,26 +3,31 @@
 
 const targetSelector = '.binder__content-page-progress--non-blocking';
 const signalsReadySelector = '#btn-add-element-content';
-const initialWaitMs = 5000;
+// Time to allow a loading indicator to appear before treating the page as a
+// simple/fast page that never shows one.
+const noSpinnerGraceMs = 5000;
+
+// Reset the stale ready flag from a previous injection (e.g. a prior TOC navigation)
+// so the background script's readiness poll doesn't resolve prematurely on this one.
+window.__signalsPageReady = false;
 
 if (document.readyState === 'loading') {
-	document.addEventListener('DOMContentLoaded', () => {
-		setTimeout(waitForSignalsReady, initialWaitMs);
-	}, { once: true });
+	document.addEventListener('DOMContentLoaded', waitForSignalsReady, { once: true });
 } else {
-	setTimeout(waitForSignalsReady, initialWaitMs);
+	waitForSignalsReady();
 }
 
 function waitForSignalsReady() {
 	const root = document.documentElement;
 	if (!root) return;
 
-	let targetSeen = Boolean(document.querySelector(targetSelector));
+	let targetSeen = false;
 	let hasRun = false;
 
 	const runOnce = () => {
 		if (hasRun) return;
 		hasRun = true;
+		clearTimeout(graceTimer);
 		observer.disconnect();
 		myFunction();
 	};
@@ -50,6 +55,8 @@ function waitForSignalsReady() {
 		}
 	};
 
+	// Observe from the start so a loading indicator that appears and
+	// disappears quickly (fast pages) is never missed between checks.
 	const observer = new MutationObserver((mutations) => {
 		if (targetSeen || mutations.length > 0) checkReady();
 	});
@@ -63,6 +70,14 @@ function waitForSignalsReady() {
 
 	// Handle pages that were already loaded before the snippet was injected.
 	checkReady();
+
+	// If no loading indicator ever shows up, the page loaded almost
+	// immediately; treat it as ready once the ready selector is present.
+	const graceTimer = setTimeout(() => {
+		if (!targetSeen && document.querySelector(signalsReadySelector)) {
+			runOnce();
+		}
+	}, noSpinnerGraceMs);
 }
 
 function myFunction() {
