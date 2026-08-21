@@ -4,6 +4,11 @@ import { downloadCsv, getUrlPrefix } from './download.js';
 import { openToolbarPopup, closePopup, waitForCondition } from './popup.js';
 import { parseHtmlTable } from './table.js';
 import { runChain } from './monitor.js';
+import {
+  runRoleAndPrivilegeExportWorkflow,
+  resetRoleAndPrivilegeExportWorkflow,
+  resumeRoleAndPrivilegeExportWorkflowIfPending,
+} from './roleAndPrivilegeExportWorkflow.js';
 
 function getTitleFromElement(element) {
   if (!element || !(element instanceof Element)) {
@@ -1039,4 +1044,10 @@ window.extract = {
   openToolbarPopup,
   closePopup,
   runChain,
+  runRoleAndPrivilegeExportWorkflow,
+  resetRoleAndPrivilegeExportWorkflow,
 };
+
+// Resume a role/privilege export workflow left in progress by the previous page load, now that
+// window.extract is fully assigned.
+resumeRoleAndPrivilegeExportWorkflowIfPending();
