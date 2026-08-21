@@ -5,3 +5,16 @@ Promote Configurations to TEST, if any
 Perform Functional Testing in TEST
 Perform Business Testing in TEST
 TQ review
+
+Preparation Name |Ref	Prep ID	PbOEL	Preparation Date	Expiration Date	Storage Requirements	Handling Instructions	Total Amt	Target pH	Actual pH |RfC	Actual Temp |RfC	Compound ID	Prep Comment
+prep_name_manu_01	[SC001401]	PbOEL1	2026-08-03T22:00:00.000Z	2026-08-16T22:00:00.000Z	RT		1 g	5.36	3.972	21.3 °C		
+prep_name_manu_02	[SC001402]	PbOEL1	2026-08-04T22:00:00.000Z	2026-08-23T22:00:00.000Z	RT		1 g	5.36	3.972	21.3 °C		
+prep_name_manu_03	[SC001403])	PbOEL2	2026-08-26T22:00:00.000Z	2026-08-26T22:00:00.000Z	RT		1 g	5.36	3.972	21.3 °C		
+prep_name_manu_04	[SC001404]	PbOEL1	2026-08-27T22:00:00.000Z	2026-08-29T22:00:00.000Z	RT		1 g	5.36	3.977	21.2 °C		
+prep_name_manu_05	[SC001405]	PbOEL2	2026-08-21T22:00:00.000Z	2026-08-23T22:00:00.000Z	-70 °C		1 g	5.36				
+prep_name_manu_06	[SC001406]	PbOEL2	2026-08-13T22:00:00.000Z	2026-08-22T22:00:00.000Z	-80 °C		1 g	5.36				
+prep_name_manu_07	[SC001407]	PbOEL3b	2026-08-27T22:00:00.000Z	2026-08-23T22:00:00.000Z	-20 °C		1 g	5.36	4.006	21.1 °C		
+prep_name_manu_08	[SC001408]	PbOEL4	2026-08-27T22:00:00.000Z	2026-08-30T22:00:00.000Z	-4 °C		1 g	5.36				
+prep_name_manu_09	[SC001409]	PbOEL N/A	2026-08-20T22:00:00.000Z	2026-08-25T22:00:00.000Z	2-8 °C		1 g	5.36				
+prep_name_manu_10	[SC001410]	PbOEL3a*	2026-08-21T22:00:00.000Z	2026-08-07T09:35:00.000Z	2-8 °C		1 g	5.36				
+prep_name_manu_11	[SC001411]	PbOEL N/A	2026-08-07T09:35:00.000Z	2026-09-02T22:00:00.000Z	40 °C		1 g	5.36				
