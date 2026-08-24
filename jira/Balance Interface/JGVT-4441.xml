@@ -100,11 +100,100 @@ to better discriminate between preparations, add: &quot;description&quot; column
                                                 <customfield id="customfield_10300" key="com.atlassian.jira.plugin.system.customfieldtypes:textarea">
                         <customfieldname>Acceptance Criteria</customfieldname>
                         <customfieldvalues>
-                            <customfieldvalue>&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; a user starts an external action &apos;GxP Preparation Balance Measurement&apos; from the Preparation Master table,&lt;/p&gt;
+                            <customfieldvalue>&lt;p&gt;&lt;b&gt;Scenario 1 - Open the combined Preparations overview&lt;/b&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the user is in the Balance Interface UI&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;a Signals GxP Experiment contains a Preparations Master table,&lt;/li&gt;
+    &lt;li&gt;the Preparations Master table contains one or more Preparation Subtables,&lt;/li&gt;
+    &lt;li&gt;and the Preparation Subtables contain preparation records.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;&lt;b&gt;Then&lt;/b&gt; the table contains all records from the preparation subtables. An additional column is shown with the Source&#160; preparations will have a column &quot;description&quot; with same content as from Preparation Subtable.&lt;/p&gt;</customfieldvalue>
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User triggers the GxP Preparation Balance Measurement external action from the Preparations Master table&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall open the Balance Interface UI,&lt;/li&gt;
+    &lt;li&gt;the System shall display one combined preparations table containing all preparation records from all Preparation Subtables belonging to that Preparations Master table,&lt;/li&gt;
+    &lt;li&gt;each preparation record shall be displayed once,&lt;/li&gt;
+    &lt;li&gt;and records from Preparation Subtables outside the selected Preparations Master table shall not be displayed.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 2 - Identify the source and description of each preparation&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; the combined preparations table contains records from one or more Preparation Subtables&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User views the combined preparations table&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall display an additional column named &quot;Source&quot;,&lt;/li&gt;
+    &lt;li&gt;the &quot;Source&quot; value of each preparation record shall equal the name of the Preparation Subtable from which that record originates,&lt;/li&gt;
+    &lt;li&gt;the System shall display a column named &quot;Description&quot;,&lt;/li&gt;
+    &lt;li&gt;the &quot;Description&quot; value of each preparation record shall equal the value from the &quot;Description&quot; column of its source Preparation Subtable,&lt;/li&gt;
+    &lt;li&gt;and an empty source &quot;Description&quot; value shall be displayed as empty and shall not be replaced with another value.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 3 - Sort the combined preparations table&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; the combined preparations table contains records from multiple Preparation Subtables&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User sorts a sortable column&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall sort all records in the combined result set, not only the records on the current page,&lt;/li&gt;
+    &lt;li&gt;the column shall support ascending and descending sorting,&lt;/li&gt;
+    &lt;li&gt;and values shall be sorted according to their data type, including text as text, numbers as numbers and dates as dates.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 4 - Filter the combined preparations table&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; the combined preparations table contains records from multiple Preparation Subtables&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User enters a filter value, including a value from the &quot;Source&quot; or &quot;Description&quot; column&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall display only the matching preparation records from the combined result set,&lt;/li&gt;
+    &lt;li&gt;the result count and pagination shall be updated to reflect the filtered result set,&lt;/li&gt;
+    &lt;li&gt;and clearing the filter shall restore all preparation records from the combined result set.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 5 - Page through the combined preparations table&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; the number of preparation records exceeds the selected page size&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User navigates through the combined preparations table&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall provide page navigation and a page-size selector with options 5, 10, 25 and All,&lt;/li&gt;
+    &lt;li&gt;the System shall display the current record range and the total number of records,&lt;/li&gt;
+    &lt;li&gt;and each record in the combined or filtered result set shall be reachable through the pagination controls.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 6 - Load Preparation Subtables asynchronously&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; a Preparations Master table contains multiple Preparation Subtables&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User opens the Balance Interface UI&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt;&lt;/p&gt;
+&lt;ul&gt;
+    &lt;li&gt;the System shall load the Preparation Subtables asynchronously,&lt;/li&gt;
+    &lt;li&gt;the System shall show that data is loading until all Preparation Subtables have been processed,&lt;/li&gt;
+    &lt;li&gt;the Interface shall remain responsive while the preparation records are loading,&lt;/li&gt;
+    &lt;li&gt;and the completed result set shall contain each preparation record once, irrespective of the order in which the Preparation Subtables finish loading.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;b&gt;Scenario 7 - No preparations available&lt;/b&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Given&lt;/b&gt; the Preparations Master table has no Preparation Subtables or its Preparation Subtables contain no preparation records&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;When&lt;/b&gt; the User triggers the GxP Preparation Balance Measurement external action from the Preparations Master table&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;Then&lt;/b&gt; the System shall open the Balance Interface UI and display an empty-state message without displaying an error.&lt;/p&gt;</customfieldvalue>
 
                         </customfieldvalues>
                     </customfield>

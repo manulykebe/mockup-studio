@@ -1,0 +1,94 @@
+<p><b>Scenario 1 - Open the combined Preparations overview</b></p>
+
+<p><b>Given</b></p>
+<ul>
+    <li>a Signals GxP Experiment contains a Preparations Master table,</li>
+    <li>the Preparations Master table contains one or more Preparation Subtables,</li>
+    <li>and the Preparation Subtables contain preparation records.</li>
+</ul>
+
+<p><b>When</b> the User triggers the GxP Preparation Balance Measurement external action from the Preparations Master table</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall open the Balance Interface UI,</li>
+    <li>the System shall display one combined preparations table containing all preparation records from all Preparation Subtables belonging to that Preparations Master table,</li>
+    <li>each preparation record shall be displayed once,</li>
+    <li>and records from Preparation Subtables outside the selected Preparations Master table shall not be displayed.</li>
+</ul>
+
+<p><b>Scenario 2 - Identify the source and description of each preparation</b></p>
+
+<p><b>Given</b> the combined preparations table contains records from one or more Preparation Subtables</p>
+
+<p><b>When</b> the User views the combined preparations table</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall display an additional column named "Source",</li>
+    <li>the "Source" value of each preparation record shall equal the name of the Preparation Subtable from which that record originates,</li>
+    <li>the System shall display a column named "Description",</li>
+    <li>the "Description" value of each preparation record shall equal the value from the "Description" column of its source Preparation Subtable,</li>
+    <li>and an empty source "Description" value shall be displayed as empty and shall not be replaced with another value.</li>
+</ul>
+
+<p><b>Scenario 3 - Sort the combined preparations table</b></p>
+
+<p><b>Given</b> the combined preparations table contains records from multiple Preparation Subtables</p>
+
+<p><b>When</b> the User sorts a sortable column</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall sort all records in the combined result set, not only the records on the current page,</li>
+    <li>the column shall support ascending and descending sorting,</li>
+    <li>and values shall be sorted according to their data type, including text as text, numbers as numbers and dates as dates.</li>
+</ul>
+
+<p><b>Scenario 4 - Filter the combined preparations table</b></p>
+
+<p><b>Given</b> the combined preparations table contains records from multiple Preparation Subtables</p>
+
+<p><b>When</b> the User enters a filter value, including a value from the "Source" or "Description" column</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall display only the matching preparation records from the combined result set,</li>
+    <li>the result count and pagination shall be updated to reflect the filtered result set,</li>
+    <li>and clearing the filter shall restore all preparation records from the combined result set.</li>
+</ul>
+
+<p><b>Scenario 5 - Page through the combined preparations table</b></p>
+
+<p><b>Given</b> the number of preparation records exceeds the selected page size</p>
+
+<p><b>When</b> the User navigates through the combined preparations table</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall provide page navigation and a page-size selector with options 5, 10, 25 and All,</li>
+    <li>the System shall display the current record range and the total number of records,</li>
+    <li>and each record in the combined or filtered result set shall be reachable through the pagination controls.</li>
+</ul>
+
+<p><b>Scenario 6 - Load Preparation Subtables asynchronously</b></p>
+
+<p><b>Given</b> a Preparations Master table contains multiple Preparation Subtables</p>
+
+<p><b>When</b> the User opens the Balance Interface UI</p>
+
+<p><b>Then</b></p>
+<ul>
+    <li>the System shall load the Preparation Subtables asynchronously,</li>
+    <li>the System shall show that data is loading until all Preparation Subtables have been processed,</li>
+    <li>the Interface shall remain responsive while the preparation records are loading,</li>
+    <li>and the completed result set shall contain each preparation record once, irrespective of the order in which the Preparation Subtables finish loading.</li>
+</ul>
+
+<p><b>Scenario 7 - No preparations available</b></p>
+
+<p><b>Given</b> the Preparations Master table has no Preparation Subtables or its Preparation Subtables contain no preparation records</p>
+
+<p><b>When</b> the User triggers the GxP Preparation Balance Measurement external action from the Preparations Master table</p>
+
+<p><b>Then</b> the System shall open the Balance Interface UI and display an empty-state message without displaying an error.</p>
