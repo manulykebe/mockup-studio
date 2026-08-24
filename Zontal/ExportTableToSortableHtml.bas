@@ -2,7 +2,7 @@ Attribute VB_Name = "ExportTableToSortableHtml"
 Option Explicit
 
 ' Exports the active Excel table, or the selected range when the active cell
-' is not inside a table, to a standalone sortable HTML file.
+' is not inside a table, to a standalone HTML table file.
 Public Sub ExportActiveTableToSortableHtml()
     Dim sourceRange As Range
     Dim html As String
@@ -20,7 +20,7 @@ Public Sub ExportActiveTableToSortableHtml()
     outputPath = Application.GetSaveAsFilename( _
         InitialFileName:=SanitizeFileName(sourceRange.Worksheet.Name) & "_table.html", _
         FileFilter:="HTML Files (*.html), *.html", _
-        Title:="Export sortable HTML table")
+        Title:="Export HTML table")
 
     If VarType(outputPath) = vbBoolean And outputPath = False Then Exit Sub
 
@@ -33,7 +33,7 @@ Public Sub ExportActiveTableToSortableHtml()
     Print #fileNumber, html
     Close #fileNumber
 
-    MsgBox "Sortable HTML table exported to:" & vbCrLf & CStr(outputPath), vbInformation
+    MsgBox "HTML table exported to:" & vbCrLf & CStr(outputPath), vbInformation
 End Sub
 
 Private Function GetSourceRange() As Range
@@ -66,17 +66,16 @@ Private Function BuildHtmlTable(ByVal sourceRange As Range) As String
     html = html & "body{font-family:system-ui,sans-serif;margin:2rem;color:#202124}" & vbCrLf
     html = html & "table{border-collapse:collapse;width:100%;max-width:100%;font-size:.95rem}" & vbCrLf
     html = html & "th,td{border:1px solid #d9d9d9;padding:.55rem .7rem;text-align:left;vertical-align:top}" & vbCrLf
-    html = html & "th{background:#f1f3f4;cursor:pointer;position:sticky;top:0;white-space:nowrap}" & vbCrLf
-    html = html & "th:hover{background:#e3e7ea}th::after{content:'  ⇅';color:#6b7280;font-size:.8em}" & vbCrLf
+    html = html & "th{background:#f1f3f4;white-space:nowrap}" & vbCrLf
     html = html & "tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}" & vbCrLf
     html = html & "</style>" & vbCrLf
     html = html & "</head>" & vbCrLf
     html = html & "<body>" & vbCrLf
-    html = html & "<table id=""sortableTable"">" & vbCrLf
+    html = html & "<table>" & vbCrLf
     html = html & "<thead><tr>"
 
     For columnIndex = 1 To sourceRange.Columns.Count
-        html = html & "<th scope=""col"" onclick=""sortTable(" & CStr(columnIndex - 1) & ")"">"
+        html = html & "<th scope=""col"">"
         html = html & HtmlEncode(CellText(sourceRange.Cells(1, columnIndex))) & "</th>"
     Next columnIndex
 
@@ -87,17 +86,13 @@ Private Function BuildHtmlTable(ByVal sourceRange As Range) As String
         html = html & "<tr>"
         For columnIndex = 1 To sourceRange.Columns.Count
             cellValue = CellText(sourceRange.Cells(rowIndex, columnIndex))
-            html = html & "<td data-sort-value=""" & HtmlEncode(LCase$(cellValue)) & """>"
+            html = html & "<td>"
             html = html & HtmlEncode(cellValue) & "</td>"
         Next columnIndex
         html = html & "</tr>" & vbCrLf
     Next rowIndex
 
     html = html & "</tbody></table>" & vbCrLf
-    html = html & "<script>" & vbCrLf
-    html = html & "const directions={};" & vbCrLf
-    html = html & "function sortTable(column){const table=document.getElementById('sortableTable');const body=table.tBodies[0];const rows=Array.from(body.rows);directions[column]=!directions[column];const direction=directions[column]?1:-1;rows.sort((a,b)=>{const av=a.cells[column].dataset.sortValue||'';const bv=b.cells[column].dataset.sortValue||'';const an=Number(av),bn=Number(bv);if(av!==''&&bv!==''&&!Number.isNaN(an)&&!Number.isNaN(bn))return(an-bn)*direction;return av.localeCompare(bv,undefined,{numeric:true,sensitivity:'base'})*direction;});rows.forEach(row=>body.appendChild(row));}" & vbCrLf
-    html = html & "</script>" & vbCrLf
     html = html & "</body></html>"
 
     BuildHtmlTable = html
