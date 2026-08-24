@@ -1,3 +1,4 @@
 {
-    "livePreview.defaultPreviewPath": "/datatables/auditlog/data/GMP000019_27-Jul-2026 12-45-47 UTC+0.datatable.html"
+    "livePreview.defaultPreviewPath": "/datatables/auditlog/data/GMP000019_27-Jul-2026 12-45-47 UTC+0.datatable.html",
+    "liveServer.settings.port": 5501
 }
