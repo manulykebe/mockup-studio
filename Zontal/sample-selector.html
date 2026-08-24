@@ -1,0 +1,534 @@
+<html>
+
+<head>
+    <style type="text/css">
+        .rstcustom__rowWrapper {
+            height: 100%;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            cursor: move;
+        }
+
+        .rstcustom__rowWrapper:hover {
+            opacity: 0.7;
+        }
+
+        .rstcustom__rowWrapper:active {
+            opacity: 1;
+        }
+
+        .rstcustom__rowWrapperDragDisabled {
+            cursor: default;
+        }
+
+        .rstcustom__row {
+            height: 100%;
+            white-space: nowrap;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            position: relative;
+        }
+
+        .rstcustom__row>* {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        /**
+ * The outline of where the element will go if dropped, displayed while dragging
+ */
+        .rstcustom__rowLandingPad,
+        .rstcustom__rowCancelPad {
+            border: none;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            outline: none;
+        }
+
+        .rstcustom__rowLandingPad *,
+        .rstcustom__rowCancelPad * {
+            opacity: 0 !important;
+        }
+
+        .rstcustom__rowLandingPad::before,
+        .rstcustom__rowCancelPad::before {
+            background-color: lightblue;
+            border: 2px dotted black;
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: -1;
+        }
+
+        /**
+ * Alternate appearance of the landing pad when the dragged location is invalid
+ */
+        .rstcustom__rowCancelPad::before {
+            background-color: #e6a8ad;
+        }
+
+        /**
+ * Nodes matching the search conditions are highlighted
+ */
+        .rstcustom__rowSearchMatch {
+            -webkit-box-shadow: inset 0 -7px 7px -3px #0080ff;
+            box-shadow: inset 0 -7px 7px -3px #0080ff;
+        }
+
+        /**
+ * The node that matches the search conditions and is currently focused
+ */
+        .rstcustom__rowSearchFocus {
+            -webkit-box-shadow: inset 0 -7px 7px -3px #fc6421;
+            box-shadow: inset 0 -7px 7px -3px #fc6421;
+        }
+
+        .rstcustom__rowContents,
+        .rstcustom__rowLabel,
+        .rstcustom__rowToolbar,
+        .rstcustom__toolbarButton {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .rstcustom__rowContents {
+            position: relative;
+            height: 100%;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 0 auto;
+            flex: 1 0 auto;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .rstcustom__rowLabel {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            padding-right: 20px;
+        }
+
+        .rstcustom__rowToolbar {
+            -webkit-box-flex: 0;
+            -ms-flex: 0 1 auto;
+            flex: 0 1 auto;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .rstcustom__collapseButton,
+        .rstcustom__expandButton {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+            background: transparent;
+            padding: 0;
+            z-index: 2;
+            position: absolute;
+            top: 45%;
+            width: 30px;
+            height: 30px;
+            -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);
+            cursor: pointer;
+        }
+
+        .rstcustom__collapseButton::after,
+        .rstcustom__expandButton::after {
+            content: '';
+            position: absolute;
+            -webkit-transform-origin: 7px 4px;
+            -ms-transform-origin: 7px 4px;
+            transform-origin: 7px 4px;
+            -webkit-transform: translate3d(-50%, -20%, 0);
+            transform: translate3d(-50%, -20%, 0);
+            border: solid transparent 10px;
+            border-left-width: 7px;
+            border-right-width: 7px;
+            border-top-color: gray;
+        }
+
+        .rstcustom__collapseButton:hover::after,
+        .rstcustom__expandButton:hover::after {
+            border-top-color: black;
+        }
+
+        .rstcustom__collapseButton:focus,
+        .rstcustom__expandButton:focus {
+            outline: none;
+        }
+
+        .rstcustom__collapseButton:focus::after,
+        .rstcustom__expandButton:focus::after {
+            -webkit-filter: drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9);
+            filter: drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9) drop-shadow(0 0 1px #83bef9);
+        }
+
+        .rstcustom__expandButton::after {
+            -webkit-transform: translate3d(-50%, -20%, 0) rotateZ(-90deg);
+            transform: translate3d(-50%, -20%, 0) rotateZ(-90deg);
+        }
+
+        /**
+ * Line for under a node with children
+ */
+        .rstcustom__lineChildren {
+            height: 100%;
+            display: inline-block;
+        }
+
+        /* ==========================================================================
+   Scaffold
+
+    Line-overlaid blocks used for showing the tree structure
+   ========================================================================== */
+        .rstcustom__lineBlock,
+        .rstcustom__absoluteLineBlock {
+            height: 100%;
+            position: relative;
+            display: inline-block;
+            -webkit-box-flex: 0;
+            -ms-flex: 0 0 auto;
+            flex: 0 0 auto;
+        }
+
+        .rstcustom__absoluteLineBlock {
+            position: absolute;
+            top: 0;
+        }
+
+        /* Highlight line for pointing to dragged row destination
+   ========================================================================== */
+        /**
+ * +--+--+
+ * |  |  |
+ * |  |  |
+ * |  |  |
+ * +--+--+
+ */
+        .rstcustom__highlightLineVertical {
+            z-index: 3;
+        }
+
+        .rstcustom__highlightLineVertical::before {
+            position: absolute;
+            content: '';
+            background-color: #36c2f6;
+            width: 6px;
+            margin-left: -3px;
+            left: 50%;
+            top: 0;
+            height: 100%;
+        }
+
+        @-webkit-keyframes rstcustom__arrow-pulse {
+            0% {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+
+            30% {
+                -webkit-transform: translate(0, 300%);
+                transform: translate(0, 300%);
+                opacity: 1;
+            }
+
+            70% {
+                -webkit-transform: translate(0, 700%);
+                transform: translate(0, 700%);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: translate(0, 1000%);
+                transform: translate(0, 1000%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rstcustom__arrow-pulse {
+            0% {
+                -webkit-transform: translate(0, 0);
+                transform: translate(0, 0);
+                opacity: 0;
+            }
+
+            30% {
+                -webkit-transform: translate(0, 300%);
+                transform: translate(0, 300%);
+                opacity: 1;
+            }
+
+            70% {
+                -webkit-transform: translate(0, 700%);
+                transform: translate(0, 700%);
+                opacity: 1;
+            }
+
+            100% {
+                -webkit-transform: translate(0, 1000%);
+                transform: translate(0, 1000%);
+                opacity: 0;
+            }
+        }
+
+        .rstcustom__highlightLineVertical::after {
+            content: '';
+            position: absolute;
+            height: 0;
+            margin-left: -3px;
+            left: 50%;
+            top: 0;
+            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
+            border-top: 3px solid white;
+            -webkit-animation: rstcustom__arrow-pulse 1s infinite linear both;
+            animation: rstcustom__arrow-pulse 1s infinite linear both;
+        }
+
+        /**
+ * +-----+
+ * |     |
+ * |  +--+
+ * |  |  |
+ * +--+--+
+ */
+        .rstcustom__highlightTopLeftCorner::before {
+            z-index: 3;
+            content: '';
+            position: absolute;
+            border-top: solid 6px #36c2f6;
+            border-left: solid 6px #36c2f6;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            height: calc(50% + 3px);
+            top: 50%;
+            margin-top: -3px;
+            right: 0;
+            width: calc(50% + 3px);
+        }
+
+        /**
+ * +--+--+
+ * |  |  |
+ * |  |  |
+ * |  +->|
+ * +-----+
+ */
+        .rstcustom__highlightBottomLeftCorner {
+            z-index: 3;
+        }
+
+        .rstcustom__highlightBottomLeftCorner::before {
+            content: '';
+            position: absolute;
+            border-bottom: solid 6px #36c2f6;
+            border-left: solid 6px #36c2f6;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            height: calc(100% + 3px);
+            top: 0;
+            right: 7px;
+            width: calc(50% - 4px);
+        }
+
+        .rstcustom__highlightBottomLeftCorner::after {
+            content: '';
+            position: absolute;
+            height: 0;
+            right: 0;
+            top: 100%;
+            margin-top: -7px;
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 7px solid #36c2f6;
+        }
+    </style>
+    <style type="text/css">
+        .rstcustom__node {
+            min-width: 100%;
+            position: relative;
+        }
+    </style>
+    <title>ZONTAL Space</title>
+    <script type="text/javascript" src="https://zontaldev.jnj.com/explore/build-client/lib/keycloak.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="Content-Security-Policy"
+        content="script-src 'self' 'nonce-rAnd0m' 'unsafe-eval';worker-src 'self' blob:;font-src 'self' data: ;">
+    <link rel="stylesheet" href="https://zontaldev.jnj.com/explore/build-client/vendors-eabed99ab4406008ed01.css">
+    <link rel="stylesheet" href="https://zontaldev.jnj.com/explore/build-client/index-cfab65454a413da3eb4a.css">
+    <script src="https://zontaldev.jnj.com/explore/build-client/main_96-c49985c9061f61f84846.js"></script>
+    <script src="https://zontaldev.jnj.com/explore/build-client/main_57-49160e2312b0c1aea784.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://zontaldev.jnj.com/explore/build-client/explore-view-712c13b3a4c76eae238e.css">
+</head>
+
+<body>
+    <div class="left menu transition right visible dropDown---removeIconLeftMenu---hO8vA">
+        <div class="ui mini icon input search"><input placeholder="Search..." maxlength="32766" type="text">
+            <div class="propertyFilter---search-controller---hnptM input"><i aria-hidden="true"
+                    class="search link icon"></i></div>
+        </div>
+        <div role="option" aria-disabled="true" class="disabled item propertyFilter---filter-clear-button---HGSpM"><span
+                class="text">Clear Selected</span></div>
+        <div class="left scrolling menu transition dropDown---scrollMenu---BY71a">
+            <div class="dropDown---scrollPane---JZcWg"
+                style="position: relative; overflow: hidden; width: 100%; height: auto; min-height: 100%; max-height: 200px;">
+                <div
+                    style="position: relative; overflow: scroll; margin-right: -10px; margin-bottom: -10px; min-height: calc(100% + 10px); max-height: 210px;">
+                    <div class="dropDown---menuItems---xGW2w">
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Cell Counter1"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Cell
+                                        Counter</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Flow cytometer2"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Flow
+                                        cytometer</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Mass Spectrometer3"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Mass
+                                        Spectrometer</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Microscope4"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Microscope</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="NIR5"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>NIR</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Particle Sizer6"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Particle
+                                        Sizer</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Protein concentration analyzer7"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Protein concentration
+                                        analyzer</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Spectrophotometer8"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Spectrophotometer</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="Test Class9"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>Test Class</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="XRPD10"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>XRPD</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="asfd11"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>asfd</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="qPCR12"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>qPCR</span></span>
+                            </div>
+                        </div>
+                        <div role="option"
+                            class="item dropDown---dropdownItem---XR7Cb dropDown---highlightedItem---lpjU6">
+                            <div class="">
+                                <div class="ui fitted checkbox checkableElementItemRenderer---checkBox---sMiaY"><input
+                                        class="hidden" readonly="" tabindex="0" type="checkbox"
+                                        value="testing13"><label></label></div><span
+                                    class="checkableElementItemRenderer---value---KiYye"><span>testing</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="position: absolute; height: 6px; display: none;">
+                    <div
+                        style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;">
+                    </div>
+                </div>
+                <div style="position: absolute; width: 6px; right: 2px; bottom: 2px; top: 2px; border-radius: 3px;">
+                    <div
+                        style="position: relative; display: block; width: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); height: 85px; transform: translateY(0px);">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
