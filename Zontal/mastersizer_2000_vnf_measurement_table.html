@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>mastersizer_2000_vnf_measuremen</title>
     <link rel="stylesheet" href="vendor/datatables/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/searchbuilder/searchBuilder.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/datetime/dataTables.dateTime.min.css">
     <style>
         body {
             font-family: system-ui, sans-serif;
@@ -748,46 +750,141 @@
         </tbody>
     </table>
     <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
+    <script src="vendor/datatables/moment.min.js"></script>
     <script src="vendor/datatables/dataTables.min.js"></script>
+    <script src="vendor/datatables/datetime/dataTables.dateTime.min.js"></script>
+    <script src="vendor/datatables/searchbuilder/dataTables.searchBuilder.min.js"></script>
     <script>
         const tableElement = document.getElementById('sortableTable');
         const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
             Array.from(row.cells, (cell) => cell.textContent.trim())
         );
 
+        const selectedIris = new Set();
+
         const dataTable = new DataTable(tableElement, {
             data: tableData,
             columns: [
                 {
-                    title: 'Select',
+                    title: '<input type="checkbox" id="selectAllVisible" aria-label="Select all visible rows">',
                     data: null,
-                    orderable: false,
+                    orderable: true,
                     searchable: false,
+                    type: 'num',
                     render: (data, type, row) => {
-                        if (type !== 'display') {
-                            return '';
+                        const iri = row[0].trim();
+                        const isSelected = selectedIris.has(iri);
+
+                        if (type === 'display') {
+                            const checked = isSelected ? ' checked' : '';
+                            return `<input type="checkbox" class="row-select" value="${iri}" aria-label="Select record ${iri}"${checked}>`;
                         }
 
-                        const iri = row[0].trim();
-                        return `<input type="checkbox" value="${iri}" aria-label="Select record ${iri}">`;
+                        // sort/type/filter requests need a plain comparable value, not markup
+                        return isSelected ? 1 : 0;
                     }
                 },
                 { title: 'Iri', data: 0 },
                 { title: 'Index', data: 1 },
-                { title: 'Measurement Time', data: 2 },
+                {
+                    title: 'Measurement Time',
+                    data: 2,
+                    // parses the ISO 8601 source string for chronological sort/search and displays it in locale format
+                    render: DataTable.render.date()
+                },
                 { title: 'Sample Identifier', data: 3 }
             ],
-            searchable: true,
-            fixedHeight: true,
-            perPage: 5,
-            perPageSelect: [5, 10, 15, 20],
-            labels: {
-                placeholder: "Search...",
-                perPage: "{select} entries per page",
-                noRows: "No entries to found",
-                info: "Showing {start} to {end} of {rows} entries"
+            order: [],
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            searchBuilder: {
+                // exclude the checkbox column (index 0), whose title is markup rather than a label
+                columns: [1, 2, 3, 4]
+            },
+            layout: {
+                top1: 'searchBuilder',
+                topStart: 'pageLength',
+                topEnd: 'search',
+                bottomStart: 'info',
+                bottomEnd: 'paging'
             }
         });
+
+        const selectAllCheckbox = document.getElementById('selectAllVisible');
+
+        function getVisibleRowCheckboxes() {
+            return dataTable.rows({ page: 'current' }).nodes().toArray()
+                .map((row) => row.querySelector('.row-select'));
+        }
+
+        function updateSelectAllState() {
+            const visibleCheckboxes = getVisibleRowCheckboxes();
+            const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedIris.has(cb.value)).length;
+            selectAllCheckbox.checked = visibleCheckboxes.length > 0 && selectedVisibleCount === visibleCheckboxes.length;
+            selectAllCheckbox.indeterminate = selectedVisibleCount > 0 && selectedVisibleCount < visibleCheckboxes.length;
+        }
+
+        // rebuilds just the info text's selection suffix, without a full draw() that would re-sort rows
+        function updateInfoText() {
+            const infoNode = dataTable.table().container().querySelector('.dt-info');
+            if (!infoNode) {
+                return;
+            }
+
+            const info = dataTable.page.info();
+            const selectedVisibleCount = getVisibleRowCheckboxes().filter((cb) => selectedIris.has(cb.value)).length;
+            const base = info.recordsDisplay === 0
+                ? 'Showing 0 to 0 of 0 entries'
+                : `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`;
+            const filtered = info.recordsDisplay !== info.recordsTotal
+                ? ` (filtered from ${info.recordsTotal} total entries)`
+                : '';
+            infoNode.innerHTML = `${base}${filtered} — <strong>${selectedIris.size}</strong> selected ` +
+                `(<strong>${selectedVisibleCount}</strong> on this page)`;
+        }
+
+        function refreshSelectionUi() {
+            updateSelectAllState();
+            updateInfoText();
+        }
+
+        tableElement.addEventListener('change', (event) => {
+            if (!event.target.classList.contains('row-select')) {
+                return;
+            }
+
+            const iri = event.target.value;
+            if (event.target.checked) {
+                selectedIris.add(iri);
+            } else {
+                selectedIris.delete(iri);
+            }
+
+            // keep the order data fresh for the next real sort, but don't reorder rows just from selecting
+            dataTable.cell(event.target.closest('td')).invalidate();
+            refreshSelectionUi();
+        });
+
+        // stop header th click-to-sort from firing when the checkbox itself is clicked
+        selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
+
+        selectAllCheckbox.addEventListener('change', () => {
+            const checked = selectAllCheckbox.checked;
+            getVisibleRowCheckboxes().forEach((checkbox) => {
+                checkbox.checked = checked;
+                if (checked) {
+                    selectedIris.add(checkbox.value);
+                } else {
+                    selectedIris.delete(checkbox.value);
+                }
+            });
+
+            dataTable.rows({ page: 'current' }).invalidate();
+            refreshSelectionUi();
+        });
+
+        dataTable.on('draw', refreshSelectionUi);
+        refreshSelectionUi();
     </script>
 </body>
 
