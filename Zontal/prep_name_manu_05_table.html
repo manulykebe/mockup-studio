@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mastersizer_2000_vnf_measuremen</title>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/searchbuilder/searchBuilder.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/datetime/dataTables.dateTime.min.css">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+            color: #202124
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            font-size: .95rem
+        }
+
+        th,
+        td {
+            border: 1px solid #d9d9d9;
+            padding: .55rem .7rem;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: #f1f3f4;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            white-space: nowrap
+        }
+
+        th:first-child,
+        td:first-child {
+            width: 1%;
+            text-align: center
+        }
+
+        th:hover {
+            background: #e3e7ea
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa
+        }
+
+        tr:hover {
+            background: #fff4cc
+        }
+    </style>
+</head>
+
+<body>
+    <table id="sortableTable">
+<thead><tr><th scope="col">Master</th><th scope="col">Master ID</th><th scope="col">Reference |Ref</th><th scope="col">Name</th><th scope="col">Description</th><th scope="col">Planned Amt</th><th scope="col">Actual Amt |RfC</th></tr></thead>
+<tbody>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-a</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-b</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015675</td><td>TestHF8</td><td>C015675-01-c</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-d</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-e</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014781</td><td>Signals Material</td><td>C014781-01-f</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014782</td><td>Signals Material</td><td>C014782-01-g</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-h</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015675</td><td>TestHF8</td><td>C015675-01-i</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-j</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-k</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014781</td><td>Signals Material</td><td>C014781-01-l</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014782</td><td>Signals Material</td><td>C014782-01-m</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-n</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015675</td><td>TestHF8</td><td>C015675-01-o</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-p</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-q</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014781</td><td>Signals Material</td><td>C014781-01-r</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_05</td><td>SC001424</td><td>C014782</td><td>Signals Material</td><td>C014782-01-s</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-a</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-b</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015675</td><td>TestHF8</td><td>C015675-01-c</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-d</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-e</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014781</td><td>Signals Material</td><td>C014781-01-f</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014782</td><td>Signals Material</td><td>C014782-01-g</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-h</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015675</td><td>TestHF8</td><td>C015675-01-i</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-j</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-k</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014781</td><td>Signals Material</td><td>C014781-01-l</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014782</td><td>Signals Material</td><td>C014782-01-m</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-n</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015675</td><td>TestHF8</td><td>C015675-01-o</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-p</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-q</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014781</td><td>Signals Material</td><td>C014781-01-r</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_04</td><td>SC001423</td><td>C014782</td><td>Signals Material</td><td>C014782-01-s</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-a</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-b</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-c</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-d</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-e</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-f</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-g</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-h</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-i</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-j</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-k</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-l</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-m</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-n</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-o</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-p</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-q</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-r</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_02</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-s</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-a</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-b</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015675</td><td>TestHF8</td><td>C015675-01-c</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-d</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-e</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014781</td><td>Signals Material</td><td>C014781-01-f</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014782</td><td>Signals Material</td><td>C014782-01-g</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-h</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015675</td><td>TestHF8</td><td>C015675-01-i</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-j</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-k</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014781</td><td>Signals Material</td><td>C014781-01-l</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014782</td><td>Signals Material</td><td>C014782-01-m</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-n</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015675</td><td>TestHF8</td><td>C015675-01-o</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-p</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-q</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014781</td><td>Signals Material</td><td>C014781-01-r</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_01</td><td>SC001420</td><td>C014782</td><td>Signals Material</td><td>C014782-01-s</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-a</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-b</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-c</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-d</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-e</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-f</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-g</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-h</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-i</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-j</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-k</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-l</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-m</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015268</td><td>SmokeTest</td><td>C015268-01-n</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015675</td><td>TestHF8</td><td>C015675-01-o</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015244</td><td>Liquid 1</td><td>C015244-01-p</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C015062</td><td>Acetaminophen</td><td>C015062-01-q</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014781</td><td>Signals Material</td><td>C014781-01-r</td><td></td><td></td></tr>
+<tr><td>prep_name_manu_03</td><td>SC001421</td><td>C014782</td><td>Signals Material</td><td>C014782-01-s</td><td></td><td></td></tr>
+
+            </tbody>
+        </table>
+        <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
+        <script src="vendor/datatables/moment.min.js"></script>
+        <script src="vendor/datatables/dataTables.min.js"></script>
+        <script src="vendor/datatables/datetime/dataTables.dateTime.min.js"></script>
+        <script src="vendor/datatables/searchbuilder/dataTables.searchBuilder.min.js"></script>
+        <script>
+            const tableElement = document.getElementById('sortableTable');
+            const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
+                Array.from(row.cells, (cell) => cell.textContent.trim())
+            );
+
+            const selectedIris = new Set();
+
+            const dataTable = new DataTable(tableElement, {
+                data: tableData,
+                columns: [
+                    {
+                        title: '<input type="checkbox" id="selectAllVisible" aria-label="Select all visible rows">',
+                        data: null,
+                        orderable: true,
+                        searchable: false,
+                        type: 'num',
+                        render: (data, type, row) => {
+                            const iri = row[0].trim();
+                            const isSelected = selectedIris.has(iri);
+
+                            if (type === 'display') {
+                                const checked = isSelected ? ' checked' : '';
+                                return `<input type="checkbox" class="row-select" value="${iri}" aria-label="Select record ${iri}"${checked}>`;
+                            }
+
+                            // sort/type/filter requests need a plain comparable value, not markup
+                            return isSelected ? 1 : 0;
+                        }
+                    },
+                    { title: 'Iri', data: 0 },
+                    { title: 'Index', data: 1 },
+                    {
+                        title: 'Measurement Time',
+                        data: 2,
+                        // parses the ISO 8601 source string for chronological sort/search and displays it in locale format
+                        render: DataTable.render.date()
+                    },
+                    { title: 'Sample Identifier', data: 3 }
+                ],
+                order: [],
+                pageLength: 10,
+                lengthMenu: [5, 10, 15, 20],
+                searchBuilder: {
+                    // exclude the checkbox column (index 0), whose title is markup rather than a label
+                    columns: [1, 2, 3, 4]
+                },
+                layout: {
+                    top1: 'searchBuilder',
+                    topStart: 'pageLength',
+                    topEnd: 'search',
+                    bottomStart: 'info',
+                    bottomEnd: 'paging'
+                }
+            });
+
+            const selectAllCheckbox = document.getElementById('selectAllVisible');
+
+            function getVisibleRowCheckboxes() {
+                return dataTable.rows({ page: 'current' }).nodes().toArray()
+                    .map((row) => row.querySelector('.row-select'));
+            }
+
+            function updateSelectAllState() {
+                const visibleCheckboxes = getVisibleRowCheckboxes();
+                const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedIris.has(cb.value)).length;
+                selectAllCheckbox.checked = visibleCheckboxes.length > 0 && selectedVisibleCount === visibleCheckboxes.length;
+                selectAllCheckbox.indeterminate = selectedVisibleCount > 0 && selectedVisibleCount < visibleCheckboxes.length;
+            }
+
+            // rebuilds just the info text's selection suffix, without a full draw() that would re-sort rows
+            function updateInfoText() {
+                const infoNode = dataTable.table().container().querySelector('.dt-info');
+                if (!infoNode) {
+                    return;
+                }
+
+                const info = dataTable.page.info();
+                const selectedVisibleCount = getVisibleRowCheckboxes().filter((cb) => selectedIris.has(cb.value)).length;
+                const base = info.recordsDisplay === 0
+                    ? 'Showing 0 to 0 of 0 entries'
+                    : `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`;
+                const filtered = info.recordsDisplay !== info.recordsTotal
+                    ? ` (filtered from ${info.recordsTotal} total entries)`
+                    : '';
+                infoNode.innerHTML = `${base}${filtered} � <strong>${selectedIris.size}</strong> selected ` +
+                    `(<strong>${selectedVisibleCount}</strong> on this page)`;
+            }
+
+            function refreshSelectionUi() {
+                updateSelectAllState();
+                updateInfoText();
+            }
+
+            tableElement.addEventListener('change', (event) => {
+                if (!event.target.classList.contains('row-select')) {
+                    return;
+                }
+
+                const iri = event.target.value;
+                if (event.target.checked) {
+                    selectedIris.add(iri);
+                } else {
+                    selectedIris.delete(iri);
+                }
+
+                // keep the order data fresh for the next real sort, but don't reorder rows just from selecting
+                dataTable.cell(event.target.closest('td')).invalidate();
+                refreshSelectionUi();
+            });
+
+            // stop header th click-to-sort from firing when the checkbox itself is clicked
+            selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
+
+            selectAllCheckbox.addEventListener('change', () => {
+                const checked = selectAllCheckbox.checked;
+                getVisibleRowCheckboxes().forEach((checkbox) => {
+                    checkbox.checked = checked;
+                    if (checked) {
+                        selectedIris.add(checkbox.value);
+                    } else {
+                        selectedIris.delete(checkbox.value);
+                    }
+                });
+
+                dataTable.rows({ page: 'current' }).invalidate();
+                refreshSelectionUi();
+            });
+
+            dataTable.on('draw', refreshSelectionUi);
+            refreshSelectionUi();
+        </script>
+</body>
+
+</html>
