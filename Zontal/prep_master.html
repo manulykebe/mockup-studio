@@ -1,0 +1,973 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mastersizer_2000_vnf_measuremen</title>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/searchbuilder/searchBuilder.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/datetime/dataTables.dateTime.min.css">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+            color: #202124
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            font-size: .95rem
+        }
+
+        th,
+        td {
+            border: 1px solid #d9d9d9;
+            padding: .55rem .7rem;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: #f1f3f4;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            white-space: nowrap
+        }
+
+        th:hover {
+            background: #e3e7ea
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa
+        }
+
+        tr:hover {
+            background: #fff4cc
+        }
+    </style>
+</head>
+
+<body>
+    <table id="sortableTable">
+        <thead>
+            <tr>
+                <th scope="col">Master</th>
+                <th scope="col">Master ID</th>
+                <th scope="col">Reference |Ref</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Planned Amt</th>
+                <th scope="col">Actual Amt |RfC</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-b</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-c</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-d</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-e</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-f</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-g</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-h</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-i</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-j</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-k</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-l</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-m</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-n</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-o</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-p</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-q</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-r</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_05</td>
+                <td>SC001424</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-s</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-b</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-c</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-d</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-e</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-f</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-g</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-h</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-i</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-j</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-k</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-l</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-m</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-n</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-o</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-p</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-q</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-r</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_04</td>
+                <td>SC001423</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-s</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-b</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-c</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-d</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-e</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-f</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-g</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-h</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-i</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-j</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-k</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-l</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-m</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-n</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-o</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-p</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-q</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-r</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_02</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-s</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-b</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-c</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-d</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-e</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-f</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-g</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-h</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-i</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-j</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-k</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-l</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-m</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-n</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-o</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-p</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-q</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-r</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_01</td>
+                <td>SC001420</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-s</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-a</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-b</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-c</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-d</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-e</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-f</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-g</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-h</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-i</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-j</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-k</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-l</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-m</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015268</td>
+                <td>SmokeTest</td>
+                <td>C015268-01-n</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015675</td>
+                <td>TestHF8</td>
+                <td>C015675-01-o</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015244</td>
+                <td>Liquid 1</td>
+                <td>C015244-01-p</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C015062</td>
+                <td>Acetaminophen</td>
+                <td>C015062-01-q</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014781</td>
+                <td>Signals Material</td>
+                <td>C014781-01-r</td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>prep_name_manu_03</td>
+                <td>SC001421</td>
+                <td>C014782</td>
+                <td>Signals Material</td>
+                <td>C014782-01-s</td>
+                <td></td>
+                <td></td>
+            </tr>
+
+        </tbody>
+    </table>
+    <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
+    <script src="vendor/datatables/moment.min.js"></script>
+    <script src="vendor/datatables/dataTables.min.js"></script>
+    <script src="vendor/datatables/datetime/dataTables.dateTime.min.js"></script>
+    <!-- <script src="vendor/datatables/searchbuilder/dataTables.searchBuilder.min.js"></script> -->
+    <script>
+        const tableElement = document.getElementById('sortableTable');
+        const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
+            Array.from(row.cells, (cell) => cell.textContent.trim())
+        );
+
+        const dataTable = new DataTable(tableElement, {
+            data: tableData,
+            columns: [
+                { data: 0 },
+                { data: 1 },
+                { data: 2 },
+                { data: 3 },
+                { data: 4 },
+                { data: 5 },
+                { data: 6 },
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    render: () => '<button type="button" class="measure-btn">Measure</button>'
+                }
+            ],
+            order: [],
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            /*searchBuilder: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+            },
+            layout: {
+                top1: 'searchBuilder',
+                topStart: 'pageLength',
+                topEnd: 'search',
+                bottomStart: 'info',
+                bottomEnd: 'paging'
+            }*/ 
+        });
+    </script>
+</body>
+
+</html>
