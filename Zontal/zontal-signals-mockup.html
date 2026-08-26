@@ -1112,6 +1112,7 @@
         );
 
         const selectedIris = new Set();
+        const availableIris = new Set(tableData.map((row) => row[0].trim()));
 
         const dataTable = new DataTable(tableElement, {
             data: tableData,
@@ -1173,6 +1174,16 @@
             importElnBtn.disabled = selectedIris.size === 0;
         }
 
+        importElnBtn.addEventListener('click', () => {
+            if (importElnBtn.disabled) {
+                return;
+            }
+            if (typeof window.syncUrlWithState === 'function') {
+                window.syncUrlWithState();
+            }
+            window.location.assign(window.location.href);
+        });
+
         function updateSelectAllState() {
             const visibleCheckboxes = getVisibleRowCheckboxes();
             const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedIris.has(cb.value)).length;
@@ -1204,6 +1215,110 @@
             updateInfoText();
             updateImportElnButtonState();
         }
+
+        function syncUrlWithState() {
+            const instrumentClassSelect = document.getElementById('instrumentClass');
+            const instrumentIdSelect = document.getElementById('instrumentId');
+            const dateNotToggle = document.getElementById('dateNot');
+            const dateValue1 = document.getElementById('dateValue1');
+            const dateValue2 = document.getElementById('dateValue2');
+            const params = new URLSearchParams();
+            const selectedList = Array.from(selectedIris).join(',');
+
+            if (instrumentClassSelect && instrumentClassSelect.value) {
+                params.set('instrumentClass', instrumentClassSelect.value);
+            }
+            if (instrumentIdSelect && instrumentIdSelect.value) {
+                params.set('instrumentId', instrumentIdSelect.value);
+            }
+            const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
+            if (dateOperator) {
+                params.set('dateOperator', dateOperator.value);
+            }
+            if (dateNotToggle) {
+                params.set('dateNot', String(dateNotToggle.getAttribute('aria-pressed') === 'true'));
+            }
+            if (dateValue1 && dateValue1.value) {
+                params.set('dateValue1', dateValue1.value);
+            }
+            if (dateValue2 && dateValue2.value) {
+                params.set('dateValue2', dateValue2.value);
+            }
+            if (selectedList) {
+                params.set('selected', selectedList);
+            }
+
+            const nextUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+            const currentUrl = `${window.location.pathname}${window.location.search}`;
+            if (currentUrl !== nextUrl) {
+                window.history.replaceState({}, '', nextUrl);
+            }
+        }
+
+        function applyStateFromUrl() {
+            const instrumentClassSelect = document.getElementById('instrumentClass');
+            const instrumentIdSelect = document.getElementById('instrumentId');
+            const dateNotToggle = document.getElementById('dateNot');
+            const dateValue1 = document.getElementById('dateValue1');
+            const dateValue2 = document.getElementById('dateValue2');
+            const params = new URLSearchParams(window.location.search);
+            const classParam = params.get('instrumentClass');
+            const instrumentIdParam = params.get('instrumentId');
+            const dateOperatorParam = params.get('dateOperator');
+            const dateNotParam = params.get('dateNot') === 'true';
+            const dateValue1Param = params.get('dateValue1') || '';
+            const dateValue2Param = params.get('dateValue2') || '';
+            const selectedParam = params.get('selected') || '';
+
+            if (classParam && instrumentClassSelect) {
+                instrumentClassSelect.value = classParam;
+                instrumentClassSelect.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+
+            if (instrumentIdParam && instrumentIdSelect && instrumentIdSelect.options.length > 0) {
+                instrumentIdSelect.value = instrumentIdParam;
+            }
+
+            if (dateOperatorParam) {
+                const radio = document.querySelector(`input[name="dateOperator"][value="${dateOperatorParam}"]`);
+                if (radio) {
+                    radio.checked = true;
+                }
+            }
+
+            if (dateNotToggle) {
+                dateNotToggle.setAttribute('aria-pressed', String(dateNotParam));
+            }
+            if (dateValue1) {
+                dateValue1.value = dateValue1Param;
+            }
+            if (dateValue2) {
+                dateValue2.value = dateValue2Param;
+            }
+
+            selectedIris.clear();
+            selectedParam.split(',')
+                .filter((iri) => availableIris.has(iri))
+                .forEach((iri) => selectedIris.add(iri));
+
+            if (dataTable) {
+                dataTable.draw(false);
+            }
+
+            document.querySelectorAll('.row-select').forEach((checkbox) => {
+                checkbox.checked = selectedIris.has(checkbox.value);
+            });
+
+            if (typeof updateDateInputsVisibility === 'function') {
+                updateDateInputsVisibility();
+            }
+            if (typeof updateMeasurementSummary === 'function') {
+                updateMeasurementSummary();
+            }
+        }
+
+        window.syncUrlWithState = syncUrlWithState;
+        window.applyStateFromUrl = applyStateFromUrl;
 
         tableElement.addEventListener('change', (event) => {
             if (!event.target.classList.contains('row-select')) {
@@ -1306,7 +1421,9 @@
                 updateMeasurementSummary();
             });
 
-            instrumentIdSelect.addEventListener('change', updateMeasurementSummary);
+            instrumentIdSelect.addEventListener('change', () => {
+                updateMeasurementSummary();
+            });
 
             function currentDateOperator() {
                 return document.querySelector('input[name="dateOperator"]:checked').value;
@@ -1319,13 +1436,6 @@
                 dateValue2.hidden = !isBetween;
             }
 
-            dateOperatorInputs.forEach((input) => {
-                input.addEventListener('change', () => {
-                    updateDateInputsVisibility();
-                    updateMeasurementSummary();
-                });
-            });
-
             dateNotToggle.addEventListener('click', () => {
                 const isPressed = dateNotToggle.getAttribute('aria-pressed') === 'true';
                 dateNotToggle.setAttribute('aria-pressed', String(!isPressed));
@@ -1333,7 +1443,9 @@
             });
 
             [dateValue1, dateValue2].forEach((el) => {
-                el.addEventListener('change', updateMeasurementSummary);
+                el.addEventListener('change', () => {
+                    updateMeasurementSummary();
+                });
             });
 
             // once results have been shown, any further filter change invalidates them until "Show results" runs again
@@ -1385,7 +1497,20 @@
                 dataTable.columns.adjust().draw(false);
             });
 
+            dateOperatorInputs.forEach((input) => {
+                input.addEventListener('change', () => {
+                    updateDateInputsVisibility();
+                    updateMeasurementSummary();
+                });
+            });
+
+            applyStateFromUrl();
             updateDateInputsVisibility();
+            updateMeasurementSummary();
+
+            if (!showResultsBtn.disabled) {
+                showResultsBtn.click();
+            }
         })();
     </script>
 </body>
