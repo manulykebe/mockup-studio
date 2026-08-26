@@ -1693,6 +1693,10 @@
             const resultSummary = document.getElementById('resultSummary');
             const operatorLabels = { equal: 'on', before: 'before', after: 'after', between: 'between' };
             let restoringUrlState = false;
+            const selectSearchTerms = new WeakMap();
+            const selectSearchTimers = new WeakMap();
+            const selectPreSearchValues = new WeakMap();
+            const SEARCH_OPTION_VALUE = '__dropdown_search__';
 
             const allPanels = [measurementPanel, resultPanel];
 
@@ -1700,6 +1704,104 @@
                 panel.classList.toggle('collapsed', !expanded);
                 panel.querySelector('.panel-header').setAttribute('aria-expanded', String(expanded));
             }
+
+            function getSearchOption(select) {
+                return select.querySelector('option[data-search-option="true"]');
+            }
+
+            // shows the typed term as the select's current (disabled) option so it stays visible while closed
+            function showTypedTermInSelect(select, term) {
+                let searchOption = getSearchOption(select);
+                if (!searchOption) {
+                    searchOption = new Option('', SEARCH_OPTION_VALUE, false, false);
+                    searchOption.dataset.searchOption = 'true';
+                    searchOption.disabled = true;
+                    select.insertBefore(searchOption, select.firstChild);
+                }
+                searchOption.textContent = term;
+                select.value = SEARCH_OPTION_VALUE;
+            }
+
+            function filterSelectFromKeyboard(select, term) {
+                const normalizedTerm = term.toLowerCase();
+                Array.from(select.options).forEach((option) => {
+                    if (option.dataset.searchOption === 'true') {
+                        return;
+                    }
+                    option.hidden = Boolean(normalizedTerm)
+                        && !option.textContent.toLowerCase().includes(normalizedTerm);
+                });
+            }
+
+            function clearSelectKeyboardFilter(select, restorePreviousValue) {
+                selectSearchTerms.delete(select);
+                window.clearTimeout(selectSearchTimers.get(select));
+                selectSearchTimers.delete(select);
+
+                const searchOption = getSearchOption(select);
+                if (searchOption) {
+                    searchOption.remove();
+                }
+                Array.from(select.options).forEach((option) => {
+                    option.hidden = false;
+                });
+
+                if (restorePreviousValue && selectPreSearchValues.has(select)) {
+                    select.value = selectPreSearchValues.get(select);
+                }
+                selectPreSearchValues.delete(select);
+            }
+
+            [instrumentClassSelect, instrumentIdSelect].forEach((select) => {
+                select.addEventListener('keydown', (event) => {
+                    if (select.disabled) {
+                        return;
+                    }
+
+                    if (event.key === 'Escape') {
+                        clearSelectKeyboardFilter(select, true);
+                        return;
+                    }
+
+                    const hasActiveTerm = selectSearchTerms.has(select);
+                    let nextTerm;
+                    if (event.key === 'Backspace') {
+                        event.preventDefault();
+                        nextTerm = (selectSearchTerms.get(select) || '').slice(0, -1);
+                    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+                        event.preventDefault();
+                        nextTerm = `${selectSearchTerms.get(select) || ''}${event.key}`;
+                    } else {
+                        return;
+                    }
+
+                    if (!hasActiveTerm) {
+                        selectPreSearchValues.set(select, select.value);
+                    }
+
+                    if (!nextTerm) {
+                        clearSelectKeyboardFilter(select, true);
+                        return;
+                    }
+
+                    selectSearchTerms.set(select, nextTerm);
+                    showTypedTermInSelect(select, nextTerm);
+                    filterSelectFromKeyboard(select, nextTerm);
+
+                    window.clearTimeout(selectSearchTimers.get(select));
+                    selectSearchTimers.set(select, window.setTimeout(() => {
+                        clearSelectKeyboardFilter(select, true);
+                    }, 1500));
+                });
+
+                select.addEventListener('change', () => {
+                    if (select.value !== SEARCH_OPTION_VALUE) {
+                        clearSelectKeyboardFilter(select, false);
+                    }
+                });
+
+                select.addEventListener('blur', () => clearSelectKeyboardFilter(select, true));
+            });
 
             // accordion behavior: expanding one panel collapses the others
             document.querySelectorAll('.panel-header').forEach((header) => {
