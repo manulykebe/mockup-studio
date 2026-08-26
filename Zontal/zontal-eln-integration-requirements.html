@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Requirements Document (BRD) - Zontal SDMS to ELN Integration Interface</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        h1 {
+            font-size: 26px;
+            color: #0366d6;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 20px;
+            color: #1b1f23;
+            border-bottom: 1px solid #e1e4e8;
+            padding-bottom: 6px;
+            margin-top: 30px;
+        }
+        h3 {
+            font-size: 16px;
+            color: #24292e;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        p, li {
+            font-size: 14px;
+        }
+        ul, ol {
+            padding-left: 24px;
+            margin-top: 6px;
+            margin-bottom: 14px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #111827;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        code, kbd {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 12px;
+            background-color: #f3f4f6;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #1f2937;
+        }
+        .meta-table {
+            margin-bottom: 25px;
+        }
+        .meta-table td {
+            padding: 6px 10px;
+        }
+        .meta-label {
+            font-weight: 600;
+            width: 20%;
+            background-color: #f6f8fa;
+        }
+        .callout {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 7px;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1;
+            border-radius: 10px;
+            color: #ffffff;
+        }
+        .badge-req { background-color: #dc2626; }
+        .badge-opt { background-color: #4b5563; }
+        .badge-must { background-color: #2563eb; }
+        .badge-should { background-color: #d97706; }
+        .gherkin {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-family: SFMono-Regular, Consolas, monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            margin: 10px 0 16px 0;
+        }
+        .gherkin-kw { color: #7c3aed; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Functional & Technical Requirements Specification</h1>
+    <p><strong>System Interface: Zontal SDMS Measurement Selection &amp; ELN Import Dialog</strong></p>
+
+    <table class="meta-table">
+        <tr>
+            <td class="meta-label">Document Title</td>
+            <td>Functional Requirements Document (FRD) - Zontal to ELN Measurement Import Interface</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Source Mockup</td>
+            <td><code>Zontal/zontal-signals-mockup.html</code></td>
+        </tr>
+        <tr>
+            <td class="meta-label">Target Integration</td>
+            <td>Zontal Scientific Data Management System (SDMS) &amp; Electronic Lab Notebook (ELN / Signals)</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Status &amp; Version</td>
+            <td><strong>Draft (v0.1)</strong></td>
+        </tr>
+        <tr>
+            <td class="meta-label">Last Updated</td>
+            <td>August 26, 2026</td>
+        </tr>
+    </table>
+
+    <div class="callout">
+        <div class="callout-title">Executive Summary</div>
+        This document defines the complete business, functional, non-functional, and technical interface requirements for the <strong>Zontal SDMS Measurement Import Plugin/Modal</strong> embedded within an Electronic Lab Notebook (ELN). The interface enables laboratory scientists to query analytical measurement records stored in Zontal (filtered by Instrument Class, Instrument ID, Sample ID, and Measurement Date), review matching measurement datasets with rich metadata, select individual or batch records across pages, and seamlessly import the raw/processed scientific datasets into their active ELN experiment.
+    </div>
+
+    <h2>1. Business Context &amp; Objectives</h2>
+    <ul>
+        <li><strong>Business Need:</strong> Analytical lab workflows require researchers to link raw scientific instrument datasets (e.g., Calorimeter, Particle sizer, XRPD, Spectrophotometer) directly from the centralized Zontal SDMS repository into ELN experiment binders to maintain GxP compliance, auditability, and data integrity.</li>
+        <li><strong>Primary Goal:</strong> Provide an intuitive, multi-step search-and-select user dialog that eliminates manual file transfers, enforces mandatory search criteria, supports flexible mathematical date range logic, and guarantees deep-link URL state reproducibility.</li>
+        <li><strong>Target Persona:</strong> Analytical Scientists, Quality Control (QC) Analysts, and Lab Managers using the ELN to document experimental procedures and link instrument data.</li>
+    </ul>
+
+    <h2>2. Interface Overview &amp; Workflow Architecture</h2>
+    <p>The interface is structured as a two-stage sequential <strong>Accordion Panel Workflow</strong>:</p>
+    <ol>
+        <li><strong>Stage 1: Select Measurement (Search &amp; Filter Panel):</strong> User defines search criteria (Instrument Class, Instrument ID, Sample ID, Date logic). Executing "Show results" queries Zontal and transitions to Stage 2.</li>
+        <li><strong>Stage 2: Select Result (Data Grid &amp; Selection Panel):</strong> User reviews matching measurement datasets in a paginated, sortable Data Grid, selects required measurement IRIs (URN UUIDs), and executes "Import results in ELN".</li>
+    </ol>
+
+    <h2>3. Detailed Functional Requirements</h2>
+
+    <h3>3.1. General Layout &amp; Accordion Panel Controls (FR-PANEL)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Requirement Name</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-PANEL-01</code></td>
+                <td>Stepped Accordion Pattern</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The interface MUST consist of two collapsing panels: <code>1. Select Measurement</code> (Panel 1) and <code>2. Select Result</code> (Panel 2). Expanding one panel MUST automatically collapse the other panel.</td>
+            </tr>
+            <tr>
+                <td><code>FR-PANEL-02</code></td>
+                <td>Initial Panel State</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Upon initial load (without pre-existing URL parameters), Panel 1 MUST be expanded. Panel 2 MUST be collapsed and visually/functionally disabled (<code>data-disabled="true"</code>, header disabled, summary showing <em>"Complete step 1 first"</em>).</td>
+            </tr>
+            <tr>
+                <td><code>FR-PANEL-03</code></td>
+                <td>Dynamic Header Summary</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    Panel 1 header MUST display a real-time summary string of active filters separated by bullet characters (<code> • </code>), e.g., <code>Calorimeter • CAL-002 • sample 15222759 • between 2025-01-01 and 2025-01-31</code>. If no filters are defined, display <em>"No filters applied"</em>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-PANEL-04</code></td>
+                <td>Filter Change Invalidation</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>If any filter criterion in Panel 1 is modified after results have been fetched, Panel 2 MUST immediately revert to disabled/collapsed state, clearing all existing record selections until "Show results" is clicked again.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>3.2. Step 1: Filter Criteria Specification (FR-FILTER)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Field Name</th>
+                <th style="width: 10%;">Type</th>
+                <th>Validation &amp; Business Rules</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-FILT-01</code></td>
+                <td><strong>Instrument class</strong> <span class="badge badge-req">Required</span></td>
+                <td>Dropdown Select</td>
+                <td>
+                    Mandatory field (marked with a red asterisk <code>*</code>). Must contain a standard list of analytical instrument classes (<em>Calorimeter, Cell Counter, Diffractometer, Dynamic vapor sorption, Flow cytometer, Mass Spectrometer, Microscope, NIR, Particle sizer, Particle characterization, Protein concentration analyzer, Spectrophotometer, Test Class, Testing, XRPD, qPCR</em>). Selecting a class enables the Instrument ID field and "Show results" button.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-02</code></td>
+                <td><strong>Instrument ID</strong></td>
+                <td>Dependent Dropdown</td>
+                <td>
+                    Disabled by default with option text <em>"Select an instrument class first"</em>. When Instrument Class is selected, an inline loading spinner MUST display while fetching Instrument IDs (simulated 650ms delay). Populated options MUST prepend an <em>"Any instrument ID"</em> option.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-03</code></td>
+                <td><strong>Keyboard Dropdown Search</strong></td>
+                <td>UX Feature</td>
+                <td>
+                    When focused on Instrument Class or Instrument ID dropdowns, typing text MUST perform dynamic client-side option filtering. The typed term MUST temporarily display in the dropdown selection, automatically clearing after 1.5 seconds of inactivity or when pressing <kbd>Esc</kbd>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-04</code></td>
+                <td><strong>Sample ID</strong></td>
+                <td>Text Input</td>
+                <td>Optional free-text search string. Filters matching records whose <code>Sample Identifier</code> contains the typed substring (case-insensitive).</td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-05</code></td>
+                <td><strong>Measurement Date Operator</strong></td>
+                <td>Radio Group &amp; Toggle</td>
+                <td>
+                    Contains:
+                    <ul>
+                        <li><strong>Not Toggle:</strong> Pill button (<code>id="dateNot"</code>) with symbol <code>&#8856;</code>. Toggles negation (e.g., <em>Not equal</em>, <em>Not between</em>). Sets <code>aria-pressed="true|false"</code>.</li>
+                        <li><strong>Comparison Operators:</strong> Segmented pill group with choices: <code>Equal</code> (default), <code>Before</code>, <code>After</code>, <code>Between</code>.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-06</code></td>
+                <td><strong>Date Value Picker(s)</strong></td>
+                <td>Date Inputs</td>
+                <td>
+                    Provides standard ISO HTML5 date input pickers.
+                    <ul>
+                        <li>If Operator is <code>Equal</code>, <code>Before</code>, or <code>After</code>, display single date input (<code>dateValue1</code>).</li>
+                        <li>If Operator is <code>Between</code>, dynamically show secondary date input (<code>dateValue2</code>) separated by an <em>"and"</em> text label.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-07</code></td>
+                <td><strong>Date Logic Help Modal</strong></td>
+                <td>Contextual Dialog</td>
+                <td>
+                    Clicking the <code>?</code> button adjacent to Measurement Date MUST open an accessible modal detailing interval boundary definitions:
+                    <table style="margin-top:8px;">
+                        <tr><th>Operator</th><th>Meaning</th><th>Interval Notation</th></tr>
+                        <tr><td>Equal</td><td>On the given date</td><td><code>{date}</code></td></tr>
+                        <tr><td>Before</td><td>Before date (excluded)</td><td><code>]-&infin;, date[</code></td></tr>
+                        <tr><td>After</td><td>After date (excluded)</td><td><code>]date, +&infin;[</code></td></tr>
+                        <tr><td>Not before</td><td>On or after date (included)</td><td><code>[date, +&infin;[</code></td></tr>
+                        <tr><td>Not after</td><td>On or before date (included)</td><td><code>]-&infin;, date]</code></td></tr>
+                        <tr><td>Not equal</td><td>Any date except given date</td><td><code>]-&infin;, date[ &cup; ]date, +&infin;[</code></td></tr>
+                        <tr><td>Between</td><td>Between two dates (inclusive)</td><td><code>[date1, date2]</code></td></tr>
+                        <tr><td>Not between</td><td>Outside range (exclusive)</td><td><code>]-&infin;, date1[ &cup; ]date2, +&infin;[</code></td></tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-FILT-08</code></td>
+                <td><strong>Show Results Action</strong></td>
+                <td>Button Action</td>
+                <td>
+                    "Show results" button MUST remain disabled until a valid Instrument Class is selected. Clicking triggers a loading state (spinner inside button and full overlay modal with message <em>"Loading measurements..."</em> for 650ms), collapses Panel 1, expands Panel 2, recalculates DataGrid layout, and updates Panel 2 summary.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>3.3. Step 2: Measurement Results Grid &amp; Selection (FR-GRID)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Functional Requirements &amp; Data Grid Rules</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-GRID-01</code></td>
+                <td>Data Grid Display</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The system MUST render matching measurement records using a DataTables layout with the following columns:
+                    <ol>
+                        <li><strong>Checkbox Column:</strong> Multi-select checkbox. Header contains "Select All Visible" checkbox.</li>
+                        <li><strong>Iri:</strong> Zontal URN identifier (e.g., <code>urn:uuid:1ed4b622-447c-45ba-b4bf-26445c96ecaf</code>).</li>
+                        <li><strong>Index:</strong> Zero-based numerical sequence index.</li>
+                        <li><strong>Measurement Time:</strong> ISO 8601 timestamp formatted as <code>YYYY-MM-DD HH:mm:ss</code>. Must support chronological sorting.</li>
+                        <li><strong>Sample Identifier:</strong> Alphanumeric sample name string (e.g., <code>15222759 BDH 1</code>, <code>14GN973 - Average</code>).</li>
+                    </ol>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-GRID-02</code></td>
+                <td>Pagination &amp; Controls</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    MUST support pagination with selectable page lengths (<code>5</code>, <code>10</code>, <code>15</code>, <code>20</code>; default: <code>10</code>). MUST include an instant search box filtering across all data columns except checkbox.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-GRID-03</code></td>
+                <td>Selection State Management</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    The system MUST maintain selected record URN IRIs in a set object that persists across page navigation, sorting, and live filtering.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-GRID-04</code></td>
+                <td>Header Checkbox Logic</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    The header checkbox (<code>#selectAllVisible</code>) controls ONLY the visible rows on the current page:
+                    <ul>
+                        <li>Checking selects all visible rows on current page.</li>
+                        <li>Unchecking deselects all visible rows on current page.</li>
+                        <li>Reflects an <code>indeterminate</code> state when some, but not all, visible page rows are selected.</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-GRID-05</code></td>
+                <td>Live Status Counter</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    Grid footer status text MUST display live counts of total selected records vs. visible page selections: <br>
+                    <code>Showing 1 to 10 of 113 entries — <strong>3</strong> selected (<strong>2</strong> on this page)</code>.
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-GRID-06</code></td>
+                <td>ELN Import Action</td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>
+                    An <strong>"Import results in ELN"</strong> button MUST be rendered at the bottom right of Panel 2. The button MUST be disabled when <code>0</code> records are selected, and enabled when $\ge 1$ records are selected. Clicking syncs state to URL parameters and submits selected IRIs to the host ELN context.
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>3.4. Deep Linking &amp; URL State Persistence (FR-URL)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Parameter</th>
+                <th style="width: 10%;">Description &amp; Behavior</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-URL-01</code></td>
+                <td>Bidirectional URL Sync</td>
+                <td>All active user selections MUST automatically synchronize with browser URL parameters using <code>window.history.replaceState</code> without reloading the page.</td>
+            </tr>
+            <tr>
+                <td><code>FR-URL-02</code></td>
+                <td>URL Parameter Schema</td>
+                <td>
+                    The URL state schema MUST adhere to:
+                    <ul>
+                        <li><code>instrumentClass</code>: e.g. <code>Calorimeter</code></li>
+                        <li><code>instrumentId</code>: e.g. <code>CAL-002</code></li>
+                        <li><code>sampleId</code>: e.g. <code>15222759</code></li>
+                        <li><code>dateOperator</code>: <code>equal</code> | <code>before</code> | <code>after</code> | <code>between</code></li>
+                        <li><code>dateNot</code>: <code>true</code> | <code>false</code></li>
+                        <li><code>dateValue1</code>: ISO Date string (<code>YYYY-MM-DD</code>)</li>
+                        <li><code>dateValue2</code>: ISO Date string (<code>YYYY-MM-DD</code>)</li>
+                        <li><code>selected</code>: Comma-separated URN IRIs (e.g., <code>urn:uuid:1ed4b622...,urn:uuid:604e49b7...</code>)</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td><code>FR-URL-03</code></td>
+                <td>Auto-Restoration &amp; Direct Execution</td>
+                <td>When the page loads with query parameters, the application MUST:
+                    <ol>
+                        <li>Display the full overlay loader modal (<em>"Loading measurements..."</em>).</li>
+                        <li>Populate all filter controls and execute dependent dropdown fetches.</li>
+                        <li>Restore checkbox selections for valid URN IRIs.</li>
+                        <li>Automatically execute search ("Show results") and open Panel 2 directly.</li>
+                    </ol>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4. Acceptance Criteria (Gherkin Scenarios)</h2>
+
+    <h3>Scenario 1: Mandatory Instrument Class Validation &amp; Dependent Fetch</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the user opens the Zontal ELN Import Interface
+<span class="gherkin-kw">And</span> no URL parameters are present
+<span class="gherkin-kw">Then</span> Panel 1 ("1. Select Measurement") is expanded
+<span class="gherkin-kw">And</span> Panel 2 ("2. Select Result") is disabled and collapsed
+<span class="gherkin-kw">And</span> the "Show results" button is disabled
+<span class="gherkin-kw">And</span> the Instrument ID dropdown is disabled with text "Select an instrument class first"
+<span class="gherkin-kw">When</span> the user selects "Calorimeter" from the Instrument Class dropdown
+<span class="gherkin-kw">Then</span> a loading spinner appears next to Instrument ID for 650ms
+<span class="gherkin-kw">And</span> Instrument ID becomes enabled with options ["Any instrument ID", "CAL-001", "CAL-002", "CAL-014"]
+<span class="gherkin-kw">And</span> the "Show results" button becomes enabled.</div>
+
+    <h3>Scenario 2: Date Filter Operator &amp; Input Visibility</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the user is configuring the Measurement Date filter in Panel 1
+<span class="gherkin-kw">When</span> the user selects the "Between" radio operator
+<span class="gherkin-kw">Then</span> both Date Value 1 and Date Value 2 inputs are visible with the "and" label
+<span class="gherkin-kw">When</span> the user toggles the "Not" button to active (aria-pressed="true")
+<span class="gherkin-kw">And</span> inputs dates "2025-01-01" and "2025-01-31"
+<span class="gherkin-kw">Then</span> the Panel 1 summary header displays "not between 2025-01-01 and 2025-01-31".</div>
+
+    <h3>Scenario 3: Multi-Page Record Selection &amp; Import Activation</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the user has executed "Show results" and Panel 2 is expanded
+<span class="gherkin-kw">And</span> the "Import results in ELN" button is disabled (0 selected)
+<span class="gherkin-kw">When</span> the user checks 2 records on Page 1
+<span class="gherkin-kw">Then</span> the status text shows "2 selected (2 on this page)"
+<span class="gherkin-kw">And</span> the "Import results in ELN" button becomes enabled
+<span class="gherkin-kw">When</span> the user navigates to Page 2 and checks 1 record
+<span class="gherkin-kw">Then</span> the status text updates to "3 selected (1 on this page)"
+<span class="gherkin-kw">And</span> navigating back to Page 1 preserves the checkboxes for the 2 previously selected records.</div>
+
+    <h3>Scenario 4: Deep Link State Restoration</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the user navigates to the page with URL:
+<code>?instrumentClass=Calorimeter&instrumentId=CAL-002&selected=urn:uuid:1ed4b622-447c-45ba-b4bf-26445c96ecaf</code>
+<span class="gherkin-kw">Then</span> the loading overlay modal appears immediately
+<span class="gherkin-kw">And</span> Instrument Class is set to "Calorimeter"
+<span class="gherkin-kw">And</span> Instrument ID is loaded and set to "CAL-002"
+<span class="gherkin-kw">And</span> search is automatically triggered
+<span class="gherkin-kw">And</span> Panel 2 expands showing matching results with URN <code>urn:uuid:1ed4b622...</code> pre-selected
+<span class="gherkin-kw">And</span> the "Import results in ELN" button is enabled.</div>
+
+    <h2>5. Data Dictionary &amp; Interface Schema</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>UI Control</th>
+                <th>Data Type</th>
+                <th>Allowed Values / Format</th>
+                <th>Zontal SDMS API Mapping</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>instrumentClass</code></td>
+                <td>Select Dropdown</td>
+                <td>String</td>
+                <td>Enum (Calorimeter, Cell Counter, Particle sizer, etc.)</td>
+                <td><code>metadata.instrument.class</code></td>
+            </tr>
+            <tr>
+                <td><code>instrumentId</code></td>
+                <td>Select Dropdown</td>
+                <td>String</td>
+                <td>Alphanumeric (e.g., <code>CAL-001</code>, <code>MASTERSIZER-2000</code>)</td>
+                <td><code>metadata.instrument.id</code></td>
+            </tr>
+            <tr>
+                <td><code>sampleId</code></td>
+                <td>Text Input</td>
+                <td>String</td>
+                <td>Substring text query</td>
+                <td><code>metadata.sample.identifier</code></td>
+            </tr>
+            <tr>
+                <td><code>dateOperator</code></td>
+                <td>Radio Group</td>
+                <td>String</td>
+                <td><code>equal</code> | <code>before</code> | <code>after</code> | <code>between</code></td>
+                <td><code>filter.date.operator</code></td>
+            </tr>
+            <tr>
+                <td><code>dateNot</code></td>
+                <td>Pill Toggle</td>
+                <td>Boolean</td>
+                <td><code>true</code> | <code>false</code></td>
+                <td><code>filter.date.negate</code></td>
+            </tr>
+            <tr>
+                <td><code>dateValue1</code></td>
+                <td>Date Picker</td>
+                <td>ISO Date</td>
+                <td><code>YYYY-MM-DD</code></td>
+                <td><code>filter.date.start</code></td>
+            </tr>
+            <tr>
+                <td><code>dateValue2</code></td>
+                <td>Date Picker</td>
+                <td>ISO Date</td>
+                <td><code>YYYY-MM-DD</code> (Required if operator=between)</td>
+                <td><code>filter.date.end</code></td>
+            </tr>
+            <tr>
+                <td><code>Iri</code></td>
+                <td>Grid Cell</td>
+                <td>URN / UUID</td>
+                <td><code>urn:uuid:&lt;UUID-v4&gt;</code></td>
+                <td><code>record.iri</code> (Primary Key)</td>
+            </tr>
+            <tr>
+                <td><code>Measurement Time</code></td>
+                <td>Grid Cell</td>
+                <td>ISO Timestamp</td>
+                <td><code>YYYY-MM-DDTHH:mm:ss.sssZ</code></td>
+                <td><code>record.timestamp</code></td>
+            </tr>
+            <tr>
+                <td><code>Sample Identifier</code></td>
+                <td>Grid Cell</td>
+                <td>String</td>
+                <td>Alphanumeric Name / Label</td>
+                <td><code>record.sample_name</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>6. Non-Functional Requirements (NFRs)</h2>
+    <ul>
+        <li><strong>NFR-01: Performance &amp; Latency Feedback:</strong> All asynchronous lookups (fetching Instrument IDs, searching measurements) MUST provide explicit visual feedback (inline spinners and full-screen semi-transparent modal overlay). Search queries MUST return within 1.0 second.</li>
+        <li><strong>NFR-02: Accessibility (WAI-ARIA Compliance):</strong> 
+            <ul>
+                <li>All interactive elements MUST support full keyboard navigation (Tab, Shift+Tab, Enter, Space, Esc).</li>
+                <li>Dynamic accordions MUST use correct <code>aria-expanded</code> and <code>aria-controls</code> attributes.</li>
+                <li>Modals MUST implement focus trapping, background backdrop dimming, and <kbd>Esc</kbd> key dismissal.</li>
+                <li>Screen reader labels MUST be supplied for icon buttons and grid checkboxes via <code>aria-label</code>.</li>
+            </ul>
+        </li>
+        <li><strong>NFR-03: Responsive Design &amp; Layout:</strong> Interface MUST render seamlessly on screen resolutions from 1024x768 up to 4K displays without breaking table columns or control alignments.</li>
+        <li><strong>NFR-04: Cross-Browser Compatibility:</strong> Supported browsers include Microsoft Edge (latest 2 versions), Google Chrome (latest 2 versions), Safari (latest 2 versions), and Firefox (latest 2 versions).</li>
+    </ul>
+
+</div>
+
+</body>
+</html>
