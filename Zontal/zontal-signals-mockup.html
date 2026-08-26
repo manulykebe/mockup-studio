@@ -160,7 +160,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1rem;
-            margin-bottom: 1.1rem
         }
 
         .field label {
@@ -168,7 +167,7 @@
             font-size: .82rem;
             font-weight: 600;
             color: #5f6368;
-            margin-bottom: .3rem
+            margin-top: .6rem
         }
 
         .field select {
@@ -183,6 +182,14 @@
         .field select:disabled {
             background: #f1f3f4;
             color: #9aa0a6
+        }
+
+        .field input[type="text"] {
+            padding: .45rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font: inherit;
+            background: #fff
         }
 
         .select-with-spinner {
@@ -579,73 +586,80 @@
             </div>
 
             <div class="field">
+                <label for="sampleId">Sample ID</label>
+                <input type="text" id="sampleId">
+            </div>
+
+            <div class="field">
                 <div class="date-label-row">
                     <label for="measurementDate">Measurement date</label>
                     <button type="button" class="help-button" id="dateHelpButton" aria-expanded="false"
                         aria-controls="dateHelp" title="Explain date operators">?</button>
                 </div>
-                <div class="date-help" id="dateHelp" role="dialog" aria-modal="true"
-                    aria-labelledby="dateHelpTitle" hidden>
+                <div class="date-help" id="dateHelp" role="dialog" aria-modal="true" aria-labelledby="dateHelpTitle"
+                    hidden>
                     <div class="date-help-content">
                         <div class="date-help-header">
                             <p id="dateHelpTitle"><strong>Date operator reference</strong></p>
-                            <button type="button" class="date-help-close" id="dateHelpClose" aria-label="Close date operator help"
-                                title="Close">&times;</button>
+                            <button type="button" class="date-help-close" id="dateHelpClose"
+                                aria-label="Close date operator help" title="Close">&times;</button>
                         </div>
-                    <p>The entered date is the boundary. A square bracket means the boundary is included; a parenthesis
-                        means it is excluded. In this notation, <code>]date[</code> is the same as the usual
-                        <code>(date)</code>. Infinity is never included.</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Selection</th>
-                                <th>Meaning</th>
-                                <th>Interval notation</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Equal</td>
-                                <td>On the given date</td>
-                                <td><code>{date}</code></td>
-                            </tr>
-                            <tr>
-                                <td>Before</td>
-                                <td>Before the given date; the date itself is excluded</td>
-                                <td><code>]-infinity, date[</code></td>
-                            </tr>
-                            <tr>
-                                <td>After</td>
-                                <td>After the given date; the date itself is excluded</td>
-                                <td><code>]date, +infinity[</code></td>
-                            </tr>
-                            <tr>
-                                <td>Not before</td>
-                                <td>On or after the given date; the date is included</td>
-                                <td><code>[date, +infinity[</code></td>
-                            </tr>
-                            <tr>
-                                <td>Not after</td>
-                                <td>On or before the given date; the date is included</td>
-                                <td><code>]-infinity, date]</code></td>
-                            </tr>
-                            <tr>
-                                <td>Not equal</td>
-                                <td>Any date except the given date</td>
-                                <td><code>]-infinity, date[ union ]date, +infinity[</code></td>
-                            </tr>
-                            <tr>
-                                <td>Between</td>
-                                <td>Between the two dates, including both boundaries</td>
-                                <td><code>[date1, date2]</code></td>
-                            </tr>
-                            <tr>
-                                <td>Not between</td>
-                                <td>Outside the range, excluding both boundary dates</td>
-                                <td><code>]-infinity, date1[ union ]date2, +infinity[</code></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                        <p>The entered date is the boundary. A square bracket means the boundary is included; a
+                            parenthesis
+                            means it is excluded. In this notation, <code>]date[</code> is the same as the usual
+                            <code>(date)</code>. Infinity is never included.
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Selection</th>
+                                    <th>Meaning</th>
+                                    <th>Interval notation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Equal</td>
+                                    <td>On the given date</td>
+                                    <td><code>{date}</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Before</td>
+                                    <td>Before the given date; the date itself is excluded</td>
+                                    <td><code>]-infinity, date[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>After</td>
+                                    <td>After the given date; the date itself is excluded</td>
+                                    <td><code>]date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not before</td>
+                                    <td>On or after the given date; the date is included</td>
+                                    <td><code>[date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not after</td>
+                                    <td>On or before the given date; the date is included</td>
+                                    <td><code>]-infinity, date]</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not equal</td>
+                                    <td>Any date except the given date</td>
+                                    <td><code>]-infinity, date[ union ]date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Between</td>
+                                    <td>Between the two dates, including both boundaries</td>
+                                    <td><code>[date1, date2]</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not between</td>
+                                    <td>Outside the range, excluding both boundary dates</td>
+                                    <td><code>]-infinity, date1[ union ]date2, +infinity[</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -1520,6 +1534,7 @@
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
             const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
+            const sampleIdInput = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
@@ -1531,6 +1546,9 @@
             }
             if (instrumentIdSelect && instrumentIdSelect.value) {
                 params.set('instrumentId', instrumentIdSelect.value);
+            }
+            if (sampleIdInput && sampleIdInput.value) {
+                params.set('sampleId', sampleIdInput.value);
             }
             const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
             if (dateOperator) {
@@ -1559,12 +1577,14 @@
         async function applyStateFromUrl() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
+            const sampleIdInput = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
             const params = new URLSearchParams(window.location.search);
             const classParam = params.get('instrumentClass');
             const instrumentIdParam = params.get('instrumentId');
+            const sampleIdParam = params.get('sampleId') || '';
             const dateOperatorParam = params.get('dateOperator');
             const dateNotParam = params.get('dateNot') === 'true';
             const dateValue1Param = params.get('dateValue1') || '';
@@ -1581,6 +1601,10 @@
             if (instrumentIdParam && instrumentIdSelect
                 && Array.from(instrumentIdSelect.options).some((option) => option.value === instrumentIdParam)) {
                 instrumentIdSelect.value = instrumentIdParam;
+            }
+
+            if (sampleIdInput) {
+                sampleIdInput.value = sampleIdParam;
             }
 
             if (dateOperatorParam) {
@@ -1676,6 +1700,7 @@
 
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
+            const sampleIdInput = document.getElementById('sampleId');
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
@@ -1891,6 +1916,11 @@
                 });
             });
 
+            sampleIdInput.addEventListener('input', () => {
+                clearSelectedRecordsOnFilterChange();
+                updateMeasurementSummary();
+            });
+
             dateHelpButton.addEventListener('click', () => {
                 const expanded = dateHelpButton.getAttribute('aria-expanded') === 'true';
                 dateHelpButton.setAttribute('aria-expanded', String(!expanded));
@@ -1938,6 +1968,9 @@
                 }
                 if (instrumentIdSelect.value) {
                     parts.push(instrumentIdSelect.value);
+                }
+                if (sampleIdInput.value) {
+                    parts.push(`sample ${sampleIdInput.value}`);
                 }
 
                 const operator = currentDateOperator();
