@@ -293,6 +293,16 @@
         .btn-primary:hover {
             background: #1765cc
         }
+
+        .btn-primary:disabled {
+            background: #9aa0a6;
+            cursor: not-allowed
+        }
+
+        .required-mark {
+            color: #d93025;
+            margin-left: .15rem
+        }
     </style>
 </head>
 
@@ -308,9 +318,9 @@
         <div class="panel-body" id="panel-measurement-body">
             <div class="filter-grid">
                 <div class="field">
-                    <label for="instrumentClass">Instrument class</label>
-                    <select id="instrumentClass">
-                        <option value="">Any instrument class</option>
+                    <label for="instrumentClass">Instrument class <span class="required-mark" aria-hidden="true">*</span></label>
+                    <select id="instrumentClass" required>
+                        <option value="">Select an instrument class</option>
                         <option>Calorimeter</option>
                         <option>Cell Counter</option>
                         <option>Diffractometer</option>
@@ -373,7 +383,7 @@
             </fieldset>
 
             <div class="panel-actions">
-                <button type="button" class="btn-primary" id="showResultsBtn">Show results</button>
+                <button type="button" class="btn-primary" id="showResultsBtn" disabled>Show results</button>
             </div>
         </div>
     </section>
@@ -1271,6 +1281,7 @@
                     ids.forEach((id) => instrumentIdSelect.appendChild(new Option(id, id)));
                 }
 
+                showResultsBtn.disabled = !selectedClass;
                 updateMeasurementSummary();
             });
 
@@ -1323,6 +1334,17 @@
                 el.addEventListener('change', updateDateFilterPreview);
             });
 
+            // once results have been shown, any further filter change invalidates them until "Show results" runs again
+            function resetResultsPanel() {
+                if (resultPanel.dataset.disabled === 'true') {
+                    return;
+                }
+                resultPanel.dataset.disabled = 'true';
+                resultPanel.querySelector('.panel-header').disabled = true;
+                setPanelExpanded(resultPanel, false);
+                resultSummary.textContent = '';
+            }
+
             function updateMeasurementSummary() {
                 const parts = [];
                 if (instrumentClassSelect.value) {
@@ -1335,6 +1357,7 @@
                     parts.push(dateFilterPreview.textContent.replace('Measurement date ', ''));
                 }
                 measurementSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
+                resetResultsPanel();
             }
 
             showResultsBtn.addEventListener('click', () => {
