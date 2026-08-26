@@ -181,12 +181,18 @@
             display: inline-flex;
             border: 1px solid #d9d9d9;
             border-radius: 999px;
-            overflow: hidden
+            overflow: hidden;
+            align-items: stretch;
+            height: 2.5rem
         }
 
         .operator-option {
             position: relative;
-            margin: 0
+            margin: 0;
+            display: flex;
+            align-items: stretch;
+            flex: 0 0 auto;
+            height: 100%
         }
 
         .operator-option input {
@@ -196,12 +202,17 @@
         }
 
         .operator-option span {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
             padding: .4rem .9rem;
             font-size: .85rem;
             cursor: pointer;
             color: #5f6368;
-            border-right: 1px solid #d9d9d9
+            border-right: 1px solid #d9d9d9;
+            box-sizing: border-box;
+            line-height: 1.2
         }
 
         .operator-option:last-child span {
@@ -210,7 +221,8 @@
 
         .operator-option input:checked+span {
             background: #1a73e8;
-            color: #fff
+            color: #fff;
+            border-right-color: transparent
         }
 
         .operator-option input:focus-visible+span {
@@ -270,7 +282,8 @@
 
         .panel-actions {
             display: flex;
-            justify-content: flex-end
+            justify-content: flex-end;
+            margin-top: 1rem
         }
 
         .btn-primary {
@@ -301,8 +314,6 @@
 </head>
 
 <body>
-    <h1 class="page-title">Signals Measurement Explorer</h1>
-
     <section class="panel" id="panel-measurement">
         <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-measurement-body">
             <span class="panel-chevron" aria-hidden="true">&#9662;</span>
@@ -1084,6 +1095,9 @@
                     </tr>
                 </tbody>
             </table>
+            <div class="panel-actions">
+                <button type="button" class="btn-primary" id="importElnBtn" disabled>Import measurements in ELN</button>
+            </div>
         </div>
     </section>
     <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
@@ -1148,10 +1162,15 @@
         });
 
         const selectAllCheckbox = document.getElementById('selectAllVisible');
+        const importElnBtn = document.getElementById('importElnBtn');
 
         function getVisibleRowCheckboxes() {
             return dataTable.rows({ page: 'current' }).nodes().toArray()
                 .map((row) => row.querySelector('.row-select'));
+        }
+
+        function updateImportElnButtonState() {
+            importElnBtn.disabled = selectedIris.size === 0;
         }
 
         function updateSelectAllState() {
@@ -1183,6 +1202,7 @@
         function refreshSelectionUi() {
             updateSelectAllState();
             updateInfoText();
+            updateImportElnButtonState();
         }
 
         tableElement.addEventListener('change', (event) => {
