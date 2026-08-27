@@ -19,7 +19,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .pivot-app{display:flex;align-items:flex-start;gap:1.25rem}
 .pivot-main{flex:1 1 auto;min-width:0}
 
-.field-list{position:fixed;top:6rem;right:2rem;width:280px;z-index:50;border:1px solid #d9d9d9;border-radius:6px;background:#fff;font-size:.82rem;box-shadow:0 4px 16px rgba(32,33,36,.18);max-height:calc(100vh - 8rem);display:flex;flex-direction:column;overflow:hidden}
+.field-list{position:fixed;top:2rem;right:2rem;width:280px;z-index:50;border:1px solid #d9d9d9;border-radius:6px;background:#fff;font-size:.82rem;box-shadow:0 4px 16px rgba(32,33,36,.18);max-height:calc(100vh - 4rem);display:flex;flex-direction:column;overflow:hidden}
 .field-list.dragging{box-shadow:0 10px 30px rgba(32,33,36,.32)}
 .field-list-header{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.7rem .9rem;background:#f1f3f4;border-bottom:1px solid #d9d9d9;cursor:grab;user-select:none}
 .field-list.dragging .field-list-header{cursor:grabbing}
@@ -36,9 +36,21 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 
 .field-chip{display:flex;align-items:center;gap:.35rem;background:#f1f3f4;border:1px solid #d9d9d9;border-radius:4px;padding:.3rem .4rem;cursor:grab}
 .field-chip:active{cursor:grabbing}
+.field-chip.drop-before{border-top:2px solid #1a73e8}
+.field-chip.drop-after{border-bottom:2px solid #1a73e8}
 .field-chip .drag-handle{color:#9aa0a6;font-size:.7rem;line-height:1}
 .field-chip .field-chip-label{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .field-chip select{font:inherit;font-size:.75rem;border:1px solid #d9d9d9;border-radius:3px;padding:.15rem .25rem;background:#fff;max-width:6.7rem}
+.chip-expand-toggle{border:none;background:none;cursor:pointer;color:#5f6368;font-size:.7rem;padding:0 .1rem;line-height:1}
+
+.field-chip-group{display:flex;flex-direction:column;gap:.35rem}
+.field-chip-values{display:flex;flex-direction:column;gap:.3rem;margin-left:1.1rem;padding-left:.5rem;border-left:2px solid #e8eaed}
+.value-chip{display:flex;align-items:center;gap:.35rem;background:#fff;border:1px solid #e0e0e0;border-radius:4px;padding:.25rem .4rem;font-size:.78rem;cursor:grab}
+.value-chip:active{cursor:grabbing}
+.value-chip.drop-before{border-top:2px solid #1a73e8}
+.value-chip.drop-after{border-bottom:2px solid #1a73e8}
+.value-chip .drag-handle{color:#bdc1c6;font-size:.65rem;line-height:1}
+.value-chip .value-chip-label{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -168,30 +180,61 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     const allFields = PivotTable.getFieldNames(sourceRows);
 
     // default layout: mirrors the original fixed pivot (Rows/Columns/Values zones, like an Excel PivotTable)
+    const defaultRows = ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'];
+    const defaultColumns = ['Datum Label'];
+    const defaultValues = ['Value'];
     const state = {
-        rows: ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'],
-        columns: ['Datum Label'],
-        values: [{ field: 'Value', aggregate: 'join' }]
+        available: allFields.filter((f) => !defaultRows.includes(f) && !defaultColumns.includes(f) && !defaultValues.includes(f)),
+        rows: defaultRows.slice(),
+        columns: defaultColumns.slice(),
+        values: defaultValues.map((field) => ({ field, aggregate: 'join' })),
+        rowVisibility: Object.fromEntries(defaultRows.map((field) => [field, true])),
+        columnValueConfig: {},
+        columnExpanded: {}
     };
 
-    function zoneOf(field) {
-        if (state.rows.includes(field)) return 'rows';
-        if (state.columns.includes(field)) return 'columns';
-        if (state.values.some((v) => v.field === field)) return 'values';
-        return 'available';
+    // distinct values for a column field, in first-seen order, all visible by default
+    function initColumnValueConfig(field) {
+        if (state.columnValueConfig[field]) return;
+        const seen = new Set();
+        const order = [];
+        sourceRows.forEach((row) => {
+            const value = row[field] != null ? row[field] : '';
+            if (!seen.has(value)) {
+                seen.add(value);
+                order.push(value);
+            }
+        });
+        state.columnValueConfig[field] = { order, hidden: new Set() };
     }
 
+    defaultColumns.forEach((field) => initColumnValueConfig(field));
+
     function unassign(field) {
+        state.available = state.available.filter((f) => f !== field);
         state.rows = state.rows.filter((f) => f !== field);
         state.columns = state.columns.filter((f) => f !== field);
         state.values = state.values.filter((v) => v.field !== field);
     }
 
-    function assignField(field, zone) {
+    // inserts at targetIndex within the zone's array (defaults to the end), preserving order for the pivot's grouping/column hierarchy
+    function assignField(field, zone, targetIndex) {
+        const existingValueDef = state.values.find((v) => v.field === field);
+        const aggregate = existingValueDef ? existingValueDef.aggregate : 'join';
         unassign(field);
-        if (zone === 'rows') state.rows.push(field);
-        else if (zone === 'columns') state.columns.push(field);
-        else if (zone === 'values') state.values.push({ field, aggregate: 'join' });
+        const arr = state[zone];
+        const index = targetIndex == null ? arr.length : Math.max(0, Math.min(targetIndex, arr.length));
+        if (zone === 'values') {
+            arr.splice(index, 0, { field, aggregate });
+        } else {
+            arr.splice(index, 0, field);
+        }
+        if (zone === 'rows' && !(field in state.rowVisibility)) {
+            state.rowVisibility[field] = true;
+        }
+        if (zone === 'columns') {
+            initColumnValueConfig(field);
+        }
         renderFieldList();
         renderPivot();
     }
@@ -204,6 +247,68 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         }
     }
 
+    // one chip per distinct value of a column field; reorderable within this list, with its own visibility checkbox
+    function createValueChip(field, value) {
+        const config = state.columnValueConfig[field];
+        const valueChip = document.createElement('div');
+        valueChip.className = 'value-chip';
+        valueChip.draggable = true;
+        valueChip.dataset.value = value;
+        valueChip.innerHTML = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span><span class="value-chip-label">${value}</span>`;
+
+        const visibilityCheckbox = document.createElement('input');
+        visibilityCheckbox.type = 'checkbox';
+        visibilityCheckbox.checked = !config.hidden.has(value);
+        visibilityCheckbox.setAttribute('aria-label', `Show ${value} column`);
+        visibilityCheckbox.title = 'Show this value as a column';
+        visibilityCheckbox.addEventListener('change', () => {
+            if (visibilityCheckbox.checked) config.hidden.delete(value);
+            else config.hidden.add(value);
+            renderPivot();
+        });
+        valueChip.appendChild(visibilityCheckbox);
+
+        valueChip.addEventListener('dragstart', (event) => {
+            event.stopPropagation();
+            event.dataTransfer.setData('application/x-pivot-value', value);
+            event.dataTransfer.effectAllowed = 'move';
+        });
+        valueChip.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            event.dataTransfer.dropEffect = 'move';
+            const before = (event.clientY - valueChip.getBoundingClientRect().top) < valueChip.offsetHeight / 2;
+            valueChip.classList.toggle('drop-before', before);
+            valueChip.classList.toggle('drop-after', !before);
+        });
+        valueChip.addEventListener('dragleave', () => valueChip.classList.remove('drop-before', 'drop-after'));
+        valueChip.addEventListener('dragend', () => valueChip.classList.remove('drop-before', 'drop-after'));
+        valueChip.addEventListener('drop', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            valueChip.classList.remove('drop-before', 'drop-after');
+            const draggedValue = event.dataTransfer.getData('application/x-pivot-value');
+            if (!draggedValue || draggedValue === value) return;
+            const insertBefore = (event.clientY - valueChip.getBoundingClientRect().top) < valueChip.offsetHeight / 2;
+            const siblingOrder = config.order.filter((v) => v !== draggedValue);
+            const targetIndex = siblingOrder.indexOf(value);
+            const index = targetIndex === -1 ? siblingOrder.length : (insertBefore ? targetIndex : targetIndex + 1);
+            siblingOrder.splice(index, 0, draggedValue);
+            config.order = siblingOrder;
+            renderFieldList();
+            renderPivot();
+        });
+
+        return valueChip;
+    }
+
+    function createValueList(field) {
+        const list = document.createElement('div');
+        list.className = 'field-chip-values';
+        state.columnValueConfig[field].order.forEach((value) => list.appendChild(createValueChip(field, value)));
+        return list;
+    }
+
     function createChip(field, zone) {
         const chip = document.createElement('div');
         chip.className = 'field-chip';
@@ -211,7 +316,21 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         chip.dataset.field = field;
         chip.dataset.zone = zone;
 
-        chip.innerHTML = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span><span class="field-chip-label">${field}</span>`;
+        let innerHtml = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span>`;
+        if (zone === 'columns') {
+            const expanded = !!state.columnExpanded[field];
+            innerHtml += `<button type="button" class="chip-expand-toggle" aria-expanded="${expanded}" aria-label="${expanded ? 'Collapse' : 'Expand'} ${field} values">${expanded ? '&#9662;' : '&#9656;'}</button>`;
+        }
+        innerHtml += `<span class="field-chip-label">${field}</span>`;
+        chip.innerHTML = innerHtml;
+
+        if (zone === 'columns') {
+            chip.querySelector('.chip-expand-toggle').addEventListener('click', (event) => {
+                event.stopPropagation();
+                state.columnExpanded[field] = !state.columnExpanded[field];
+                renderFieldList();
+            });
+        }
 
         if (zone === 'values') {
             const valueDef = state.values.find((v) => v.field === field);
@@ -225,27 +344,66 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             chip.appendChild(aggSelect);
         }
 
-        const zoneSelect = document.createElement('select');
-        zoneSelect.setAttribute('aria-label', `Move ${field} to zone`);
-        [['available', 'Unassigned'], ['rows', 'Rows'], ['columns', 'Columns'], ['values', 'Values']]
-            .forEach(([value, label]) => zoneSelect.appendChild(new Option(label, value, false, zone === value)));
-        zoneSelect.addEventListener('change', () => assignField(field, zoneSelect.value));
-        chip.appendChild(zoneSelect);
+        if (zone === 'rows') {
+            const visibilityCheckbox = document.createElement('input');
+            visibilityCheckbox.type = 'checkbox';
+            visibilityCheckbox.checked = state.rowVisibility[field] !== false;
+            visibilityCheckbox.setAttribute('aria-label', `Show ${field} column`);
+            visibilityCheckbox.title = 'Show this column (grouping is unaffected)';
+            visibilityCheckbox.addEventListener('change', () => {
+                state.rowVisibility[field] = visibilityCheckbox.checked;
+                renderPivot();
+            });
+            chip.appendChild(visibilityCheckbox);
+        }
 
         chip.addEventListener('dragstart', (event) => {
             event.dataTransfer.setData('text/plain', field);
             event.dataTransfer.effectAllowed = 'move';
         });
 
+        // dropping on a chip reorders relative to it, instead of just appending to the zone
+        chip.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            const before = (event.clientY - chip.getBoundingClientRect().top) < chip.offsetHeight / 2;
+            chip.classList.toggle('drop-before', before);
+            chip.classList.toggle('drop-after', !before);
+        });
+        chip.addEventListener('dragleave', () => chip.classList.remove('drop-before', 'drop-after'));
+        chip.addEventListener('dragend', () => chip.classList.remove('drop-before', 'drop-after'));
+        chip.addEventListener('drop', (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            chip.classList.remove('drop-before', 'drop-after');
+            const draggedField = event.dataTransfer.getData('text/plain');
+            if (!draggedField || draggedField === field) return;
+            const insertBefore = (event.clientY - chip.getBoundingClientRect().top) < chip.offsetHeight / 2;
+            const siblingOrder = (zone === 'values' ? state.values.map((v) => v.field) : state[zone]).filter((f) => f !== draggedField);
+            const targetIndex = siblingOrder.indexOf(field);
+            const index = targetIndex === -1 ? siblingOrder.length : (insertBefore ? targetIndex : targetIndex + 1);
+            assignField(draggedField, zone, index);
+        });
+
+        if (zone === 'columns') {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'field-chip-group';
+            wrapper.appendChild(chip);
+            if (state.columnExpanded[field]) {
+                wrapper.appendChild(createValueList(field));
+            }
+            return wrapper;
+        }
+
         return chip;
     }
 
     function renderFieldList() {
         Object.values(zoneContainers).forEach((container) => { container.innerHTML = ''; });
-        allFields.forEach((field) => {
-            const zone = zoneOf(field);
-            zoneContainers[zone].appendChild(createChip(field, zone));
-        });
+        state.available.forEach((field) => zoneContainers.available.appendChild(createChip(field, 'available')));
+        state.rows.forEach((field) => zoneContainers.rows.appendChild(createChip(field, 'rows')));
+        state.columns.forEach((field) => zoneContainers.columns.appendChild(createChip(field, 'columns')));
+        state.values.forEach((valueDef) => zoneContainers.values.appendChild(createChip(valueDef.field, 'values')));
     }
 
     Object.entries(zoneContainers).forEach(([zone, container]) => {
@@ -270,17 +428,23 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         }
         const pivot = PivotTable.pivotTableData(sourceRows, {
             rowFields: state.rows,
-            columnFields: state.columns,
+            columnFields: state.columns.map((field) => {
+                const config = state.columnValueConfig[field];
+                return { field, order: config ? config.order : undefined, hidden: config ? config.hidden : undefined };
+            }),
             values: state.values,
             delimiter: ', '
         });
-        PivotTable.renderPivotTable(pivotContainer, pivot, { tableId: 'pivotTable' });
+        // hidden row fields still drive grouping above; they're just excluded from the rendered columns
+        const visibleRowFields = state.rows.filter((field) => state.rowVisibility[field] !== false);
+        PivotTable.renderPivotTable(pivotContainer, { ...pivot, rowFields: visibleRowFields }, { tableId: 'pivotTable' });
     }
 
     function setView(view) {
         const showPivot = view === 'pivot';
         pivotContainer.hidden = !showPivot;
         flatTable.hidden = showPivot;
+        fieldList.hidden = !showPivot;
         viewPivotBtn.classList.toggle('active', showPivot);
         viewFlatBtn.classList.toggle('active', !showPivot);
     }
@@ -302,15 +466,26 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     // panel is repositioned via pointer events (not native drag) so it doesn't interfere with the field chips' drag-and-drop
     let dragOffsetX = 0;
     let dragOffsetY = 0;
+    const FIELD_LIST_MARGIN = 32;
+
+    function clampFieldListPosition(left, top) {
+        const maxLeft = Math.max(0, window.innerWidth - fieldList.offsetWidth);
+        const maxTop = Math.max(0, window.innerHeight - fieldListHeader.offsetHeight);
+        return {
+            left: Math.min(Math.max(0, left), maxLeft),
+            top: Math.min(Math.max(0, top), maxTop)
+        };
+    }
+
+    function setFieldListPosition(left, top) {
+        const clamped = clampFieldListPosition(left, top);
+        fieldList.style.left = `${clamped.left}px`;
+        fieldList.style.top = `${clamped.top}px`;
+        fieldList.style.right = 'auto';
+    }
 
     function onPanelPointerMove(event) {
-        const maxLeft = window.innerWidth - fieldList.offsetWidth;
-        const maxTop = window.innerHeight - fieldListHeader.offsetHeight;
-        const left = Math.min(Math.max(0, event.clientX - dragOffsetX), maxLeft);
-        const top = Math.min(Math.max(0, event.clientY - dragOffsetY), maxTop);
-        fieldList.style.left = `${left}px`;
-        fieldList.style.top = `${top}px`;
-        fieldList.style.right = 'auto';
+        setFieldListPosition(event.clientX - dragOffsetX, event.clientY - dragOffsetY);
     }
 
     function onPanelPointerUp() {
@@ -327,6 +502,12 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         fieldList.classList.add('dragging');
         document.addEventListener('pointermove', onPanelPointerMove);
         document.addEventListener('pointerup', onPanelPointerUp);
+    });
+
+    // default position: top-right corner, clamped so the panel is always fully on screen
+    setFieldListPosition(window.innerWidth - fieldList.offsetWidth - FIELD_LIST_MARGIN, FIELD_LIST_MARGIN);
+    window.addEventListener('resize', () => {
+        setFieldListPosition(parseFloat(fieldList.style.left) || 0, parseFloat(fieldList.style.top) || 0);
     });
 
     renderFieldList();

@@ -88,7 +88,7 @@
      * @param {Object[]} rows
      * @param {Object} options
      * @param {string[]} options.rowFields - fields identifying a pivoted record (Excel "Rows")
-     * @param {string[]} [options.columnFields] - fields whose values become column headers (Excel "Columns")
+     * @param {Array<string|{field: string, order?: string[], hidden?: Iterable<string>}>} [options.columnFields] - fields whose values become column headers (Excel "Columns"); a config object can pin a custom value order and/or filter out hidden values
      * @param {Array<string|{field: string, aggregate?: string|Function, label?: string}>} options.values - fields to aggregate into cells (Excel "Values")
      * @param {string} [options.delimiter=', ']
      * @returns {{rowFields: string[], columns: Array<{id: string, label: string}>, data: Object[]}}
@@ -119,6 +119,15 @@
         });
         const showValueLabel = resolvedValues.length > 1;
 
+        const resolvedColumnFields = columnFields.map((columnField) => {
+            const config = typeof columnField === 'string' ? { field: columnField } : columnField;
+            return {
+                field: config.field,
+                order: config.order,
+                hidden: config.hidden ? new Set(config.hidden) : null
+            };
+        });
+
         const groups = new Map();
         const columnGroups = [];
         const columnGroupSet = new Set();
@@ -127,22 +136,27 @@
             const rowKeyValues = rowFields.map((field) => (row[field] != null ? row[field] : ''));
             const groupKey = rowKeyValues.join('\u0001');
 
-            const colKeyValues = columnFields.map((field) => (row[field] != null ? row[field] : ''));
-            const colKey = colKeyValues.length ? colKeyValues.join('\u0001') : '__all__';
-            const colLabel = colKeyValues.join(delimiter);
-
-            if (!columnGroupSet.has(colKey)) {
-                columnGroupSet.add(colKey);
-                columnGroups.push({ key: colKey, label: colLabel });
-            }
-
             if (!groups.has(groupKey)) {
                 const record = { __cells: {} };
                 rowFields.forEach((field, index) => { record[field] = rowKeyValues[index]; });
                 groups.set(groupKey, record);
             }
-
             const record = groups.get(groupKey);
+
+            const colKeyValues = resolvedColumnFields.map((cf) => (row[cf.field] != null ? row[cf.field] : ''));
+            const isHidden = resolvedColumnFields.some((cf, index) => cf.hidden && cf.hidden.has(colKeyValues[index]));
+            if (isHidden) {
+                return;
+            }
+
+            const colKey = colKeyValues.length ? colKeyValues.join('\u0001') : '__all__';
+            const colLabel = colKeyValues.join(delimiter);
+
+            if (!columnGroupSet.has(colKey)) {
+                columnGroupSet.add(colKey);
+                columnGroups.push({ key: colKey, label: colLabel, values: colKeyValues });
+            }
+
             resolvedValues.forEach((valueDef) => {
                 const cellId = `${colKey}::${valueDef.field}`;
                 if (!record.__cells[cellId]) {
@@ -151,6 +165,21 @@
                 record.__cells[cellId].push(row[valueDef.field] != null ? row[valueDef.field] : '');
             });
         });
+
+        // apply a custom per-field value order (e.g. from a drag-reordered value list), highest-priority field first
+        if (resolvedColumnFields.some((cf) => cf.order)) {
+            columnGroups.sort((a, b) => {
+                for (let i = 0; i < resolvedColumnFields.length; i += 1) {
+                    const order = resolvedColumnFields[i].order;
+                    if (!order) continue;
+                    const rankA = order.indexOf(a.values[i]);
+                    const rankB = order.indexOf(b.values[i]);
+                    const diff = (rankA === -1 ? order.length : rankA) - (rankB === -1 ? order.length : rankB);
+                    if (diff !== 0) return diff;
+                }
+                return 0;
+            });
+        }
 
         const columns = [];
         columnGroups.forEach((columnGroup) => {
