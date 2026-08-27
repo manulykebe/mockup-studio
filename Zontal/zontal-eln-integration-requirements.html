@@ -260,8 +260,8 @@
             <tr>
                 <td><code>FR-FILT-04</code></td>
                 <td><strong>Sample ID</strong></td>
-                <td>Text Input</td>
-                <td>Optional free-text search string. Filters matching records whose <code>Sample Identifier</code> contains the typed substring (case-insensitive).</td>
+                <td>Removable Badge List</td>
+                <td>Initially populated from all samples in the active ELN experiment: <code>S0033337</code>, <code>S0033338</code>, <code>S0033339</code>, <code>S0033342</code>, and <code>S0033347</code>. Each badge MUST provide an accessible <code>x</code> control that removes that sample from the active filter. Filters matching records whose <code>Sample Identifier</code> is one of the remaining sample IDs.</td>
             </tr>
             <tr>
                 <td><code>FR-FILT-05</code></td>
@@ -414,7 +414,7 @@
                     <ul>
                         <li><code>instrumentClass</code>: e.g. <code>Calorimeter</code></li>
                         <li><code>instrumentId</code>: e.g. <code>CAL-002</code></li>
-                        <li><code>sampleId</code>: e.g. <code>15222759</code></li>
+                        <li><code>sampleId</code>: Comma-separated active experiment sample IDs, e.g. <code>S0033337,S0033338</code></li>
                         <li><code>dateOperator</code>: <code>equal</code> | <code>before</code> | <code>after</code> | <code>between</code></li>
                         <li><code>dateNot</code>: <code>true</code> | <code>false</code></li>
                         <li><code>dateValue1</code>: ISO Date string (<code>YYYY-MM-DD</code>)</li>
@@ -508,9 +508,9 @@
             </tr>
             <tr>
                 <td><code>sampleId</code></td>
-                <td>Text Input</td>
-                <td>String</td>
-                <td>Substring text query</td>
+                <td>Removable Badge List</td>
+                <td>String Array</td>
+                <td>Comma-separated active experiment sample IDs</td>
                 <td><code>metadata.sample.identifier</code></td>
             </tr>
             <tr>

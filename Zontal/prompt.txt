@@ -1,0 +1,9 @@
+add badges in id="sampleId",
+
+S0033337
+S0033338
+S0033339
+S0033342
+S0033347
+
+these badges have a x icon to remove them from the list.
