@@ -60,6 +60,17 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .chip-rename-input{font:inherit;font-size:.78rem;border:1px solid #1a73e8;border-radius:3px;padding:.1rem .3rem;width:100%;box-sizing:border-box}
 .chip-reset-btn{border:none;background:none;cursor:pointer;color:#9aa0a6;font-size:.7rem;line-height:1;padding:0;flex:0 0 auto}
 .chip-reset-btn:hover{color:#d93025}
+
+.pivot-cell-table{width:100%;border-collapse:collapse;font-size:.78rem}
+.pivot-cell-table th,.pivot-cell-table td{border:none;border-bottom:1px solid #e8eaed;padding:.15rem .3rem}
+.pivot-cell-table tr:last-child th,.pivot-cell-table tr:last-child td{border-bottom:none}
+.pivot-cell-table th{background:none;font-weight:500;color:#5f6368;text-align:left;white-space:nowrap}
+
+/* "Table" aggregate cells must not inherit the page's table/th/td/tr styling (border, padding, background, width) */
+.pivot-cell-table-raw{width:auto;border-collapse:collapse;font-size:inherit}
+.pivot-cell-table-raw th,.pivot-cell-table-raw td{border:none;padding:0;background:none;font-weight:normal;white-space:normal;text-align:left;vertical-align:top}
+.pivot-cell-table-raw tr:nth-child(even){background:none}
+.pivot-cell-table-raw tr:hover{background:none}
 </style>
 </head>
 <body>
@@ -76,9 +87,11 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 <thead><tr><th scope="col">Iri</th><th scope="col">Custom Information Aggregate Iri</th><th scope="col">Measurement Time</th><th scope="col">Sample Identifier</th><th scope="col">Datum Label</th><th scope="col">Index</th><th scope="col">Scalar Double Datum</th><th scope="col">Scalar String Datum</th><th scope="col">Unit</th></tr></thead>
 <tbody>
 <tr><td>urn:uuid:b4d300de-ee12-4488-87e8-25c1fac85109</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Instrument serial number</td><td>0</td><td></td><td>MAL1098134</td><td></td></tr>
+<tr><td>urn:uuid:b4d300de-ee12-4488-87e8-25c1fac85109</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Instrument serial number</td><td>0</td><td></td><td>MAL1098134 bis</td><td></td></tr>
 <tr><td>urn:uuid:bd5e2058-f823-49ff-9f35-da304ee9334e</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Result transform type</td><td>1</td><td></td><td>Volume</td><td></td></tr>
 <tr><td>urn:uuid:aaa2534b-117e-431b-a914-99d4feebae8c</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>D [4, 3] - Volume weighted mean</td><td>2</td><td>62.061</td><td></td><td>µm</td></tr>
 <tr><td>urn:uuid:2b53e557-3049-457d-8921-750f332d1d19</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>D [3, 2] - Surface weighted mean</td><td>3</td><td>55.073</td><td></td><td>µm</td></tr>
+<tr><td>urn:uuid:2b53e557-3049-457d-8921-750f332d1d19</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>D [3, 2] - Surface weighted mean</td><td>3</td><td>55.077</td><td></td><td>µm</td></tr>
 <tr><td>urn:uuid:b18af124-6ae5-4da7-a4d9-b759f0f88f28</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Start result channel size</td><td>4</td><td>0.02</td><td></td><td>µm</td></tr>
 <tr><td>urn:uuid:e0c5ed78-3e8d-4865-9572-ec66268408a8</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Last result channel size</td><td>5</td><td>2000</td><td></td><td>µm</td></tr>
 <tr><td>urn:uuid:850811d2-c86d-4461-bcfe-c4ddf45f53f8</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Particle absorption index</td><td>6</td><td>0</td><td></td><td>(unitless)</td></tr>
@@ -174,10 +187,16 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         values: document.getElementById('zoneValues')
     };
     const AGG_OPTIONS = [
+        ['table', 'Table'],
         ['join', 'Join'],
         ['badge', 'Join + count'],
-        ['count', 'Count'],
         ['first', 'First']
+    ];
+    // only offered for fields that contain at least one numeric-looking value (see isNumericField)
+    const NUMERIC_AGG_OPTIONS = [
+        ['average', 'Average'],
+        ['stdev', 'Std Dev'],
+        ['count', 'Count']
     ];
 
     // one non-empty scalar column is expected per Datum Label row; append the unit when present
@@ -190,6 +209,44 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     const { rows: sourceRows } = PivotTable.parseHtmlTable(flatTable);
     sourceRows.forEach((row) => { row['Value'] = extractValue(row); });
     const allFields = PivotTable.getFieldNames(sourceRows);
+
+    // true if any source value for this field parses as a number, making average/stdev/count meaningful
+    function isNumericField(field) {
+        return sourceRows.some((row) => PivotTable.toNumber(row[field]) !== null);
+    }
+
+    // "Value" entries look like "62.061 µm" (from Scalar Double Datum) or plain text like "Volume" (from Scalar
+    // String Datum); calculations only make sense when every entry in a cell originates from Scalar Double Datum —
+    // otherwise fall back to a plain join, and re-attach the shared unit to average/stdev results
+    function makeScalarAggregate(strategy) {
+        return (values, delimiter) => {
+            const parsed = values.map((v) => {
+                const num = PivotTable.toNumber(v);
+                const unitMatch = num !== null ? String(v).trim().match(/^-?\d+(?:\.\d+)?\s*(.*)$/) : null;
+                return { num, unit: unitMatch && unitMatch[1] ? unitMatch[1] : '' };
+            });
+            if (!parsed.length || parsed.some((p) => p.num === null)) {
+                return PivotTable.aggregators.join(values, delimiter);
+            }
+            if (strategy === 'count') {
+                return String(parsed.length);
+            }
+            const nums = parsed.map((p) => p.num);
+            const unit = (parsed.find((p) => p.unit) || {}).unit || '';
+            let result;
+            if (strategy === 'average') {
+                result = nums.reduce((sum, n) => sum + n, 0) / nums.length;
+            } else if (nums.length < 2) {
+                return '';
+            } else {
+                const mean = nums.reduce((sum, n) => sum + n, 0) / nums.length;
+                const variance = nums.reduce((sum, n) => sum + (n - mean) ** 2, 0) / (nums.length - 1);
+                result = Math.sqrt(variance);
+            }
+            const rounded = Math.round(result * 10000) / 10000;
+            return unit ? `${rounded} ${unit}` : String(rounded);
+        };
+    }
 
     // default layout: mirrors the original fixed pivot (Rows/Columns/Values zones, like an Excel PivotTable)
     const defaultRows = ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'];
@@ -526,7 +583,11 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             const valueDef = state.values.find((v) => v.field === field);
             const aggSelect = document.createElement('select');
             aggSelect.setAttribute('aria-label', `Aggregation for ${field}`);
-            AGG_OPTIONS.forEach(([value, label]) => {
+            let options = isNumericField(field) ? AGG_OPTIONS.concat(NUMERIC_AGG_OPTIONS) : AGG_OPTIONS;
+            if (!options.some(([value]) => value === valueDef.aggregate)) {
+                options = options.concat(NUMERIC_AGG_OPTIONS.filter(([value]) => value === valueDef.aggregate));
+            }
+            options.forEach(([value, label]) => {
                 const option = new Option(label, value, false, valueDef.aggregate === value);
                 aggSelect.appendChild(option);
             });
@@ -622,7 +683,14 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
                 const config = state.columnValueConfig[field];
                 return { field, order: config ? config.order : undefined, hidden: config ? config.hidden : undefined, labels: config ? config.labels : undefined };
             }),
-            values: state.values.map((valueDef) => ({ ...valueDef, label: state.fieldLabels[valueDef.field] })),
+            values: state.values.map((valueDef) => {
+                const useScalarAggregate = valueDef.field === 'Value' && ['average', 'stdev', 'count'].includes(valueDef.aggregate);
+                return {
+                    ...valueDef,
+                    aggregate: useScalarAggregate ? makeScalarAggregate(valueDef.aggregate) : valueDef.aggregate,
+                    label: state.fieldLabels[valueDef.field]
+                };
+            }),
             delimiter: ', '
         });
         // hidden row fields still drive grouping above; they're just excluded from the rendered columns

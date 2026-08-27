@@ -70,29 +70,60 @@
         return fields;
     }
 
+    // Parses a value's leading numeric portion (allowing a trailing unit suffix like "62.061 µm"); returns null when not numeric.
+    function toNumber(value) {
+        if (value == null) return null;
+        const trimmed = String(value).trim();
+        if (!trimmed || !/^-?\d+(?:\.\d+)?(?:\s*[^\d.]*)?$/.test(trimmed)) return null;
+        const num = parseFloat(trimmed);
+        return Number.isFinite(num) ? num : null;
+    }
+
+    // rounds to 4 decimal places to avoid floating-point noise in displayed stats
+    function formatStat(num) {
+        return String(Math.round(num * 10000) / 10000);
+    }
+
     // Built-in strategies for resolving multiple values landing in the same pivot cell.
     const AGGREGATORS = {
         join: (values, delimiter) => values.join(delimiter),
         count: (values) => String(values.length),
         first: (values) => (values.length ? values[0] : ''),
         array: (values) => values.slice(),
+        // a single value renders as plain text; multiple values render as an unformatted per-row table (see renderCell)
+        table: (values) => (values.length > 1 ? values.slice() : (values.length ? values[0] : '')),
         badge: (values, delimiter) => {
             const unique = Array.from(new Set(values));
             return unique.length > 1 ? `${unique.join(delimiter)} (${unique.length})` : (unique[0] || '');
+        },
+        average: (values) => {
+            const nums = values.map(toNumber).filter((n) => n !== null);
+            if (!nums.length) return '';
+            return formatStat(nums.reduce((sum, n) => sum + n, 0) / nums.length);
+        },
+        stdev: (values) => {
+            const nums = values.map(toNumber).filter((n) => n !== null);
+            if (nums.length < 2) return '';
+            const mean = nums.reduce((sum, n) => sum + n, 0) / nums.length;
+            const variance = nums.reduce((sum, n) => sum + (n - mean) ** 2, 0) / (nums.length - 1);
+            return formatStat(Math.sqrt(variance));
         }
     };
 
     /**
-     * Groups rows by rowFields and rotates columnFields values into column headers,
-     * one set of columns per requested value field.
+     * Groups rows by rowFields and rotates columnFields values into column headers.
+     * When a single value field is requested, each column group gets one output column.
+     * When multiple value fields are requested, each column group instead gets a single combined
+     * column (`multi: true`, with a `fields` list) whose cell data is a `{label, value}[]` array,
+     * meant to be rendered as a compact name/value mini-table (see renderPivotTable).
      * @param {Object[]} rows
      * @param {Object} options
      * @param {string[]} options.rowFields - fields identifying a pivoted record (Excel "Rows")
      * @param {Array<string|{field: string, order?: string[], hidden?: Iterable<string>, labels?: Object<string,string>}>} [options.columnFields] - fields whose values become column headers (Excel "Columns"); a config object can pin a custom value order, filter out hidden values, and/or rename individual values for display via `labels`
      * @param {Object<string,string>} [options.columnFields[].labels] - map of raw value -> display label used when building the column header text (grouping/order/hidden still use the raw value)
-     * @param {Array<string|{field: string, aggregate?: string|Function, label?: string}>} options.values - fields to aggregate into cells (Excel "Values")
+     * @param {Array<string|{field: string, aggregate?: string|Function, label?: string}>} options.values - fields to aggregate into cells (Excel "Values"); built-in aggregates are 'join'|'badge'|'count'|'first'|'array'|'table'|'average'|'stdev' ('average'/'stdev' ignore non-numeric values; 'table' renders multiple values as an unformatted per-row table, a single value as plain text)
      * @param {string} [options.delimiter=', ']
-     * @returns {{rowFields: string[], columns: Array<{id: string, label: string}>, data: Object[]}}
+     * @returns {{rowFields: string[], columns: Array<{id: string, label: string, multi?: boolean, fields?: Array<{field: string, label: string}>}>, data: Object[]}}
      */
     function pivotTableData(rows, options) {
         const {
@@ -188,25 +219,43 @@
             });
         }
 
+        // when more than one value field is configured, each column group gets a single combined column
+        // (rendered as a name/value mini-table) instead of one output column per value field
         const columns = [];
         columnGroups.forEach((columnGroup) => {
-            resolvedValues.forEach((valueDef) => {
-                const id = `${columnGroup.key}::${valueDef.field}`;
+            if (showValueLabel) {
+                columns.push({
+                    id: columnGroup.key,
+                    label: columnGroup.label || 'Values',
+                    multi: true,
+                    fields: resolvedValues.map((valueDef) => ({
+                        field: valueDef.field,
+                        label: valueDef.label || valueDef.field,
+                        aggregate: valueDef.aggregate
+                    }))
+                });
+            } else {
+                const valueDef = resolvedValues[0];
                 const valueLabel = valueDef.label || valueDef.field;
-                const label = showValueLabel
-                    ? `${columnGroup.label ? columnGroup.label + ' – ' : ''}${valueLabel}`
-                    : (columnGroup.label || valueLabel);
-                columns.push({ id, label, aggregate: valueDef.aggregate });
-            });
+                columns.push({ id: `${columnGroup.key}::${valueDef.field}`, label: columnGroup.label || valueLabel, aggregate: valueDef.aggregate });
+            }
         });
 
         const data = Array.from(groups.values()).map((record) => {
             const out = {};
             rowFields.forEach((field) => { out[field] = record[field]; });
             columns.forEach((column) => {
-                const cellValues = record.__cells[column.id] || [];
-                const aggregator = typeof column.aggregate === 'function' ? column.aggregate : AGGREGATORS[column.aggregate];
-                out[column.id] = cellValues.length ? aggregator(cellValues, delimiter) : '';
+                if (column.multi) {
+                    out[column.id] = column.fields.map((f) => {
+                        const cellValues = record.__cells[`${column.id}::${f.field}`] || [];
+                        const aggregator = typeof f.aggregate === 'function' ? f.aggregate : AGGREGATORS[f.aggregate];
+                        return { label: f.label, value: cellValues.length ? aggregator(cellValues, delimiter) : '' };
+                    });
+                } else {
+                    const cellValues = record.__cells[column.id] || [];
+                    const aggregator = typeof column.aggregate === 'function' ? column.aggregate : AGGREGATORS[column.aggregate];
+                    out[column.id] = cellValues.length ? aggregator(cellValues, delimiter) : '';
+                }
             });
             return out;
         });
@@ -220,6 +269,21 @@
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
             .replace(/"/g, '&quot;');
+    }
+
+    // an array cell is either {label, value} pairs (combined multi-field column, rendered as a name/value
+    // mini-table) or plain raw values (the 'table' aggregate, rendered as a bare unformatted per-row table)
+    function renderCell(value) {
+        if (Array.isArray(value)) {
+            if (!value.length) return '';
+            if (typeof value[0] === 'object' && value[0] !== null) {
+                const rows = value.map((entry) => `<tr><th scope="row">${escapeHtml(entry.label)}</th><td>${escapeHtml(entry.value)}</td></tr>`).join('');
+                return `<table class="pivot-cell-table"><tbody>${rows}</tbody></table>`;
+            }
+            const rows = value.map((entry) => `<tr><td>${escapeHtml(entry)}</td></tr>`).join('');
+            return `<table class="pivot-cell-table-raw"><tbody>${rows}</tbody></table>`;
+        }
+        return escapeHtml(value != null ? value : '');
     }
 
     /**
@@ -246,7 +310,7 @@
 
         const bodyRows = data.map((record) => {
             const rowCells = rowFields.map((field) => `<td>${escapeHtml(record[field] != null ? record[field] : '')}</td>`)
-                .concat(columns.map((column) => `<td>${escapeHtml(record[column.id] != null ? record[column.id] : '')}</td>`))
+                .concat(columns.map((column) => `<td>${renderCell(record[column.id])}</td>`))
                 .join('');
             return `<tr>${rowCells}</tr>`;
         }).join('');
@@ -258,5 +322,5 @@
         return container.querySelector('table');
     }
 
-    return { parseHtmlTable, getFieldNames, pivotTableData, renderPivotTable, aggregators: AGGREGATORS };
+    return { parseHtmlTable, getFieldNames, pivotTableData, renderPivotTable, aggregators: AGGREGATORS, toNumber };
 }));
