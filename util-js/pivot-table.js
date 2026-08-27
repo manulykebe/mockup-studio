@@ -1,17 +1,17 @@
 /**
  * Generic, dependency-free HTML/data table pivot utility.
  * Converts flat EAV-style (Entity-Attribute-Value) row data into an Excel-like
- * pivot table: grouping rows by key fields and rotating an attribute field
- * into dynamic columns, with configurable handling of multi-value collisions.
+ * pivot table: grouping rows by one or more key fields, rotating one or more
+ * attribute fields into column headers, and aggregating one or more value
+ * fields per cell with a configurable collision strategy.
  *
  * Usage:
  *   const { parseHtmlTable, pivotTableData, renderPivotTable } = PivotTable;
- *   const { headers, rows } = parseHtmlTable(document.querySelector('table'));
+ *   const { rows } = parseHtmlTable(document.querySelector('table'));
  *   const pivot = pivotTableData(rows, {
- *       rowKeys: ['Measurement Time', 'Sample Identifier'],
- *       pivotCol: 'Datum Label',
- *       valueFn: (row) => row['Scalar Double Datum'] || row['Scalar String Datum'],
- *       aggregate: 'join' // 'join' | 'count' | 'first' | 'array' | 'badge' | custom fn
+ *       rowFields: ['Measurement Time', 'Sample Identifier'],
+ *       columnFields: ['Datum Label'],
+ *       values: [{ field: 'Value', aggregate: 'join' }] // 'join'|'count'|'first'|'array'|'badge'|fn
  *   });
  *   renderPivotTable(document.getElementById('out'), pivot);
  */
@@ -51,6 +51,25 @@
         return { headers, rows };
     }
 
+    /**
+     * Returns the union of field names found across all rows, in first-seen order.
+     * @param {Object[]} rows
+     * @returns {string[]}
+     */
+    function getFieldNames(rows) {
+        const seen = new Set();
+        const fields = [];
+        rows.forEach((row) => {
+            Object.keys(row).forEach((key) => {
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    fields.push(key);
+                }
+            });
+        });
+        return fields;
+    }
+
     // Built-in strategies for resolving multiple values landing in the same pivot cell.
     const AGGREGATORS = {
         join: (values, delimiter) => values.join(delimiter),
@@ -64,75 +83,99 @@
     };
 
     /**
-     * Groups rows by rowKeys and rotates pivotCol values into columns.
+     * Groups rows by rowFields and rotates columnFields values into column headers,
+     * one set of columns per requested value field.
      * @param {Object[]} rows
      * @param {Object} options
-     * @param {string[]} options.rowKeys - fields identifying a pivoted record
-     * @param {string} options.pivotCol - field whose values become column headers
-     * @param {(row: Object) => string} [options.valueFn] - extracts the cell value from a source row
-     * @param {string|(values: string[], delimiter: string) => *} [options.aggregate='join'] - collision strategy
+     * @param {string[]} options.rowFields - fields identifying a pivoted record (Excel "Rows")
+     * @param {string[]} [options.columnFields] - fields whose values become column headers (Excel "Columns")
+     * @param {Array<string|{field: string, aggregate?: string|Function, label?: string}>} options.values - fields to aggregate into cells (Excel "Values")
      * @param {string} [options.delimiter=', ']
-     * @returns {{rowKeys: string[], columns: string[], data: Object[]}}
+     * @returns {{rowFields: string[], columns: Array<{id: string, label: string}>, data: Object[]}}
      */
     function pivotTableData(rows, options) {
         const {
-            rowKeys,
-            pivotCol,
-            valueFn = (row) => row.value,
-            aggregate = 'join',
+            rowFields,
+            columnFields = [],
+            values,
             delimiter = ', '
         } = options || {};
 
-        if (!Array.isArray(rowKeys) || rowKeys.length === 0) {
-            throw new Error('pivotTableData requires a non-empty rowKeys array');
+        if (!Array.isArray(rowFields) || rowFields.length === 0) {
+            throw new Error('pivotTableData requires a non-empty rowFields array');
         }
-        if (!pivotCol) {
-            throw new Error('pivotTableData requires a pivotCol');
+        if (!Array.isArray(values) || values.length === 0) {
+            throw new Error('pivotTableData requires a non-empty values array');
         }
 
-        const aggregator = typeof aggregate === 'function' ? aggregate : AGGREGATORS[aggregate];
-        if (!aggregator) {
-            throw new Error(`Unknown aggregate strategy "${aggregate}"`);
-        }
+        const resolvedValues = values.map((value) => (
+            typeof value === 'string' ? { field: value, aggregate: 'join' } : value
+        ));
+        resolvedValues.forEach((value) => {
+            const aggregator = typeof value.aggregate === 'function' ? value.aggregate : AGGREGATORS[value.aggregate];
+            if (!aggregator) {
+                throw new Error(`Unknown aggregate strategy "${value.aggregate}"`);
+            }
+        });
+        const showValueLabel = resolvedValues.length > 1;
 
         const groups = new Map();
-        const columns = [];
-        const columnSet = new Set();
+        const columnGroups = [];
+        const columnGroupSet = new Set();
 
         rows.forEach((row) => {
-            const keyValues = rowKeys.map((key) => (row[key] != null ? row[key] : ''));
-            const groupKey = keyValues.join('\u0001');
-            const column = row[pivotCol] != null ? row[pivotCol] : '';
+            const rowKeyValues = rowFields.map((field) => (row[field] != null ? row[field] : ''));
+            const groupKey = rowKeyValues.join('\u0001');
 
-            if (!columnSet.has(column)) {
-                columnSet.add(column);
-                columns.push(column);
+            const colKeyValues = columnFields.map((field) => (row[field] != null ? row[field] : ''));
+            const colKey = colKeyValues.length ? colKeyValues.join('\u0001') : '__all__';
+            const colLabel = colKeyValues.join(delimiter);
+
+            if (!columnGroupSet.has(colKey)) {
+                columnGroupSet.add(colKey);
+                columnGroups.push({ key: colKey, label: colLabel });
             }
 
             if (!groups.has(groupKey)) {
                 const record = { __cells: {} };
-                rowKeys.forEach((key, index) => { record[key] = keyValues[index]; });
+                rowFields.forEach((field, index) => { record[field] = rowKeyValues[index]; });
                 groups.set(groupKey, record);
             }
 
             const record = groups.get(groupKey);
-            if (!record.__cells[column]) {
-                record.__cells[column] = [];
-            }
-            record.__cells[column].push(valueFn(row));
+            resolvedValues.forEach((valueDef) => {
+                const cellId = `${colKey}::${valueDef.field}`;
+                if (!record.__cells[cellId]) {
+                    record.__cells[cellId] = [];
+                }
+                record.__cells[cellId].push(row[valueDef.field] != null ? row[valueDef.field] : '');
+            });
+        });
+
+        const columns = [];
+        columnGroups.forEach((columnGroup) => {
+            resolvedValues.forEach((valueDef) => {
+                const id = `${columnGroup.key}::${valueDef.field}`;
+                const valueLabel = valueDef.label || valueDef.field;
+                const label = showValueLabel
+                    ? `${columnGroup.label ? columnGroup.label + ' – ' : ''}${valueLabel}`
+                    : (columnGroup.label || valueLabel);
+                columns.push({ id, label, aggregate: valueDef.aggregate });
+            });
         });
 
         const data = Array.from(groups.values()).map((record) => {
             const out = {};
-            rowKeys.forEach((key) => { out[key] = record[key]; });
+            rowFields.forEach((field) => { out[field] = record[field]; });
             columns.forEach((column) => {
-                const values = record.__cells[column] || [];
-                out[column] = values.length ? aggregator(values, delimiter) : '';
+                const cellValues = record.__cells[column.id] || [];
+                const aggregator = typeof column.aggregate === 'function' ? column.aggregate : AGGREGATORS[column.aggregate];
+                out[column.id] = cellValues.length ? aggregator(cellValues, delimiter) : '';
             });
             return out;
         });
 
-        return { rowKeys, columns, data };
+        return { rowFields, columns, data };
     }
 
     function escapeHtml(value) {
@@ -146,7 +189,7 @@
     /**
      * Renders a pivotTableData() result as an HTML <table> inside container.
      * @param {HTMLElement} container
-     * @param {{rowKeys: string[], columns: string[], data: Object[]}} pivotResult
+     * @param {{rowFields: string[], columns: Array<{id: string, label: string}>, data: Object[]}} pivotResult
      * @param {Object} [options]
      * @param {string} [options.tableId]
      * @param {string} [options.tableClass]
@@ -157,19 +200,18 @@
             throw new Error('renderPivotTable requires a container element');
         }
 
-        const { rowKeys, columns, data } = pivotResult;
+        const { rowFields, columns, data } = pivotResult;
         const { tableId, tableClass = '' } = options || {};
-        const allFields = rowKeys.concat(columns);
 
-        const headerCells = allFields
-            .map((label) => `<th scope="col">${escapeHtml(label)}</th>`)
+        const headerCells = rowFields.map((label) => `<th scope="col">${escapeHtml(label)}</th>`)
+            .concat(columns.map((column) => `<th scope="col">${escapeHtml(column.label)}</th>`))
             .join('');
 
         const bodyRows = data.map((record) => {
-            const cells = allFields
-                .map((key) => `<td>${escapeHtml(record[key] != null ? record[key] : '')}</td>`)
+            const rowCells = rowFields.map((field) => `<td>${escapeHtml(record[field] != null ? record[field] : '')}</td>`)
+                .concat(columns.map((column) => `<td>${escapeHtml(record[column.id] != null ? record[column.id] : '')}</td>`))
                 .join('');
-            return `<tr>${cells}</tr>`;
+            return `<tr>${rowCells}</tr>`;
         }).join('');
 
         const idAttr = tableId ? ` id="${escapeHtml(tableId)}"` : '';
@@ -179,5 +221,5 @@
         return container.querySelector('table');
     }
 
-    return { parseHtmlTable, pivotTableData, renderPivotTable, aggregators: AGGREGATORS };
+    return { parseHtmlTable, getFieldNames, pivotTableData, renderPivotTable, aggregators: AGGREGATORS };
 }));

@@ -14,26 +14,42 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .pivot-toolbar .view-toggle{display:inline-flex;border:1px solid #d9d9d9;border-radius:999px;overflow:hidden}
 .pivot-toolbar .view-toggle button{border:none;background:#fff;padding:.4rem .9rem;font:inherit;cursor:pointer;color:#5f6368}
 .pivot-toolbar .view-toggle button.active{background:#1a73e8;color:#fff}
-.pivot-toolbar label{font-size:.85rem;color:#5f6368;display:inline-flex;align-items:center;gap:.4rem}
-.pivot-toolbar select{padding:.35rem .5rem;border:1px solid #d9d9d9;border-radius:4px;font:inherit}
 [hidden]{display:none!important}
+
+.pivot-app{display:flex;align-items:flex-start;gap:1.25rem}
+.pivot-main{flex:1 1 auto;min-width:0}
+
+.field-list{position:fixed;top:6rem;right:2rem;width:280px;z-index:50;border:1px solid #d9d9d9;border-radius:6px;background:#fff;font-size:.82rem;box-shadow:0 4px 16px rgba(32,33,36,.18);max-height:calc(100vh - 8rem);display:flex;flex-direction:column;overflow:hidden}
+.field-list.dragging{box-shadow:0 10px 30px rgba(32,33,36,.32)}
+.field-list-header{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.7rem .9rem;background:#f1f3f4;border-bottom:1px solid #d9d9d9;cursor:grab;user-select:none}
+.field-list.dragging .field-list-header{cursor:grabbing}
+.field-list-header h3{margin:0;font-size:.9rem}
+.field-list-toggle{border:1px solid transparent;background:none;cursor:pointer;font-size:.85rem;color:#5f6368;padding:.1rem .35rem;line-height:1;border-radius:3px}
+.field-list-toggle:hover{background:#e3e7ea}
+.field-list-body{overflow-y:auto}
+.field-list.collapsed .field-list-body{display:none}
+.field-list h4{margin:0;padding:.5rem .9rem;font-size:.78rem;color:#5f6368;text-transform:uppercase;letter-spacing:.03em;background:#f8f9fa;border-top:1px solid #d9d9d9;border-bottom:1px solid #e8eaed}
+.field-list-fields{max-height:220px;overflow-y:auto;padding:.4rem}
+.zone-drop{min-height:2.4rem;padding:.4rem;display:flex;flex-direction:column;gap:.35rem}
+.zone-drop.drag-over{background:#e8f0fe}
+.field-list-fields.drag-over{background:#e8f0fe}
+
+.field-chip{display:flex;align-items:center;gap:.35rem;background:#f1f3f4;border:1px solid #d9d9d9;border-radius:4px;padding:.3rem .4rem;cursor:grab}
+.field-chip:active{cursor:grabbing}
+.field-chip .drag-handle{color:#9aa0a6;font-size:.7rem;line-height:1}
+.field-chip .field-chip-label{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.field-chip select{font:inherit;font-size:.75rem;border:1px solid #d9d9d9;border-radius:3px;padding:.15rem .25rem;background:#fff;max-width:6.7rem}
 </style>
 </head>
 <body>
 <div class="pivot-toolbar">
 <div class="view-toggle" role="group" aria-label="Table view">
-<button type="button" id="viewFlatBtn">Flat EAV view</button>
-<button type="button" id="viewPivotBtn" class="active">Pivoted Excel view</button>
+<button type="button" id="viewFlatBtn">Flat view</button>
+<button type="button" id="viewPivotBtn" class="active">Pivoted view</button>
 </div>
-<label for="aggregateSelect">Multi-value cells:
-<select id="aggregateSelect">
-<option value="join">Join values</option>
-<option value="badge">Join values + count</option>
-<option value="count">Count only</option>
-<option value="first">First value only</option>
-</select>
-</label>
 </div>
+<div class="pivot-app">
+<div class="pivot-main">
 <div id="pivotContainer"></div>
 <table id="flatTable" hidden>
 <thead><tr><th scope="col">Iri</th><th scope="col">Custom Information Aggregate Iri</th><th scope="col">Measurement Time</th><th scope="col">Sample Identifier</th><th scope="col">Datum Label</th><th scope="col">Index</th><th scope="col">Scalar Double Datum</th><th scope="col">Scalar String Datum</th><th scope="col">Unit</th></tr></thead>
@@ -103,6 +119,23 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 <tr><td>urn:uuid:19853323-14d6-44fb-aa01-22bab535781b</td><td>urn:uuid:bbe6942a-1120-40c9-83e2-1d3ef5110d47</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b - Average</td><td>SOP Name</td><td>14</td><td></td><td>QAS3001-b</td><td></td></tr>
 <tr><td>urn:uuid:ba8a8f5b-d513-4494-9c7d-46be4e1f5b88</td><td>urn:uuid:bbe6942a-1120-40c9-83e2-1d3ef5110d47</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b - Average</td><td>Sample source type</td><td>15</td><td></td><td>Malvern Instruments</td><td></td></tr>
 </tbody></table>
+</div>
+<aside class="field-list" id="fieldList">
+<div class="field-list-header" id="fieldListHeader">
+<h3>PivotTable Fields</h3>
+<button type="button" class="field-list-toggle" id="fieldListToggle" aria-expanded="true" aria-controls="fieldListBody" title="Collapse panel">&#9662;</button>
+</div>
+<div class="field-list-body" id="fieldListBody">
+<div class="field-list-fields" id="zoneAvailable" data-zone="available"></div>
+<h4>Rows</h4>
+<div class="zone-drop" id="zoneRows" data-zone="rows"></div>
+<h4>Columns</h4>
+<div class="zone-drop" id="zoneColumns" data-zone="columns"></div>
+<h4>Values</h4>
+<div class="zone-drop" id="zoneValues" data-zone="values"></div>
+</div>
+</aside>
+</div>
 <script src="../util-js/pivot-table.js"></script>
 <script>
 (function () {
@@ -110,7 +143,18 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     const pivotContainer = document.getElementById('pivotContainer');
     const viewFlatBtn = document.getElementById('viewFlatBtn');
     const viewPivotBtn = document.getElementById('viewPivotBtn');
-    const aggregateSelect = document.getElementById('aggregateSelect');
+    const zoneContainers = {
+        available: document.getElementById('zoneAvailable'),
+        rows: document.getElementById('zoneRows'),
+        columns: document.getElementById('zoneColumns'),
+        values: document.getElementById('zoneValues')
+    };
+    const AGG_OPTIONS = [
+        ['join', 'Join'],
+        ['badge', 'Join + count'],
+        ['count', 'Count'],
+        ['first', 'First']
+    ];
 
     // one non-empty scalar column is expected per Datum Label row; append the unit when present
     function extractValue(row) {
@@ -119,13 +163,115 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         return unit ? `${value} ${unit}` : value;
     }
 
+    const { rows: sourceRows } = PivotTable.parseHtmlTable(flatTable);
+    sourceRows.forEach((row) => { row['Value'] = extractValue(row); });
+    const allFields = PivotTable.getFieldNames(sourceRows);
+
+    // default layout: mirrors the original fixed pivot (Rows/Columns/Values zones, like an Excel PivotTable)
+    const state = {
+        rows: ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'],
+        columns: ['Datum Label'],
+        values: [{ field: 'Value', aggregate: 'join' }]
+    };
+
+    function zoneOf(field) {
+        if (state.rows.includes(field)) return 'rows';
+        if (state.columns.includes(field)) return 'columns';
+        if (state.values.some((v) => v.field === field)) return 'values';
+        return 'available';
+    }
+
+    function unassign(field) {
+        state.rows = state.rows.filter((f) => f !== field);
+        state.columns = state.columns.filter((f) => f !== field);
+        state.values = state.values.filter((v) => v.field !== field);
+    }
+
+    function assignField(field, zone) {
+        unassign(field);
+        if (zone === 'rows') state.rows.push(field);
+        else if (zone === 'columns') state.columns.push(field);
+        else if (zone === 'values') state.values.push({ field, aggregate: 'join' });
+        renderFieldList();
+        renderPivot();
+    }
+
+    function setAggregate(field, aggregate) {
+        const valueDef = state.values.find((v) => v.field === field);
+        if (valueDef) {
+            valueDef.aggregate = aggregate;
+            renderPivot();
+        }
+    }
+
+    function createChip(field, zone) {
+        const chip = document.createElement('div');
+        chip.className = 'field-chip';
+        chip.draggable = true;
+        chip.dataset.field = field;
+        chip.dataset.zone = zone;
+
+        chip.innerHTML = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span><span class="field-chip-label">${field}</span>`;
+
+        if (zone === 'values') {
+            const valueDef = state.values.find((v) => v.field === field);
+            const aggSelect = document.createElement('select');
+            aggSelect.setAttribute('aria-label', `Aggregation for ${field}`);
+            AGG_OPTIONS.forEach(([value, label]) => {
+                const option = new Option(label, value, false, valueDef.aggregate === value);
+                aggSelect.appendChild(option);
+            });
+            aggSelect.addEventListener('change', () => setAggregate(field, aggSelect.value));
+            chip.appendChild(aggSelect);
+        }
+
+        const zoneSelect = document.createElement('select');
+        zoneSelect.setAttribute('aria-label', `Move ${field} to zone`);
+        [['available', 'Unassigned'], ['rows', 'Rows'], ['columns', 'Columns'], ['values', 'Values']]
+            .forEach(([value, label]) => zoneSelect.appendChild(new Option(label, value, false, zone === value)));
+        zoneSelect.addEventListener('change', () => assignField(field, zoneSelect.value));
+        chip.appendChild(zoneSelect);
+
+        chip.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', field);
+            event.dataTransfer.effectAllowed = 'move';
+        });
+
+        return chip;
+    }
+
+    function renderFieldList() {
+        Object.values(zoneContainers).forEach((container) => { container.innerHTML = ''; });
+        allFields.forEach((field) => {
+            const zone = zoneOf(field);
+            zoneContainers[zone].appendChild(createChip(field, zone));
+        });
+    }
+
+    Object.entries(zoneContainers).forEach(([zone, container]) => {
+        container.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = 'move';
+            container.classList.add('drag-over');
+        });
+        container.addEventListener('dragleave', () => container.classList.remove('drag-over'));
+        container.addEventListener('drop', (event) => {
+            event.preventDefault();
+            container.classList.remove('drag-over');
+            const field = event.dataTransfer.getData('text/plain');
+            if (field) assignField(field, zone);
+        });
+    });
+
     function renderPivot() {
-        const { rows } = PivotTable.parseHtmlTable(flatTable);
-        const pivot = PivotTable.pivotTableData(rows, {
-            rowKeys: ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'],
-            pivotCol: 'Datum Label',
-            valueFn: extractValue,
-            aggregate: aggregateSelect.value,
+        if (!state.rows.length || !state.values.length) {
+            pivotContainer.innerHTML = '<p>Add at least one field to Rows and Values.</p>';
+            return;
+        }
+        const pivot = PivotTable.pivotTableData(sourceRows, {
+            rowFields: state.rows,
+            columnFields: state.columns,
+            values: state.values,
             delimiter: ', '
         });
         PivotTable.renderPivotTable(pivotContainer, pivot, { tableId: 'pivotTable' });
@@ -141,8 +287,49 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 
     viewPivotBtn.addEventListener('click', () => setView('pivot'));
     viewFlatBtn.addEventListener('click', () => setView('flat'));
-    aggregateSelect.addEventListener('change', renderPivot);
 
+    const fieldList = document.getElementById('fieldList');
+    const fieldListHeader = document.getElementById('fieldListHeader');
+    const fieldListToggle = document.getElementById('fieldListToggle');
+
+    fieldListToggle.addEventListener('click', () => {
+        const collapsed = fieldList.classList.toggle('collapsed');
+        fieldListToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
+        fieldListToggle.setAttribute('aria-expanded', String(!collapsed));
+        fieldListToggle.title = collapsed ? 'Expand panel' : 'Collapse panel';
+    });
+
+    // panel is repositioned via pointer events (not native drag) so it doesn't interfere with the field chips' drag-and-drop
+    let dragOffsetX = 0;
+    let dragOffsetY = 0;
+
+    function onPanelPointerMove(event) {
+        const maxLeft = window.innerWidth - fieldList.offsetWidth;
+        const maxTop = window.innerHeight - fieldListHeader.offsetHeight;
+        const left = Math.min(Math.max(0, event.clientX - dragOffsetX), maxLeft);
+        const top = Math.min(Math.max(0, event.clientY - dragOffsetY), maxTop);
+        fieldList.style.left = `${left}px`;
+        fieldList.style.top = `${top}px`;
+        fieldList.style.right = 'auto';
+    }
+
+    function onPanelPointerUp() {
+        fieldList.classList.remove('dragging');
+        document.removeEventListener('pointermove', onPanelPointerMove);
+        document.removeEventListener('pointerup', onPanelPointerUp);
+    }
+
+    fieldListHeader.addEventListener('pointerdown', (event) => {
+        if (event.target.closest('.field-list-toggle')) return;
+        const rect = fieldList.getBoundingClientRect();
+        dragOffsetX = event.clientX - rect.left;
+        dragOffsetY = event.clientY - rect.top;
+        fieldList.classList.add('dragging');
+        document.addEventListener('pointermove', onPanelPointerMove);
+        document.addEventListener('pointerup', onPanelPointerUp);
+    });
+
+    renderFieldList();
     renderPivot();
     setView('pivot');
 }());
