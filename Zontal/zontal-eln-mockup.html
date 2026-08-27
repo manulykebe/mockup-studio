@@ -192,6 +192,51 @@
             background: #fff
         }
 
+        .sample-id-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            min-height: 2.2rem;
+            padding: .4rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff
+        }
+
+        .sample-id-badge {
+            align-items: center;
+            background: #e8f0fe;
+            border: 1px solid #aecbfa;
+            border-radius: 999px;
+            color: #174ea6;
+            display: inline-flex;
+            font-size: .82rem;
+            gap: .25rem;
+            padding: .16rem .28rem .16rem .55rem
+        }
+
+        .sample-id-remove {
+            align-items: center;
+            background: transparent;
+            border: 0;
+            border-radius: 50%;
+            color: #174ea6;
+            cursor: pointer;
+            display: inline-flex;
+            font: inherit;
+            font-size: 1.05rem;
+            height: 1.1rem;
+            justify-content: center;
+            line-height: 1;
+            padding: 0;
+            width: 1.1rem
+        }
+
+        .sample-id-remove:hover,
+        .sample-id-remove:focus-visible {
+            background: #c6dafc
+        }
+
         .select-with-spinner {
             position: relative
         }
@@ -587,7 +632,7 @@
 
             <div class="field">
                 <label for="sampleId">Sample ID</label>
-                <input type="text" id="sampleId">
+                <div class="sample-id-list" id="sampleId" aria-label="Samples in this experiment"></div>
             </div>
 
             <div class="field">
@@ -1534,7 +1579,7 @@
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
             const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
-            const sampleIdInput = document.getElementById('sampleId');
+            const sampleIdList = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
@@ -1547,8 +1592,11 @@
             if (instrumentIdSelect && instrumentIdSelect.value) {
                 params.set('instrumentId', instrumentIdSelect.value);
             }
-            if (sampleIdInput && sampleIdInput.value) {
-                params.set('sampleId', sampleIdInput.value);
+            const sampleIds = sampleIdList
+                ? Array.from(sampleIdList.querySelectorAll('[data-sample-id]'), (badge) => badge.dataset.sampleId)
+                : [];
+            if (sampleIds.length) {
+                params.set('sampleId', sampleIds.join(','));
             }
             const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
             if (dateOperator) {
@@ -1577,14 +1625,14 @@
         async function applyStateFromUrl() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
-            const sampleIdInput = document.getElementById('sampleId');
+            const sampleIdList = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
             const params = new URLSearchParams(window.location.search);
             const classParam = params.get('instrumentClass');
             const instrumentIdParam = params.get('instrumentId');
-            const sampleIdParam = params.get('sampleId') || '';
+            const sampleIdParam = params.get('sampleId');
             const dateOperatorParam = params.get('dateOperator');
             const dateNotParam = params.get('dateNot') === 'true';
             const dateValue1Param = params.get('dateValue1') || '';
@@ -1603,8 +1651,8 @@
                 instrumentIdSelect.value = instrumentIdParam;
             }
 
-            if (sampleIdInput) {
-                sampleIdInput.value = sampleIdParam;
+            if (sampleIdList && sampleIdParam !== null && typeof window.setExperimentSampleIds === 'function') {
+                window.setExperimentSampleIds(sampleIdParam.split(',').filter(Boolean));
             }
 
             if (dateOperatorParam) {
@@ -1700,7 +1748,9 @@
 
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
-            const sampleIdInput = document.getElementById('sampleId');
+            const sampleIdList = document.getElementById('sampleId');
+            const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347'];
+            let selectedSampleIds = [...experimentSampleIds];
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
@@ -1724,6 +1774,37 @@
             const SEARCH_OPTION_VALUE = '__dropdown_search__';
 
             const allPanels = [measurementPanel, resultPanel];
+
+            function renderSampleIds() {
+                sampleIdList.replaceChildren();
+                selectedSampleIds.forEach((sampleId) => {
+                    const badge = document.createElement('span');
+                    badge.className = 'sample-id-badge';
+                    badge.dataset.sampleId = sampleId;
+                    badge.append(document.createTextNode(sampleId));
+
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.className = 'sample-id-remove';
+                    removeButton.setAttribute('aria-label', `Remove sample ${sampleId}`);
+                    removeButton.title = `Remove ${sampleId}`;
+                    removeButton.textContent = '\u00d7';
+                    removeButton.addEventListener('click', () => {
+                        selectedSampleIds = selectedSampleIds.filter((id) => id !== sampleId);
+                        renderSampleIds();
+                        clearSelectedRecordsOnFilterChange();
+                        updateMeasurementSummary();
+                    });
+                    badge.append(removeButton);
+                    sampleIdList.append(badge);
+                });
+            }
+
+            window.setExperimentSampleIds = (sampleIds) => {
+                selectedSampleIds = experimentSampleIds.filter((sampleId) => sampleIds.includes(sampleId));
+                renderSampleIds();
+            };
+            renderSampleIds();
 
             function setPanelExpanded(panel, expanded) {
                 panel.classList.toggle('collapsed', !expanded);
@@ -1916,11 +1997,6 @@
                 });
             });
 
-            sampleIdInput.addEventListener('input', () => {
-                clearSelectedRecordsOnFilterChange();
-                updateMeasurementSummary();
-            });
-
             dateHelpButton.addEventListener('click', () => {
                 const expanded = dateHelpButton.getAttribute('aria-expanded') === 'true';
                 dateHelpButton.setAttribute('aria-expanded', String(!expanded));
@@ -1969,8 +2045,8 @@
                 if (instrumentIdSelect.value) {
                     parts.push(instrumentIdSelect.value);
                 }
-                if (sampleIdInput.value) {
-                    parts.push(`sample ${sampleIdInput.value}`);
+                if (selectedSampleIds.length) {
+                    parts.push(`samples ${selectedSampleIds.join(', ')}`);
                 }
 
                 const operator = currentDateOperator();
