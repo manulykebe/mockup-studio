@@ -24,7 +24,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .field-list-header{display:flex;align-items:center;justify-content:space-between;gap:.5rem;padding:.7rem .9rem;background:#f1f3f4;border-bottom:1px solid #d9d9d9;cursor:grab;user-select:none}
 .field-list.dragging .field-list-header{cursor:grabbing}
 .field-list-header h3{margin:0;font-size:.9rem}
-.field-list-toggle{border:1px solid transparent;background:none;cursor:pointer;font-size:.85rem;color:#5f6368;padding:.1rem .35rem;line-height:1;border-radius:3px}
+.field-list-toggle{display:inline-flex;align-items:center;justify-content:center;border:1px solid transparent;background:none;cursor:pointer;font-size:.85rem;color:#5f6368;padding:.1rem .35rem;line-height:1;border-radius:3px}
 .field-list-toggle:hover{background:#e3e7ea}
 .field-list-header-actions{display:flex;align-items:center;gap:.25rem}
 .field-list-body{overflow-y:auto}
@@ -137,7 +137,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 <div class="field-list-header" id="fieldListHeader">
 <h3>PivotTable Fields</h3>
 <div class="field-list-header-actions">
-<button type="button" class="field-list-toggle" id="fieldListSaveBtn" title="Save current view to the URL" aria-label="Save current view to the URL">&#128279;</button>
+<button type="button" class="field-list-toggle" id="fieldListSaveBtn" title="Save current view to the URL" aria-label="Save current view to the URL"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l2.83-2.83a5 5 0 0 0-7.07-7.07l-1.5 1.5"></path><path d="M14 11a5 5 0 0 0-7.07 0L4.1 13.83a5 5 0 0 0 7.07 7.07l1.5-1.5"></path></svg></button>
 <button type="button" class="field-list-toggle" id="fieldListToggle" aria-expanded="true" aria-controls="fieldListBody" title="Collapse panel">&#9662;</button>
 </div>
 </div>
@@ -548,7 +548,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
         navigator.clipboard?.writeText(window.location.href).catch(() => {});
         const originalHtml = fieldListSaveBtn.innerHTML;
-        fieldListSaveBtn.innerHTML = '&#9989;';
+        fieldListSaveBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
         window.setTimeout(() => { fieldListSaveBtn.innerHTML = originalHtml; }, 1200);
     });
 
