@@ -10,10 +10,32 @@ table{border-collapse:collapse;width:100%;max-width:100%;font-size:.95rem}
 th,td{border:1px solid #d9d9d9;padding:.55rem .7rem;text-align:left;vertical-align:top}
 th{background:#f1f3f4;white-space:nowrap}
 tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
+.pivot-toolbar{display:flex;align-items:center;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+.pivot-toolbar .view-toggle{display:inline-flex;border:1px solid #d9d9d9;border-radius:999px;overflow:hidden}
+.pivot-toolbar .view-toggle button{border:none;background:#fff;padding:.4rem .9rem;font:inherit;cursor:pointer;color:#5f6368}
+.pivot-toolbar .view-toggle button.active{background:#1a73e8;color:#fff}
+.pivot-toolbar label{font-size:.85rem;color:#5f6368;display:inline-flex;align-items:center;gap:.4rem}
+.pivot-toolbar select{padding:.35rem .5rem;border:1px solid #d9d9d9;border-radius:4px;font:inherit}
+[hidden]{display:none!important}
 </style>
 </head>
 <body>
-<table>
+<div class="pivot-toolbar">
+<div class="view-toggle" role="group" aria-label="Table view">
+<button type="button" id="viewFlatBtn">Flat EAV view</button>
+<button type="button" id="viewPivotBtn" class="active">Pivoted Excel view</button>
+</div>
+<label for="aggregateSelect">Multi-value cells:
+<select id="aggregateSelect">
+<option value="join">Join values</option>
+<option value="badge">Join values + count</option>
+<option value="count">Count only</option>
+<option value="first">First value only</option>
+</select>
+</label>
+</div>
+<div id="pivotContainer"></div>
+<table id="flatTable" hidden>
 <thead><tr><th scope="col">Iri</th><th scope="col">Custom Information Aggregate Iri</th><th scope="col">Measurement Time</th><th scope="col">Sample Identifier</th><th scope="col">Datum Label</th><th scope="col">Index</th><th scope="col">Scalar Double Datum</th><th scope="col">Scalar String Datum</th><th scope="col">Unit</th></tr></thead>
 <tbody>
 <tr><td>urn:uuid:b4d300de-ee12-4488-87e8-25c1fac85109</td><td>urn:uuid:bca0ef6a-ed73-4210-ba2d-659c3af1fbe6</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b</td><td>Instrument serial number</td><td>0</td><td></td><td>MAL1098134</td><td></td></tr>
@@ -81,4 +103,48 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 <tr><td>urn:uuid:19853323-14d6-44fb-aa01-22bab535781b</td><td>urn:uuid:bbe6942a-1120-40c9-83e2-1d3ef5110d47</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b - Average</td><td>SOP Name</td><td>14</td><td></td><td>QAS3001-b</td><td></td></tr>
 <tr><td>urn:uuid:ba8a8f5b-d513-4494-9c7d-46be4e1f5b88</td><td>urn:uuid:bbe6942a-1120-40c9-83e2-1d3ef5110d47</td><td>2015-04-10T08:52:38.000Z</td><td>QAS3001-b - Average</td><td>Sample source type</td><td>15</td><td></td><td>Malvern Instruments</td><td></td></tr>
 </tbody></table>
+<script src="../util-js/pivot-table.js"></script>
+<script>
+(function () {
+    const flatTable = document.getElementById('flatTable');
+    const pivotContainer = document.getElementById('pivotContainer');
+    const viewFlatBtn = document.getElementById('viewFlatBtn');
+    const viewPivotBtn = document.getElementById('viewPivotBtn');
+    const aggregateSelect = document.getElementById('aggregateSelect');
+
+    // one non-empty scalar column is expected per Datum Label row; append the unit when present
+    function extractValue(row) {
+        const value = row['Scalar Double Datum'] || row['Scalar String Datum'] || '';
+        const unit = row['Unit'];
+        return unit ? `${value} ${unit}` : value;
+    }
+
+    function renderPivot() {
+        const { rows } = PivotTable.parseHtmlTable(flatTable);
+        const pivot = PivotTable.pivotTableData(rows, {
+            rowKeys: ['Measurement Time', 'Sample Identifier', 'Custom Information Aggregate Iri'],
+            pivotCol: 'Datum Label',
+            valueFn: extractValue,
+            aggregate: aggregateSelect.value,
+            delimiter: ', '
+        });
+        PivotTable.renderPivotTable(pivotContainer, pivot, { tableId: 'pivotTable' });
+    }
+
+    function setView(view) {
+        const showPivot = view === 'pivot';
+        pivotContainer.hidden = !showPivot;
+        flatTable.hidden = showPivot;
+        viewPivotBtn.classList.toggle('active', showPivot);
+        viewFlatBtn.classList.toggle('active', !showPivot);
+    }
+
+    viewPivotBtn.addEventListener('click', () => setView('pivot'));
+    viewFlatBtn.addEventListener('click', () => setView('flat'));
+    aggregateSelect.addEventListener('change', renderPivot);
+
+    renderPivot();
+    setView('pivot');
+}());
+</script>
 </body></html>
