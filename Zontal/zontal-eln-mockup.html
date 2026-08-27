@@ -1,0 +1,2050 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>mastersizer_2000_vnf_measuremen</title>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/searchbuilder/searchBuilder.dataTables.min.css">
+    <link rel="stylesheet" href="vendor/datatables/datetime/dataTables.dateTime.min.css">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+            color: #202124
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            font-size: .95rem
+        }
+
+        th,
+        td {
+            border: 1px solid #d9d9d9;
+            padding: .55rem .7rem;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: #f1f3f4;
+            cursor: pointer;
+            position: sticky;
+            top: 0;
+            white-space: nowrap
+        }
+
+        th:first-child,
+        td:first-child {
+            width: 1%;
+            text-align: center
+        }
+
+        th:hover {
+            background: #e3e7ea
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa
+        }
+
+        tr:hover {
+            background: #fff4cc
+        }
+
+        #sortableTable {
+            font-size: .82rem;
+        }
+
+        #sortableTable th,
+        #sortableTable td {
+            line-height: 1.2;
+            padding: .3rem .45rem;
+        }
+
+        #sortableTable th {
+            font-size: .78rem;
+        }
+
+        #panel-result .dt-layout-row {
+            margin: .45rem 0;
+        }
+
+        #panel-result .dt-length,
+        #panel-result .dt-search,
+        #panel-result .dt-info,
+        #panel-result .dt-paging {
+            font-size: .78rem;
+        }
+
+        #panel-result .dt-paging-button {
+            min-width: 1.8rem;
+            padding: .25rem .45rem;
+        }
+
+        .page-title {
+            font-size: 1.4rem;
+            margin: 0 0 1.5rem
+        }
+
+        .panel {
+            border: 1px solid #d9d9d9;
+            border-radius: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .panel-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: 0.25rem 0.25rem;
+            background: #f1f3f4;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+            color: #202124
+        }
+
+        .panel-header:hover {
+            background: #e3e7ea
+        }
+
+        .panel[data-disabled="true"] .panel-header {
+            cursor: not-allowed;
+            color: #9aa0a6
+        }
+
+        .panel-chevron {
+            display: inline-block;
+            transition: transform .15s ease;
+            width: 1rem
+        }
+
+        .panel.collapsed .panel-chevron {
+            transform: rotate(-90deg)
+        }
+
+        .panel-title {
+            font-weight: 600;
+            flex: 0 0 auto
+        }
+
+        .panel-summary {
+            margin-left: auto;
+            color: #5f6368;
+            font-size: .85rem;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .panel-body {
+            padding: 1.1rem;
+            border-top: 1px solid #d9d9d9
+        }
+
+        .panel.collapsed .panel-body {
+            display: none
+        }
+
+        .filter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .field label {
+            display: block;
+            font-size: .82rem;
+            font-weight: 600;
+            color: #5f6368;
+            margin-top: .6rem
+        }
+
+        .field select {
+            width: 100%;
+            padding: .45rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font: inherit;
+            background: #fff
+        }
+
+        .field select:disabled {
+            background: #f1f3f4;
+            color: #9aa0a6
+        }
+
+        .field input[type="text"] {
+            padding: .45rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font: inherit;
+            background: #fff
+        }
+
+        .select-with-spinner {
+            position: relative
+        }
+
+        .select-with-spinner .loading-spinner {
+            border-color: rgba(95, 99, 104, .3);
+            border-top-color: #5f6368;
+            position: absolute;
+            right: .7rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1
+        }
+
+        .date-filter {
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            padding: .85rem 1rem 1rem;
+            margin: 0 0 1.1rem
+        }
+
+        .date-filter legend {
+            font-size: .82rem;
+            font-weight: 600;
+            color: #5f6368;
+            padding: 0 .4rem
+        }
+
+        .date-filter-row {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: .75rem;
+            margin-bottom: .75rem
+        }
+
+        .operator-group {
+            display: inline-flex;
+            border: 1px solid #d9d9d9;
+            border-radius: 999px;
+            overflow: hidden;
+            align-items: stretch;
+            height: 2.5rem
+        }
+
+        .operator-option {
+            position: relative;
+            margin: 0;
+            display: flex;
+            align-items: stretch;
+            flex: 0 0 auto;
+            height: 100%
+        }
+
+        .operator-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none
+        }
+
+        .operator-option span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            padding: .4rem .9rem;
+            font-size: .85rem;
+            cursor: pointer;
+            color: #5f6368;
+            border-right: 1px solid #d9d9d9;
+            box-sizing: border-box;
+            line-height: 1.2
+        }
+
+        .operator-option:last-child span {
+            border-right: none
+        }
+
+        .operator-option input:checked+span {
+            background: #1a73e8;
+            color: #fff;
+            border-right-color: transparent
+        }
+
+        .operator-option input:focus-visible+span {
+            outline: 2px solid #1a73e8;
+            outline-offset: -2px
+        }
+
+        .not-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: .35rem;
+            font: inherit;
+            font-size: .85rem;
+            color: #5f6368;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 999px;
+            padding: .3rem .75rem;
+            cursor: pointer;
+            user-select: none;
+            flex: 0 0 auto
+        }
+
+        .not-toggle:hover {
+            background: #f1f3f4
+        }
+
+        .not-toggle .not-icon {
+            font-size: 1rem;
+            line-height: 1
+        }
+
+        .not-toggle[aria-pressed="true"] {
+            background: #fce8e6;
+            border-color: #d93025;
+            color: #d93025
+        }
+
+        .date-filter-values {
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            flex: 0 0 auto
+        }
+
+        .date-input {
+            padding: .4rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font: inherit
+        }
+
+        .date-and {
+            color: #5f6368;
+            font-size: .85rem
+        }
+
+        .date-label-row {
+            align-items: center;
+            display: flex;
+            gap: .4rem
+        }
+
+        .help-button {
+            align-items: center;
+            background: #fff;
+            border: 1px solid #9aa0a6;
+            border-radius: 50%;
+            color: #5f6368;
+            cursor: pointer;
+            display: inline-flex;
+            font-size: .72rem;
+            font-weight: 700;
+            height: 1.15rem;
+            justify-content: center;
+            line-height: 1;
+            padding: 0;
+            width: 1.15rem
+        }
+
+        .help-button:hover,
+        .help-button[aria-expanded="true"] {
+            background: #e8f0fe;
+            border-color: #1a73e8;
+            color: #1a73e8
+        }
+
+        .date-help {
+            align-items: center;
+            background: rgba(32, 33, 36, .4);
+            display: flex;
+            inset: 0;
+            justify-content: center;
+            margin: 0;
+            overflow: auto;
+            padding: 1rem;
+            position: fixed;
+            z-index: 20
+        }
+
+        .date-help[hidden] {
+            display: none
+        }
+
+        .date-help p {
+            margin: 0 0 .55rem
+        }
+
+        .date-help p:last-child {
+            margin-bottom: 0
+        }
+
+        .date-help table {
+            border-collapse: collapse;
+            font-size: inherit;
+            margin-top: .45rem
+        }
+
+        .date-help th,
+        .date-help td {
+            border: 1px solid #d9d9d9;
+            padding: .35rem .55rem
+        }
+
+        .date-help th {
+            background: #e8eaed;
+            color: #3c4043
+        }
+
+        .date-help-content {
+            background: #f8f9fa;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 4px 18px rgba(32, 33, 36, .25);
+            color: #3c4043;
+            font-size: .82rem;
+            line-height: 1.45;
+            margin: auto;
+            max-height: calc(100vh - 2rem);
+            max-width: 56rem;
+            overflow: auto;
+            padding: 1rem 1.1rem
+        }
+
+        .date-help-header {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: .55rem
+        }
+
+        .date-help-header p {
+            margin: 0
+        }
+
+        .date-help-close {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            color: #5f6368;
+            cursor: pointer;
+            font-size: 1.25rem;
+            line-height: 1;
+            padding: .15rem .4rem
+        }
+
+        .date-help-close:hover {
+            background: #e8eaed;
+            color: #202124
+        }
+
+        .panel-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem
+        }
+
+        .btn-primary {
+            align-items: center;
+            background: #1a73e8;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            display: inline-flex;
+            gap: .5rem;
+            padding: .55rem 1.2rem;
+            font: inherit;
+            font-weight: 600;
+            cursor: pointer
+        }
+
+        .loading-spinner {
+            width: .9rem;
+            height: .9rem;
+            border: 2px solid rgba(255, 255, 255, .45);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+        }
+
+        .loading-spinner[hidden] {
+            display: none;
+        }
+
+        .url-loading-modal {
+            align-items: center;
+            background: rgba(32, 33, 36, .35);
+            display: flex;
+            inset: 0;
+            justify-content: center;
+            position: fixed;
+            z-index: 10
+        }
+
+        .url-loading-modal[hidden] {
+            display: none;
+        }
+
+        .url-loading-content {
+            align-items: center;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 4px 16px rgba(32, 33, 36, .2);
+            display: flex;
+            gap: .75rem;
+            padding: 1.1rem 1.35rem;
+            color: #202124;
+            font-weight: 600
+        }
+
+        .url-loading-content .loading-spinner {
+            border-color: rgba(26, 115, 232, .3);
+            border-top-color: #1a73e8;
+            flex: 0 0 auto
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .btn-primary:hover {
+            background: #1765cc
+        }
+
+        .btn-primary:disabled {
+            background: #9aa0a6;
+            cursor: not-allowed
+        }
+
+        .required-mark {
+            color: #d93025;
+            margin-left: .15rem
+        }
+    </style>
+</head>
+
+<body>
+    <div class="url-loading-modal" id="urlLoadingModal" role="dialog" aria-modal="true"
+        aria-labelledby="urlLoadingMessage" hidden>
+        <div class="url-loading-content">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span id="urlLoadingMessage">Loading measurements...</span>
+        </div>
+    </div>
+    <section class="panel" id="panel-measurement">
+        <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-measurement-body">
+            <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+            <span class="panel-title">1. Select Measurement</span>
+            <span class="panel-summary" id="measurementSummary">No filters applied</span>
+        </button>
+        <div class="panel-body" id="panel-measurement-body">
+            <div class="filter-grid">
+                <div class="field">
+                    <label for="instrumentClass">Instrument class <span class="required-mark"
+                            aria-hidden="true">*</span></label>
+                    <select id="instrumentClass" required>
+                        <option value="">Select an instrument class</option>
+                        <option>Calorimeter</option>
+                        <option>Cell Counter</option>
+                        <option>Diffractometer</option>
+                        <option>Dynamic vapor sorption</option>
+                        <option>Flow cytometer</option>
+                        <option>Mass Spectrometer</option>
+                        <option>Microscope</option>
+                        <option>NIR</option>
+                        <option>Particle sizer</option>
+                        <option>Particle characterization</option>
+                        <option>Protein concentration analyzer</option>
+                        <option>Spectrophotometer</option>
+                        <option>Test Class</option>
+                        <option>Testing</option>
+                        <option>XRPD</option>
+                        <option>asfd</option>
+                        <option>qPCR</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="instrumentId">Instrument ID</label>
+                    <div class="select-with-spinner">
+                        <select id="instrumentId" disabled>
+                            <option value="">Select an instrument class first</option>
+                        </select>
+                        <span class="loading-spinner" id="instrumentIdSpinner" aria-label="Loading instrument IDs"
+                            hidden></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field">
+                <label for="sampleId">Sample ID</label>
+                <input type="text" id="sampleId">
+            </div>
+
+            <div class="field">
+                <div class="date-label-row">
+                    <label for="measurementDate">Measurement date</label>
+                    <button type="button" class="help-button" id="dateHelpButton" aria-expanded="false"
+                        aria-controls="dateHelp" title="Explain date operators">?</button>
+                </div>
+                <div class="date-help" id="dateHelp" role="dialog" aria-modal="true" aria-labelledby="dateHelpTitle"
+                    hidden>
+                    <div class="date-help-content">
+                        <div class="date-help-header">
+                            <p id="dateHelpTitle"><strong>Date operator reference</strong></p>
+                            <button type="button" class="date-help-close" id="dateHelpClose"
+                                aria-label="Close date operator help" title="Close">&times;</button>
+                        </div>
+                        <p>The entered date is the boundary. A square bracket means the boundary is included; a
+                            parenthesis
+                            means it is excluded. In this notation, <code>]date[</code> is the same as the usual
+                            <code>(date)</code>. Infinity is never included.
+                        </p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Selection</th>
+                                    <th>Meaning</th>
+                                    <th>Interval notation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Equal</td>
+                                    <td>On the given date</td>
+                                    <td><code>{date}</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Before</td>
+                                    <td>Before the given date; the date itself is excluded</td>
+                                    <td><code>]-infinity, date[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>After</td>
+                                    <td>After the given date; the date itself is excluded</td>
+                                    <td><code>]date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not before</td>
+                                    <td>On or after the given date; the date is included</td>
+                                    <td><code>[date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not after</td>
+                                    <td>On or before the given date; the date is included</td>
+                                    <td><code>]-infinity, date]</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not equal</td>
+                                    <td>Any date except the given date</td>
+                                    <td><code>]-infinity, date[ union ]date, +infinity[</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Between</td>
+                                    <td>Between the two dates, including both boundaries</td>
+                                    <td><code>[date1, date2]</code></td>
+                                </tr>
+                                <tr>
+                                    <td>Not between</td>
+                                    <td>Outside the range, excluding both boundary dates</td>
+                                    <td><code>]-infinity, date1[ union ]date2, +infinity[</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <fieldset class="date-filter">
+                    <div class="date-filter-row">
+                        <button type="button" id="dateNot" class="not-toggle" aria-pressed="false"
+                            title="Negate this filter">
+                            <span class="not-icon" aria-hidden="true">&#8856;</span>
+                            <span>Not</span>
+                        </button>
+                        <div class="operator-group" role="radiogroup" aria-label="Date comparison operator">
+                            <label class="operator-option">
+                                <input type="radio" name="dateOperator" value="equal" checked>
+                                <span>Equal</span>
+                            </label>
+                            <label class="operator-option">
+                                <input type="radio" name="dateOperator" value="before">
+                                <span>Before</span>
+                            </label>
+                            <label class="operator-option">
+                                <input type="radio" name="dateOperator" value="after">
+                                <span>After</span>
+                            </label>
+                            <label class="operator-option">
+                                <input type="radio" name="dateOperator" value="between">
+                                <span>Between</span>
+                            </label>
+                        </div>
+                        <div class="date-filter-values">
+                            <input type="date" id="dateValue1" class="date-input" aria-label="Date value">
+                            <span class="date-and" id="dateAndLabel" hidden>and</span>
+                            <input type="date" id="dateValue2" class="date-input" aria-label="End date value" hidden>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="panel-actions">
+                <button type="button" class="btn-primary" id="showResultsBtn" disabled>
+                    <span class="loading-spinner" aria-hidden="true" hidden></span>
+                    <span>Show results</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel collapsed" id="panel-result" data-disabled="true">
+        <button type="button" class="panel-header" aria-expanded="false" aria-controls="panel-result-body" disabled>
+            <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+            <span class="panel-title">2. Select Result</span>
+            <span class="panel-summary" id="resultSummary">Complete step 1 first</span>
+        </button>
+        <div class="panel-body" id="panel-result-body">
+            <table id="sortableTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Iri</th>
+                        <th scope="col">Index</th>
+                        <th scope="col">Measurement Time</th>
+                        <th scope="col">Sample Identifier</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>urn:uuid:1ed4b622-447c-45ba-b4bf-26445c96ecaf</td>
+                        <td>0</td>
+                        <td>2015-04-10T08:52:38.000Z</td>
+                        <td>QAS3001-b</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:604e49b7-987c-4475-adee-7b46cbcc0ae7</td>
+                        <td>1</td>
+                        <td>2015-04-10T08:53:15.000Z</td>
+                        <td>QAS3001-b</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:358a01a9-6a8f-4730-958c-8ae255049bf8</td>
+                        <td>2</td>
+                        <td>2015-04-10T08:53:52.000Z</td>
+                        <td>QAS3001-b</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:d35df8f7-ad6f-4020-8c1c-db3cce9ce69c</td>
+                        <td>3</td>
+                        <td>2015-04-10T08:52:38.000Z</td>
+                        <td>QAS3001-b - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c7920c59-e01b-418c-9f2c-ecba4f93b6bd</td>
+                        <td>4</td>
+                        <td>2015-04-10T10:25:34.000Z</td>
+                        <td>15222759 BDH 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:721d2d3b-1253-43c8-8d48-eee6aea56336</td>
+                        <td>5</td>
+                        <td>2015-04-10T10:26:31.000Z</td>
+                        <td>15222759 BDH 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c6bce9fa-13c2-4d90-8e73-693146bbdc9c</td>
+                        <td>6</td>
+                        <td>2015-04-10T10:27:28.000Z</td>
+                        <td>15222759 BDH 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a01bbd96-8b18-4c77-a86b-6888958b0f92</td>
+                        <td>7</td>
+                        <td>2015-04-10T10:25:34.000Z</td>
+                        <td>15222759 BDH 1 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:3a4b531c-acd4-446f-acb8-3d8a5def1a07</td>
+                        <td>8</td>
+                        <td>2015-04-10T11:07:23.000Z</td>
+                        <td>15222759 BDH 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:be47050d-d41d-4fb5-b494-7c9b89069c33</td>
+                        <td>9</td>
+                        <td>2015-04-10T11:08:20.000Z</td>
+                        <td>15222759 BDH 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c093b942-39b4-4a60-86a2-d29dc8368f5e</td>
+                        <td>10</td>
+                        <td>2015-04-10T11:09:17.000Z</td>
+                        <td>15222759 BDH 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:5409fc40-08f6-4ade-84c7-3f3f68386f5a</td>
+                        <td>11</td>
+                        <td>2015-04-10T11:07:23.000Z</td>
+                        <td>15222759 BDH 2 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:345716d8-cc8c-484b-8b1e-b30d5caf5ae4</td>
+                        <td>12</td>
+                        <td>2015-04-10T11:47:33.000Z</td>
+                        <td>15222759 BDH 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:584e7146-2fc7-4f09-8f5d-8bcd86fb3afd</td>
+                        <td>13</td>
+                        <td>2015-04-10T11:48:30.000Z</td>
+                        <td>15222759 BDH 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:65cb56a2-11a3-49a9-8d03-363b6ea3bc6c</td>
+                        <td>14</td>
+                        <td>2015-04-10T11:49:27.000Z</td>
+                        <td>15222759 BDH 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:1df6d506-20d9-43ca-9252-53d347e087ed</td>
+                        <td>15</td>
+                        <td>2015-04-10T11:47:33.000Z</td>
+                        <td>15222759 BDH 3 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:dfd0e38d-cfa0-4448-83d4-f46a4a80f089</td>
+                        <td>16</td>
+                        <td>2015-04-10T12:09:18.000Z</td>
+                        <td>15222759 BDH 4</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ed485e03-4ae7-4e4a-a6b1-40a4718b8e76</td>
+                        <td>17</td>
+                        <td>2015-04-10T12:10:15.000Z</td>
+                        <td>15222759 BDH 4</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:46ef3ad1-78eb-4c28-ac0b-6ca0104fb60e</td>
+                        <td>18</td>
+                        <td>2015-04-10T12:11:12.000Z</td>
+                        <td>15222759 BDH 4</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a94bdbe3-0d1a-46be-a5d8-57826d458d85</td>
+                        <td>19</td>
+                        <td>2015-04-10T12:09:18.000Z</td>
+                        <td>15222759 BDH 4 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c60fe508-bdb6-407a-b354-3ae1a7f70a01</td>
+                        <td>20</td>
+                        <td>2015-04-10T12:33:08.000Z</td>
+                        <td>15222759 EMD 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:995c6163-35cf-40bb-8263-278cc831ebaa</td>
+                        <td>21</td>
+                        <td>2015-04-10T12:34:05.000Z</td>
+                        <td>15222759 EMD 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:9bdde30a-bb11-4899-b3b2-4fa841fb5ad4</td>
+                        <td>22</td>
+                        <td>2015-04-10T12:35:02.000Z</td>
+                        <td>15222759 EMD 1</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:2017b615-caa8-4d10-90b3-bfa7272b8186</td>
+                        <td>23</td>
+                        <td>2015-04-10T12:33:08.000Z</td>
+                        <td>15222759 EMD 1 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:507ff3e6-99e8-4bed-b5e1-fd539cbab332</td>
+                        <td>24</td>
+                        <td>2015-04-10T13:07:50.000Z</td>
+                        <td>15222759 EMD 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:69b5d15d-a4fd-4d52-9560-898d7c480ed7</td>
+                        <td>25</td>
+                        <td>2015-04-10T13:08:48.000Z</td>
+                        <td>15222759 EMD 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:61e68b81-80e7-4eb8-b9fa-0da782557046</td>
+                        <td>26</td>
+                        <td>2015-04-10T13:09:45.000Z</td>
+                        <td>15222759 EMD 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:cb8403b6-d442-479a-8ade-924f5987ed1f</td>
+                        <td>27</td>
+                        <td>2015-04-10T13:07:50.000Z</td>
+                        <td>15222759 EMD 2 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:828f3a3e-d3b9-4b35-bde9-20785aedaac7</td>
+                        <td>28</td>
+                        <td>2015-04-10T13:33:24.000Z</td>
+                        <td>15222759 EMD 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c8c73ccf-d62e-4e10-be54-7315d971c71a</td>
+                        <td>29</td>
+                        <td>2015-04-10T13:34:21.000Z</td>
+                        <td>15222759 EMD 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:86018b83-65f4-4d4b-ac2a-b17840b55de2</td>
+                        <td>30</td>
+                        <td>2015-04-10T13:35:18.000Z</td>
+                        <td>15222759 EMD 3</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:eb86e50c-1a5a-4811-be28-47e064ea4db0</td>
+                        <td>31</td>
+                        <td>2015-04-10T13:33:24.000Z</td>
+                        <td>15222759 EMD 3 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:8af0e979-70f3-431e-82c9-a4461f7f1a26</td>
+                        <td>32</td>
+                        <td>2015-04-10T13:47:30.000Z</td>
+                        <td>15222759 EMD External Sonication</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:b71892b4-a1ab-49e2-b560-48aeb9d8197e</td>
+                        <td>33</td>
+                        <td>2015-04-10T13:48:27.000Z</td>
+                        <td>15222759 EMD External Sonication</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:68cce924-2b97-4f5e-9e69-5069ee566e87</td>
+                        <td>34</td>
+                        <td>2015-04-10T13:49:25.000Z</td>
+                        <td>15222759 EMD External Sonication</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:e805b85d-318e-43a1-822e-3d6700da5bda</td>
+                        <td>35</td>
+                        <td>2015-04-10T13:47:30.000Z</td>
+                        <td>15222759 EMD External Sonication - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:e6e27c61-33d9-4716-8676-c127e06c96d0</td>
+                        <td>36</td>
+                        <td>2015-04-10T14:02:19.000Z</td>
+                        <td>15222759 External Sonication 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:30c5a8a2-691e-4e07-be38-dd06e87261db</td>
+                        <td>37</td>
+                        <td>2015-04-10T14:03:17.000Z</td>
+                        <td>15222759 External Sonication 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:d1446e48-d0cc-4d58-800d-f3b606d41b0d</td>
+                        <td>38</td>
+                        <td>2015-04-10T14:04:14.000Z</td>
+                        <td>15222759 External Sonication 2</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:28515501-26ce-4e36-a916-85b838288f24</td>
+                        <td>39</td>
+                        <td>2015-04-10T14:02:19.000Z</td>
+                        <td>15222759 External Sonication 2 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ffd19dd3-4d26-4ea8-95a2-07dd226bd8ce</td>
+                        <td>40</td>
+                        <td>2015-04-10T14:16:22.000Z</td>
+                        <td>15222759 External Sonication BDH</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:1abafc53-562b-47d4-9424-590d6a3e4a8e</td>
+                        <td>41</td>
+                        <td>2015-04-10T14:17:19.000Z</td>
+                        <td>15222759 External Sonication BDH</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ff209e6b-1c0b-4108-8ed0-4f148bf4d811</td>
+                        <td>42</td>
+                        <td>2015-04-10T14:18:16.000Z</td>
+                        <td>15222759 External Sonication BDH</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:2a84e8dd-89a6-406e-af71-89ae1fc7c165</td>
+                        <td>43</td>
+                        <td>2015-04-10T14:16:22.000Z</td>
+                        <td>15222759 External Sonication BDH - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:e40c29e9-89a6-4f2c-af7c-64518b7d6aeb</td>
+                        <td>44</td>
+                        <td>2015-04-13T14:48:42.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:b39713f9-f557-4d9d-a40f-a5e526b797b6</td>
+                        <td>45</td>
+                        <td>2015-04-13T14:49:44.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:55d4f535-20a0-4dd7-8393-32ae54f251e2</td>
+                        <td>46</td>
+                        <td>2015-04-13T14:50:41.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:3de44c12-fe41-4a5d-97c9-71698575c991</td>
+                        <td>47</td>
+                        <td>2015-04-13T14:48:42.000Z</td>
+                        <td>14GN973 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:53f17aa6-f51f-412b-b27d-2b5eeaee8ffb</td>
+                        <td>48</td>
+                        <td>2015-04-13T15:01:54.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:33a6064a-69e7-491f-ba6e-713bd5148a75</td>
+                        <td>49</td>
+                        <td>2015-04-13T15:02:51.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:b10be268-483b-49cb-a3f2-bf2bcf1944d0</td>
+                        <td>50</td>
+                        <td>2015-04-13T15:03:49.000Z</td>
+                        <td>14GN973</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:07a836c2-b1a6-40aa-a352-20cb229e4ace</td>
+                        <td>51</td>
+                        <td>2015-04-13T15:01:54.000Z</td>
+                        <td>14GN973 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:44823977-c2c3-4ded-917d-f3db2f667595</td>
+                        <td>52</td>
+                        <td>2015-04-13T15:15:51.000Z</td>
+                        <td>13NN430</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:0bf760f3-3f89-4af3-8996-883882289861</td>
+                        <td>53</td>
+                        <td>2015-04-13T15:16:48.000Z</td>
+                        <td>13NN430</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:7a5dbedc-c6d7-4ca3-9aec-3c20695a0cbc</td>
+                        <td>54</td>
+                        <td>2015-04-13T15:17:45.000Z</td>
+                        <td>13NN430</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ade4bcd6-d42a-4b46-ad03-e302f25cd6f5</td>
+                        <td>55</td>
+                        <td>2015-04-13T15:15:51.000Z</td>
+                        <td>13NN430 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a84d8e69-b8d0-4c96-9998-1e0c27aa01f7</td>
+                        <td>56</td>
+                        <td>2015-04-13T15:29:11.000Z</td>
+                        <td>13EN930</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:69bb1ce0-27c9-40b7-87db-688df0cc17e5</td>
+                        <td>57</td>
+                        <td>2015-04-13T15:30:08.000Z</td>
+                        <td>13EN930</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:9379b098-1192-4418-adaa-138d8f211328</td>
+                        <td>58</td>
+                        <td>2015-04-13T15:31:05.000Z</td>
+                        <td>13EN930</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ed7dbbb4-90f4-44b7-a2ae-0bcca19a57b0</td>
+                        <td>59</td>
+                        <td>2015-04-13T15:29:11.000Z</td>
+                        <td>13EN930 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:e1dd118e-892e-4218-af1a-02f8fac17aa8</td>
+                        <td>60</td>
+                        <td>2015-04-13T16:03:49.000Z</td>
+                        <td>13NN431</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:75377964-6563-49f0-9f75-9214c32361a9</td>
+                        <td>61</td>
+                        <td>2015-04-13T16:04:46.000Z</td>
+                        <td>13NN431</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:94e4f4ce-041c-4b2e-a1c6-bf620c8a5e3f</td>
+                        <td>62</td>
+                        <td>2015-04-13T16:05:43.000Z</td>
+                        <td>13NN431</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:5d9fe06a-14cc-4348-af9f-0b8fac1fb0b8</td>
+                        <td>63</td>
+                        <td>2015-04-13T16:03:49.000Z</td>
+                        <td>13NN431 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:bfae64e6-9c1b-4de4-bc56-784c1e174a78</td>
+                        <td>64</td>
+                        <td>2015-04-13T16:17:19.000Z</td>
+                        <td>13NN433</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:eee1c92a-77ae-49a1-aab9-78852baeea00</td>
+                        <td>65</td>
+                        <td>2015-04-13T16:18:16.000Z</td>
+                        <td>13NN433</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ba08ed41-4d3e-4ff6-9373-e0ff9502760e</td>
+                        <td>66</td>
+                        <td>2015-04-13T16:19:13.000Z</td>
+                        <td>13NN433</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:19218a86-e9c1-436d-aa6a-6911f7415497</td>
+                        <td>67</td>
+                        <td>2015-04-13T16:17:19.000Z</td>
+                        <td>13NN433 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:697c10ea-522f-43e5-a0cc-c12a7519f1fd</td>
+                        <td>68</td>
+                        <td>2015-04-14T10:13:34.000Z</td>
+                        <td>14CN689</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:59781039-89b6-4db3-b181-8b00ba150349</td>
+                        <td>69</td>
+                        <td>2015-04-14T10:14:31.000Z</td>
+                        <td>14CN689</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:724dd4bf-0dc2-49ca-8737-9a8d99d03b31</td>
+                        <td>70</td>
+                        <td>2015-04-14T10:15:29.000Z</td>
+                        <td>14CN689</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:f53d3a55-5e78-4a9f-93da-74170ae23725</td>
+                        <td>71</td>
+                        <td>2015-04-14T10:13:34.000Z</td>
+                        <td>14CN689 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ffa195b6-34fa-4ffd-8a13-73d89919785c</td>
+                        <td>72</td>
+                        <td>2015-04-14T10:25:42.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:6adb32ef-949f-495e-848a-3701fa67c0dc</td>
+                        <td>73</td>
+                        <td>2015-04-14T10:26:39.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ae4abdd3-d7b5-4d8a-93a5-ce1df67d6778</td>
+                        <td>74</td>
+                        <td>2015-04-14T10:27:36.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:97679336-6405-41c4-ac14-901d7e92551d</td>
+                        <td>75</td>
+                        <td>2015-04-14T10:25:42.000Z</td>
+                        <td>14EN903 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:52f544d2-c2f7-470b-92ca-a6a921266571</td>
+                        <td>76</td>
+                        <td>2015-04-14T10:35:34.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:7d7f8217-b493-49e9-afe0-be7a665c04b3</td>
+                        <td>77</td>
+                        <td>2015-04-14T10:36:31.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:9f6c4c28-ffed-4285-91b3-b6d49e24bd93</td>
+                        <td>78</td>
+                        <td>2015-04-14T10:37:28.000Z</td>
+                        <td>14EN903</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a37ef4d7-e070-465f-8c2a-164c2ae90a9b</td>
+                        <td>79</td>
+                        <td>2015-04-14T10:35:34.000Z</td>
+                        <td>14EN903 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:dbf3e356-2ac1-44fa-8255-a85e8ca2a5e8</td>
+                        <td>80</td>
+                        <td>2015-04-14T10:54:15.000Z</td>
+                        <td>15BN604</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:bd13ab79-461c-41d3-9195-22c5faa8af70</td>
+                        <td>81</td>
+                        <td>2015-04-14T10:55:13.000Z</td>
+                        <td>15BN604</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:3370bb1b-555a-44db-99f0-923e8a27bd00</td>
+                        <td>82</td>
+                        <td>2015-04-14T10:56:10.000Z</td>
+                        <td>15BN604</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ea8857f1-288c-43e6-9f16-819724e37474</td>
+                        <td>83</td>
+                        <td>2015-04-14T10:54:15.000Z</td>
+                        <td>15BN604 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:f59de158-2944-4892-839d-66c73d5d27fc</td>
+                        <td>84</td>
+                        <td>2015-04-14T11:05:51.000Z</td>
+                        <td>15BN597</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:82a2021f-72e3-442a-9f5e-76523ab791e1</td>
+                        <td>85</td>
+                        <td>2015-04-14T11:06:48.000Z</td>
+                        <td>15BN597</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:00f8c020-deb8-4a73-9753-043411bc5e16</td>
+                        <td>86</td>
+                        <td>2015-04-14T11:07:45.000Z</td>
+                        <td>15BN597</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:f127ca09-82c7-41a6-9b34-7043d3798bc6</td>
+                        <td>87</td>
+                        <td>2015-04-14T11:05:51.000Z</td>
+                        <td>15BN597 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:6f76b1a2-32b5-4ebc-bc31-9c4393339d9f</td>
+                        <td>88</td>
+                        <td>2015-04-14T14:10:23.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c8d3b5d2-4d4b-4442-a55f-691209b0634c</td>
+                        <td>89</td>
+                        <td>2015-04-14T14:11:20.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:91718ded-4003-49b0-b31b-5a6e1bd796ea</td>
+                        <td>90</td>
+                        <td>2015-04-14T14:12:18.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:2b3770d8-70a3-41f0-a9b4-a0e3593af12d</td>
+                        <td>91</td>
+                        <td>2015-04-14T14:10:23.000Z</td>
+                        <td>14GN982 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:5be3ff20-53d6-4d3c-861f-6156734ef10c</td>
+                        <td>92</td>
+                        <td>2015-04-14T14:20:08.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:de853ee3-dc0e-43c4-bc74-20e103cfd458</td>
+                        <td>93</td>
+                        <td>2015-04-14T14:21:06.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:f10bd711-04ed-4349-9140-f9f910af50b4</td>
+                        <td>94</td>
+                        <td>2015-04-14T14:22:03.000Z</td>
+                        <td>14GN982</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:25e21f75-0c97-4a12-8da8-b62dd29538bd</td>
+                        <td>95</td>
+                        <td>2015-04-14T14:20:08.000Z</td>
+                        <td>14GN982 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c8679dfd-c35a-44cd-8d13-b238c0522d1b</td>
+                        <td>96</td>
+                        <td>2015-04-14T14:31:27.000Z</td>
+                        <td>14GN972</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:9a460f55-7e78-4975-90ed-eb860ad27ba2</td>
+                        <td>97</td>
+                        <td>2015-04-14T14:32:24.000Z</td>
+                        <td>14GN972</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:fbd80532-5518-4479-8bef-7b52d1b4ce50</td>
+                        <td>98</td>
+                        <td>2015-04-14T14:33:21.000Z</td>
+                        <td>14GN972</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:5cc90b29-9718-4197-a801-c07d8dd9b733</td>
+                        <td>99</td>
+                        <td>2015-04-14T14:31:27.000Z</td>
+                        <td>14GN972 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:1902b1cc-a484-43f1-8ad4-a4aa9bf1b018</td>
+                        <td>100</td>
+                        <td>2015-04-14T14:42:01.000Z</td>
+                        <td>14GN975</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:80e715b3-db27-4ea5-bbe4-3a4fa8ef8c96</td>
+                        <td>101</td>
+                        <td>2015-04-14T14:42:59.000Z</td>
+                        <td>14GN975</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:fac28128-5633-444d-a76e-177bbab37d68</td>
+                        <td>102</td>
+                        <td>2015-04-14T14:43:56.000Z</td>
+                        <td>14GN975</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a0362b69-96fa-448d-9401-7d46a2916baa</td>
+                        <td>103</td>
+                        <td>2015-04-14T14:42:01.000Z</td>
+                        <td>14GN975 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:0146713c-111a-4f8b-83bb-91ae78e70454</td>
+                        <td>104</td>
+                        <td>2015-04-14T15:17:59.000Z</td>
+                        <td>14CN685</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:3adf8928-9f3f-4acd-a558-3e10c1e90f2a</td>
+                        <td>105</td>
+                        <td>2015-04-14T15:18:56.000Z</td>
+                        <td>14CN685</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:03fed2db-67b3-4f49-96af-3d2b99ab5299</td>
+                        <td>106</td>
+                        <td>2015-04-14T15:19:53.000Z</td>
+                        <td>14CN685</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:1d207970-c21e-4509-bb72-d02182f153c6</td>
+                        <td>107</td>
+                        <td>2015-04-14T15:17:59.000Z</td>
+                        <td>14CN685 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:bfcbbc8d-fc12-45b9-a760-39bb4f8dda7d</td>
+                        <td>108</td>
+                        <td>2015-04-14T15:48:10.000Z</td>
+                        <td>13HN141</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:ef3065ee-4f28-41ae-8d80-ca8a0acbe8a9</td>
+                        <td>109</td>
+                        <td>2015-04-14T15:49:07.000Z</td>
+                        <td>13HN141</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:a3be40c2-9949-4597-8ecb-ee5f034eea76</td>
+                        <td>110</td>
+                        <td>2015-04-14T15:50:04.000Z</td>
+                        <td>13HN141</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:5065c11b-41a2-48de-ba42-aadb3993e550</td>
+                        <td>111</td>
+                        <td>2015-04-14T15:48:10.000Z</td>
+                        <td>13HN141 - Average</td>
+                    </tr>
+                    <tr>
+                        <td>urn:uuid:c1ca74bd-ef2c-498b-ae7d-27e23953d023</td>
+                        <td>112</td>
+                        <td>2015-04-29T17:15:14.000Z</td>
+                        <td>TAH 15CN680</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="panel-actions">
+                <button type="button" class="btn-primary" id="importElnBtn" disabled>Import results in ELN</button>
+            </div>
+        </div>
+    </section>
+    <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
+    <script src="vendor/datatables/moment.min.js"></script>
+    <script src="vendor/datatables/dataTables.min.js"></script>
+    <script src="vendor/datatables/datetime/dataTables.dateTime.min.js"></script>
+    <script src="vendor/datatables/searchbuilder/dataTables.searchBuilder.min.js"></script>
+    <script>
+        const tableElement = document.getElementById('sortableTable');
+        const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
+            Array.from(row.cells, (cell) => cell.textContent.trim())
+        );
+
+        const selectedIris = new Set();
+        const availableIris = new Set(tableData.map((row) => row[0].trim()));
+
+        const dataTable = new DataTable(tableElement, {
+            data: tableData,
+            columns: [
+                {
+                    title: '<input type="checkbox" id="selectAllVisible" aria-label="Select all visible rows">',
+                    data: null,
+                    orderable: true,
+                    searchable: false,
+                    type: 'num',
+                    render: (data, type, row) => {
+                        const iri = row[0].trim();
+                        const isSelected = selectedIris.has(iri);
+
+                        if (type === 'display') {
+                            const checked = isSelected ? ' checked' : '';
+                            return `<input type="checkbox" class="row-select" value="${iri}" aria-label="Select record ${iri}"${checked}>`;
+                        }
+
+                        // sort/type/filter requests need a plain comparable value, not markup
+                        return isSelected ? 1 : 0;
+                    }
+                },
+                { title: 'Iri', data: 0 },
+                { title: 'Index', data: 1 },
+                {
+                    title: 'Measurement Time',
+                    data: 2,
+                    // parses the ISO 8601 source string for chronological sort/search and displays date + time
+                    render: DataTable.render.date('YYYY-MM-DD HH:mm:ss')
+                },
+                { title: 'Sample Identifier', data: 3 }
+            ],
+            order: [],
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            searchBuilder: {
+                // exclude the checkbox column (index 0), whose title is markup rather than a label
+                columns: [1, 2, 3, 4]
+            },
+            layout: {
+                // top1: 'searchBuilder',
+                topStart: 'pageLength',
+                topEnd: 'search',
+                bottomStart: 'info',
+                bottomEnd: 'paging'
+            }
+        });
+
+        const selectAllCheckbox = document.getElementById('selectAllVisible');
+        const importElnBtn = document.getElementById('importElnBtn');
+
+        function getVisibleRowCheckboxes() {
+            return dataTable.rows({ page: 'current' }).nodes().toArray()
+                .map((row) => row.querySelector('.row-select'));
+        }
+
+        function updateImportElnButtonState() {
+            importElnBtn.disabled = selectedIris.size === 0;
+        }
+
+        importElnBtn.addEventListener('click', () => {
+            if (importElnBtn.disabled) {
+                return;
+            }
+            if (typeof window.syncUrlWithState === 'function') {
+                window.syncUrlWithState();
+            }
+            window.location.assign(window.location.href);
+        });
+
+        function updateSelectAllState() {
+            const visibleCheckboxes = getVisibleRowCheckboxes();
+            const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedIris.has(cb.value)).length;
+            selectAllCheckbox.checked = visibleCheckboxes.length > 0 && selectedVisibleCount === visibleCheckboxes.length;
+            selectAllCheckbox.indeterminate = selectedVisibleCount > 0 && selectedVisibleCount < visibleCheckboxes.length;
+        }
+
+        function syncVisibleRowCheckboxes() {
+            getVisibleRowCheckboxes().forEach((checkbox) => {
+                checkbox.checked = selectedIris.has(checkbox.value);
+            });
+        }
+
+        // rebuilds just the info text's selection suffix, without a full draw() that would re-sort rows
+        function updateInfoText() {
+            const infoNode = dataTable.table().container().querySelector('.dt-info');
+            if (!infoNode) {
+                return;
+            }
+
+            const info = dataTable.page.info();
+            const selectedVisibleCount = getVisibleRowCheckboxes().filter((cb) => selectedIris.has(cb.value)).length;
+            const base = info.recordsDisplay === 0
+                ? 'Showing 0 to 0 of 0 entries'
+                : `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`;
+            const filtered = info.recordsDisplay !== info.recordsTotal
+                ? ` (filtered from ${info.recordsTotal} total entries)`
+                : '';
+            infoNode.innerHTML = `${base}${filtered} — <strong>${selectedIris.size}</strong> selected ` +
+                `(<strong>${selectedVisibleCount}</strong> on this page)`;
+        }
+
+        function refreshSelectionUi() {
+            syncVisibleRowCheckboxes();
+            updateSelectAllState();
+            updateInfoText();
+            updateImportElnButtonState();
+        }
+
+        function syncUrlWithState() {
+            const instrumentClassSelect = document.getElementById('instrumentClass');
+            const instrumentIdSelect = document.getElementById('instrumentId');
+            const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
+            const sampleIdInput = document.getElementById('sampleId');
+            const dateNotToggle = document.getElementById('dateNot');
+            const dateValue1 = document.getElementById('dateValue1');
+            const dateValue2 = document.getElementById('dateValue2');
+            const params = new URLSearchParams();
+            const selectedList = Array.from(selectedIris).join(',');
+
+            if (instrumentClassSelect && instrumentClassSelect.value) {
+                params.set('instrumentClass', instrumentClassSelect.value);
+            }
+            if (instrumentIdSelect && instrumentIdSelect.value) {
+                params.set('instrumentId', instrumentIdSelect.value);
+            }
+            if (sampleIdInput && sampleIdInput.value) {
+                params.set('sampleId', sampleIdInput.value);
+            }
+            const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
+            if (dateOperator) {
+                params.set('dateOperator', dateOperator.value);
+            }
+            if (dateNotToggle) {
+                params.set('dateNot', String(dateNotToggle.getAttribute('aria-pressed') === 'true'));
+            }
+            if (dateValue1 && dateValue1.value) {
+                params.set('dateValue1', dateValue1.value);
+            }
+            if (dateValue2 && dateValue2.value) {
+                params.set('dateValue2', dateValue2.value);
+            }
+            if (selectedList) {
+                params.set('selected', selectedList);
+            }
+
+            const nextUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+            const currentUrl = `${window.location.pathname}${window.location.search}`;
+            if (currentUrl !== nextUrl) {
+                window.history.replaceState({}, '', nextUrl);
+            }
+        }
+
+        async function applyStateFromUrl() {
+            const instrumentClassSelect = document.getElementById('instrumentClass');
+            const instrumentIdSelect = document.getElementById('instrumentId');
+            const sampleIdInput = document.getElementById('sampleId');
+            const dateNotToggle = document.getElementById('dateNot');
+            const dateValue1 = document.getElementById('dateValue1');
+            const dateValue2 = document.getElementById('dateValue2');
+            const params = new URLSearchParams(window.location.search);
+            const classParam = params.get('instrumentClass');
+            const instrumentIdParam = params.get('instrumentId');
+            const sampleIdParam = params.get('sampleId') || '';
+            const dateOperatorParam = params.get('dateOperator');
+            const dateNotParam = params.get('dateNot') === 'true';
+            const dateValue1Param = params.get('dateValue1') || '';
+            const dateValue2Param = params.get('dateValue2') || '';
+            const selectedParam = params.get('selected') || '';
+
+            if (classParam && instrumentClassSelect) {
+                instrumentClassSelect.value = classParam;
+                if (typeof window.loadInstrumentIds === 'function') {
+                    await window.loadInstrumentIds(classParam);
+                }
+            }
+
+            if (instrumentIdParam && instrumentIdSelect
+                && Array.from(instrumentIdSelect.options).some((option) => option.value === instrumentIdParam)) {
+                instrumentIdSelect.value = instrumentIdParam;
+            }
+
+            if (sampleIdInput) {
+                sampleIdInput.value = sampleIdParam;
+            }
+
+            if (dateOperatorParam) {
+                const radio = document.querySelector(`input[name="dateOperator"][value="${dateOperatorParam}"]`);
+                if (radio) {
+                    radio.checked = true;
+                }
+            }
+
+            if (dateNotToggle) {
+                dateNotToggle.setAttribute('aria-pressed', String(dateNotParam));
+            }
+            if (dateValue1) {
+                dateValue1.value = dateValue1Param;
+            }
+            if (dateValue2) {
+                dateValue2.value = dateValue2Param;
+            }
+
+            selectedIris.clear();
+            selectedParam.split(',')
+                .filter((iri) => availableIris.has(iri))
+                .forEach((iri) => selectedIris.add(iri));
+
+            if (dataTable) {
+                dataTable.draw(false);
+            }
+
+            document.querySelectorAll('.row-select').forEach((checkbox) => {
+                checkbox.checked = selectedIris.has(checkbox.value);
+            });
+
+            if (typeof updateDateInputsVisibility === 'function') {
+                updateDateInputsVisibility();
+            }
+            if (typeof updateMeasurementSummary === 'function') {
+                updateMeasurementSummary();
+            }
+        }
+
+        window.syncUrlWithState = syncUrlWithState;
+        window.applyStateFromUrl = applyStateFromUrl;
+
+        tableElement.addEventListener('change', (event) => {
+            if (!event.target.classList.contains('row-select')) {
+                return;
+            }
+
+            const iri = event.target.value;
+            if (event.target.checked) {
+                selectedIris.add(iri);
+            } else {
+                selectedIris.delete(iri);
+            }
+
+            // keep the order data fresh for the next real sort, but don't reorder rows just from selecting
+            dataTable.cell(event.target.closest('td')).invalidate();
+            refreshSelectionUi();
+        });
+
+        // stop header th click-to-sort from firing when the checkbox itself is clicked
+        selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
+
+        selectAllCheckbox.addEventListener('change', () => {
+            const checked = selectAllCheckbox.checked;
+            getVisibleRowCheckboxes().forEach((checkbox) => {
+                checkbox.checked = checked;
+                if (checked) {
+                    selectedIris.add(checkbox.value);
+                } else {
+                    selectedIris.delete(checkbox.value);
+                }
+            });
+
+            dataTable.rows({ page: 'current' }).invalidate();
+            refreshSelectionUi();
+        });
+
+        dataTable.on('draw', refreshSelectionUi);
+        refreshSelectionUi();
+    </script>
+
+    <script>
+        (async function () {
+            const instrumentIdsByClass = {
+                'Calorimeter': ['CAL-001', 'CAL-002', 'CAL-014'],
+                'Cell Counter': ['CC-3100', 'CC-3200'],
+                'Diffractometer': ['DIFF-A1', 'DIFF-B2'],
+                'Particle sizer': ['MASTERSIZER-2000', 'MASTERSIZER-3000'],
+                'Spectrophotometer': ['UV-1800', 'UV-2600'],
+                'XRPD': ['XRPD-01', 'XRPD-02']
+            };
+
+            const instrumentClassSelect = document.getElementById('instrumentClass');
+            const instrumentIdSelect = document.getElementById('instrumentId');
+            const sampleIdInput = document.getElementById('sampleId');
+            const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
+            const dateNotToggle = document.getElementById('dateNot');
+            const dateValue1 = document.getElementById('dateValue1');
+            const dateValue2 = document.getElementById('dateValue2');
+            const dateHelpButton = document.getElementById('dateHelpButton');
+            const dateHelp = document.getElementById('dateHelp');
+            const dateHelpClose = document.getElementById('dateHelpClose');
+            const dateAndLabel = document.getElementById('dateAndLabel');
+            const measurementSummary = document.getElementById('measurementSummary');
+            const showResultsBtn = document.getElementById('showResultsBtn');
+            const showResultsSpinner = showResultsBtn.querySelector('.loading-spinner');
+            const urlLoadingModal = document.getElementById('urlLoadingModal');
+            const measurementPanel = document.getElementById('panel-measurement');
+            const resultPanel = document.getElementById('panel-result');
+            const resultSummary = document.getElementById('resultSummary');
+            const operatorLabels = { equal: 'on', before: 'before', after: 'after', between: 'between' };
+            let restoringUrlState = false;
+            const selectSearchTerms = new WeakMap();
+            const selectSearchTimers = new WeakMap();
+            const selectPreSearchValues = new WeakMap();
+            const SEARCH_OPTION_VALUE = '__dropdown_search__';
+
+            const allPanels = [measurementPanel, resultPanel];
+
+            function setPanelExpanded(panel, expanded) {
+                panel.classList.toggle('collapsed', !expanded);
+                panel.querySelector('.panel-header').setAttribute('aria-expanded', String(expanded));
+            }
+
+            function getSearchOption(select) {
+                return select.querySelector('option[data-search-option="true"]');
+            }
+
+            // shows the typed term as the select's current (disabled) option so it stays visible while closed
+            function showTypedTermInSelect(select, term) {
+                let searchOption = getSearchOption(select);
+                if (!searchOption) {
+                    searchOption = new Option('', SEARCH_OPTION_VALUE, false, false);
+                    searchOption.dataset.searchOption = 'true';
+                    searchOption.disabled = true;
+                    select.insertBefore(searchOption, select.firstChild);
+                }
+                searchOption.textContent = term;
+                select.value = SEARCH_OPTION_VALUE;
+            }
+
+            function filterSelectFromKeyboard(select, term) {
+                const normalizedTerm = term.toLowerCase();
+                Array.from(select.options).forEach((option) => {
+                    if (option.dataset.searchOption === 'true') {
+                        return;
+                    }
+                    option.hidden = Boolean(normalizedTerm)
+                        && !option.textContent.toLowerCase().includes(normalizedTerm);
+                });
+            }
+
+            function clearSelectKeyboardFilter(select, restorePreviousValue) {
+                selectSearchTerms.delete(select);
+                window.clearTimeout(selectSearchTimers.get(select));
+                selectSearchTimers.delete(select);
+
+                const searchOption = getSearchOption(select);
+                if (searchOption) {
+                    searchOption.remove();
+                }
+                Array.from(select.options).forEach((option) => {
+                    option.hidden = false;
+                });
+
+                if (restorePreviousValue && selectPreSearchValues.has(select)) {
+                    select.value = selectPreSearchValues.get(select);
+                }
+                selectPreSearchValues.delete(select);
+            }
+
+            [instrumentClassSelect, instrumentIdSelect].forEach((select) => {
+                select.addEventListener('keydown', (event) => {
+                    if (select.disabled) {
+                        return;
+                    }
+
+                    if (event.key === 'Escape') {
+                        clearSelectKeyboardFilter(select, true);
+                        return;
+                    }
+
+                    const hasActiveTerm = selectSearchTerms.has(select);
+                    let nextTerm;
+                    if (event.key === 'Backspace') {
+                        event.preventDefault();
+                        nextTerm = (selectSearchTerms.get(select) || '').slice(0, -1);
+                    } else if (event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey) {
+                        event.preventDefault();
+                        nextTerm = `${selectSearchTerms.get(select) || ''}${event.key}`;
+                    } else {
+                        return;
+                    }
+
+                    if (!hasActiveTerm) {
+                        selectPreSearchValues.set(select, select.value);
+                    }
+
+                    if (!nextTerm) {
+                        clearSelectKeyboardFilter(select, true);
+                        return;
+                    }
+
+                    selectSearchTerms.set(select, nextTerm);
+                    showTypedTermInSelect(select, nextTerm);
+                    filterSelectFromKeyboard(select, nextTerm);
+
+                    window.clearTimeout(selectSearchTimers.get(select));
+                    selectSearchTimers.set(select, window.setTimeout(() => {
+                        clearSelectKeyboardFilter(select, true);
+                    }, 1500));
+                });
+
+                select.addEventListener('change', () => {
+                    if (select.value !== SEARCH_OPTION_VALUE) {
+                        clearSelectKeyboardFilter(select, false);
+                    }
+                });
+
+                select.addEventListener('blur', () => clearSelectKeyboardFilter(select, true));
+            });
+
+            // accordion behavior: expanding one panel collapses the others
+            document.querySelectorAll('.panel-header').forEach((header) => {
+                header.addEventListener('click', () => {
+                    const panel = header.closest('.panel');
+                    if (panel.dataset.disabled === 'true') {
+                        return;
+                    }
+                    const expand = panel.classList.contains('collapsed');
+                    allPanels.forEach((other) => setPanelExpanded(other, other === panel && expand));
+                });
+            });
+
+            function getInstrumentIds(selectedClass) {
+                return instrumentIdsByClass[selectedClass]
+                    || (selectedClass ? [`${selectedClass.toUpperCase().replace(/\s+/g, '-')}-01`] : []);
+            }
+
+            function clearSelectedRecordsOnFilterChange() {
+                if (restoringUrlState || selectedIris.size === 0) {
+                    return;
+                }
+                selectedIris.clear();
+                dataTable.rows().invalidate();
+                refreshSelectionUi();
+            }
+
+            function loadInstrumentIds(selectedClass) {
+                instrumentIdSpinner.hidden = !selectedClass;
+                instrumentIdSelect.disabled = true;
+
+                return new Promise((resolve) => {
+                    window.setTimeout(() => {
+                        const ids = getInstrumentIds(selectedClass);
+                        instrumentIdSelect.innerHTML = '';
+                        if (!selectedClass) {
+                            instrumentIdSelect.appendChild(new Option('Select an instrument class first', ''));
+                        } else {
+                            instrumentIdSelect.appendChild(new Option('Any instrument ID', ''));
+                            ids.forEach((id) => instrumentIdSelect.appendChild(new Option(id, id)));
+                        }
+                        instrumentIdSelect.disabled = !selectedClass;
+                        instrumentIdSpinner.hidden = true;
+                        resolve();
+                    }, 650);
+                });
+            }
+
+            window.loadInstrumentIds = loadInstrumentIds;
+
+            instrumentClassSelect.addEventListener('change', async () => {
+                const selectedClass = instrumentClassSelect.value;
+                clearSelectedRecordsOnFilterChange();
+                showResultsBtn.disabled = true;
+                await loadInstrumentIds(selectedClass);
+                showResultsBtn.disabled = !selectedClass;
+                updateMeasurementSummary();
+            });
+
+            instrumentIdSelect.addEventListener('change', () => {
+                clearSelectedRecordsOnFilterChange();
+                updateMeasurementSummary();
+            });
+
+            function currentDateOperator() {
+                return document.querySelector('input[name="dateOperator"]:checked').value;
+            }
+
+            // only "between" needs a second date, everything else is a single-value comparison
+            function updateDateInputsVisibility() {
+                const isBetween = currentDateOperator() === 'between';
+                dateAndLabel.hidden = !isBetween;
+                dateValue2.hidden = !isBetween;
+            }
+
+            dateNotToggle.addEventListener('click', () => {
+                clearSelectedRecordsOnFilterChange();
+                const isPressed = dateNotToggle.getAttribute('aria-pressed') === 'true';
+                dateNotToggle.setAttribute('aria-pressed', String(!isPressed));
+                updateMeasurementSummary();
+            });
+
+            [dateValue1, dateValue2].forEach((el) => {
+                el.addEventListener('change', () => {
+                    clearSelectedRecordsOnFilterChange();
+                    updateMeasurementSummary();
+                });
+            });
+
+            sampleIdInput.addEventListener('input', () => {
+                clearSelectedRecordsOnFilterChange();
+                updateMeasurementSummary();
+            });
+
+            dateHelpButton.addEventListener('click', () => {
+                const expanded = dateHelpButton.getAttribute('aria-expanded') === 'true';
+                dateHelpButton.setAttribute('aria-expanded', String(!expanded));
+                dateHelp.hidden = expanded;
+                if (!expanded) {
+                    dateHelpClose.focus();
+                }
+            });
+
+            function closeDateHelp() {
+                dateHelpButton.setAttribute('aria-expanded', 'false');
+                dateHelp.hidden = true;
+                dateHelpButton.focus();
+            }
+
+            dateHelpClose.addEventListener('click', closeDateHelp);
+
+            dateHelp.addEventListener('click', (event) => {
+                if (event.target === dateHelp) {
+                    closeDateHelp();
+                }
+            });
+
+            dateHelp.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && dateHelpButton.getAttribute('aria-expanded') === 'true') {
+                    closeDateHelp();
+                }
+            });
+
+            // once results have been shown, any further filter change invalidates them until "Show results" runs again
+            function resetResultsPanel() {
+                if (resultPanel.dataset.disabled === 'true') {
+                    return;
+                }
+                resultPanel.dataset.disabled = 'true';
+                resultPanel.querySelector('.panel-header').disabled = true;
+                setPanelExpanded(resultPanel, false);
+                resultSummary.textContent = '';
+            }
+
+            function updateMeasurementSummary() {
+                const parts = [];
+                if (instrumentClassSelect.value) {
+                    parts.push(instrumentClassSelect.value);
+                }
+                if (instrumentIdSelect.value) {
+                    parts.push(instrumentIdSelect.value);
+                }
+                if (sampleIdInput.value) {
+                    parts.push(`sample ${sampleIdInput.value}`);
+                }
+
+                const operator = currentDateOperator();
+                const not = dateNotToggle.getAttribute('aria-pressed') === 'true';
+                const value1 = dateValue1.value;
+                const value2 = dateValue2.value;
+                if (operator === 'between') {
+                    if (value1 && value2) {
+                        parts.push(`${not ? 'not ' : ''}between ${value1} and ${value2}`);
+                    }
+                } else if (value1) {
+                    parts.push(`${not ? 'not ' : ''}${operatorLabels[operator]} ${value1}`);
+                }
+
+                measurementSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
+                resetResultsPanel();
+            }
+
+            showResultsBtn.addEventListener('click', () => {
+                if (showResultsBtn.disabled) {
+                    return;
+                }
+
+                showResultsBtn.disabled = true;
+                showResultsSpinner.hidden = false;
+                urlLoadingModal.hidden = false;
+                window.setTimeout(() => {
+                    resultPanel.dataset.disabled = 'false';
+                    resultPanel.querySelector('.panel-header').disabled = false;
+                    setPanelExpanded(resultPanel, true);
+                    setPanelExpanded(measurementPanel, false);
+                    resultSummary.textContent = measurementSummary.textContent === 'No filters applied'
+                        ? 'All measurements'
+                        : measurementSummary.textContent;
+
+                    showResultsSpinner.hidden = true;
+                    showResultsBtn.disabled = false;
+                    urlLoadingModal.hidden = true;
+
+                    // the results panel was hidden while DataTable computed initial column widths, recalc now that it's visible
+                    dataTable.columns.adjust().draw(false);
+                }, 650);
+            });
+
+            dateOperatorInputs.forEach((input) => {
+                input.addEventListener('change', () => {
+                    clearSelectedRecordsOnFilterChange();
+                    updateDateInputsVisibility();
+                    updateMeasurementSummary();
+                });
+            });
+
+            const loadingFromUrl = window.location.search.length > 1;
+            if (loadingFromUrl) {
+                urlLoadingModal.hidden = false;
+            }
+
+            restoringUrlState = true;
+            await applyStateFromUrl();
+            restoringUrlState = false;
+            showResultsBtn.disabled = !instrumentClassSelect.value;
+            updateDateInputsVisibility();
+            updateMeasurementSummary();
+
+            if (!showResultsBtn.disabled) {
+                showResultsBtn.click();
+            }
+
+            if (loadingFromUrl) {
+                await new Promise((resolve) => window.setTimeout(resolve, showResultsBtn.disabled ? 0 : 700));
+                urlLoadingModal.hidden = true;
+            }
+        })();
+    </script>
+</body>
+
+</html>

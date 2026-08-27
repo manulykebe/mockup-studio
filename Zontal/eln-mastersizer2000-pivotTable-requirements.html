@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requirements Specification - ELN Mastersizer 2000 Pivot Table</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background-color: #f6f8fa;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 40px;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        h1 {
+            font-size: 26px;
+            color: #0366d6;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h2 {
+            font-size: 20px;
+            color: #1b1f23;
+            border-bottom: 1px solid #e1e4e8;
+            padding-bottom: 6px;
+            margin-top: 30px;
+        }
+        h3 {
+            font-size: 16px;
+            color: #24292e;
+            margin-top: 20px;
+            margin-bottom: 8px;
+        }
+        p, li {
+            font-size: 14px;
+        }
+        ul, ol {
+            padding-left: 24px;
+            margin-top: 6px;
+            margin-bottom: 14px;
+        }
+        li {
+            margin-bottom: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+            font-size: 13px;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 8px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #111827;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        code, kbd {
+            font-family: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 12px;
+            background-color: #f3f4f6;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: #1f2937;
+        }
+        .meta-table {
+            margin-bottom: 25px;
+        }
+        .meta-table td {
+            padding: 6px 10px;
+        }
+        .meta-label {
+            font-weight: 600;
+            width: 20%;
+            background-color: #f6f8fa;
+        }
+        .callout {
+            background-color: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .callout-title {
+            font-weight: 600;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+        .change-callout {
+            background-color: #fff7ed;
+            border-left-color: #d97706;
+        }
+        .change-callout .callout-title {
+            color: #9a3412;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 7px;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1;
+            border-radius: 10px;
+            color: #ffffff;
+            white-space: nowrap;
+        }
+        .badge-req { background-color: #dc2626; }
+        .badge-opt { background-color: #4b5563; }
+        .badge-must { background-color: #2563eb; }
+        .badge-should { background-color: #d97706; }
+        .badge-added { background-color: #16a34a; }
+        .badge-changed { background-color: #d97706; }
+        .badge-existing { background-color: #6b7280; }
+        .gherkin {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            padding: 12px 16px;
+            font-family: SFMono-Regular, Consolas, monospace;
+            font-size: 12.5px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            margin: 10px 0 16px 0;
+        }
+        .gherkin-kw { color: #7c3aed; font-weight: bold; }
+        .status-added { background-color: #f0fdf4; }
+        .status-changed { background-color: #fff7ed; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Functional &amp; Technical Requirements Specification</h1>
+    <p><strong>System Interface: ELN Mastersizer 2000 Pivot Table</strong></p>
+
+    <table class="meta-table">
+        <tr>
+            <td class="meta-label">Document Title</td>
+            <td>Functional Requirements Document (FRD) - ELN Mastersizer 2000 Pivot Table</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Source Mockup</td>
+            <td><code>Zontal/eln-mastersizer2000-pivotTable.html</code></td>
+        </tr>
+        <tr>
+            <td class="meta-label">Supporting Component</td>
+            <td><code>util-js/pivot-table.js</code></td>
+        </tr>
+        <tr>
+            <td class="meta-label">Target Integration</td>
+            <td>Electronic Lab Notebook (ELN) measurement review and reporting workflow</td>
+        </tr>
+        <tr>
+            <td class="meta-label">Status &amp; Version</td>
+            <td><strong>Draft (v0.2)</strong> <span class="badge badge-changed">VERSION UPDATE</span></td>
+        </tr>
+        <tr>
+            <td class="meta-label">Last Updated</td>
+            <td>August 27, 2026</td>
+        </tr>
+    </table>
+
+    <div class="callout change-callout">
+        <div class="callout-title">Version 0.2 Change Legend</div>
+        Requirements marked <span class="badge badge-added">ADDED v0.2</span> or <span class="badge badge-changed">CHANGED v0.2</span> are new or revised in this version. Requirements marked <span class="badge badge-existing">BASELINE</span> describe functionality already present in the source mockup and retained in v0.2. The change register below is the authoritative summary of what was added or changed.
+    </div>
+
+    <div class="callout">
+        <div class="callout-title">Executive Summary</div>
+        This document specifies an interactive pivot-table experience for reviewing Mastersizer 2000 measurement data in an ELN context. Users can configure row, column, and value dimensions; reorder fields; filter visible row and column values; rename displayed labels without losing their source names; choose appropriate aggregation behavior; and save a reproducible view in the URL. Version 0.2 formalizes the expanded value aggregation model, including numeric statistics, unit-aware calculation behavior, and a plain multi-value table presentation.
+    </div>
+
+    <h2>1. Business Context &amp; Objectives</h2>
+    <ul>
+        <li><strong>Business Need:</strong> Laboratory users need to inspect repeated Mastersizer 2000 measurements in a compact, configurable view while preserving the relationship between source data and displayed labels.</li>
+        <li><strong>Primary Goal:</strong> Provide an Excel-like pivot experience that supports rapid comparison of measurements, controlled aggregation, and reproducible view configuration.</li>
+        <li><strong>Data Integrity Goal:</strong> Calculations MUST only be performed on values originating from <code>Scalar Double Datum</code>. Text values originating from <code>Scalar String Datum</code> MUST remain visible through joined or tabular presentation rather than being treated as numeric data.</li>
+        <li><strong>Target Persona:</strong> Analytical Scientists, QC Analysts, and Lab Managers reviewing particle-size measurements in the ELN.</li>
+    </ul>
+
+    <h2>2. Scope &amp; Workflow</h2>
+    <p>The interface provides two complementary views of the same source table:</p>
+    <ol>
+        <li><strong>Flat view:</strong> Displays the source records and source fields without pivot manipulation.</li>
+        <li><strong>Pivoted view:</strong> Displays grouped records according to user-selected Rows, Columns, and Values field zones.</li>
+    </ol>
+    <p>The pivot workflow is:</p>
+    <ol>
+        <li>Review fields in the Available list.</li>
+        <li>Drag fields into Rows, Columns, or Values zones.</li>
+        <li>Reorder fields within a zone.</li>
+        <li>Configure visibility, value order, labels, and aggregation.</li>
+        <li>Save the current configuration as a URL-reproducible view.</li>
+    </ol>
+
+    <h2>3. Version 0.2 Change Register</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Change ID</th>
+                <th style="width: 25%;">Area</th>
+                <th style="width: 15%;">Status</th>
+                <th>What is added or changed in v0.2</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="status-added">
+                <td><code>CHG-02-01</code></td>
+                <td>Value aggregation</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td>Adds a <code>Table</code> aggregation option beside <code>Join</code>. Multiple values render as one plain, unformatted row-per-value table; a single value remains plain text.</td>
+            </tr>
+            <tr class="status-added">
+                <td><code>CHG-02-02</code></td>
+                <td>Numeric statistics</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td>Adds <code>Average</code>, <code>Std Dev</code>, and <code>Count</code> options for numeric-capable Values fields.</td>
+            </tr>
+            <tr class="status-changed">
+                <td><code>CHG-02-03</code></td>
+                <td>Numeric source rule</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td>Clarifies that calculations are valid only for values originating from <code>Scalar Double Datum</code>. Non-numeric <code>Scalar String Datum</code> values fall back to joined text.</td>
+            </tr>
+            <tr class="status-changed">
+                <td><code>CHG-02-04</code></td>
+                <td>Units</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td>Average and standard deviation results MUST retain the applicable source unit, such as <code>55.075 µm</code> or <code>0.0028 µm</code>. Count has no unit.</td>
+            </tr>
+            <tr class="status-added">
+                <td><code>CHG-02-05</code></td>
+                <td>Aggregation symbols</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td>Adds visual result markers: <code>⋯</code> for joined multi-values, <code>①</code> for First over multiple values, <code>Ø</code> for Average, <code>σ</code> for Std Dev, and <code>#</code> for Count. The Table presentation has no symbol.</td>
+            </tr>
+            <tr class="status-added">
+                <td><code>CHG-02-06</code></td>
+                <td>Multiple Values fields</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td>When more than one field is assigned to Values, the pivot MUST use one output column per column group and render a compact name/value table inside each cell.</td>
+            </tr>
+            <tr class="status-added">
+                <td><code>CHG-02-07</code></td>
+                <td>Column chip labels</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td>Users can rename field and value chips by double-clicking their labels. The new label is shown in black and the original source label remains visible in grey below it. A reset control is positioned left of the original label.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>4. Detailed Functional Requirements</h2>
+
+    <h3>4.1. View and Field-Zone Management (FR-VIEW)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-VIEW-01</code></td>
+                <td>Flat/Pivoted Views</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The interface MUST provide Flat view and Pivoted view controls. Pivoted view MUST be the initial active view.</td>
+            </tr>
+            <tr>
+                <td><code>FR-VIEW-02</code></td>
+                <td>Available Fields</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The Available list MUST contain source fields not assigned to Rows, Columns, or Values. A field MUST appear in only one zone at a time.</td>
+            </tr>
+            <tr>
+                <td><code>FR-VIEW-03</code></td>
+                <td>Drag-and-Drop Assignment</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Users MUST be able to drag a field into a zone and reorder it relative to existing fields. The resulting order MUST control grouping or value-field order.</td>
+            </tr>
+            <tr>
+                <td><code>FR-VIEW-04</code></td>
+                <td>Multiple Values Chips</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The Values zone MUST support multiple field chips concurrently. Each Values chip MUST retain its own aggregation selection and display label.</td>
+            </tr>
+            <tr>
+                <td><code>FR-VIEW-05</code></td>
+                <td>Collapsible Field Panel</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-should">SHOULD</span></td>
+                <td>The field panel SHOULD be collapsible and draggable. Its collapsed state and position SHOULD remain usable without changing pivot results.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.2. Rows and Columns Configuration (FR-DIM)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-DIM-01</code></td>
+                <td>Row Grouping</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Rows fields MUST group records by the selected source values. Hidden row fields MUST continue to participate in grouping even when their output column is hidden.</td>
+            </tr>
+            <tr>
+                <td><code>FR-DIM-02</code></td>
+                <td>Row Visibility</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Each Rows chip MUST expose a visibility checkbox. Unchecking it MUST hide only the rendered row column and MUST NOT remove its grouping behavior.</td>
+            </tr>
+            <tr>
+                <td><code>FR-DIM-03</code></td>
+                <td>Column Value Expansion</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Each Columns field MUST be expandable to show distinct values. Distinct values MUST be reorderable and individually hideable.</td>
+            </tr>
+            <tr>
+                <td><code>FR-DIM-04</code></td>
+                <td>Value-Order Preservation</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Custom ordering of distinct column values MUST be preserved in the rendered pivot column order.</td>
+            </tr>
+            <tr>
+                <td><code>FR-DIM-05</code></td>
+                <td>Column Value Labels</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Users MUST be able to rename a distinct value chip without changing the raw source value used for grouping, ordering, or visibility. The custom label MUST be used only for display headers.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.3. Chip Renaming and Label Integrity (FR-LABEL)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-LABEL-01</code></td>
+                <td>Inline Rename Trigger</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Double-clicking a label on a Rows, Columns, Values, or expanded column-value chip MUST replace the label with an inline text input.</td>
+            </tr>
+            <tr>
+                <td><code>FR-LABEL-02</code></td>
+                <td>Dual Label Display</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>After renaming, the new label MUST appear in black above the original label. The original label MUST remain visible in grey below it so source meaning is never lost.</td>
+            </tr>
+            <tr>
+                <td><code>FR-LABEL-03</code></td>
+                <td>Reset Behavior</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>A reset control MUST appear immediately to the left of the original label. Activating it, or submitting an empty label, MUST restore the original display.</td>
+            </tr>
+            <tr>
+                <td><code>FR-LABEL-04</code></td>
+                <td>Keyboard Completion</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Enter or blur MUST commit a rename. Escape MUST cancel the edit. Dragging MUST resume after editing.</td>
+            </tr>
+            <tr>
+                <td><code>FR-LABEL-05</code></td>
+                <td>Safe Text Rendering</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>User-entered labels MUST render as literal text and MUST NOT be interpreted as HTML or script.</td>
+            </tr>
+            <tr>
+                <td><code>FR-LABEL-06</code></td>
+                <td>Displayed Header Propagation</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Custom Rows labels MUST update row headers. Custom column-value labels MUST update pivot column headers. Custom Values labels MUST be used in multi-value cell labels.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.4. Value Aggregation (FR-AGG)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-AGG-01</code></td>
+                <td>Join</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Join MUST concatenate values using the configured delimiter. For multiple raw values, the result MUST be prefixed with <code>⋯</code>; a single raw value MUST remain unmarked.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-02</code></td>
+                <td>First</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>First MUST return the first value in source order. When multiple values were reduced, the result MUST be prefixed with <code>①</code>.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-03</code></td>
+                <td>Table</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Table MUST render multiple raw values as one value per row in a plain, unformatted table. A single raw value MUST render as plain text without a containing table. No aggregation symbol MUST be shown for Table.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-04</code></td>
+                <td>Numeric Option Availability</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Average, Std Dev, and Count MUST be offered when the selected field contains numeric-capable source data. The UI labels SHOULD identify them as numeric-only options.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-05</code></td>
+                <td>Average</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Average MUST calculate the arithmetic mean of numeric Scalar Double Datum values and prefix the result with <code>Ø</code>.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-06</code></td>
+                <td>Standard Deviation</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Std Dev MUST calculate sample standard deviation using numeric Scalar Double Datum values and prefix the result with <code>σ</code>. A cell with fewer than two numeric values MUST return an empty result.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-07</code></td>
+                <td>Numeric Count</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Count MUST count numeric Scalar Double Datum values and prefix the result with <code>#</code>.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-08</code></td>
+                <td>Non-Numeric Fallback</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>If a selected Value cell contains text from Scalar String Datum, Average, Std Dev, and Count MUST NOT calculate. They MUST fall back to joined raw values, including the normal <code>⋯</code> marker when more than one value is joined.</td>
+            </tr>
+            <tr>
+                <td><code>FR-AGG-09</code></td>
+                <td>Unit Preservation</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Average and Std Dev MUST append the applicable source unit after the calculated number, for example <code>Ø 55.075 µm</code> and <code>σ 0.0028 µm</code>. Count MUST remain unitless.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.5. Multiple Values Fields (FR-MULTI)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-MULTI-01</code></td>
+                <td>Combined Output Column</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>When more than one Values field is selected, each column group MUST produce one output column rather than one column per Values field.</td>
+            </tr>
+            <tr>
+                <td><code>FR-MULTI-02</code></td>
+                <td>Name/Value Cell Table</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Each combined cell MUST contain a compact table with one row per Values field: the displayed field name in the first column and the aggregated content in the second column.</td>
+            </tr>
+            <tr>
+                <td><code>FR-MULTI-03</code></td>
+                <td>Stable Raw Keys</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Combined rendering MUST NOT alter grouping, ordering, hidden-value filtering, or raw cell identity. These operations MUST continue to use original source values and field names.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4.6. URL Persistence (FR-STATE)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 15%;">Req ID</th>
+                <th style="width: 20%;">Feature</th>
+                <th style="width: 15%;">Status</th>
+                <th style="width: 10%;">Priority</th>
+                <th>Requirement Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>FR-STATE-01</code></td>
+                <td>Save View</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>The Save current view action MUST serialize the active pivot configuration into the <code>pivot</code> URL parameter without reloading the page.</td>
+            </tr>
+            <tr>
+                <td><code>FR-STATE-02</code></td>
+                <td>Layout Restoration</td>
+                <td><span class="badge badge-existing">BASELINE</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>On load, valid Rows, Columns, Values, aggregation, visibility, order, expansion, and panel state MUST be restored.</td>
+            </tr>
+            <tr>
+                <td><code>FR-STATE-03</code></td>
+                <td>Rename Restoration</td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+                <td><span class="badge badge-must">MUST</span></td>
+                <td>Field labels and per-column-value labels MUST be serialized and restored. Restored labels MUST affect display only and MUST NOT replace raw data keys.</td>
+            </tr>
+            <tr>
+                <td><code>FR-STATE-04</code></td>
+                <td>Backward Compatibility</td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span></td>
+                <td><span class="badge badge-should">SHOULD</span></td>
+                <td>Saved views created before v0.2 SHOULD load with default labels and existing aggregation behavior when the new state properties are absent.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>5. Data Dictionary &amp; Aggregation Contract</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Source Field</th>
+                <th>Role</th>
+                <th>Data Type</th>
+                <th>Rules</th>
+                <th>Example</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>Scalar Double Datum</code></td>
+                <td>Numeric source</td>
+                <td>Decimal number</td>
+                <td>Eligible for Average, Std Dev, and Count. Unit is taken from the corresponding <code>Unit</code> field.</td>
+                <td><code>55.073</code></td>
+            </tr>
+            <tr>
+                <td><code>Scalar String Datum</code></td>
+                <td>Text source</td>
+                <td>String</td>
+                <td>Not eligible for numeric calculations. Values MUST be joined or shown with Table aggregation.</td>
+                <td><code>MAL1098134</code></td>
+            </tr>
+            <tr>
+                <td><code>Unit</code></td>
+                <td>Numeric qualifier</td>
+                <td>String</td>
+                <td>Appended to Average and Std Dev results when present.</td>
+                <td><code>µm</code></td>
+            </tr>
+            <tr>
+                <td><code>Datum Label</code></td>
+                <td>Column dimension</td>
+                <td>String</td>
+                <td>Distinct values become pivot column groups and can be reordered, hidden, or relabeled.</td>
+                <td><code>D [3, 2] - Surface weighted mean</code></td>
+            </tr>
+            <tr>
+                <td><code>Value</code></td>
+                <td>Derived Values field</td>
+                <td>String or numeric-with-unit display value</td>
+                <td>Derived from Scalar Double Datum plus Unit, or Scalar String Datum when no double datum exists.</td>
+                <td><code>55.073 µm</code></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>6. Acceptance Criteria</h2>
+
+    <h3>Scenario 1: Numeric Average with Unit</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the Values zone contains the derived field <code>Value</code>
+<span class="gherkin-kw">And</span> a pivot cell contains Scalar Double Datum values 55.073 and 55.077 with Unit "µm"
+<span class="gherkin-kw">When</span> the user selects "Average (num only)"
+<span class="gherkin-kw">Then</span> the cell displays "Ø 55.075 µm"
+<span class="gherkin-kw">And</span> the raw source values remain unchanged.</div>
+
+    <h3>Scenario 2: Non-Numeric Fallback</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> a pivot cell contains Scalar String Datum values "MAL1098134" and "MAL1098134 bis"
+<span class="gherkin-kw">When</span> the user selects "Average (num only)" or "Count (num only)"
+<span class="gherkin-kw">Then</span> no numeric calculation is performed
+<span class="gherkin-kw">And</span> the cell displays the joined text prefixed with "⋯"
+<span class="gherkin-kw">And</span> the text values are not discarded.</div>
+
+    <h3>Scenario 3: Table Aggregation</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> a pivot cell contains more than one source value
+<span class="gherkin-kw">When</span> the user selects "Table"
+<span class="gherkin-kw">Then</span> the cell displays one raw value per row in a plain, unformatted table
+<span class="gherkin-kw">And</span> no Table icon or other aggregation symbol is displayed
+<span class="gherkin-kw">When</span> the cell contains only one source value
+<span class="gherkin-kw">Then</span> the value is displayed as plain text without a containing table.</div>
+
+    <h3>Scenario 4: Multiple Values Fields</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the Values zone contains "Value" and "Index"
+<span class="gherkin-kw">When</span> the pivot is rendered
+<span class="gherkin-kw">Then</span> each column group contains one output column
+<span class="gherkin-kw">And</span> each populated cell contains a two-column table
+<span class="gherkin-kw">And</span> the first column contains the Values chip name
+<span class="gherkin-kw">And</span> the second column contains its aggregated content.</div>
+
+    <h3>Scenario 5: Rename and Restore a Chip</h3>
+    <div class="gherkin"><span class="gherkin-kw">Given</span> the user double-clicks the "Sample Identifier" Rows chip label
+<span class="gherkin-kw">When</span> the user enters "Sample ID" and presses Enter
+<span class="gherkin-kw">Then</span> "Sample ID" is shown in black
+<span class="gherkin-kw">And</span> "Sample Identifier" remains visible in grey beneath it
+<span class="gherkin-kw">And</span> the reset control appears immediately to the left of the grey original label
+<span class="gherkin-kw">And</span> the rendered row header is "Sample ID"
+<span class="gherkin-kw">When</span> the user saves the view and reloads the URL
+<span class="gherkin-kw">Then</span> both labels and the rendered header are restored.</div>
+
+    <h2>7. Non-Functional Requirements</h2>
+    <ul>
+        <li><strong>NFR-01: Data Integrity:</strong> Raw source field names and values MUST remain available as stable keys for grouping, sorting, filtering, and persistence.</li>
+        <li><strong>NFR-02: Accessibility:</strong> Interactive controls MUST expose meaningful labels. Rename inputs MUST be keyboard operable. Reset controls MUST identify the original label.</li>
+        <li><strong>NFR-03: Security:</strong> User-entered chip labels MUST be rendered as text and MUST NOT create executable or interpreted HTML content.</li>
+        <li><strong>NFR-04: Compatibility:</strong> The shared pivot utility MUST preserve existing behavior for callers that do not use v0.2 label, multi-value, or aggregation features.</li>
+        <li><strong>NFR-05: Readability:</strong> The new name/value tables MUST remain legible when multiple Values fields are selected. A single-value cell MUST avoid unnecessary table markup.</li>
+    </ul>
+
+    <h2>8. Traceability Summary</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Capability</th>
+                <th>Source Implementation Surface</th>
+                <th>Requirements</th>
+                <th>Version 0.2 Treatment</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Field zones and pivot grouping</td>
+                <td><code>renderFieldList()</code>, <code>assignField()</code>, <code>pivotTableData()</code></td>
+                <td><code>FR-VIEW</code>, <code>FR-DIM</code></td>
+                <td><span class="badge badge-existing">BASELINE</span> retained and clarified</td>
+            </tr>
+            <tr>
+                <td>Chip renaming</td>
+                <td><code>createEditableLabel()</code>, label state serialization</td>
+                <td><code>FR-LABEL</code>, <code>FR-STATE-03</code></td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+            </tr>
+            <tr>
+                <td>Numeric calculations</td>
+                <td><code>makeScalarAggregate()</code>, <code>toNumber()</code>, numeric aggregators</td>
+                <td><code>FR-AGG-04</code> through <code>FR-AGG-09</code></td>
+                <td><span class="badge badge-changed">CHANGED v0.2</span> source and unit rules made explicit</td>
+            </tr>
+            <tr>
+                <td>Table aggregation</td>
+                <td><code>AGGREGATORS.table</code>, <code>renderCell()</code></td>
+                <td><code>FR-AGG-03</code></td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+            </tr>
+            <tr>
+                <td>Multiple Values presentation</td>
+                <td><code>pivotTableData()</code> multi-field columns, nested cell rendering</td>
+                <td><code>FR-MULTI</code></td>
+                <td><span class="badge badge-added">ADDED v0.2</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

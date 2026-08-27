@@ -79,7 +79,7 @@ function appendBalanceButtonToSampleBinderElements() {
             button.style.borderRadius = '50%';
             button.style.boxShadow = '0 0 0 4px rgba(242, 193, 0, 0.24)';
             button.addEventListener('click', () => {
-                window.open('https://dev.ui.eln-integrations.im.jnj.com/balance-measurement-action.html?__eid=' + focus, '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                window.open('http://127.0.0.1:5500/prep_master.html?__eid=' + focus, '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
             });
             targetControls.insertBefore(button, targetControls.firstChild);
         }
