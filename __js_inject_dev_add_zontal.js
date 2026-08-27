@@ -78,13 +78,13 @@ function appendBalanceButtonToSampleBinderElements() {
 
         const template2 = document.createElement('template');
         template2.innerHTML = buttonHtml.trim();
-        const button2 = template.content.firstElementChild;
+        const button2 = template2.content.firstElementChild;
         if (button2) {
             button2.type = 'button';
             button2.className = 'd-flex align-items-center justify-content-center text-gray-500 text-gray-700-hover text-gray-700-focus btn btn-icon';
             button2.id = '6d09124d-d082-4982-b373-85618e850934';
             button2.setAttribute('aria-label', 'GxP Preparation Balance Measurement');
-            button2.setAttribute('data-testid', 'icon-button-6d05124d-d082-4982-b373-85618e850934');
+            button2.setAttribute('data-testid', 'icon-button-6d09124d-d082-4982-b373-85618e850934');
             button2.style.backgroundColor = '#fff9c4';
             button2.style.border = '2px solid #f2c100';
             button2.style.borderRadius = '50%';
