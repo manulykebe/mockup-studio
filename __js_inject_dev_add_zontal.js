@@ -10,7 +10,13 @@ function appendBalanceButtonToSampleBinderElements() {
     <span class="d-inline-flex align-items-center">
     <span class="snb-icon encoded-svg-icon d-flex align-items-center justify-content-center external-actions-icon external-actions-icon--element-icon icon-lg">
     
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" class="custom-icon center-icon"><mask id="menu-explore_svg__a" width="24" height="24" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type: alpha;"><path fill="black" d="M0 0h24v24H0z"></path></mask><g mask="url(#menu-explore_svg__a)"><path fill="#fff" d="M12 22a9.7 9.7 0 0 1-3.9-.788 10.1 10.1 0 0 1-3.175-2.137q-1.35-1.35-2.137-3.175A9.7 9.7 0 0 1 2 12q0-2.075.788-3.9a10.1 10.1 0 0 1 2.137-3.175q1.35-1.35 3.175-2.137A9.7 9.7 0 0 1 12 2q2.075 0 3.9.788a10.1 10.1 0 0 1 3.175 2.137q1.35 1.35 2.137 3.175A9.7 9.7 0 0 1 22 12v8q0 .824-.587 1.413A1.93 1.93 0 0 1 20 22zm0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4 6.325 6.325 4 12q0 .575.075 1.125T4.3 14.2L8 10.5l3.3 2.775L14.575 10H13V8h5v5h-2v-1.575L11.4 16l-3.275-2.8-2.95 2.95a8.1 8.1 0 0 0 2.837 2.788Q9.8 20 12 20m7.5.5q.424 0 .712-.288a.97.97 0 0 0 .288-.712.97.97 0 0 0-.288-.712.97.97 0 0 0-.712-.288.97.97 0 0 0-.712.288.97.97 0 0 0-.288.712q0 .424.288.712.287.288.712.288"></path></g></svg></span></span></button>`;
+    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="table"
+        class="svg-inline--fa fa-table snb-icon text-inherit" role="img"
+        xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path fill="currentColor"
+            d="M64 64C46.3 64 32 78.3 32 96l0 64 448 0 0-64c0-17.7-14.3-32-32-32L64 64zM32 192l0 112 208 0 0-112L32 192zm240 0l0 112 208 0 0-112-208 0zM240 336L32 336l0 80c0 17.7 14.3 32 32 32l176 0 0-112zm32 112l176 0c17.7 0 32-14.3 32-32l0-80-208 0 0 112zM0 96C0 60.7 28.7 32 64 32l384 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96z">
+        </path>
+    </svg></span></span></button>`;
 
     const binderElements = document.querySelectorAll(selector);
 
