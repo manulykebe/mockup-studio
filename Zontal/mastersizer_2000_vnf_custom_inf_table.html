@@ -26,6 +26,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .field-list-header h3{margin:0;font-size:.9rem}
 .field-list-toggle{border:1px solid transparent;background:none;cursor:pointer;font-size:.85rem;color:#5f6368;padding:.1rem .35rem;line-height:1;border-radius:3px}
 .field-list-toggle:hover{background:#e3e7ea}
+.field-list-header-actions{display:flex;align-items:center;gap:.25rem}
 .field-list-body{overflow-y:auto}
 .field-list.collapsed .field-list-body{display:none}
 .field-list h4{margin:0;padding:.5rem .9rem;font-size:.78rem;color:#5f6368;text-transform:uppercase;letter-spacing:.03em;background:#f8f9fa;border-top:1px solid #d9d9d9;border-bottom:1px solid #e8eaed}
@@ -135,7 +136,10 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 <aside class="field-list" id="fieldList">
 <div class="field-list-header" id="fieldListHeader">
 <h3>PivotTable Fields</h3>
+<div class="field-list-header-actions">
+<button type="button" class="field-list-toggle" id="fieldListSaveBtn" title="Save current view to the URL" aria-label="Save current view to the URL">&#128279;</button>
 <button type="button" class="field-list-toggle" id="fieldListToggle" aria-expanded="true" aria-controls="fieldListBody" title="Collapse panel">&#9662;</button>
+</div>
 </div>
 <div class="field-list-body" id="fieldListBody">
 <div class="field-list-fields" id="zoneAvailable" data-zone="available"></div>
@@ -190,7 +194,8 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         values: defaultValues.map((field) => ({ field, aggregate: 'join' })),
         rowVisibility: Object.fromEntries(defaultRows.map((field) => [field, true])),
         columnValueConfig: {},
-        columnExpanded: {}
+        columnExpanded: {},
+        panelCollapsed: false
     };
 
     // distinct values for a column field, in first-seen order, all visible by default
@@ -209,6 +214,72 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     }
 
     defaultColumns.forEach((field) => initColumnValueConfig(field));
+
+    // packs the current Rows/Columns/Values layout, per-field visibility and order into a JSON-safe object
+    function serializeState() {
+        const columnValueConfig = {};
+        Object.entries(state.columnValueConfig).forEach(([field, config]) => {
+            columnValueConfig[field] = { order: config.order, hidden: Array.from(config.hidden) };
+        });
+        return {
+            rows: state.rows,
+            columns: state.columns,
+            values: state.values,
+            rowVisibility: state.rowVisibility,
+            columnValueConfig,
+            columnExpanded: state.columnExpanded,
+            panelCollapsed: state.panelCollapsed
+        };
+    }
+
+    // restores a serializeState() payload, ignoring fields that no longer exist in the source data
+    function applyState(saved) {
+        if (!saved || typeof saved !== 'object') return;
+        if (Array.isArray(saved.rows)) {
+            state.rows = saved.rows.filter((field) => allFields.includes(field));
+        }
+        if (Array.isArray(saved.columns)) {
+            state.columns = saved.columns.filter((field) => allFields.includes(field));
+        }
+        if (Array.isArray(saved.values)) {
+            state.values = saved.values
+                .filter((valueDef) => valueDef && allFields.includes(valueDef.field))
+                .map((valueDef) => ({ field: valueDef.field, aggregate: valueDef.aggregate || 'join' }));
+        }
+        if (saved.rowVisibility && typeof saved.rowVisibility === 'object') {
+            Object.assign(state.rowVisibility, saved.rowVisibility);
+        }
+        if (saved.columnValueConfig && typeof saved.columnValueConfig === 'object') {
+            Object.entries(saved.columnValueConfig).forEach(([field, config]) => {
+                state.columnValueConfig[field] = {
+                    order: Array.isArray(config.order) ? config.order : [],
+                    hidden: new Set(Array.isArray(config.hidden) ? config.hidden : [])
+                };
+            });
+        }
+        if (saved.columnExpanded && typeof saved.columnExpanded === 'object') {
+            Object.assign(state.columnExpanded, saved.columnExpanded);
+        }
+        if (typeof saved.panelCollapsed === 'boolean') {
+            state.panelCollapsed = saved.panelCollapsed;
+        }
+
+        const usedFields = new Set([...state.rows, ...state.columns, ...state.values.map((v) => v.field)]);
+        state.available = allFields.filter((field) => !usedFields.has(field));
+        state.rows.forEach((field) => {
+            if (!(field in state.rowVisibility)) state.rowVisibility[field] = true;
+        });
+        state.columns.forEach((field) => initColumnValueConfig(field));
+    }
+
+    const savedStateParam = new URLSearchParams(window.location.search).get('pivot');
+    if (savedStateParam) {
+        try {
+            applyState(JSON.parse(savedStateParam));
+        } catch (error) {
+            console.warn('Ignoring invalid pivot state in URL', error);
+        }
+    }
 
     function unassign(field) {
         state.available = state.available.filter((f) => f !== field);
@@ -455,12 +526,30 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     const fieldList = document.getElementById('fieldList');
     const fieldListHeader = document.getElementById('fieldListHeader');
     const fieldListToggle = document.getElementById('fieldListToggle');
+    const fieldListSaveBtn = document.getElementById('fieldListSaveBtn');
 
-    fieldListToggle.addEventListener('click', () => {
-        const collapsed = fieldList.classList.toggle('collapsed');
+    function setPanelCollapsed(collapsed) {
+        state.panelCollapsed = collapsed;
+        fieldList.classList.toggle('collapsed', collapsed);
         fieldListToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
         fieldListToggle.setAttribute('aria-expanded', String(!collapsed));
         fieldListToggle.title = collapsed ? 'Expand panel' : 'Collapse panel';
+    }
+
+    fieldListToggle.addEventListener('click', () => {
+        setPanelCollapsed(!state.panelCollapsed);
+    });
+
+    setPanelCollapsed(state.panelCollapsed);
+
+    fieldListSaveBtn.addEventListener('click', () => {
+        const params = new URLSearchParams(window.location.search);
+        params.set('pivot', JSON.stringify(serializeState()));
+        window.history.replaceState({}, '', `${window.location.pathname}?${params.toString()}`);
+        navigator.clipboard?.writeText(window.location.href).catch(() => {});
+        const originalHtml = fieldListSaveBtn.innerHTML;
+        fieldListSaveBtn.innerHTML = '&#9989;';
+        window.setTimeout(() => { fieldListSaveBtn.innerHTML = originalHtml; }, 1200);
     });
 
     // panel is repositioned via pointer events (not native drag) so it doesn't interfere with the field chips' drag-and-drop
