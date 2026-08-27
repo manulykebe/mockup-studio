@@ -593,6 +593,11 @@
             <span class="panel-summary" id="measurementSummary">No filters applied</span>
         </button>
         <div class="panel-body" id="panel-measurement-body">
+            <div class="field">
+                <label for="sampleId">Sample ID (from this experiment)</label>
+                <div class="sample-id-list" id="sampleId" aria-label="Samples in this experiment"></div>
+            </div>
+
             <div class="filter-grid">
                 <div class="field">
                     <label for="instrumentClass">Instrument class <span class="required-mark"
@@ -628,11 +633,6 @@
                             hidden></span>
                     </div>
                 </div>
-            </div>
-
-            <div class="field">
-                <label for="sampleId">Sample ID</label>
-                <div class="sample-id-list" id="sampleId" aria-label="Samples in this experiment"></div>
             </div>
 
             <div class="field">
