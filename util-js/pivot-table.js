@@ -88,7 +88,8 @@
      * @param {Object[]} rows
      * @param {Object} options
      * @param {string[]} options.rowFields - fields identifying a pivoted record (Excel "Rows")
-     * @param {Array<string|{field: string, order?: string[], hidden?: Iterable<string>}>} [options.columnFields] - fields whose values become column headers (Excel "Columns"); a config object can pin a custom value order and/or filter out hidden values
+     * @param {Array<string|{field: string, order?: string[], hidden?: Iterable<string>, labels?: Object<string,string>}>} [options.columnFields] - fields whose values become column headers (Excel "Columns"); a config object can pin a custom value order, filter out hidden values, and/or rename individual values for display via `labels`
+     * @param {Object<string,string>} [options.columnFields[].labels] - map of raw value -> display label used when building the column header text (grouping/order/hidden still use the raw value)
      * @param {Array<string|{field: string, aggregate?: string|Function, label?: string}>} options.values - fields to aggregate into cells (Excel "Values")
      * @param {string} [options.delimiter=', ']
      * @returns {{rowFields: string[], columns: Array<{id: string, label: string}>, data: Object[]}}
@@ -124,7 +125,8 @@
             return {
                 field: config.field,
                 order: config.order,
-                hidden: config.hidden ? new Set(config.hidden) : null
+                hidden: config.hidden ? new Set(config.hidden) : null,
+                labels: config.labels || null
             };
         });
 
@@ -150,7 +152,12 @@
             }
 
             const colKey = colKeyValues.length ? colKeyValues.join('\u0001') : '__all__';
-            const colLabel = colKeyValues.join(delimiter);
+            // display labels are cosmetic only; grouping/order/hidden always key off the raw value
+            const colLabelValues = colKeyValues.map((value, index) => {
+                const labels = resolvedColumnFields[index].labels;
+                return (labels && Object.prototype.hasOwnProperty.call(labels, value)) ? labels[value] : value;
+            });
+            const colLabel = colLabelValues.join(delimiter);
 
             if (!columnGroupSet.has(colKey)) {
                 columnGroupSet.add(colKey);
@@ -222,6 +229,7 @@
      * @param {Object} [options]
      * @param {string} [options.tableId]
      * @param {string} [options.tableClass]
+     * @param {Object<string,string>} [options.rowFieldLabels] - map of row field name -> display label for its header cell
      * @returns {HTMLTableElement}
      */
     function renderPivotTable(container, pivotResult, options) {
@@ -230,9 +238,9 @@
         }
 
         const { rowFields, columns, data } = pivotResult;
-        const { tableId, tableClass = '' } = options || {};
+        const { tableId, tableClass = '', rowFieldLabels } = options || {};
 
-        const headerCells = rowFields.map((label) => `<th scope="col">${escapeHtml(label)}</th>`)
+        const headerCells = rowFields.map((field) => `<th scope="col">${escapeHtml((rowFieldLabels && rowFieldLabels[field]) || field)}</th>`)
             .concat(columns.map((column) => `<th scope="col">${escapeHtml(column.label)}</th>`))
             .join('');
 

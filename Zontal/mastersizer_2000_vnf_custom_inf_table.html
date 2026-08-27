@@ -52,6 +52,14 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
 .value-chip.drop-after{border-bottom:2px solid #1a73e8}
 .value-chip .drag-handle{color:#bdc1c6;font-size:.65rem;line-height:1}
 .value-chip .value-chip-label{flex:1 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+.chip-label-stack{display:flex;flex-direction:column;line-height:1.15;overflow:hidden}
+.chip-label-new{color:#202124;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-label-original-row{display:flex;align-items:center;gap:.2rem;overflow:hidden}
+.chip-label-original{color:#9aa0a6;font-size:.7rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.chip-rename-input{font:inherit;font-size:.78rem;border:1px solid #1a73e8;border-radius:3px;padding:.1rem .3rem;width:100%;box-sizing:border-box}
+.chip-reset-btn{border:none;background:none;cursor:pointer;color:#9aa0a6;font-size:.7rem;line-height:1;padding:0;flex:0 0 auto}
+.chip-reset-btn:hover{color:#d93025}
 </style>
 </head>
 <body>
@@ -195,6 +203,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         rowVisibility: Object.fromEntries(defaultRows.map((field) => [field, true])),
         columnValueConfig: {},
         columnExpanded: {},
+        fieldLabels: {},
         panelCollapsed: false
     };
 
@@ -210,7 +219,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
                 order.push(value);
             }
         });
-        state.columnValueConfig[field] = { order, hidden: new Set() };
+        state.columnValueConfig[field] = { order, hidden: new Set(), labels: {} };
     }
 
     defaultColumns.forEach((field) => initColumnValueConfig(field));
@@ -219,7 +228,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     function serializeState() {
         const columnValueConfig = {};
         Object.entries(state.columnValueConfig).forEach(([field, config]) => {
-            columnValueConfig[field] = { order: config.order, hidden: Array.from(config.hidden) };
+            columnValueConfig[field] = { order: config.order, hidden: Array.from(config.hidden), labels: { ...config.labels } };
         });
         return {
             rows: state.rows,
@@ -228,6 +237,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             rowVisibility: state.rowVisibility,
             columnValueConfig,
             columnExpanded: state.columnExpanded,
+            fieldLabels: state.fieldLabels,
             panelCollapsed: state.panelCollapsed
         };
     }
@@ -253,12 +263,16 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             Object.entries(saved.columnValueConfig).forEach(([field, config]) => {
                 state.columnValueConfig[field] = {
                     order: Array.isArray(config.order) ? config.order : [],
-                    hidden: new Set(Array.isArray(config.hidden) ? config.hidden : [])
+                    hidden: new Set(Array.isArray(config.hidden) ? config.hidden : []),
+                    labels: (config.labels && typeof config.labels === 'object') ? { ...config.labels } : {}
                 };
             });
         }
         if (saved.columnExpanded && typeof saved.columnExpanded === 'object') {
             Object.assign(state.columnExpanded, saved.columnExpanded);
+        }
+        if (saved.fieldLabels && typeof saved.fieldLabels === 'object') {
+            state.fieldLabels = { ...saved.fieldLabels };
         }
         if (typeof saved.panelCollapsed === 'boolean') {
             state.panelCollapsed = saved.panelCollapsed;
@@ -270,6 +284,9 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             if (!(field in state.rowVisibility)) state.rowVisibility[field] = true;
         });
         state.columns.forEach((field) => initColumnValueConfig(field));
+        Object.keys(state.fieldLabels).forEach((field) => {
+            if (!allFields.includes(field)) delete state.fieldLabels[field];
+        });
     }
 
     const savedStateParam = new URLSearchParams(window.location.search).get('pivot');
@@ -318,6 +335,87 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         }
     }
 
+    // renamable chip label: double-click to edit inline; renamed chips keep showing the original name (grey) alongside the new one (black)
+    function createEditableLabel(className, original, getCustom, setCustom, clearCustom) {
+        const label = document.createElement('span');
+        label.className = className;
+
+        function renderLabel() {
+            label.innerHTML = '';
+            const custom = getCustom();
+            if (custom) {
+                const stack = document.createElement('span');
+                stack.className = 'chip-label-stack';
+                const newLine = document.createElement('span');
+                newLine.className = 'chip-label-new';
+                newLine.textContent = custom;
+                const originalRow = document.createElement('span');
+                originalRow.className = 'chip-label-original-row';
+                const resetBtn = document.createElement('button');
+                resetBtn.type = 'button';
+                resetBtn.className = 'chip-reset-btn';
+                resetBtn.title = 'Reset to original name';
+                resetBtn.setAttribute('aria-label', `Reset name to ${original}`);
+                resetBtn.textContent = '\u2715';
+                resetBtn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    clearCustom();
+                    renderLabel();
+                });
+                const originalLine = document.createElement('span');
+                originalLine.className = 'chip-label-original';
+                originalLine.textContent = original;
+                originalRow.append(resetBtn, originalLine);
+                stack.append(newLine, originalRow);
+                label.appendChild(stack);
+            } else {
+                label.textContent = original;
+            }
+        }
+
+        function startEdit() {
+            const chipEl = label.closest('[draggable="true"]');
+            if (chipEl) chipEl.draggable = false;
+            label.innerHTML = '';
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'chip-rename-input';
+            input.value = getCustom() || original;
+            input.setAttribute('aria-label', `Rename ${original}`);
+            label.appendChild(input);
+            input.focus();
+            input.select();
+            input.addEventListener('mousedown', (event) => event.stopPropagation());
+            input.addEventListener('dragstart', (event) => event.stopPropagation());
+
+            let done = false;
+            function finish(commit) {
+                if (done) return;
+                done = true;
+                if (chipEl) chipEl.draggable = true;
+                if (commit) {
+                    const value = input.value.trim();
+                    if (!value || value === original) clearCustom();
+                    else setCustom(value);
+                }
+                renderLabel();
+            }
+            input.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') { event.preventDefault(); finish(true); }
+                else if (event.key === 'Escape') { event.preventDefault(); finish(false); }
+            });
+            input.addEventListener('blur', () => finish(true));
+        }
+
+        label.addEventListener('dblclick', (event) => {
+            event.stopPropagation();
+            startEdit();
+        });
+
+        renderLabel();
+        return label;
+    }
+
     // one chip per distinct value of a column field; reorderable within this list, with its own visibility checkbox
     function createValueChip(field, value) {
         const config = state.columnValueConfig[field];
@@ -325,7 +423,14 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
         valueChip.className = 'value-chip';
         valueChip.draggable = true;
         valueChip.dataset.value = value;
-        valueChip.innerHTML = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span><span class="value-chip-label">${value}</span>`;
+        valueChip.innerHTML = `<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span>`;
+        valueChip.appendChild(createEditableLabel(
+            'value-chip-label',
+            value,
+            () => config.labels[value],
+            (newLabel) => { config.labels[value] = newLabel; renderPivot(); },
+            () => { delete config.labels[value]; renderPivot(); }
+        ));
 
         const visibilityCheckbox = document.createElement('input');
         visibilityCheckbox.type = 'checkbox';
@@ -392,8 +497,22 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             const expanded = !!state.columnExpanded[field];
             innerHtml += `<button type="button" class="chip-expand-toggle" aria-expanded="${expanded}" aria-label="${expanded ? 'Collapse' : 'Expand'} ${field} values">${expanded ? '&#9662;' : '&#9656;'}</button>`;
         }
-        innerHtml += `<span class="field-chip-label">${field}</span>`;
         chip.innerHTML = innerHtml;
+
+        if (zone === 'available') {
+            const label = document.createElement('span');
+            label.className = 'field-chip-label';
+            label.textContent = field;
+            chip.appendChild(label);
+        } else {
+            chip.appendChild(createEditableLabel(
+                'field-chip-label',
+                field,
+                () => state.fieldLabels[field],
+                (newLabel) => { state.fieldLabels[field] = newLabel; renderPivot(); },
+                () => { delete state.fieldLabels[field]; renderPivot(); }
+            ));
+        }
 
         if (zone === 'columns') {
             chip.querySelector('.chip-expand-toggle').addEventListener('click', (event) => {
@@ -501,14 +620,14 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
             rowFields: state.rows,
             columnFields: state.columns.map((field) => {
                 const config = state.columnValueConfig[field];
-                return { field, order: config ? config.order : undefined, hidden: config ? config.hidden : undefined };
+                return { field, order: config ? config.order : undefined, hidden: config ? config.hidden : undefined, labels: config ? config.labels : undefined };
             }),
-            values: state.values,
+            values: state.values.map((valueDef) => ({ ...valueDef, label: state.fieldLabels[valueDef.field] })),
             delimiter: ', '
         });
         // hidden row fields still drive grouping above; they're just excluded from the rendered columns
         const visibleRowFields = state.rows.filter((field) => state.rowVisibility[field] !== false);
-        PivotTable.renderPivotTable(pivotContainer, { ...pivot, rowFields: visibleRowFields }, { tableId: 'pivotTable' });
+        PivotTable.renderPivotTable(pivotContainer, { ...pivot, rowFields: visibleRowFields }, { tableId: 'pivotTable', rowFieldLabels: state.fieldLabels });
     }
 
     function setView(view) {
