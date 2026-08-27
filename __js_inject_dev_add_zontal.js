@@ -10,11 +10,11 @@ function appendBalanceButtonToSampleBinderElements() {
     <span class="d-inline-flex align-items-center">
     <span class="snb-icon encoded-svg-icon d-flex align-items-center justify-content-center external-actions-icon external-actions-icon--element-icon icon-lg">
     
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" class="custom-icon center-icon"><path fill="currentColor" d="M12 22a9.7 9.7 0 0 1-3.9-.788 10.1 10.1 0 0 1-3.175-2.137q-1.35-1.35-2.137-3.175A9.7 9.7 0 0 1 2 12q0-2.075.788-3.9a10.1 10.1 0 0 1 2.137-3.175q1.35-1.35 3.175-2.137A9.7 9.7 0 0 1 12 2q2.075 0 3.9.788a10.1 10.1 0 0 1 3.175 2.137q1.35 1.35 2.137 3.175A9.7 9.7 0 0 1 22 12v8q0 .824-.587 1.413A1.93 1.93 0 0 1 20 22zm0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4 6.325 6.325 4 12q0 .575.075 1.125T4.3 14.2L8 10.5l3.3 2.775L14.575 10H13V8h5v5h-2v-1.575L11.4 16l-3.275-2.8-2.95 2.95a8.1 8.1 0 0 0 2.837 2.788Q9.8 20 12 20m7.5.5q.424 0 .712-.288a.97.97 0 0 0 .288-.712.97.97 0 0 0-.288-.712.97.97 0 0 0-.712-.288.97.97 0 0 0-.712.288.97.97 0 0 0-.288.712q0 .424.288.712.287.288.712.288"></path></svg></span></span></button>`;
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" class="custom-icon center-icon"><mask id="menu-explore_svg__a" width="24" height="24" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type: alpha;"><path fill="black" d="M0 0h24v24H0z"></path></mask><g mask="url(#menu-explore_svg__a)"><path fill="#fff" d="M12 22a9.7 9.7 0 0 1-3.9-.788 10.1 10.1 0 0 1-3.175-2.137q-1.35-1.35-2.137-3.175A9.7 9.7 0 0 1 2 12q0-2.075.788-3.9a10.1 10.1 0 0 1 2.137-3.175q1.35-1.35 3.175-2.137A9.7 9.7 0 0 1 12 2q2.075 0 3.9.788a10.1 10.1 0 0 1 3.175 2.137q1.35 1.35 2.137 3.175A9.7 9.7 0 0 1 22 12v8q0 .824-.587 1.413A1.93 1.93 0 0 1 20 22zm0-2q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4 6.325 6.325 4 12q0 .575.075 1.125T4.3 14.2L8 10.5l3.3 2.775L14.575 10H13V8h5v5h-2v-1.575L11.4 16l-3.275-2.8-2.95 2.95a8.1 8.1 0 0 0 2.837 2.788Q9.8 20 12 20m7.5.5q.424 0 .712-.288a.97.97 0 0 0 .288-.712.97.97 0 0 0-.288-.712.97.97 0 0 0-.712-.288.97.97 0 0 0-.712.288.97.97 0 0 0-.288.712q0 .424.288.712.287.288.712.288"></path></g></svg></span></span></button>`;
 
     const binderElements = document.querySelectorAll(selector);
 
-    binderElements.forEach((binder) => {
+    binderElements.forEach((binder, idx) => {
         const titleDiv = binder.querySelector(titleSelector);
         if (!titleDiv) {
             return;
@@ -66,11 +66,42 @@ function appendBalanceButtonToSampleBinderElements() {
             button.style.borderRadius = '50%';
             button.style.boxShadow = '0 0 0 4px rgba(242, 193, 0, 0.24)';
             button.addEventListener('click', () => {
-                window.open('http://127.0.0.1:5500/prep_master.html?__eid=' + focus, '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+
+                if (idx == 0) {
+                    window.open('xhttp://127.0.0.1:5501/Zontal/zontal-signals-mockup.html', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                } else {
+                    window.open('xhttp://127.0.0.1:5501/Zontal/zontal-signals-mockup.html?instrumentClass=Particle+sizer&instrumentId=MASTERSIZER-2000&dateOperator=equal&dateNot=false&selected=urn%3Auuid%3A1ed4b622-447c-45ba-b4bf-26445c96ecaf%2Curn%3Auuid%3A604e49b7-987c-4475-adee-7b46cbcc0ae7%2Curn%3Auuid%3Ac093b942-39b4-4a60-86a2-d29dc8368f5e%2Curn%3Auuid%3A358a01a9-6a8f-4730-958c-8ae255049bf8%2Curn%3Auuid%3Ad35df8f7-ad6f-4020-8c1c-db3cce9ce69c', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                }
             });
             targetControls.insertBefore(button, targetControls.firstChild);
         }
+
+        const template2 = document.createElement('template');
+        template2.innerHTML = buttonHtml.trim();
+        const button2 = template.content.firstElementChild;
+        if (button2) {
+            button2.type = 'button';
+            button2.className = 'd-flex align-items-center justify-content-center text-gray-500 text-gray-700-hover text-gray-700-focus btn btn-icon';
+            button2.id = '6d09124d-d082-4982-b373-85618e850934';
+            button2.setAttribute('aria-label', 'GxP Preparation Balance Measurement');
+            button2.setAttribute('data-testid', 'icon-button-6d05124d-d082-4982-b373-85618e850934');
+            button2.style.backgroundColor = '#fff9c4';
+            button2.style.border = '2px solid #f2c100';
+            button2.style.borderRadius = '50%';
+            button2.style.boxShadow = '0 0 0 4px rgba(242, 193, 0, 0.24)';
+            button2.addEventListener('click', () => {
+
+                if (idx == 0) {
+                    window.open('http://127.0.0.1:5501/Zontal/zontal-signals-mockup.html', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                } else {
+                    window.open('http://127.0.0.1:5501/Zontal/zontal-signals-mockup.html?instrumentClass=Particle+sizer&instrumentId=MASTERSIZER-2000&dateOperator=equal&dateNot=false&selected=urn%3Auuid%3A1ed4b622-447c-45ba-b4bf-26445c96ecaf%2Curn%3Auuid%3A604e49b7-987c-4475-adee-7b46cbcc0ae7%2Curn%3Auuid%3Ac093b942-39b4-4a60-86a2-d29dc8368f5e%2Curn%3Auuid%3A358a01a9-6a8f-4730-958c-8ae255049bf8%2Curn%3Auuid%3Ad35df8f7-ad6f-4020-8c1c-db3cce9ce69c', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                }
+            });
+            targetControls.insertBefore(button2, targetControls.firstChild);
+        }
+
+
     });
 }
 
-setTimeout(appendBalanceButtonToSampleBinderElements, 5000);
+setTimeout(appendBalanceButtonToSampleBinderElements, 500);
