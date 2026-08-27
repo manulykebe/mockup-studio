@@ -194,9 +194,9 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
     ];
     // only offered for fields that contain at least one numeric-looking value (see isNumericField)
     const NUMERIC_AGG_OPTIONS = [
-        ['average', 'Average'],
-        ['stdev', 'Std Dev'],
-        ['count', 'Count']
+        ['average', 'Average (num only)'],
+        ['stdev', 'Std Dev (num only)'],    
+        ['count', 'Count (num only)']
     ];
 
     // one non-empty scalar column is expected per Datum Label row; append the unit when present
@@ -229,7 +229,7 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
                 return PivotTable.aggregators.join(values, delimiter);
             }
             if (strategy === 'count') {
-                return String(parsed.length);
+                return `${PivotTable.aggSymbols.count} ${parsed.length}`;
             }
             const nums = parsed.map((p) => p.num);
             const unit = (parsed.find((p) => p.unit) || {}).unit || '';
@@ -244,7 +244,8 @@ tr:nth-child(even){background:#fafafa}tr:hover{background:#fff4cc}
                 result = Math.sqrt(variance);
             }
             const rounded = Math.round(result * 10000) / 10000;
-            return unit ? `${rounded} ${unit}` : String(rounded);
+            const symbol = PivotTable.aggSymbols[strategy];
+            return unit ? `${symbol} ${rounded} ${unit}` : `${symbol} ${rounded}`;
         };
     }
 

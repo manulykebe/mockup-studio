@@ -84,29 +84,37 @@
         return String(Math.round(num * 10000) / 10000);
     }
 
+    // Prefix glyphs identifying which aggregation strategy produced a cell's value at a glance.
+    const AGG_SYMBOLS = { join: '\u22EF', badge: '\u22EF', first: '\u2460', average: '\u00D8', stdev: '\u03C3', count: '#' };
+
     // Built-in strategies for resolving multiple values landing in the same pivot cell.
+    // Symbols are only prepended when the strategy actually combines/calculates something (n>1, or for the
+    // always-computed stats average/stdev/count); a lone pass-through value is left unmarked.
     const AGGREGATORS = {
-        join: (values, delimiter) => values.join(delimiter),
-        count: (values) => String(values.length),
-        first: (values) => (values.length ? values[0] : ''),
+        join: (values, delimiter) => (values.length > 1 ? `${AGG_SYMBOLS.join} ${values.join(delimiter)}` : (values.length ? values[0] : '')),
+        count: (values) => `${AGG_SYMBOLS.count} ${values.length}`,
+        first: (values) => {
+            if (!values.length) return '';
+            return values.length > 1 ? `${AGG_SYMBOLS.first} ${values[0]}` : values[0];
+        },
         array: (values) => values.slice(),
         // a single value renders as plain text; multiple values render as an unformatted per-row table (see renderCell)
         table: (values) => (values.length > 1 ? values.slice() : (values.length ? values[0] : '')),
         badge: (values, delimiter) => {
             const unique = Array.from(new Set(values));
-            return unique.length > 1 ? `${unique.join(delimiter)} (${unique.length})` : (unique[0] || '');
+            return unique.length > 1 ? `${AGG_SYMBOLS.badge} ${unique.join(delimiter)} (${unique.length})` : (unique[0] || '');
         },
         average: (values) => {
             const nums = values.map(toNumber).filter((n) => n !== null);
             if (!nums.length) return '';
-            return formatStat(nums.reduce((sum, n) => sum + n, 0) / nums.length);
+            return `${AGG_SYMBOLS.average} ${formatStat(nums.reduce((sum, n) => sum + n, 0) / nums.length)}`;
         },
         stdev: (values) => {
             const nums = values.map(toNumber).filter((n) => n !== null);
             if (nums.length < 2) return '';
             const mean = nums.reduce((sum, n) => sum + n, 0) / nums.length;
             const variance = nums.reduce((sum, n) => sum + (n - mean) ** 2, 0) / (nums.length - 1);
-            return formatStat(Math.sqrt(variance));
+            return `${AGG_SYMBOLS.stdev} ${formatStat(Math.sqrt(variance))}`;
         }
     };
 
@@ -322,5 +330,5 @@
         return container.querySelector('table');
     }
 
-    return { parseHtmlTable, getFieldNames, pivotTableData, renderPivotTable, aggregators: AGGREGATORS, toNumber };
+    return { parseHtmlTable, getFieldNames, pivotTableData, renderPivotTable, aggregators: AGGREGATORS, toNumber, aggSymbols: AGG_SYMBOLS };
 }));
