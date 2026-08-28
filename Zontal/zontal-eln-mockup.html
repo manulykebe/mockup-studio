@@ -203,40 +203,6 @@
             background: #fff
         }
 
-        .sample-id-badge {
-            align-items: center;
-            background: #e8f0fe;
-            border: 1px solid #aecbfa;
-            border-radius: 999px;
-            color: #174ea6;
-            display: inline-flex;
-            font-size: .82rem;
-            gap: .25rem;
-            padding: .16rem .28rem .16rem .55rem
-        }
-
-        .sample-id-remove {
-            align-items: center;
-            background: transparent;
-            border: 0;
-            border-radius: 50%;
-            color: #174ea6;
-            cursor: pointer;
-            display: inline-flex;
-            font: inherit;
-            font-size: 1.05rem;
-            height: 1.1rem;
-            justify-content: center;
-            line-height: 1;
-            padding: 0;
-            width: 1.1rem
-        }
-
-        .sample-id-remove:hover,
-        .sample-id-remove:focus-visible {
-            background: #c6dafc
-        }
-
         .select-with-spinner {
             position: relative
         }
@@ -249,6 +215,64 @@
             top: 50%;
             transform: translateY(-50%);
             z-index: 1
+        }
+
+        .instrument-id-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            min-height: 2.2rem;
+            padding: .4rem .55rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+            transition: opacity .15s ease
+        }
+
+        .instrument-id-options.is-loading {
+            opacity: .55
+        }
+
+        .instrument-id-chip,
+        .sample-id-chip {
+            -webkit-appearance: none;
+            appearance: none;
+            box-sizing: border-box;
+            background: #fff;
+            border: 1px solid #aecbfa;
+            border-radius: 999px;
+            color: #174ea6;
+            cursor: pointer;
+            font: inherit;
+            font-size: .82rem;
+            line-height: 1.2;
+            padding: .16rem .7rem
+        }
+
+        .instrument-id-chip:hover,
+        .instrument-id-chip:focus-visible,
+        .sample-id-chip:hover,
+        .sample-id-chip:focus-visible {
+            background: #e8f0fe
+        }
+
+        .instrument-id-chip[aria-pressed="true"],
+        .sample-id-chip[aria-pressed="true"] {
+            background: #e8f0fe;
+            border-color: #174ea6;
+            font-weight: 600
+        }
+
+        .instrument-id-chip:disabled,
+        .sample-id-chip:disabled {
+            cursor: not-allowed;
+            opacity: .6
+        }
+
+        .instrument-id-placeholder {
+            color: #9aa0a6;
+            font-size: .85rem;
+            padding: .16rem 0
         }
 
         .date-filter {
@@ -736,11 +760,12 @@
                     </select>
                 </div>
                 <div class="field">
-                    <label for="instrumentId">Instrument ID</label>
+                    <label id="instrumentIdLabel">Instrument ID</label>
                     <div class="select-with-spinner">
-                        <select id="instrumentId" disabled>
-                            <option value="">Select an instrument class first</option>
-                        </select>
+                        <div class="instrument-id-options" id="instrumentIdOptions" role="group"
+                            aria-labelledby="instrumentIdLabel">
+                            <span class="instrument-id-placeholder">Select an instrument class first</span>
+                        </div>
                         <span class="loading-spinner" id="instrumentIdSpinner" aria-label="Loading instrument IDs"
                             hidden></span>
                     </div>
@@ -820,7 +845,7 @@ pivot: {
 
 
             <div class="panel-actions">
-                <button type="button" class="btn-primary" id="showResultsBtn" disabled>
+                <button type="button" class="btn-primary" id="showResultsBtn" disabled hidden>
                     <span class="loading-spinner" aria-hidden="true" hidden></span>
                     <span>Show results</span>
                 </button>
@@ -1655,8 +1680,8 @@ pivot: {
 
         function syncUrlWithState() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
-            const instrumentIdSelect = document.getElementById('instrumentId');
-            const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
+            const selectedInstrumentChips = document
+                .querySelectorAll('#instrumentIdOptions .instrument-id-chip[aria-pressed="true"]');
             const sampleIdList = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
@@ -1667,11 +1692,13 @@ pivot: {
             if (instrumentClassSelect && instrumentClassSelect.value) {
                 params.set('instrumentClass', instrumentClassSelect.value);
             }
-            if (instrumentIdSelect && instrumentIdSelect.value) {
-                params.set('instrumentId', instrumentIdSelect.value);
+            if (selectedInstrumentChips.length) {
+                params.set('instrumentId', Array.from(selectedInstrumentChips, (chip) => chip.dataset.instrumentId)
+                    .join(','));
             }
             const sampleIds = sampleIdList
-                ? Array.from(sampleIdList.querySelectorAll('[data-sample-id]'), (badge) => badge.dataset.sampleId)
+                ? Array.from(sampleIdList.querySelectorAll('.sample-id-chip[aria-pressed="true"]'),
+                    (chip) => chip.dataset.sampleId)
                 : [];
             if (sampleIds.length) {
                 params.set('sampleId', sampleIds.join(','));
@@ -1702,7 +1729,6 @@ pivot: {
 
         async function applyStateFromUrl() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
-            const instrumentIdSelect = document.getElementById('instrumentId');
             const sampleIdList = document.getElementById('sampleId');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
@@ -1724,9 +1750,8 @@ pivot: {
                 }
             }
 
-            if (instrumentIdParam && instrumentIdSelect
-                && Array.from(instrumentIdSelect.options).some((option) => option.value === instrumentIdParam)) {
-                instrumentIdSelect.value = instrumentIdParam;
+            if (instrumentIdParam && typeof window.setSelectedInstrumentIds === 'function') {
+                window.setSelectedInstrumentIds(instrumentIdParam.split(',').filter(Boolean));
             }
 
             if (sampleIdList && sampleIdParam !== null && typeof window.setExperimentSampleIds === 'function') {
@@ -1825,11 +1850,12 @@ pivot: {
             };
 
             const instrumentClassSelect = document.getElementById('instrumentClass');
-            const instrumentIdSelect = document.getElementById('instrumentId');
+            const instrumentIdOptions = document.getElementById('instrumentIdOptions');
+            const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
             const sampleIdList = document.getElementById('sampleId');
             const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347',
-                'S1252752', 'S1254079', 'S1254780', 'S1265421', 'S1265421', 'S1267076'];
-            let selectedSampleIds = [...experimentSampleIds];
+                'S1252752', 'S1254079', 'S1254780   ', 'S1265421', 'S1267076'];
+            let selectedSampleIds = new Set(experimentSampleIds);
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
@@ -1854,36 +1880,106 @@ pivot: {
 
             const allPanels = [measurementPanel, resultPanel];
 
+            // renders every experiment sample ID as a toggleable chip, all selected (ON) by default
             function renderSampleIds() {
                 sampleIdList.replaceChildren();
-                selectedSampleIds.forEach((sampleId) => {
-                    const badge = document.createElement('span');
-                    badge.className = 'sample-id-badge';
-                    badge.dataset.sampleId = sampleId;
-                    badge.append(document.createTextNode(sampleId));
-
-                    const removeButton = document.createElement('button');
-                    removeButton.type = 'button';
-                    removeButton.className = 'sample-id-remove';
-                    removeButton.setAttribute('aria-label', `Remove sample ${sampleId}`);
-                    removeButton.title = `Remove ${sampleId}`;
-                    removeButton.textContent = '\u00d7';
-                    removeButton.addEventListener('click', () => {
-                        selectedSampleIds = selectedSampleIds.filter((id) => id !== sampleId);
-                        renderSampleIds();
-                        clearSelectedRecordsOnFilterChange();
-                        updateMeasurementSummary();
-                    });
-                    badge.append(removeButton);
-                    sampleIdList.append(badge);
+                experimentSampleIds.forEach((sampleId) => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.className = 'sample-id-chip';
+                    chip.dataset.sampleId = sampleId;
+                    chip.setAttribute('aria-pressed', String(selectedSampleIds.has(sampleId)));
+                    chip.textContent = sampleId;
+                    chip.addEventListener('click', () => toggleSampleId(sampleId));
+                    sampleIdList.append(chip);
                 });
             }
 
+            function updateSampleIdChipStates() {
+                sampleIdList.querySelectorAll('.sample-id-chip').forEach((chip) => {
+                    chip.setAttribute('aria-pressed', String(selectedSampleIds.has(chip.dataset.sampleId)));
+                });
+            }
+
+            function toggleSampleId(sampleId) {
+                if (selectedSampleIds.has(sampleId)) {
+                    selectedSampleIds.delete(sampleId);
+                } else {
+                    selectedSampleIds.add(sampleId);
+                }
+                updateSampleIdChipStates();
+                clearSelectedRecordsOnFilterChange();
+                updateMeasurementSummary();
+            }
+
             window.setExperimentSampleIds = (sampleIds) => {
-                selectedSampleIds = experimentSampleIds.filter((sampleId) => sampleIds.includes(sampleId));
-                renderSampleIds();
+                selectedSampleIds = new Set(experimentSampleIds.filter((sampleId) => sampleIds.includes(sampleId)));
+                updateSampleIdChipStates();
             };
             renderSampleIds();
+
+            let currentInstrumentIds = [];
+            let selectedInstrumentIds = new Set();
+
+            function setInstrumentIdPlaceholder(text) {
+                instrumentIdOptions.replaceChildren();
+                const placeholder = document.createElement('span');
+                placeholder.className = 'instrument-id-placeholder';
+                placeholder.textContent = text;
+                instrumentIdOptions.append(placeholder);
+            }
+
+            // renders every available instrument ID as a toggleable chip, all selected (ON) by default
+            function renderInstrumentIdOptions(selectedClass) {
+                currentInstrumentIds = getInstrumentIds(selectedClass);
+                selectedInstrumentIds = new Set(currentInstrumentIds);
+                instrumentIdOptions.replaceChildren();
+
+                if (!selectedClass) {
+                    setInstrumentIdPlaceholder('Select an instrument class first');
+                    return;
+                }
+                if (!currentInstrumentIds.length) {
+                    setInstrumentIdPlaceholder('No instrument IDs available');
+                    return;
+                }
+
+                currentInstrumentIds.forEach((id) => {
+                    const chip = document.createElement('button');
+                    chip.type = 'button';
+                    chip.className = 'instrument-id-chip';
+                    chip.dataset.instrumentId = id;
+                    chip.setAttribute('aria-pressed', String(selectedInstrumentIds.has(id)));
+                    chip.textContent = id;
+                    chip.addEventListener('click', () => toggleInstrumentId(id));
+                    instrumentIdOptions.append(chip);
+                });
+            }
+
+            function updateInstrumentIdChipStates() {
+                instrumentIdOptions.querySelectorAll('.instrument-id-chip').forEach((chip) => {
+                    chip.setAttribute('aria-pressed', String(selectedInstrumentIds.has(chip.dataset.instrumentId)));
+                });
+            }
+
+            function toggleInstrumentId(id, options = {}) {
+                if (selectedInstrumentIds.has(id)) {
+                    selectedInstrumentIds.delete(id);
+                } else {
+                    selectedInstrumentIds.add(id);
+                }
+                updateInstrumentIdChipStates();
+                if (!options.silent) {
+                    clearSelectedRecordsOnFilterChange();
+                    updateMeasurementSummary();
+                }
+            }
+
+            window.setSelectedInstrumentIds = (ids) => {
+                selectedInstrumentIds = new Set(currentInstrumentIds.filter((id) => ids.includes(id)));
+                updateInstrumentIdChipStates();
+            };
+
 
             function setPanelExpanded(panel, expanded) {
                 panel.classList.toggle('collapsed', !expanded);
@@ -1937,7 +2033,7 @@ pivot: {
                 selectPreSearchValues.delete(select);
             }
 
-            [instrumentClassSelect, instrumentIdSelect].forEach((select) => {
+            [instrumentClassSelect].forEach((select) => {
                 select.addEventListener('keydown', (event) => {
                     if (select.disabled) {
                         return;
@@ -2016,19 +2112,15 @@ pivot: {
 
             function loadInstrumentIds(selectedClass) {
                 instrumentIdSpinner.hidden = !selectedClass;
-                instrumentIdSelect.disabled = true;
+                instrumentIdOptions.classList.add('is-loading');
+                instrumentIdOptions.querySelectorAll('.instrument-id-chip').forEach((chip) => {
+                    chip.disabled = true;
+                });
 
                 return new Promise((resolve) => {
                     window.setTimeout(() => {
-                        const ids = getInstrumentIds(selectedClass);
-                        instrumentIdSelect.innerHTML = '';
-                        if (!selectedClass) {
-                            instrumentIdSelect.appendChild(new Option('Select an instrument class first', ''));
-                        } else {
-                            instrumentIdSelect.appendChild(new Option('Any instrument ID', ''));
-                            ids.forEach((id) => instrumentIdSelect.appendChild(new Option(id, id)));
-                        }
-                        instrumentIdSelect.disabled = !selectedClass;
+                        renderInstrumentIdOptions(selectedClass);
+                        instrumentIdOptions.classList.remove('is-loading');
                         instrumentIdSpinner.hidden = true;
                         resolve();
                     }, 650);
@@ -2042,14 +2134,10 @@ pivot: {
                 clearSelectedRecordsOnFilterChange();
                 showResultsBtn.disabled = true;
                 await loadInstrumentIds(selectedClass);
-                showResultsBtn.disabled = !selectedClass;
                 updateMeasurementSummary();
             });
 
-            instrumentIdSelect.addEventListener('change', () => {
-                clearSelectedRecordsOnFilterChange();
-                updateMeasurementSummary();
-            });
+            renderInstrumentIdOptions('');
 
             function currentDateOperator() {
                 return document.querySelector('input[name="dateOperator"]:checked').value;
@@ -2116,16 +2204,25 @@ pivot: {
                 resultSummary.textContent = '';
             }
 
+            // only allow running a search once at least one instrument ID and one sample ID are picked
+            function updateShowResultsAvailability() {
+                const canShowResults = selectedInstrumentIds.size > 0 && selectedSampleIds.size > 0;
+                showResultsBtn.hidden = !canShowResults;
+                showResultsBtn.disabled = !canShowResults;
+            }
+
             function updateMeasurementSummary() {
                 const parts = [];
                 if (instrumentClassSelect.value) {
                     parts.push(instrumentClassSelect.value);
                 }
-                if (instrumentIdSelect.value) {
-                    parts.push(instrumentIdSelect.value);
+                if (selectedInstrumentIds.size) {
+                    const orderedIds = currentInstrumentIds.filter((id) => selectedInstrumentIds.has(id));
+                    parts.push(orderedIds.join(', '));
                 }
-                if (selectedSampleIds.length) {
-                    parts.push(`samples ${selectedSampleIds.join(', ')}`);
+                if (selectedSampleIds.size) {
+                    const orderedSampleIds = experimentSampleIds.filter((sampleId) => selectedSampleIds.has(sampleId));
+                    parts.push(`samples ${orderedSampleIds.join(', ')}`);
                 }
 
                 const operator = currentDateOperator();
@@ -2142,6 +2239,7 @@ pivot: {
 
                 measurementSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
                 resetResultsPanel();
+                updateShowResultsAvailability();
             }
 
             showResultsBtn.addEventListener('click', () => {
@@ -2186,7 +2284,6 @@ pivot: {
             restoringUrlState = true;
             await applyStateFromUrl();
             restoringUrlState = false;
-            showResultsBtn.disabled = !instrumentClassSelect.value;
             updateDateInputsVisibility();
             updateMeasurementSummary();
 
