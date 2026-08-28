@@ -1,0 +1,67 @@
+pivot: {
+    "rows": [
+        "Custom Information Aggregate Iri",
+        "Measurement Time",
+        "Sample Identifier"
+    ],
+    "columns": [
+        "Datum Label"
+    ],
+    "values": [
+        {
+            "field": "Value",
+            "aggregate": "table"
+        }
+    ],
+    "rowVisibility": {
+        "Measurement Time": true,
+        "Sample Identifier": true,
+        "Custom Information Aggregate Iri": false
+    },
+    "columnValueConfig": {
+        "Datum Label": {
+            "order": [
+                "Instrument serial number",
+                "Concentration",
+                "Result transform type",
+                "Specific surface area",
+                "D [4, 3] - Volume weighted mean",
+                "D [3, 2] - Surface weighted mean",
+                "Start result channel size",
+                "Last result channel size",
+                "Particle absorption index",
+                "Obscuration",
+                "Residual",
+                "Span",
+                "Uniformity",
+                "Stirrer speed",
+                "SOP Name",
+                "Sample source type"
+            ],
+            "hidden": [
+                "Result transform type",
+                "Start result channel size",
+                "Last result channel size",
+                "Particle absorption index",
+                "Obscuration",
+                "Residual",
+                "Span",
+                "Uniformity",
+                "Sample source type",
+                "SOP Name",
+                "Stirrer speed"
+            ],
+            "labels": {
+                "D [4, 3] - Volume weighted mean": "D [4,3]",
+                "D [3, 2] - Surface weighted mean": "D [3,2]"
+            }
+        }
+    },
+    "columnExpanded": {
+        "Datum Label": false
+    },
+    "fieldLabels": {
+        "Datum Label": "Parameter"
+    },
+    "panelCollapsed": true
+}

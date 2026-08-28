@@ -596,53 +596,13 @@
             <span class="panel-summary" id="measurementSummary">No filters applied</span>
         </button>
         <div class="panel-body" id="panel-measurement-body">
-            <div class="field">
-                <label for="sampleId">Sample ID (from this experiment)</label>
-                <div class="sample-id-list" id="sampleId" aria-label="Samples in this experiment"></div>
-            </div>
-
-            <div class="filter-grid">
-                <div class="field">
-                    <label for="instrumentClass">Instrument class <span class="required-mark"
-                            aria-hidden="true">*</span></label>
-                    <select id="instrumentClass" required>
-                        <option value="">Select an instrument class</option>
-                        <option>Calorimeter</option>
-                        <option>Cell Counter</option>
-                        <option>Diffractometer</option>
-                        <option>Dynamic vapor sorption</option>
-                        <option>Flow cytometer</option>
-                        <option>Mass Spectrometer</option>
-                        <option>Microscope</option>
-                        <option>NIR</option>
-                        <option>Particle sizer</option>
-                        <option>Particle characterization</option>
-                        <option>Protein concentration analyzer</option>
-                        <option>Spectrophotometer</option>
-                        <option>Test Class</option>
-                        <option>Testing</option>
-                        <option>XRPD</option>
-                        <option>asfd</option>
-                        <option>qPCR</option>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="instrumentId">Instrument ID</label>
-                    <div class="select-with-spinner">
-                        <select id="instrumentId" disabled>
-                            <option value="">Select an instrument class first</option>
-                        </select>
-                        <span class="loading-spinner" id="instrumentIdSpinner" aria-label="Loading instrument IDs"
-                            hidden></span>
-                    </div>
-                </div>
-            </div>
 
             <div class="field">
                 <div class="date-label-row">
                     <label for="measurementDate">Measurement date</label>
                     <button type="button" class="help-button" id="dateHelpButton" aria-expanded="false"
                         aria-controls="dateHelp" title="Explain date operators">?</button>
+                        <label> taken from experiment.createDate?</label>
                 </div>
                 <div class="date-help" id="dateHelp" role="dialog" aria-modal="true" aria-labelledby="dateHelpTitle"
                     hidden>
@@ -744,6 +704,121 @@
                     </div>
                 </fieldset>
             </div>
+
+            <div class="field">
+                <label for="sampleId">Sample ID (from this experiment)</label>
+                <div class="sample-id-list" id="sampleId" aria-label="Samples in this experiment"></div>
+            </div>
+
+            <div class="filter-grid">
+                <div class="field">
+                    <label for="instrumentClass">Instrument class <span class="required-mark"
+                            aria-hidden="true">*</span></label>
+                    <select id="instrumentClass" required>
+                        <option value="">Select an instrument class</option>
+                        <option>Calorimeter</option>
+                        <option>Cell Counter</option>
+                        <option>Diffractometer</option>
+                        <option>Dynamic vapor sorption</option>
+                        <option>Flow cytometer</option>
+                        <option>Mass Spectrometer</option>
+                        <option>Microscope</option>
+                        <option>NIR</option>
+                        <option>Particle sizer</option>
+                        <option>Particle characterization</option>
+                        <option>Protein concentration analyzer</option>
+                        <option>Spectrophotometer</option>
+                        <option>Test Class</option>
+                        <option>Testing</option>
+                        <option>XRPD</option>
+                        <option>asfd</option>
+                        <option>qPCR</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label for="instrumentId">Instrument ID</label>
+                    <div class="select-with-spinner">
+                        <select id="instrumentId" disabled>
+                            <option value="">Select an instrument class first</option>
+                        </select>
+                        <span class="loading-spinner" id="instrumentIdSpinner" aria-label="Loading instrument IDs"
+                            hidden></span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <pre><textarea>
+pivot: {
+    "rows": [
+        "Custom Information Aggregate Iri",
+        "Measurement Time",
+        "Sample Identifier"
+    ],
+    "columns": [
+        "Datum Label"
+    ],
+    "values": [
+        {
+            "field": "Value",
+            "aggregate": "table"
+        }
+    ],
+    "rowVisibility": {
+        "Measurement Time": true,
+        "Sample Identifier": true,
+        "Custom Information Aggregate Iri": false
+    },
+    "columnValueConfig": {
+        "Datum Label": {
+            "order": [
+                "Instrument serial number",
+                "Concentration",
+                "Result transform type",
+                "Specific surface area",
+                "D [4, 3] - Volume weighted mean",
+                "D [3, 2] - Surface weighted mean",
+                "Start result channel size",
+                "Last result channel size",
+                "Particle absorption index",
+                "Obscuration",
+                "Residual",
+                "Span",
+                "Uniformity",
+                "Stirrer speed",
+                "SOP Name",
+                "Sample source type"
+            ],
+            "hidden": [
+                "Result transform type",
+                "Start result channel size",
+                "Last result channel size",
+                "Particle absorption index",
+                "Obscuration",
+                "Residual",
+                "Span",
+                "Uniformity",
+                "Sample source type",
+                "SOP Name",
+                "Stirrer speed"
+            ],
+            "labels": {
+                "D [4, 3] - Volume weighted mean": "D [4,3]",
+                "D [3, 2] - Surface weighted mean": "D [3,2]"
+            }
+        }
+    },
+    "columnExpanded": {
+        "Datum Label": false
+    },
+    "fieldLabels": {
+        "Datum Label": "Parameter"
+    },
+    "panelCollapsed": true
+}
+                </textarea></pre>
+            </div>
+
+
             <div class="panel-actions">
                 <button type="button" class="btn-primary" id="showResultsBtn" disabled>
                     <span class="loading-spinner" aria-hidden="true" hidden></span>
@@ -1752,7 +1827,8 @@
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const instrumentIdSelect = document.getElementById('instrumentId');
             const sampleIdList = document.getElementById('sampleId');
-            const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347'];
+            const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347',
+                'S1252752', 'S1254079', 'S1254780', 'S1265421', 'S1265421', 'S1267076'];
             let selectedSampleIds = [...experimentSampleIds];
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
