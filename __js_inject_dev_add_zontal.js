@@ -98,9 +98,9 @@ function appendBalanceButtonToSampleBinderElements() {
             button2.addEventListener('click', () => {
 
                 if (idx == 0) {
-                    window.open('http://127.0.0.1:5501/Zontal/zontal-eln-mockup.html', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                    window.open('http://127.0.0.1:5501/Zontal/zontal-eln-mockup.html?&dateOperator=after&dateNot=false&dateValue1=2026-08-28', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
                 } else {
-                    window.open('http://127.0.0.1:5501/Zontal/zontal-eln-mockup.html?instrumentClass=Particle+sizer&instrumentId=MASTERSIZER-2000&dateOperator=equal&dateNot=false&selected=urn%3Auuid%3A1ed4b622-447c-45ba-b4bf-26445c96ecaf%2Curn%3Auuid%3A604e49b7-987c-4475-adee-7b46cbcc0ae7%2Curn%3Auuid%3Ac093b942-39b4-4a60-86a2-d29dc8368f5e%2Curn%3Auuid%3A358a01a9-6a8f-4730-958c-8ae255049bf8%2Curn%3Auuid%3Ad35df8f7-ad6f-4020-8c1c-db3cce9ce69c', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
+                    window.open('http://127.0.0.1:5501/Zontal/zontal-eln-mockup.html?instrumentClass=Particle+sizer&instrumentId=MASTERSIZER-3000&sampleId=S0033337&dateOperator=after&dateNot=false&dateValue1=2026-08-27&selected=urn%3Auuid%3Ad35df8f7-ad6f-4020-8c1c-db3cce9ce69c%2Curn%3Auuid%3A604e49b7-987c-4475-adee-7b46cbcc0ae7%2Curn%3Auuid%3A358a01a9-6a8f-4730-958c-8ae255049bf8%2Curn%3Auuid%3A1ed4b622-447c-45ba-b4bf-26445c96ecaf', '_blank', 'location=yes,toolbar=yes,scrollbars=yes,resizable=yes,width=800,height=600');
                 }
             });
             targetControls.insertBefore(button2, targetControls.firstChild);
