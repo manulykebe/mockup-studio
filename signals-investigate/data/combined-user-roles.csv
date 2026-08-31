@@ -1,0 +1,2492 @@
+Environment;Tab;SubTab;Role Index;Role;Permission Index;Permission;Value
+devinternal;Administration;;1;System Admin;1;Configure System;1
+devinternal;Administration;;1;System Admin;2;Manage System Templates;1
+devinternal;Administration;;1;System Admin;3;Manage Groups;1
+devinternal;Administration;;1;System Admin;4;Manage Attributes;1
+devinternal;Administration;;1;System Admin;5;Manage ADOs;1
+devinternal;Administration;;2;Inventory Admin;1;Configure System;1
+devinternal;Administration;;2;Inventory Admin;2;Manage System Templates;1
+devinternal;Administration;;2;Inventory Admin;3;Manage Groups;0
+devinternal;Administration;;2;Inventory Admin;4;Manage Attributes;0
+devinternal;Administration;;2;Inventory Admin;5;Manage ADOs;0
+devinternal;Administration;;3;Standard User;1;Configure System;0
+devinternal;Administration;;3;Standard User;2;Manage System Templates;0
+devinternal;Administration;;3;Standard User;3;Manage Groups;0
+devinternal;Administration;;3;Standard User;4;Manage Attributes;0
+devinternal;Administration;;3;Standard User;5;Manage ADOs;0
+devinternal;Administration;;4;Archivist;1;Configure System;0
+devinternal;Administration;;4;Archivist;2;Manage System Templates;0
+devinternal;Administration;;4;Archivist;3;Manage Groups;0
+devinternal;Administration;;4;Archivist;4;Manage Attributes;0
+devinternal;Administration;;4;Archivist;5;Manage ADOs;0
+devinternal;Administration;;5;Disc Pharm Super User;1;Configure System;0
+devinternal;Administration;;5;Disc Pharm Super User;2;Manage System Templates;0
+devinternal;Administration;;5;Disc Pharm Super User;3;Manage Groups;1
+devinternal;Administration;;5;Disc Pharm Super User;4;Manage Attributes;0
+devinternal;Administration;;5;Disc Pharm Super User;5;Manage ADOs;0
+devinternal;Administration;;6;Disc Pharm User;1;Configure System;0
+devinternal;Administration;;6;Disc Pharm User;2;Manage System Templates;0
+devinternal;Administration;;6;Disc Pharm User;3;Manage Groups;0
+devinternal;Administration;;6;Disc Pharm User;4;Manage Attributes;0
+devinternal;Administration;;6;Disc Pharm User;5;Manage ADOs;0
+devinternal;Administration;;7;FL-Approver;1;Configure System;0
+devinternal;Administration;;7;FL-Approver;2;Manage System Templates;0
+devinternal;Administration;;7;FL-Approver;3;Manage Groups;0
+devinternal;Administration;;7;FL-Approver;4;Manage Attributes;0
+devinternal;Administration;;7;FL-Approver;5;Manage ADOs;0
+devinternal;Administration;;8;FL-Archivist;1;Configure System;0
+devinternal;Administration;;8;FL-Archivist;2;Manage System Templates;0
+devinternal;Administration;;8;FL-Archivist;3;Manage Groups;0
+devinternal;Administration;;8;FL-Archivist;4;Manage Attributes;0
+devinternal;Administration;;8;FL-Archivist;5;Manage ADOs;0
+devinternal;Administration;;9;FL-Author;1;Configure System;0
+devinternal;Administration;;9;FL-Author;2;Manage System Templates;0
+devinternal;Administration;;9;FL-Author;3;Manage Groups;0
+devinternal;Administration;;9;FL-Author;4;Manage Attributes;0
+devinternal;Administration;;9;FL-Author;5;Manage ADOs;0
+devinternal;Administration;;10;Gxp Recipe Builder;1;Configure System;1
+devinternal;Administration;;10;Gxp Recipe Builder;2;Manage System Templates;1
+devinternal;Administration;;10;Gxp Recipe Builder;3;Manage Groups;0
+devinternal;Administration;;10;Gxp Recipe Builder;4;Manage Attributes;0
+devinternal;Administration;;10;Gxp Recipe Builder;5;Manage ADOs;0
+devinternal;Administration;;11;GxP Std User;1;Configure System;0
+devinternal;Administration;;11;GxP Std User;2;Manage System Templates;0
+devinternal;Administration;;11;GxP Std User;3;Manage Groups;0
+devinternal;Administration;;11;GxP Std User;4;Manage Attributes;0
+devinternal;Administration;;11;GxP Std User;5;Manage ADOs;0
+devinternal;Administration;;12;GxP Superuser;1;Configure System;0
+devinternal;Administration;;12;GxP Superuser;2;Manage System Templates;0
+devinternal;Administration;;12;GxP Superuser;3;Manage Groups;1
+devinternal;Administration;;12;GxP Superuser;4;Manage Attributes;0
+devinternal;Administration;;12;GxP Superuser;5;Manage ADOs;0
+devinternal;Administration;;13;Gxp-Active Directory Sync Test Role;1;Configure System;0
+devinternal;Administration;;13;Gxp-Active Directory Sync Test Role;2;Manage System Templates;0
+devinternal;Administration;;13;Gxp-Active Directory Sync Test Role;3;Manage Groups;0
+devinternal;Administration;;13;Gxp-Active Directory Sync Test Role;4;Manage Attributes;0
+devinternal;Administration;;13;Gxp-Active Directory Sync Test Role;5;Manage ADOs;0
+devinternal;Administration;;14;HELM User;1;Configure System;0
+devinternal;Administration;;14;HELM User;2;Manage System Templates;0
+devinternal;Administration;;14;HELM User;3;Manage Groups;0
+devinternal;Administration;;14;HELM User;4;Manage Attributes;0
+devinternal;Administration;;14;HELM User;5;Manage ADOs;0
+devinternal;Administration;;15;Janssen Internal User;1;Configure System;0
+devinternal;Administration;;15;Janssen Internal User;2;Manage System Templates;0
+devinternal;Administration;;15;Janssen Internal User;3;Manage Groups;0
+devinternal;Administration;;15;Janssen Internal User;4;Manage Attributes;0
+devinternal;Administration;;15;Janssen Internal User;5;Manage ADOs;0
+devinternal;Administration;;16;LAC User;1;Configure System;0
+devinternal;Administration;;16;LAC User;2;Manage System Templates;0
+devinternal;Administration;;16;LAC User;3;Manage Groups;0
+devinternal;Administration;;16;LAC User;4;Manage Attributes;0
+devinternal;Administration;;16;LAC User;5;Manage ADOs;0
+devinternal;Administration;;17;ML Key User;1;Configure System;0
+devinternal;Administration;;17;ML Key User;2;Manage System Templates;0
+devinternal;Administration;;17;ML Key User;3;Manage Groups;0
+devinternal;Administration;;17;ML Key User;4;Manage Attributes;0
+devinternal;Administration;;17;ML Key User;5;Manage ADOs;0
+devinternal;Administration;;18;Non-GxP Standard User;1;Configure System;0
+devinternal;Administration;;18;Non-GxP Standard User;2;Manage System Templates;0
+devinternal;Administration;;18;Non-GxP Standard User;3;Manage Groups;0
+devinternal;Administration;;18;Non-GxP Standard User;4;Manage Attributes;0
+devinternal;Administration;;18;Non-GxP Standard User;5;Manage ADOs;0
+devinternal;Administration;;19;PMP test;1;Configure System;1
+devinternal;Administration;;19;PMP test;2;Manage System Templates;0
+devinternal;Administration;;19;PMP test;3;Manage Groups;0
+devinternal;Administration;;19;PMP test;4;Manage Attributes;0
+devinternal;Administration;;19;PMP test;5;Manage ADOs;0
+devinternal;Administration;;20;ReseachCenterManager;1;Configure System;0
+devinternal;Administration;;20;ReseachCenterManager;2;Manage System Templates;0
+devinternal;Administration;;20;ReseachCenterManager;3;Manage Groups;0
+devinternal;Administration;;20;ReseachCenterManager;4;Manage Attributes;0
+devinternal;Administration;;20;ReseachCenterManager;5;Manage ADOs;0
+devinternal;Administration;;21;ResearchCenterUser;1;Configure System;0
+devinternal;Administration;;21;ResearchCenterUser;2;Manage System Templates;0
+devinternal;Administration;;21;ResearchCenterUser;3;Manage Groups;0
+devinternal;Administration;;21;ResearchCenterUser;4;Manage Attributes;0
+devinternal;Administration;;21;ResearchCenterUser;5;Manage ADOs;0
+devinternal;Administration;;22;ResearchCenterViewer;1;Configure System;0
+devinternal;Administration;;22;ResearchCenterViewer;2;Manage System Templates;0
+devinternal;Administration;;22;ResearchCenterViewer;3;Manage Groups;0
+devinternal;Administration;;22;ResearchCenterViewer;4;Manage Attributes;0
+devinternal;Administration;;22;ResearchCenterViewer;5;Manage ADOs;0
+devinternal;Administration;;23;Sign & 2 Stage Review;1;Configure System;0
+devinternal;Administration;;23;Sign & 2 Stage Review;2;Manage System Templates;0
+devinternal;Administration;;23;Sign & 2 Stage Review;3;Manage Groups;0
+devinternal;Administration;;23;Sign & 2 Stage Review;4;Manage Attributes;0
+devinternal;Administration;;23;Sign & 2 Stage Review;5;Manage ADOs;0
+devinternal;Administration;;24;Sign & Close;1;Configure System;0
+devinternal;Administration;;24;Sign & Close;2;Manage System Templates;0
+devinternal;Administration;;24;Sign & Close;3;Manage Groups;0
+devinternal;Administration;;24;Sign & Close;4;Manage Attributes;0
+devinternal;Administration;;24;Sign & Close;5;Manage ADOs;0
+devinternal;Administration;;25;Standard User NON-GxP;1;Configure System;0
+devinternal;Administration;;25;Standard User NON-GxP;2;Manage System Templates;0
+devinternal;Administration;;25;Standard User NON-GxP;3;Manage Groups;0
+devinternal;Administration;;25;Standard User NON-GxP;4;Manage Attributes;0
+devinternal;Administration;;25;Standard User NON-GxP;5;Manage ADOs;0
+devinternal;Administration;;26;Super User;1;Configure System;0
+devinternal;Administration;;26;Super User;2;Manage System Templates;0
+devinternal;Administration;;26;Super User;3;Manage Groups;1
+devinternal;Administration;;26;Super User;4;Manage Attributes;0
+devinternal;Administration;;26;Super User;5;Manage ADOs;0
+devinternal;Administration;;27;Super User Admin;1;Configure System;1
+devinternal;Administration;;27;Super User Admin;2;Manage System Templates;1
+devinternal;Administration;;27;Super User Admin;3;Manage Groups;0
+devinternal;Administration;;27;Super User Admin;4;Manage Attributes;0
+devinternal;Administration;;27;Super User Admin;5;Manage ADOs;0
+devinternal;Administration;;28;Template Manager;1;Configure System;1
+devinternal;Administration;;28;Template Manager;2;Manage System Templates;1
+devinternal;Administration;;28;Template Manager;3;Manage Groups;0
+devinternal;Administration;;28;Template Manager;4;Manage Attributes;0
+devinternal;Administration;;28;Template Manager;5;Manage ADOs;0
+devinternal;Administration;;29;test;1;Configure System;1
+devinternal;Administration;;29;test;2;Manage System Templates;1
+devinternal;Administration;;29;test;3;Manage Groups;1
+devinternal;Administration;;29;test;4;Manage Attributes;0
+devinternal;Administration;;29;test;5;Manage ADOs;0
+devinternal;Author;;1;System Admin;1;Share;1
+devinternal;Author;;1;System Admin;2;Read Dependent Share;1
+devinternal;Author;;1;System Admin;3;Add/Edit/Delete comments;1
+devinternal;Author;;1;System Admin;4;Broad User Search;1
+devinternal;Author;;1;System Admin;5;Share Templates;1
+devinternal;Author;;1;System Admin;6;Move Experiments;1
+devinternal;Author;;1;System Admin;7;Trash Experiments;1
+devinternal;Author;;1;System Admin;8;Trash Notebooks;1
+devinternal;Author;;1;System Admin;9;Export Notebooks;1
+devinternal;Author;;1;System Admin;10;Trash Requests;1
+devinternal;Author;;1;System Admin;11;Delete Samples;1
+devinternal;Author;;1;System Admin;12;Close/Cancel Samples;1
+devinternal;Author;;1;System Admin;13;Reopen Samples;1
+devinternal;Author;;1;System Admin;14;Add Parallel Experiments;1
+devinternal;Author;;1;System Admin;15;Move Parallel Experiments;1
+devinternal;Author;;1;System Admin;16;Export Parallel Experiments;1
+devinternal;Author;;1;System Admin;17;Trash Parallel Experiments;1
+devinternal;Author;;1;System Admin;18;Archive;1
+devinternal;Author;;1;System Admin;19;Return From Archive;1
+devinternal;Author;;1;System Admin;20;Trash Mandatory Entities;1
+devinternal;Author;;1;System Admin;21;Clone Entities;1
+devinternal;Author;;1;System Admin;22;Save as Template;1
+devinternal;Author;;1;System Admin;23;Update Definition;1
+devinternal;Author;;2;Inventory Admin;1;Share;0
+devinternal;Author;;2;Inventory Admin;2;Read Dependent Share;0
+devinternal;Author;;2;Inventory Admin;3;Add/Edit/Delete comments;0
+devinternal;Author;;2;Inventory Admin;4;Broad User Search;0
+devinternal;Author;;2;Inventory Admin;5;Share Templates;0
+devinternal;Author;;2;Inventory Admin;6;Move Experiments;0
+devinternal;Author;;2;Inventory Admin;7;Trash Experiments;0
+devinternal;Author;;2;Inventory Admin;8;Trash Notebooks;0
+devinternal;Author;;2;Inventory Admin;9;Export Notebooks;0
+devinternal;Author;;2;Inventory Admin;10;Trash Requests;0
+devinternal;Author;;2;Inventory Admin;11;Delete Samples;0
+devinternal;Author;;2;Inventory Admin;12;Close/Cancel Samples;0
+devinternal;Author;;2;Inventory Admin;13;Reopen Samples;0
+devinternal;Author;;2;Inventory Admin;14;Add Parallel Experiments;0
+devinternal;Author;;2;Inventory Admin;15;Move Parallel Experiments;0
+devinternal;Author;;2;Inventory Admin;16;Export Parallel Experiments;0
+devinternal;Author;;2;Inventory Admin;17;Trash Parallel Experiments;0
+devinternal;Author;;2;Inventory Admin;18;Archive;0
+devinternal;Author;;2;Inventory Admin;19;Return From Archive;0
+devinternal;Author;;2;Inventory Admin;20;Trash Mandatory Entities;0
+devinternal;Author;;2;Inventory Admin;21;Clone Entities;0
+devinternal;Author;;2;Inventory Admin;22;Save as Template;0
+devinternal;Author;;2;Inventory Admin;23;Update Definition;0
+devinternal;Author;;3;Standard User;1;Share;0
+devinternal;Author;;3;Standard User;2;Read Dependent Share;0
+devinternal;Author;;3;Standard User;3;Add/Edit/Delete comments;1
+devinternal;Author;;3;Standard User;4;Broad User Search;0
+devinternal;Author;;3;Standard User;5;Share Templates;0
+devinternal;Author;;3;Standard User;6;Move Experiments;1
+devinternal;Author;;3;Standard User;7;Trash Experiments;0
+devinternal;Author;;3;Standard User;8;Trash Notebooks;0
+devinternal;Author;;3;Standard User;9;Export Notebooks;1
+devinternal;Author;;3;Standard User;10;Trash Requests;0
+devinternal;Author;;3;Standard User;11;Delete Samples;0
+devinternal;Author;;3;Standard User;12;Close/Cancel Samples;1
+devinternal;Author;;3;Standard User;13;Reopen Samples;1
+devinternal;Author;;3;Standard User;14;Add Parallel Experiments;1
+devinternal;Author;;3;Standard User;15;Move Parallel Experiments;0
+devinternal;Author;;3;Standard User;16;Export Parallel Experiments;1
+devinternal;Author;;3;Standard User;17;Trash Parallel Experiments;0
+devinternal;Author;;3;Standard User;18;Archive;0
+devinternal;Author;;3;Standard User;19;Return From Archive;0
+devinternal;Author;;3;Standard User;20;Trash Mandatory Entities;0
+devinternal;Author;;3;Standard User;21;Clone Entities;1
+devinternal;Author;;3;Standard User;22;Save as Template;1
+devinternal;Author;;3;Standard User;23;Update Definition;1
+devinternal;Author;;4;Archivist;1;Share;0
+devinternal;Author;;4;Archivist;2;Read Dependent Share;0
+devinternal;Author;;4;Archivist;3;Add/Edit/Delete comments;0
+devinternal;Author;;4;Archivist;4;Broad User Search;0
+devinternal;Author;;4;Archivist;5;Share Templates;0
+devinternal;Author;;4;Archivist;6;Move Experiments;0
+devinternal;Author;;4;Archivist;7;Trash Experiments;0
+devinternal;Author;;4;Archivist;8;Trash Notebooks;0
+devinternal;Author;;4;Archivist;9;Export Notebooks;0
+devinternal;Author;;4;Archivist;10;Trash Requests;0
+devinternal;Author;;4;Archivist;11;Delete Samples;0
+devinternal;Author;;4;Archivist;12;Close/Cancel Samples;0
+devinternal;Author;;4;Archivist;13;Reopen Samples;0
+devinternal;Author;;4;Archivist;14;Add Parallel Experiments;0
+devinternal;Author;;4;Archivist;15;Move Parallel Experiments;0
+devinternal;Author;;4;Archivist;16;Export Parallel Experiments;0
+devinternal;Author;;4;Archivist;17;Trash Parallel Experiments;0
+devinternal;Author;;4;Archivist;18;Archive;1
+devinternal;Author;;4;Archivist;19;Return From Archive;1
+devinternal;Author;;4;Archivist;20;Trash Mandatory Entities;0
+devinternal;Author;;4;Archivist;21;Clone Entities;0
+devinternal;Author;;4;Archivist;22;Save as Template;0
+devinternal;Author;;4;Archivist;23;Update Definition;0
+devinternal;Author;;5;Disc Pharm Super User;1;Share;1
+devinternal;Author;;5;Disc Pharm Super User;2;Read Dependent Share;0
+devinternal;Author;;5;Disc Pharm Super User;3;Add/Edit/Delete comments;0
+devinternal;Author;;5;Disc Pharm Super User;4;Broad User Search;0
+devinternal;Author;;5;Disc Pharm Super User;5;Share Templates;1
+devinternal;Author;;5;Disc Pharm Super User;6;Move Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;7;Trash Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;8;Trash Notebooks;0
+devinternal;Author;;5;Disc Pharm Super User;9;Export Notebooks;0
+devinternal;Author;;5;Disc Pharm Super User;10;Trash Requests;0
+devinternal;Author;;5;Disc Pharm Super User;11;Delete Samples;0
+devinternal;Author;;5;Disc Pharm Super User;12;Close/Cancel Samples;0
+devinternal;Author;;5;Disc Pharm Super User;13;Reopen Samples;0
+devinternal;Author;;5;Disc Pharm Super User;14;Add Parallel Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;15;Move Parallel Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;16;Export Parallel Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;17;Trash Parallel Experiments;0
+devinternal;Author;;5;Disc Pharm Super User;18;Archive;0
+devinternal;Author;;5;Disc Pharm Super User;19;Return From Archive;0
+devinternal;Author;;5;Disc Pharm Super User;20;Trash Mandatory Entities;0
+devinternal;Author;;5;Disc Pharm Super User;21;Clone Entities;0
+devinternal;Author;;5;Disc Pharm Super User;22;Save as Template;0
+devinternal;Author;;5;Disc Pharm Super User;23;Update Definition;0
+devinternal;Author;;6;Disc Pharm User;1;Share;0
+devinternal;Author;;6;Disc Pharm User;2;Read Dependent Share;0
+devinternal;Author;;6;Disc Pharm User;3;Add/Edit/Delete comments;1
+devinternal;Author;;6;Disc Pharm User;4;Broad User Search;0
+devinternal;Author;;6;Disc Pharm User;5;Share Templates;0
+devinternal;Author;;6;Disc Pharm User;6;Move Experiments;1
+devinternal;Author;;6;Disc Pharm User;7;Trash Experiments;0
+devinternal;Author;;6;Disc Pharm User;8;Trash Notebooks;0
+devinternal;Author;;6;Disc Pharm User;9;Export Notebooks;1
+devinternal;Author;;6;Disc Pharm User;10;Trash Requests;0
+devinternal;Author;;6;Disc Pharm User;11;Delete Samples;0
+devinternal;Author;;6;Disc Pharm User;12;Close/Cancel Samples;0
+devinternal;Author;;6;Disc Pharm User;13;Reopen Samples;0
+devinternal;Author;;6;Disc Pharm User;14;Add Parallel Experiments;0
+devinternal;Author;;6;Disc Pharm User;15;Move Parallel Experiments;0
+devinternal;Author;;6;Disc Pharm User;16;Export Parallel Experiments;0
+devinternal;Author;;6;Disc Pharm User;17;Trash Parallel Experiments;0
+devinternal;Author;;6;Disc Pharm User;18;Archive;0
+devinternal;Author;;6;Disc Pharm User;19;Return From Archive;0
+devinternal;Author;;6;Disc Pharm User;20;Trash Mandatory Entities;0
+devinternal;Author;;6;Disc Pharm User;21;Clone Entities;0
+devinternal;Author;;6;Disc Pharm User;22;Save as Template;0
+devinternal;Author;;6;Disc Pharm User;23;Update Definition;0
+devinternal;Author;;7;FL-Approver;1;Share;0
+devinternal;Author;;7;FL-Approver;2;Read Dependent Share;0
+devinternal;Author;;7;FL-Approver;3;Add/Edit/Delete comments;0
+devinternal;Author;;7;FL-Approver;4;Broad User Search;0
+devinternal;Author;;7;FL-Approver;5;Share Templates;0
+devinternal;Author;;7;FL-Approver;6;Move Experiments;0
+devinternal;Author;;7;FL-Approver;7;Trash Experiments;0
+devinternal;Author;;7;FL-Approver;8;Trash Notebooks;0
+devinternal;Author;;7;FL-Approver;9;Export Notebooks;0
+devinternal;Author;;7;FL-Approver;10;Trash Requests;0
+devinternal;Author;;7;FL-Approver;11;Delete Samples;0
+devinternal;Author;;7;FL-Approver;12;Close/Cancel Samples;0
+devinternal;Author;;7;FL-Approver;13;Reopen Samples;0
+devinternal;Author;;7;FL-Approver;14;Add Parallel Experiments;0
+devinternal;Author;;7;FL-Approver;15;Move Parallel Experiments;0
+devinternal;Author;;7;FL-Approver;16;Export Parallel Experiments;0
+devinternal;Author;;7;FL-Approver;17;Trash Parallel Experiments;0
+devinternal;Author;;7;FL-Approver;18;Archive;0
+devinternal;Author;;7;FL-Approver;19;Return From Archive;0
+devinternal;Author;;7;FL-Approver;20;Trash Mandatory Entities;0
+devinternal;Author;;7;FL-Approver;21;Clone Entities;0
+devinternal;Author;;7;FL-Approver;22;Save as Template;0
+devinternal;Author;;7;FL-Approver;23;Update Definition;0
+devinternal;Author;;8;FL-Archivist;1;Share;0
+devinternal;Author;;8;FL-Archivist;2;Read Dependent Share;0
+devinternal;Author;;8;FL-Archivist;3;Add/Edit/Delete comments;0
+devinternal;Author;;8;FL-Archivist;4;Broad User Search;0
+devinternal;Author;;8;FL-Archivist;5;Share Templates;0
+devinternal;Author;;8;FL-Archivist;6;Move Experiments;0
+devinternal;Author;;8;FL-Archivist;7;Trash Experiments;0
+devinternal;Author;;8;FL-Archivist;8;Trash Notebooks;0
+devinternal;Author;;8;FL-Archivist;9;Export Notebooks;0
+devinternal;Author;;8;FL-Archivist;10;Trash Requests;0
+devinternal;Author;;8;FL-Archivist;11;Delete Samples;0
+devinternal;Author;;8;FL-Archivist;12;Close/Cancel Samples;0
+devinternal;Author;;8;FL-Archivist;13;Reopen Samples;0
+devinternal;Author;;8;FL-Archivist;14;Add Parallel Experiments;0
+devinternal;Author;;8;FL-Archivist;15;Move Parallel Experiments;0
+devinternal;Author;;8;FL-Archivist;16;Export Parallel Experiments;0
+devinternal;Author;;8;FL-Archivist;17;Trash Parallel Experiments;0
+devinternal;Author;;8;FL-Archivist;18;Archive;0
+devinternal;Author;;8;FL-Archivist;19;Return From Archive;0
+devinternal;Author;;8;FL-Archivist;20;Trash Mandatory Entities;0
+devinternal;Author;;8;FL-Archivist;21;Clone Entities;0
+devinternal;Author;;8;FL-Archivist;22;Save as Template;0
+devinternal;Author;;8;FL-Archivist;23;Update Definition;0
+devinternal;Author;;9;FL-Author;1;Share;0
+devinternal;Author;;9;FL-Author;2;Read Dependent Share;0
+devinternal;Author;;9;FL-Author;3;Add/Edit/Delete comments;0
+devinternal;Author;;9;FL-Author;4;Broad User Search;0
+devinternal;Author;;9;FL-Author;5;Share Templates;0
+devinternal;Author;;9;FL-Author;6;Move Experiments;0
+devinternal;Author;;9;FL-Author;7;Trash Experiments;0
+devinternal;Author;;9;FL-Author;8;Trash Notebooks;0
+devinternal;Author;;9;FL-Author;9;Export Notebooks;0
+devinternal;Author;;9;FL-Author;10;Trash Requests;0
+devinternal;Author;;9;FL-Author;11;Delete Samples;0
+devinternal;Author;;9;FL-Author;12;Close/Cancel Samples;0
+devinternal;Author;;9;FL-Author;13;Reopen Samples;0
+devinternal;Author;;9;FL-Author;14;Add Parallel Experiments;0
+devinternal;Author;;9;FL-Author;15;Move Parallel Experiments;0
+devinternal;Author;;9;FL-Author;16;Export Parallel Experiments;0
+devinternal;Author;;9;FL-Author;17;Trash Parallel Experiments;0
+devinternal;Author;;9;FL-Author;18;Archive;0
+devinternal;Author;;9;FL-Author;19;Return From Archive;0
+devinternal;Author;;9;FL-Author;20;Trash Mandatory Entities;0
+devinternal;Author;;9;FL-Author;21;Clone Entities;0
+devinternal;Author;;9;FL-Author;22;Save as Template;0
+devinternal;Author;;9;FL-Author;23;Update Definition;0
+devinternal;Author;;10;Gxp Recipe Builder;1;Share;1
+devinternal;Author;;10;Gxp Recipe Builder;2;Read Dependent Share;0
+devinternal;Author;;10;Gxp Recipe Builder;3;Add/Edit/Delete comments;0
+devinternal;Author;;10;Gxp Recipe Builder;4;Broad User Search;0
+devinternal;Author;;10;Gxp Recipe Builder;5;Share Templates;0
+devinternal;Author;;10;Gxp Recipe Builder;6;Move Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;7;Trash Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;8;Trash Notebooks;0
+devinternal;Author;;10;Gxp Recipe Builder;9;Export Notebooks;0
+devinternal;Author;;10;Gxp Recipe Builder;10;Trash Requests;0
+devinternal;Author;;10;Gxp Recipe Builder;11;Delete Samples;0
+devinternal;Author;;10;Gxp Recipe Builder;12;Close/Cancel Samples;0
+devinternal;Author;;10;Gxp Recipe Builder;13;Reopen Samples;0
+devinternal;Author;;10;Gxp Recipe Builder;14;Add Parallel Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;15;Move Parallel Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;16;Export Parallel Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;17;Trash Parallel Experiments;0
+devinternal;Author;;10;Gxp Recipe Builder;18;Archive;0
+devinternal;Author;;10;Gxp Recipe Builder;19;Return From Archive;0
+devinternal;Author;;10;Gxp Recipe Builder;20;Trash Mandatory Entities;0
+devinternal;Author;;10;Gxp Recipe Builder;21;Clone Entities;0
+devinternal;Author;;10;Gxp Recipe Builder;22;Save as Template;0
+devinternal;Author;;10;Gxp Recipe Builder;23;Update Definition;0
+devinternal;Author;;11;GxP Std User;1;Share;0
+devinternal;Author;;11;GxP Std User;2;Read Dependent Share;0
+devinternal;Author;;11;GxP Std User;3;Add/Edit/Delete comments;1
+devinternal;Author;;11;GxP Std User;4;Broad User Search;0
+devinternal;Author;;11;GxP Std User;5;Share Templates;0
+devinternal;Author;;11;GxP Std User;6;Move Experiments;1
+devinternal;Author;;11;GxP Std User;7;Trash Experiments;0
+devinternal;Author;;11;GxP Std User;8;Trash Notebooks;0
+devinternal;Author;;11;GxP Std User;9;Export Notebooks;1
+devinternal;Author;;11;GxP Std User;10;Trash Requests;0
+devinternal;Author;;11;GxP Std User;11;Delete Samples;0
+devinternal;Author;;11;GxP Std User;12;Close/Cancel Samples;0
+devinternal;Author;;11;GxP Std User;13;Reopen Samples;0
+devinternal;Author;;11;GxP Std User;14;Add Parallel Experiments;0
+devinternal;Author;;11;GxP Std User;15;Move Parallel Experiments;0
+devinternal;Author;;11;GxP Std User;16;Export Parallel Experiments;0
+devinternal;Author;;11;GxP Std User;17;Trash Parallel Experiments;0
+devinternal;Author;;11;GxP Std User;18;Archive;0
+devinternal;Author;;11;GxP Std User;19;Return From Archive;0
+devinternal;Author;;11;GxP Std User;20;Trash Mandatory Entities;0
+devinternal;Author;;11;GxP Std User;21;Clone Entities;0
+devinternal;Author;;11;GxP Std User;22;Save as Template;0
+devinternal;Author;;11;GxP Std User;23;Update Definition;0
+devinternal;Author;;12;GxP Superuser;1;Share;1
+devinternal;Author;;12;GxP Superuser;2;Read Dependent Share;0
+devinternal;Author;;12;GxP Superuser;3;Add/Edit/Delete comments;0
+devinternal;Author;;12;GxP Superuser;4;Broad User Search;0
+devinternal;Author;;12;GxP Superuser;5;Share Templates;1
+devinternal;Author;;12;GxP Superuser;6;Move Experiments;0
+devinternal;Author;;12;GxP Superuser;7;Trash Experiments;0
+devinternal;Author;;12;GxP Superuser;8;Trash Notebooks;0
+devinternal;Author;;12;GxP Superuser;9;Export Notebooks;1
+devinternal;Author;;12;GxP Superuser;10;Trash Requests;0
+devinternal;Author;;12;GxP Superuser;11;Delete Samples;0
+devinternal;Author;;12;GxP Superuser;12;Close/Cancel Samples;0
+devinternal;Author;;12;GxP Superuser;13;Reopen Samples;0
+devinternal;Author;;12;GxP Superuser;14;Add Parallel Experiments;0
+devinternal;Author;;12;GxP Superuser;15;Move Parallel Experiments;0
+devinternal;Author;;12;GxP Superuser;16;Export Parallel Experiments;0
+devinternal;Author;;12;GxP Superuser;17;Trash Parallel Experiments;0
+devinternal;Author;;12;GxP Superuser;18;Archive;0
+devinternal;Author;;12;GxP Superuser;19;Return From Archive;0
+devinternal;Author;;12;GxP Superuser;20;Trash Mandatory Entities;0
+devinternal;Author;;12;GxP Superuser;21;Clone Entities;0
+devinternal;Author;;12;GxP Superuser;22;Save as Template;0
+devinternal;Author;;12;GxP Superuser;23;Update Definition;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;1;Share;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;2;Read Dependent Share;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;3;Add/Edit/Delete comments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;4;Broad User Search;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;5;Share Templates;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;6;Move Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;7;Trash Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;8;Trash Notebooks;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;9;Export Notebooks;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;10;Trash Requests;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;11;Delete Samples;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;12;Close/Cancel Samples;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;13;Reopen Samples;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;14;Add Parallel Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;15;Move Parallel Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;16;Export Parallel Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;17;Trash Parallel Experiments;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;18;Archive;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;19;Return From Archive;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;20;Trash Mandatory Entities;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;21;Clone Entities;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;22;Save as Template;0
+devinternal;Author;;13;Gxp-Active Directory Sync Test Role;23;Update Definition;0
+devinternal;Author;;14;HELM User;1;Share;0
+devinternal;Author;;14;HELM User;2;Read Dependent Share;0
+devinternal;Author;;14;HELM User;3;Add/Edit/Delete comments;0
+devinternal;Author;;14;HELM User;4;Broad User Search;0
+devinternal;Author;;14;HELM User;5;Share Templates;0
+devinternal;Author;;14;HELM User;6;Move Experiments;0
+devinternal;Author;;14;HELM User;7;Trash Experiments;0
+devinternal;Author;;14;HELM User;8;Trash Notebooks;0
+devinternal;Author;;14;HELM User;9;Export Notebooks;0
+devinternal;Author;;14;HELM User;10;Trash Requests;0
+devinternal;Author;;14;HELM User;11;Delete Samples;0
+devinternal;Author;;14;HELM User;12;Close/Cancel Samples;0
+devinternal;Author;;14;HELM User;13;Reopen Samples;0
+devinternal;Author;;14;HELM User;14;Add Parallel Experiments;0
+devinternal;Author;;14;HELM User;15;Move Parallel Experiments;0
+devinternal;Author;;14;HELM User;16;Export Parallel Experiments;0
+devinternal;Author;;14;HELM User;17;Trash Parallel Experiments;0
+devinternal;Author;;14;HELM User;18;Archive;0
+devinternal;Author;;14;HELM User;19;Return From Archive;0
+devinternal;Author;;14;HELM User;20;Trash Mandatory Entities;0
+devinternal;Author;;14;HELM User;21;Clone Entities;0
+devinternal;Author;;14;HELM User;22;Save as Template;0
+devinternal;Author;;14;HELM User;23;Update Definition;0
+devinternal;Author;;15;Janssen Internal User;1;Share;0
+devinternal;Author;;15;Janssen Internal User;2;Read Dependent Share;0
+devinternal;Author;;15;Janssen Internal User;3;Add/Edit/Delete comments;0
+devinternal;Author;;15;Janssen Internal User;4;Broad User Search;0
+devinternal;Author;;15;Janssen Internal User;5;Share Templates;0
+devinternal;Author;;15;Janssen Internal User;6;Move Experiments;1
+devinternal;Author;;15;Janssen Internal User;7;Trash Experiments;0
+devinternal;Author;;15;Janssen Internal User;8;Trash Notebooks;0
+devinternal;Author;;15;Janssen Internal User;9;Export Notebooks;1
+devinternal;Author;;15;Janssen Internal User;10;Trash Requests;0
+devinternal;Author;;15;Janssen Internal User;11;Delete Samples;1
+devinternal;Author;;15;Janssen Internal User;12;Close/Cancel Samples;1
+devinternal;Author;;15;Janssen Internal User;13;Reopen Samples;1
+devinternal;Author;;15;Janssen Internal User;14;Add Parallel Experiments;1
+devinternal;Author;;15;Janssen Internal User;15;Move Parallel Experiments;0
+devinternal;Author;;15;Janssen Internal User;16;Export Parallel Experiments;1
+devinternal;Author;;15;Janssen Internal User;17;Trash Parallel Experiments;0
+devinternal;Author;;15;Janssen Internal User;18;Archive;0
+devinternal;Author;;15;Janssen Internal User;19;Return From Archive;0
+devinternal;Author;;15;Janssen Internal User;20;Trash Mandatory Entities;0
+devinternal;Author;;15;Janssen Internal User;21;Clone Entities;0
+devinternal;Author;;15;Janssen Internal User;22;Save as Template;0
+devinternal;Author;;15;Janssen Internal User;23;Update Definition;0
+devinternal;Author;;16;LAC User;1;Share;0
+devinternal;Author;;16;LAC User;2;Read Dependent Share;0
+devinternal;Author;;16;LAC User;3;Add/Edit/Delete comments;0
+devinternal;Author;;16;LAC User;4;Broad User Search;0
+devinternal;Author;;16;LAC User;5;Share Templates;0
+devinternal;Author;;16;LAC User;6;Move Experiments;0
+devinternal;Author;;16;LAC User;7;Trash Experiments;0
+devinternal;Author;;16;LAC User;8;Trash Notebooks;0
+devinternal;Author;;16;LAC User;9;Export Notebooks;0
+devinternal;Author;;16;LAC User;10;Trash Requests;0
+devinternal;Author;;16;LAC User;11;Delete Samples;0
+devinternal;Author;;16;LAC User;12;Close/Cancel Samples;0
+devinternal;Author;;16;LAC User;13;Reopen Samples;0
+devinternal;Author;;16;LAC User;14;Add Parallel Experiments;0
+devinternal;Author;;16;LAC User;15;Move Parallel Experiments;0
+devinternal;Author;;16;LAC User;16;Export Parallel Experiments;0
+devinternal;Author;;16;LAC User;17;Trash Parallel Experiments;0
+devinternal;Author;;16;LAC User;18;Archive;0
+devinternal;Author;;16;LAC User;19;Return From Archive;0
+devinternal;Author;;16;LAC User;20;Trash Mandatory Entities;0
+devinternal;Author;;16;LAC User;21;Clone Entities;0
+devinternal;Author;;16;LAC User;22;Save as Template;0
+devinternal;Author;;16;LAC User;23;Update Definition;0
+devinternal;Author;;17;ML Key User;1;Share;0
+devinternal;Author;;17;ML Key User;2;Read Dependent Share;0
+devinternal;Author;;17;ML Key User;3;Add/Edit/Delete comments;0
+devinternal;Author;;17;ML Key User;4;Broad User Search;0
+devinternal;Author;;17;ML Key User;5;Share Templates;0
+devinternal;Author;;17;ML Key User;6;Move Experiments;0
+devinternal;Author;;17;ML Key User;7;Trash Experiments;0
+devinternal;Author;;17;ML Key User;8;Trash Notebooks;0
+devinternal;Author;;17;ML Key User;9;Export Notebooks;0
+devinternal;Author;;17;ML Key User;10;Trash Requests;0
+devinternal;Author;;17;ML Key User;11;Delete Samples;0
+devinternal;Author;;17;ML Key User;12;Close/Cancel Samples;0
+devinternal;Author;;17;ML Key User;13;Reopen Samples;0
+devinternal;Author;;17;ML Key User;14;Add Parallel Experiments;0
+devinternal;Author;;17;ML Key User;15;Move Parallel Experiments;0
+devinternal;Author;;17;ML Key User;16;Export Parallel Experiments;0
+devinternal;Author;;17;ML Key User;17;Trash Parallel Experiments;0
+devinternal;Author;;17;ML Key User;18;Archive;0
+devinternal;Author;;17;ML Key User;19;Return From Archive;0
+devinternal;Author;;17;ML Key User;20;Trash Mandatory Entities;0
+devinternal;Author;;17;ML Key User;21;Clone Entities;0
+devinternal;Author;;17;ML Key User;22;Save as Template;0
+devinternal;Author;;17;ML Key User;23;Update Definition;0
+devinternal;Author;;18;Non-GxP Standard User;1;Share;0
+devinternal;Author;;18;Non-GxP Standard User;2;Read Dependent Share;0
+devinternal;Author;;18;Non-GxP Standard User;3;Add/Edit/Delete comments;1
+devinternal;Author;;18;Non-GxP Standard User;4;Broad User Search;0
+devinternal;Author;;18;Non-GxP Standard User;5;Share Templates;0
+devinternal;Author;;18;Non-GxP Standard User;6;Move Experiments;1
+devinternal;Author;;18;Non-GxP Standard User;7;Trash Experiments;0
+devinternal;Author;;18;Non-GxP Standard User;8;Trash Notebooks;0
+devinternal;Author;;18;Non-GxP Standard User;9;Export Notebooks;1
+devinternal;Author;;18;Non-GxP Standard User;10;Trash Requests;0
+devinternal;Author;;18;Non-GxP Standard User;11;Delete Samples;0
+devinternal;Author;;18;Non-GxP Standard User;12;Close/Cancel Samples;1
+devinternal;Author;;18;Non-GxP Standard User;13;Reopen Samples;1
+devinternal;Author;;18;Non-GxP Standard User;14;Add Parallel Experiments;0
+devinternal;Author;;18;Non-GxP Standard User;15;Move Parallel Experiments;0
+devinternal;Author;;18;Non-GxP Standard User;16;Export Parallel Experiments;0
+devinternal;Author;;18;Non-GxP Standard User;17;Trash Parallel Experiments;0
+devinternal;Author;;18;Non-GxP Standard User;18;Archive;0
+devinternal;Author;;18;Non-GxP Standard User;19;Return From Archive;0
+devinternal;Author;;18;Non-GxP Standard User;20;Trash Mandatory Entities;0
+devinternal;Author;;18;Non-GxP Standard User;21;Clone Entities;1
+devinternal;Author;;18;Non-GxP Standard User;22;Save as Template;1
+devinternal;Author;;18;Non-GxP Standard User;23;Update Definition;1
+devinternal;Author;;19;PMP test;1;Share;0
+devinternal;Author;;19;PMP test;2;Read Dependent Share;0
+devinternal;Author;;19;PMP test;3;Add/Edit/Delete comments;0
+devinternal;Author;;19;PMP test;4;Broad User Search;1
+devinternal;Author;;19;PMP test;5;Share Templates;0
+devinternal;Author;;19;PMP test;6;Move Experiments;0
+devinternal;Author;;19;PMP test;7;Trash Experiments;0
+devinternal;Author;;19;PMP test;8;Trash Notebooks;0
+devinternal;Author;;19;PMP test;9;Export Notebooks;0
+devinternal;Author;;19;PMP test;10;Trash Requests;0
+devinternal;Author;;19;PMP test;11;Delete Samples;0
+devinternal;Author;;19;PMP test;12;Close/Cancel Samples;0
+devinternal;Author;;19;PMP test;13;Reopen Samples;0
+devinternal;Author;;19;PMP test;14;Add Parallel Experiments;0
+devinternal;Author;;19;PMP test;15;Move Parallel Experiments;0
+devinternal;Author;;19;PMP test;16;Export Parallel Experiments;0
+devinternal;Author;;19;PMP test;17;Trash Parallel Experiments;0
+devinternal;Author;;19;PMP test;18;Archive;0
+devinternal;Author;;19;PMP test;19;Return From Archive;0
+devinternal;Author;;19;PMP test;20;Trash Mandatory Entities;0
+devinternal;Author;;19;PMP test;21;Clone Entities;0
+devinternal;Author;;19;PMP test;22;Save as Template;0
+devinternal;Author;;19;PMP test;23;Update Definition;0
+devinternal;Author;;20;ReseachCenterManager;1;Share;0
+devinternal;Author;;20;ReseachCenterManager;2;Read Dependent Share;0
+devinternal;Author;;20;ReseachCenterManager;3;Add/Edit/Delete comments;0
+devinternal;Author;;20;ReseachCenterManager;4;Broad User Search;0
+devinternal;Author;;20;ReseachCenterManager;5;Share Templates;0
+devinternal;Author;;20;ReseachCenterManager;6;Move Experiments;0
+devinternal;Author;;20;ReseachCenterManager;7;Trash Experiments;0
+devinternal;Author;;20;ReseachCenterManager;8;Trash Notebooks;0
+devinternal;Author;;20;ReseachCenterManager;9;Export Notebooks;0
+devinternal;Author;;20;ReseachCenterManager;10;Trash Requests;0
+devinternal;Author;;20;ReseachCenterManager;11;Delete Samples;0
+devinternal;Author;;20;ReseachCenterManager;12;Close/Cancel Samples;0
+devinternal;Author;;20;ReseachCenterManager;13;Reopen Samples;0
+devinternal;Author;;20;ReseachCenterManager;14;Add Parallel Experiments;0
+devinternal;Author;;20;ReseachCenterManager;15;Move Parallel Experiments;0
+devinternal;Author;;20;ReseachCenterManager;16;Export Parallel Experiments;0
+devinternal;Author;;20;ReseachCenterManager;17;Trash Parallel Experiments;0
+devinternal;Author;;20;ReseachCenterManager;18;Archive;0
+devinternal;Author;;20;ReseachCenterManager;19;Return From Archive;0
+devinternal;Author;;20;ReseachCenterManager;20;Trash Mandatory Entities;0
+devinternal;Author;;20;ReseachCenterManager;21;Clone Entities;0
+devinternal;Author;;20;ReseachCenterManager;22;Save as Template;0
+devinternal;Author;;20;ReseachCenterManager;23;Update Definition;0
+devinternal;Author;;21;ResearchCenterUser;1;Share;0
+devinternal;Author;;21;ResearchCenterUser;2;Read Dependent Share;0
+devinternal;Author;;21;ResearchCenterUser;3;Add/Edit/Delete comments;0
+devinternal;Author;;21;ResearchCenterUser;4;Broad User Search;0
+devinternal;Author;;21;ResearchCenterUser;5;Share Templates;0
+devinternal;Author;;21;ResearchCenterUser;6;Move Experiments;0
+devinternal;Author;;21;ResearchCenterUser;7;Trash Experiments;0
+devinternal;Author;;21;ResearchCenterUser;8;Trash Notebooks;0
+devinternal;Author;;21;ResearchCenterUser;9;Export Notebooks;0
+devinternal;Author;;21;ResearchCenterUser;10;Trash Requests;0
+devinternal;Author;;21;ResearchCenterUser;11;Delete Samples;0
+devinternal;Author;;21;ResearchCenterUser;12;Close/Cancel Samples;0
+devinternal;Author;;21;ResearchCenterUser;13;Reopen Samples;0
+devinternal;Author;;21;ResearchCenterUser;14;Add Parallel Experiments;0
+devinternal;Author;;21;ResearchCenterUser;15;Move Parallel Experiments;0
+devinternal;Author;;21;ResearchCenterUser;16;Export Parallel Experiments;0
+devinternal;Author;;21;ResearchCenterUser;17;Trash Parallel Experiments;0
+devinternal;Author;;21;ResearchCenterUser;18;Archive;0
+devinternal;Author;;21;ResearchCenterUser;19;Return From Archive;0
+devinternal;Author;;21;ResearchCenterUser;20;Trash Mandatory Entities;0
+devinternal;Author;;21;ResearchCenterUser;21;Clone Entities;0
+devinternal;Author;;21;ResearchCenterUser;22;Save as Template;0
+devinternal;Author;;21;ResearchCenterUser;23;Update Definition;0
+devinternal;Author;;22;ResearchCenterViewer;1;Share;0
+devinternal;Author;;22;ResearchCenterViewer;2;Read Dependent Share;0
+devinternal;Author;;22;ResearchCenterViewer;3;Add/Edit/Delete comments;0
+devinternal;Author;;22;ResearchCenterViewer;4;Broad User Search;0
+devinternal;Author;;22;ResearchCenterViewer;5;Share Templates;0
+devinternal;Author;;22;ResearchCenterViewer;6;Move Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;7;Trash Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;8;Trash Notebooks;0
+devinternal;Author;;22;ResearchCenterViewer;9;Export Notebooks;0
+devinternal;Author;;22;ResearchCenterViewer;10;Trash Requests;0
+devinternal;Author;;22;ResearchCenterViewer;11;Delete Samples;0
+devinternal;Author;;22;ResearchCenterViewer;12;Close/Cancel Samples;0
+devinternal;Author;;22;ResearchCenterViewer;13;Reopen Samples;0
+devinternal;Author;;22;ResearchCenterViewer;14;Add Parallel Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;15;Move Parallel Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;16;Export Parallel Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;17;Trash Parallel Experiments;0
+devinternal;Author;;22;ResearchCenterViewer;18;Archive;0
+devinternal;Author;;22;ResearchCenterViewer;19;Return From Archive;0
+devinternal;Author;;22;ResearchCenterViewer;20;Trash Mandatory Entities;0
+devinternal;Author;;22;ResearchCenterViewer;21;Clone Entities;0
+devinternal;Author;;22;ResearchCenterViewer;22;Save as Template;0
+devinternal;Author;;22;ResearchCenterViewer;23;Update Definition;0
+devinternal;Author;;23;Sign & 2 Stage Review;1;Share;0
+devinternal;Author;;23;Sign & 2 Stage Review;2;Read Dependent Share;0
+devinternal;Author;;23;Sign & 2 Stage Review;3;Add/Edit/Delete comments;0
+devinternal;Author;;23;Sign & 2 Stage Review;4;Broad User Search;0
+devinternal;Author;;23;Sign & 2 Stage Review;5;Share Templates;0
+devinternal;Author;;23;Sign & 2 Stage Review;6;Move Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;7;Trash Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;8;Trash Notebooks;0
+devinternal;Author;;23;Sign & 2 Stage Review;9;Export Notebooks;0
+devinternal;Author;;23;Sign & 2 Stage Review;10;Trash Requests;0
+devinternal;Author;;23;Sign & 2 Stage Review;11;Delete Samples;0
+devinternal;Author;;23;Sign & 2 Stage Review;12;Close/Cancel Samples;0
+devinternal;Author;;23;Sign & 2 Stage Review;13;Reopen Samples;0
+devinternal;Author;;23;Sign & 2 Stage Review;14;Add Parallel Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;15;Move Parallel Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;16;Export Parallel Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;17;Trash Parallel Experiments;0
+devinternal;Author;;23;Sign & 2 Stage Review;18;Archive;0
+devinternal;Author;;23;Sign & 2 Stage Review;19;Return From Archive;0
+devinternal;Author;;23;Sign & 2 Stage Review;20;Trash Mandatory Entities;0
+devinternal;Author;;23;Sign & 2 Stage Review;21;Clone Entities;0
+devinternal;Author;;23;Sign & 2 Stage Review;22;Save as Template;0
+devinternal;Author;;23;Sign & 2 Stage Review;23;Update Definition;0
+devinternal;Author;;24;Sign & Close;1;Share;0
+devinternal;Author;;24;Sign & Close;2;Read Dependent Share;0
+devinternal;Author;;24;Sign & Close;3;Add/Edit/Delete comments;0
+devinternal;Author;;24;Sign & Close;4;Broad User Search;0
+devinternal;Author;;24;Sign & Close;5;Share Templates;0
+devinternal;Author;;24;Sign & Close;6;Move Experiments;0
+devinternal;Author;;24;Sign & Close;7;Trash Experiments;0
+devinternal;Author;;24;Sign & Close;8;Trash Notebooks;0
+devinternal;Author;;24;Sign & Close;9;Export Notebooks;0
+devinternal;Author;;24;Sign & Close;10;Trash Requests;0
+devinternal;Author;;24;Sign & Close;11;Delete Samples;0
+devinternal;Author;;24;Sign & Close;12;Close/Cancel Samples;0
+devinternal;Author;;24;Sign & Close;13;Reopen Samples;0
+devinternal;Author;;24;Sign & Close;14;Add Parallel Experiments;0
+devinternal;Author;;24;Sign & Close;15;Move Parallel Experiments;0
+devinternal;Author;;24;Sign & Close;16;Export Parallel Experiments;0
+devinternal;Author;;24;Sign & Close;17;Trash Parallel Experiments;0
+devinternal;Author;;24;Sign & Close;18;Archive;0
+devinternal;Author;;24;Sign & Close;19;Return From Archive;0
+devinternal;Author;;24;Sign & Close;20;Trash Mandatory Entities;0
+devinternal;Author;;24;Sign & Close;21;Clone Entities;0
+devinternal;Author;;24;Sign & Close;22;Save as Template;0
+devinternal;Author;;24;Sign & Close;23;Update Definition;0
+devinternal;Author;;25;Standard User NON-GxP;1;Share;0
+devinternal;Author;;25;Standard User NON-GxP;2;Read Dependent Share;0
+devinternal;Author;;25;Standard User NON-GxP;3;Add/Edit/Delete comments;0
+devinternal;Author;;25;Standard User NON-GxP;4;Broad User Search;0
+devinternal;Author;;25;Standard User NON-GxP;5;Share Templates;0
+devinternal;Author;;25;Standard User NON-GxP;6;Move Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;7;Trash Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;8;Trash Notebooks;0
+devinternal;Author;;25;Standard User NON-GxP;9;Export Notebooks;0
+devinternal;Author;;25;Standard User NON-GxP;10;Trash Requests;0
+devinternal;Author;;25;Standard User NON-GxP;11;Delete Samples;0
+devinternal;Author;;25;Standard User NON-GxP;12;Close/Cancel Samples;0
+devinternal;Author;;25;Standard User NON-GxP;13;Reopen Samples;0
+devinternal;Author;;25;Standard User NON-GxP;14;Add Parallel Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;15;Move Parallel Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;16;Export Parallel Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;17;Trash Parallel Experiments;0
+devinternal;Author;;25;Standard User NON-GxP;18;Archive;0
+devinternal;Author;;25;Standard User NON-GxP;19;Return From Archive;0
+devinternal;Author;;25;Standard User NON-GxP;20;Trash Mandatory Entities;0
+devinternal;Author;;25;Standard User NON-GxP;21;Clone Entities;0
+devinternal;Author;;25;Standard User NON-GxP;22;Save as Template;0
+devinternal;Author;;25;Standard User NON-GxP;23;Update Definition;0
+devinternal;Author;;26;Super User;1;Share;1
+devinternal;Author;;26;Super User;2;Read Dependent Share;0
+devinternal;Author;;26;Super User;3;Add/Edit/Delete comments;0
+devinternal;Author;;26;Super User;4;Broad User Search;0
+devinternal;Author;;26;Super User;5;Share Templates;1
+devinternal;Author;;26;Super User;6;Move Experiments;1
+devinternal;Author;;26;Super User;7;Trash Experiments;0
+devinternal;Author;;26;Super User;8;Trash Notebooks;0
+devinternal;Author;;26;Super User;9;Export Notebooks;1
+devinternal;Author;;26;Super User;10;Trash Requests;0
+devinternal;Author;;26;Super User;11;Delete Samples;1
+devinternal;Author;;26;Super User;12;Close/Cancel Samples;1
+devinternal;Author;;26;Super User;13;Reopen Samples;1
+devinternal;Author;;26;Super User;14;Add Parallel Experiments;1
+devinternal;Author;;26;Super User;15;Move Parallel Experiments;1
+devinternal;Author;;26;Super User;16;Export Parallel Experiments;1
+devinternal;Author;;26;Super User;17;Trash Parallel Experiments;0
+devinternal;Author;;26;Super User;18;Archive;1
+devinternal;Author;;26;Super User;19;Return From Archive;1
+devinternal;Author;;26;Super User;20;Trash Mandatory Entities;0
+devinternal;Author;;26;Super User;21;Clone Entities;0
+devinternal;Author;;26;Super User;22;Save as Template;0
+devinternal;Author;;26;Super User;23;Update Definition;0
+devinternal;Author;;27;Super User Admin;1;Share;1
+devinternal;Author;;27;Super User Admin;2;Read Dependent Share;0
+devinternal;Author;;27;Super User Admin;3;Add/Edit/Delete comments;0
+devinternal;Author;;27;Super User Admin;4;Broad User Search;0
+devinternal;Author;;27;Super User Admin;5;Share Templates;1
+devinternal;Author;;27;Super User Admin;6;Move Experiments;1
+devinternal;Author;;27;Super User Admin;7;Trash Experiments;1
+devinternal;Author;;27;Super User Admin;8;Trash Notebooks;1
+devinternal;Author;;27;Super User Admin;9;Export Notebooks;1
+devinternal;Author;;27;Super User Admin;10;Trash Requests;1
+devinternal;Author;;27;Super User Admin;11;Delete Samples;0
+devinternal;Author;;27;Super User Admin;12;Close/Cancel Samples;0
+devinternal;Author;;27;Super User Admin;13;Reopen Samples;0
+devinternal;Author;;27;Super User Admin;14;Add Parallel Experiments;0
+devinternal;Author;;27;Super User Admin;15;Move Parallel Experiments;0
+devinternal;Author;;27;Super User Admin;16;Export Parallel Experiments;0
+devinternal;Author;;27;Super User Admin;17;Trash Parallel Experiments;0
+devinternal;Author;;27;Super User Admin;18;Archive;0
+devinternal;Author;;27;Super User Admin;19;Return From Archive;0
+devinternal;Author;;27;Super User Admin;20;Trash Mandatory Entities;0
+devinternal;Author;;27;Super User Admin;21;Clone Entities;0
+devinternal;Author;;27;Super User Admin;22;Save as Template;0
+devinternal;Author;;27;Super User Admin;23;Update Definition;0
+devinternal;Author;;28;Template Manager;1;Share;0
+devinternal;Author;;28;Template Manager;2;Read Dependent Share;0
+devinternal;Author;;28;Template Manager;3;Add/Edit/Delete comments;0
+devinternal;Author;;28;Template Manager;4;Broad User Search;0
+devinternal;Author;;28;Template Manager;5;Share Templates;0
+devinternal;Author;;28;Template Manager;6;Move Experiments;0
+devinternal;Author;;28;Template Manager;7;Trash Experiments;0
+devinternal;Author;;28;Template Manager;8;Trash Notebooks;0
+devinternal;Author;;28;Template Manager;9;Export Notebooks;0
+devinternal;Author;;28;Template Manager;10;Trash Requests;0
+devinternal;Author;;28;Template Manager;11;Delete Samples;0
+devinternal;Author;;28;Template Manager;12;Close/Cancel Samples;0
+devinternal;Author;;28;Template Manager;13;Reopen Samples;0
+devinternal;Author;;28;Template Manager;14;Add Parallel Experiments;0
+devinternal;Author;;28;Template Manager;15;Move Parallel Experiments;0
+devinternal;Author;;28;Template Manager;16;Export Parallel Experiments;0
+devinternal;Author;;28;Template Manager;17;Trash Parallel Experiments;0
+devinternal;Author;;28;Template Manager;18;Archive;0
+devinternal;Author;;28;Template Manager;19;Return From Archive;0
+devinternal;Author;;28;Template Manager;20;Trash Mandatory Entities;0
+devinternal;Author;;28;Template Manager;21;Clone Entities;0
+devinternal;Author;;28;Template Manager;22;Save as Template;0
+devinternal;Author;;28;Template Manager;23;Update Definition;0
+devinternal;Author;;29;test;1;Share;0
+devinternal;Author;;29;test;2;Read Dependent Share;0
+devinternal;Author;;29;test;3;Add/Edit/Delete comments;0
+devinternal;Author;;29;test;4;Broad User Search;0
+devinternal;Author;;29;test;5;Share Templates;1
+devinternal;Author;;29;test;6;Move Experiments;0
+devinternal;Author;;29;test;7;Trash Experiments;0
+devinternal;Author;;29;test;8;Trash Notebooks;0
+devinternal;Author;;29;test;9;Export Notebooks;0
+devinternal;Author;;29;test;10;Trash Requests;0
+devinternal;Author;;29;test;11;Delete Samples;0
+devinternal;Author;;29;test;12;Close/Cancel Samples;0
+devinternal;Author;;29;test;13;Reopen Samples;0
+devinternal;Author;;29;test;14;Add Parallel Experiments;0
+devinternal;Author;;29;test;15;Move Parallel Experiments;0
+devinternal;Author;;29;test;16;Export Parallel Experiments;0
+devinternal;Author;;29;test;17;Trash Parallel Experiments;0
+devinternal;Author;;29;test;18;Archive;0
+devinternal;Author;;29;test;19;Return From Archive;0
+devinternal;Author;;29;test;20;Trash Mandatory Entities;0
+devinternal;Author;;29;test;21;Clone Entities;0
+devinternal;Author;;29;test;22;Save as Template;0
+devinternal;Author;;29;test;23;Update Definition;0
+devinternal;Materials;;1;System Admin;1;Manage Material Libraries;1
+devinternal;Materials;;1;System Admin;2;View Materials;1
+devinternal;Materials;;1;System Admin;3;Add Materials;1
+devinternal;Materials;;1;System Admin;4;Edit Materials;1
+devinternal;Materials;;1;System Admin;5;Delete Materials;1
+devinternal;Materials;;1;System Admin;6;Export Materials;1
+devinternal;Materials;;2;Inventory Admin;1;Manage Material Libraries;1
+devinternal;Materials;;2;Inventory Admin;2;View Materials;1
+devinternal;Materials;;2;Inventory Admin;3;Add Materials;1
+devinternal;Materials;;2;Inventory Admin;4;Edit Materials;1
+devinternal;Materials;;2;Inventory Admin;5;Delete Materials;1
+devinternal;Materials;;2;Inventory Admin;6;Export Materials;0
+devinternal;Materials;;3;Standard User;1;Manage Material Libraries;0
+devinternal;Materials;;3;Standard User;2;View Materials;1
+devinternal;Materials;;3;Standard User;3;Add Materials;0
+devinternal;Materials;;3;Standard User;4;Edit Materials;0
+devinternal;Materials;;3;Standard User;5;Delete Materials;0
+devinternal;Materials;;3;Standard User;6;Export Materials;0
+devinternal;Materials;;4;Archivist;1;Manage Material Libraries;0
+devinternal;Materials;;4;Archivist;2;View Materials;0
+devinternal;Materials;;4;Archivist;3;Add Materials;0
+devinternal;Materials;;4;Archivist;4;Edit Materials;0
+devinternal;Materials;;4;Archivist;5;Delete Materials;0
+devinternal;Materials;;4;Archivist;6;Export Materials;0
+devinternal;Materials;;5;Disc Pharm Super User;1;Manage Material Libraries;0
+devinternal;Materials;;5;Disc Pharm Super User;2;View Materials;0
+devinternal;Materials;;5;Disc Pharm Super User;3;Add Materials;0
+devinternal;Materials;;5;Disc Pharm Super User;4;Edit Materials;0
+devinternal;Materials;;5;Disc Pharm Super User;5;Delete Materials;0
+devinternal;Materials;;5;Disc Pharm Super User;6;Export Materials;0
+devinternal;Materials;;6;Disc Pharm User;1;Manage Material Libraries;0
+devinternal;Materials;;6;Disc Pharm User;2;View Materials;1
+devinternal;Materials;;6;Disc Pharm User;3;Add Materials;1
+devinternal;Materials;;6;Disc Pharm User;4;Edit Materials;1
+devinternal;Materials;;6;Disc Pharm User;5;Delete Materials;0
+devinternal;Materials;;6;Disc Pharm User;6;Export Materials;0
+devinternal;Materials;;7;FL-Approver;1;Manage Material Libraries;0
+devinternal;Materials;;7;FL-Approver;2;View Materials;0
+devinternal;Materials;;7;FL-Approver;3;Add Materials;0
+devinternal;Materials;;7;FL-Approver;4;Edit Materials;0
+devinternal;Materials;;7;FL-Approver;5;Delete Materials;0
+devinternal;Materials;;7;FL-Approver;6;Export Materials;0
+devinternal;Materials;;8;FL-Archivist;1;Manage Material Libraries;0
+devinternal;Materials;;8;FL-Archivist;2;View Materials;0
+devinternal;Materials;;8;FL-Archivist;3;Add Materials;0
+devinternal;Materials;;8;FL-Archivist;4;Edit Materials;0
+devinternal;Materials;;8;FL-Archivist;5;Delete Materials;0
+devinternal;Materials;;8;FL-Archivist;6;Export Materials;0
+devinternal;Materials;;9;FL-Author;1;Manage Material Libraries;0
+devinternal;Materials;;9;FL-Author;2;View Materials;0
+devinternal;Materials;;9;FL-Author;3;Add Materials;0
+devinternal;Materials;;9;FL-Author;4;Edit Materials;0
+devinternal;Materials;;9;FL-Author;5;Delete Materials;0
+devinternal;Materials;;9;FL-Author;6;Export Materials;0
+devinternal;Materials;;10;Gxp Recipe Builder;1;Manage Material Libraries;0
+devinternal;Materials;;10;Gxp Recipe Builder;2;View Materials;0
+devinternal;Materials;;10;Gxp Recipe Builder;3;Add Materials;0
+devinternal;Materials;;10;Gxp Recipe Builder;4;Edit Materials;0
+devinternal;Materials;;10;Gxp Recipe Builder;5;Delete Materials;0
+devinternal;Materials;;10;Gxp Recipe Builder;6;Export Materials;0
+devinternal;Materials;;11;GxP Std User;1;Manage Material Libraries;0
+devinternal;Materials;;11;GxP Std User;2;View Materials;1
+devinternal;Materials;;11;GxP Std User;3;Add Materials;1
+devinternal;Materials;;11;GxP Std User;4;Edit Materials;1
+devinternal;Materials;;11;GxP Std User;5;Delete Materials;0
+devinternal;Materials;;11;GxP Std User;6;Export Materials;1
+devinternal;Materials;;12;GxP Superuser;1;Manage Material Libraries;0
+devinternal;Materials;;12;GxP Superuser;2;View Materials;0
+devinternal;Materials;;12;GxP Superuser;3;Add Materials;0
+devinternal;Materials;;12;GxP Superuser;4;Edit Materials;0
+devinternal;Materials;;12;GxP Superuser;5;Delete Materials;0
+devinternal;Materials;;12;GxP Superuser;6;Export Materials;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;1;Manage Material Libraries;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;2;View Materials;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;3;Add Materials;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;4;Edit Materials;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;5;Delete Materials;0
+devinternal;Materials;;13;Gxp-Active Directory Sync Test Role;6;Export Materials;0
+devinternal;Materials;;14;HELM User;1;Manage Material Libraries;0
+devinternal;Materials;;14;HELM User;2;View Materials;1
+devinternal;Materials;;14;HELM User;3;Add Materials;1
+devinternal;Materials;;14;HELM User;4;Edit Materials;1
+devinternal;Materials;;14;HELM User;5;Delete Materials;1
+devinternal;Materials;;14;HELM User;6;Export Materials;1
+devinternal;Materials;;15;Janssen Internal User;1;Manage Material Libraries;0
+devinternal;Materials;;15;Janssen Internal User;2;View Materials;0
+devinternal;Materials;;15;Janssen Internal User;3;Add Materials;0
+devinternal;Materials;;15;Janssen Internal User;4;Edit Materials;0
+devinternal;Materials;;15;Janssen Internal User;5;Delete Materials;0
+devinternal;Materials;;15;Janssen Internal User;6;Export Materials;0
+devinternal;Materials;;16;LAC User;1;Manage Material Libraries;0
+devinternal;Materials;;16;LAC User;2;View Materials;0
+devinternal;Materials;;16;LAC User;3;Add Materials;0
+devinternal;Materials;;16;LAC User;4;Edit Materials;0
+devinternal;Materials;;16;LAC User;5;Delete Materials;0
+devinternal;Materials;;16;LAC User;6;Export Materials;0
+devinternal;Materials;;17;ML Key User;1;Manage Material Libraries;0
+devinternal;Materials;;17;ML Key User;2;View Materials;1
+devinternal;Materials;;17;ML Key User;3;Add Materials;0
+devinternal;Materials;;17;ML Key User;4;Edit Materials;0
+devinternal;Materials;;17;ML Key User;5;Delete Materials;0
+devinternal;Materials;;17;ML Key User;6;Export Materials;0
+devinternal;Materials;;18;Non-GxP Standard User;1;Manage Material Libraries;0
+devinternal;Materials;;18;Non-GxP Standard User;2;View Materials;0
+devinternal;Materials;;18;Non-GxP Standard User;3;Add Materials;0
+devinternal;Materials;;18;Non-GxP Standard User;4;Edit Materials;0
+devinternal;Materials;;18;Non-GxP Standard User;5;Delete Materials;0
+devinternal;Materials;;18;Non-GxP Standard User;6;Export Materials;0
+devinternal;Materials;;19;PMP test;1;Manage Material Libraries;0
+devinternal;Materials;;19;PMP test;2;View Materials;0
+devinternal;Materials;;19;PMP test;3;Add Materials;0
+devinternal;Materials;;19;PMP test;4;Edit Materials;0
+devinternal;Materials;;19;PMP test;5;Delete Materials;0
+devinternal;Materials;;19;PMP test;6;Export Materials;0
+devinternal;Materials;;20;ReseachCenterManager;1;Manage Material Libraries;0
+devinternal;Materials;;20;ReseachCenterManager;2;View Materials;1
+devinternal;Materials;;20;ReseachCenterManager;3;Add Materials;1
+devinternal;Materials;;20;ReseachCenterManager;4;Edit Materials;1
+devinternal;Materials;;20;ReseachCenterManager;5;Delete Materials;1
+devinternal;Materials;;20;ReseachCenterManager;6;Export Materials;1
+devinternal;Materials;;21;ResearchCenterUser;1;Manage Material Libraries;0
+devinternal;Materials;;21;ResearchCenterUser;2;View Materials;1
+devinternal;Materials;;21;ResearchCenterUser;3;Add Materials;1
+devinternal;Materials;;21;ResearchCenterUser;4;Edit Materials;0
+devinternal;Materials;;21;ResearchCenterUser;5;Delete Materials;0
+devinternal;Materials;;21;ResearchCenterUser;6;Export Materials;1
+devinternal;Materials;;22;ResearchCenterViewer;1;Manage Material Libraries;0
+devinternal;Materials;;22;ResearchCenterViewer;2;View Materials;1
+devinternal;Materials;;22;ResearchCenterViewer;3;Add Materials;0
+devinternal;Materials;;22;ResearchCenterViewer;4;Edit Materials;0
+devinternal;Materials;;22;ResearchCenterViewer;5;Delete Materials;0
+devinternal;Materials;;22;ResearchCenterViewer;6;Export Materials;1
+devinternal;Materials;;23;Sign & 2 Stage Review;1;Manage Material Libraries;0
+devinternal;Materials;;23;Sign & 2 Stage Review;2;View Materials;0
+devinternal;Materials;;23;Sign & 2 Stage Review;3;Add Materials;0
+devinternal;Materials;;23;Sign & 2 Stage Review;4;Edit Materials;0
+devinternal;Materials;;23;Sign & 2 Stage Review;5;Delete Materials;0
+devinternal;Materials;;23;Sign & 2 Stage Review;6;Export Materials;0
+devinternal;Materials;;24;Sign & Close;1;Manage Material Libraries;0
+devinternal;Materials;;24;Sign & Close;2;View Materials;0
+devinternal;Materials;;24;Sign & Close;3;Add Materials;0
+devinternal;Materials;;24;Sign & Close;4;Edit Materials;0
+devinternal;Materials;;24;Sign & Close;5;Delete Materials;0
+devinternal;Materials;;24;Sign & Close;6;Export Materials;0
+devinternal;Materials;;25;Standard User NON-GxP;1;Manage Material Libraries;0
+devinternal;Materials;;25;Standard User NON-GxP;2;View Materials;0
+devinternal;Materials;;25;Standard User NON-GxP;3;Add Materials;0
+devinternal;Materials;;25;Standard User NON-GxP;4;Edit Materials;0
+devinternal;Materials;;25;Standard User NON-GxP;5;Delete Materials;0
+devinternal;Materials;;25;Standard User NON-GxP;6;Export Materials;0
+devinternal;Materials;;26;Super User;1;Manage Material Libraries;0
+devinternal;Materials;;26;Super User;2;View Materials;1
+devinternal;Materials;;26;Super User;3;Add Materials;1
+devinternal;Materials;;26;Super User;4;Edit Materials;1
+devinternal;Materials;;26;Super User;5;Delete Materials;1
+devinternal;Materials;;26;Super User;6;Export Materials;1
+devinternal;Materials;;27;Super User Admin;1;Manage Material Libraries;0
+devinternal;Materials;;27;Super User Admin;2;View Materials;0
+devinternal;Materials;;27;Super User Admin;3;Add Materials;0
+devinternal;Materials;;27;Super User Admin;4;Edit Materials;0
+devinternal;Materials;;27;Super User Admin;5;Delete Materials;0
+devinternal;Materials;;27;Super User Admin;6;Export Materials;0
+devinternal;Materials;;28;Template Manager;1;Manage Material Libraries;0
+devinternal;Materials;;28;Template Manager;2;View Materials;0
+devinternal;Materials;;28;Template Manager;3;Add Materials;0
+devinternal;Materials;;28;Template Manager;4;Edit Materials;0
+devinternal;Materials;;28;Template Manager;5;Delete Materials;0
+devinternal;Materials;;28;Template Manager;6;Export Materials;0
+devinternal;Materials;;29;test;1;Manage Material Libraries;0
+devinternal;Materials;;29;test;2;View Materials;0
+devinternal;Materials;;29;test;3;Add Materials;0
+devinternal;Materials;;29;test;4;Edit Materials;0
+devinternal;Materials;;29;test;5;Delete Materials;0
+devinternal;Materials;;29;test;6;Export Materials;0
+devinternal;Inventory;Application;1;System Admin;1;Inventory App;1
+devinternal;Inventory;Application;1;System Admin;2;Manage Inventory;1
+devinternal;Inventory;Application;1;System Admin;3;Manage Inventory Attributes;1
+devinternal;Inventory;Application;2;Inventory Admin;1;Inventory App;1
+devinternal;Inventory;Application;2;Inventory Admin;2;Manage Inventory;1
+devinternal;Inventory;Application;2;Inventory Admin;3;Manage Inventory Attributes;1
+devinternal;Inventory;Application;3;Standard User;1;Inventory App;0
+devinternal;Inventory;Application;3;Standard User;2;Manage Inventory;0
+devinternal;Inventory;Application;3;Standard User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;4;Archivist;1;Inventory App;0
+devinternal;Inventory;Application;4;Archivist;2;Manage Inventory;0
+devinternal;Inventory;Application;4;Archivist;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;5;Disc Pharm Super User;1;Inventory App;0
+devinternal;Inventory;Application;5;Disc Pharm Super User;2;Manage Inventory;0
+devinternal;Inventory;Application;5;Disc Pharm Super User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;6;Disc Pharm User;1;Inventory App;0
+devinternal;Inventory;Application;6;Disc Pharm User;2;Manage Inventory;0
+devinternal;Inventory;Application;6;Disc Pharm User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;7;FL-Approver;1;Inventory App;0
+devinternal;Inventory;Application;7;FL-Approver;2;Manage Inventory;0
+devinternal;Inventory;Application;7;FL-Approver;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;8;FL-Archivist;1;Inventory App;0
+devinternal;Inventory;Application;8;FL-Archivist;2;Manage Inventory;0
+devinternal;Inventory;Application;8;FL-Archivist;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;9;FL-Author;1;Inventory App;0
+devinternal;Inventory;Application;9;FL-Author;2;Manage Inventory;0
+devinternal;Inventory;Application;9;FL-Author;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;10;Gxp Recipe Builder;1;Inventory App;0
+devinternal;Inventory;Application;10;Gxp Recipe Builder;2;Manage Inventory;0
+devinternal;Inventory;Application;10;Gxp Recipe Builder;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;11;GxP Std User;1;Inventory App;1
+devinternal;Inventory;Application;11;GxP Std User;2;Manage Inventory;0
+devinternal;Inventory;Application;11;GxP Std User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;12;GxP Superuser;1;Inventory App;0
+devinternal;Inventory;Application;12;GxP Superuser;2;Manage Inventory;0
+devinternal;Inventory;Application;12;GxP Superuser;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;13;Gxp-Active Directory Sync Test Role;1;Inventory App;0
+devinternal;Inventory;Application;13;Gxp-Active Directory Sync Test Role;2;Manage Inventory;0
+devinternal;Inventory;Application;13;Gxp-Active Directory Sync Test Role;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;14;HELM User;1;Inventory App;0
+devinternal;Inventory;Application;14;HELM User;2;Manage Inventory;0
+devinternal;Inventory;Application;14;HELM User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;15;Janssen Internal User;1;Inventory App;0
+devinternal;Inventory;Application;15;Janssen Internal User;2;Manage Inventory;0
+devinternal;Inventory;Application;15;Janssen Internal User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;16;LAC User;1;Inventory App;0
+devinternal;Inventory;Application;16;LAC User;2;Manage Inventory;0
+devinternal;Inventory;Application;16;LAC User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;17;ML Key User;1;Inventory App;0
+devinternal;Inventory;Application;17;ML Key User;2;Manage Inventory;0
+devinternal;Inventory;Application;17;ML Key User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;18;Non-GxP Standard User;1;Inventory App;0
+devinternal;Inventory;Application;18;Non-GxP Standard User;2;Manage Inventory;0
+devinternal;Inventory;Application;18;Non-GxP Standard User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;19;PMP test;1;Inventory App;1
+devinternal;Inventory;Application;19;PMP test;2;Manage Inventory;0
+devinternal;Inventory;Application;19;PMP test;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;20;ReseachCenterManager;1;Inventory App;0
+devinternal;Inventory;Application;20;ReseachCenterManager;2;Manage Inventory;0
+devinternal;Inventory;Application;20;ReseachCenterManager;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;21;ResearchCenterUser;1;Inventory App;0
+devinternal;Inventory;Application;21;ResearchCenterUser;2;Manage Inventory;0
+devinternal;Inventory;Application;21;ResearchCenterUser;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;22;ResearchCenterViewer;1;Inventory App;0
+devinternal;Inventory;Application;22;ResearchCenterViewer;2;Manage Inventory;0
+devinternal;Inventory;Application;22;ResearchCenterViewer;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;23;Sign & 2 Stage Review;1;Inventory App;0
+devinternal;Inventory;Application;23;Sign & 2 Stage Review;2;Manage Inventory;0
+devinternal;Inventory;Application;23;Sign & 2 Stage Review;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;24;Sign & Close;1;Inventory App;0
+devinternal;Inventory;Application;24;Sign & Close;2;Manage Inventory;0
+devinternal;Inventory;Application;24;Sign & Close;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;25;Standard User NON-GxP;1;Inventory App;0
+devinternal;Inventory;Application;25;Standard User NON-GxP;2;Manage Inventory;0
+devinternal;Inventory;Application;25;Standard User NON-GxP;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;26;Super User;1;Inventory App;0
+devinternal;Inventory;Application;26;Super User;2;Manage Inventory;0
+devinternal;Inventory;Application;26;Super User;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;27;Super User Admin;1;Inventory App;0
+devinternal;Inventory;Application;27;Super User Admin;2;Manage Inventory;0
+devinternal;Inventory;Application;27;Super User Admin;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;28;Template Manager;1;Inventory App;0
+devinternal;Inventory;Application;28;Template Manager;2;Manage Inventory;0
+devinternal;Inventory;Application;28;Template Manager;3;Manage Inventory Attributes;0
+devinternal;Inventory;Application;29;test;1;Inventory App;0
+devinternal;Inventory;Application;29;test;2;Manage Inventory;0
+devinternal;Inventory;Application;29;test;3;Manage Inventory Attributes;0
+devinternal;Inventory;Locations;1;System Admin;1;Add Location;1
+devinternal;Inventory;Locations;1;System Admin;2;Edit Location;1
+devinternal;Inventory;Locations;1;System Admin;3;Move Location Contents;1
+devinternal;Inventory;Locations;1;System Admin;4;Move Location;1
+devinternal;Inventory;Locations;1;System Admin;5;Delete Location;1
+devinternal;Inventory;Locations;2;Inventory Admin;1;Add Location;1
+devinternal;Inventory;Locations;2;Inventory Admin;2;Edit Location;1
+devinternal;Inventory;Locations;2;Inventory Admin;3;Move Location Contents;1
+devinternal;Inventory;Locations;2;Inventory Admin;4;Move Location;1
+devinternal;Inventory;Locations;2;Inventory Admin;5;Delete Location;1
+devinternal;Inventory;Locations;3;Standard User;1;Add Location;0
+devinternal;Inventory;Locations;3;Standard User;2;Edit Location;0
+devinternal;Inventory;Locations;3;Standard User;3;Move Location Contents;0
+devinternal;Inventory;Locations;3;Standard User;4;Move Location;0
+devinternal;Inventory;Locations;3;Standard User;5;Delete Location;0
+devinternal;Inventory;Locations;4;Archivist;1;Add Location;0
+devinternal;Inventory;Locations;4;Archivist;2;Edit Location;0
+devinternal;Inventory;Locations;4;Archivist;3;Move Location Contents;0
+devinternal;Inventory;Locations;4;Archivist;4;Move Location;0
+devinternal;Inventory;Locations;4;Archivist;5;Delete Location;0
+devinternal;Inventory;Locations;5;Disc Pharm Super User;1;Add Location;0
+devinternal;Inventory;Locations;5;Disc Pharm Super User;2;Edit Location;0
+devinternal;Inventory;Locations;5;Disc Pharm Super User;3;Move Location Contents;0
+devinternal;Inventory;Locations;5;Disc Pharm Super User;4;Move Location;0
+devinternal;Inventory;Locations;5;Disc Pharm Super User;5;Delete Location;0
+devinternal;Inventory;Locations;6;Disc Pharm User;1;Add Location;0
+devinternal;Inventory;Locations;6;Disc Pharm User;2;Edit Location;0
+devinternal;Inventory;Locations;6;Disc Pharm User;3;Move Location Contents;0
+devinternal;Inventory;Locations;6;Disc Pharm User;4;Move Location;0
+devinternal;Inventory;Locations;6;Disc Pharm User;5;Delete Location;0
+devinternal;Inventory;Locations;7;FL-Approver;1;Add Location;0
+devinternal;Inventory;Locations;7;FL-Approver;2;Edit Location;0
+devinternal;Inventory;Locations;7;FL-Approver;3;Move Location Contents;0
+devinternal;Inventory;Locations;7;FL-Approver;4;Move Location;0
+devinternal;Inventory;Locations;7;FL-Approver;5;Delete Location;0
+devinternal;Inventory;Locations;8;FL-Archivist;1;Add Location;0
+devinternal;Inventory;Locations;8;FL-Archivist;2;Edit Location;0
+devinternal;Inventory;Locations;8;FL-Archivist;3;Move Location Contents;0
+devinternal;Inventory;Locations;8;FL-Archivist;4;Move Location;0
+devinternal;Inventory;Locations;8;FL-Archivist;5;Delete Location;0
+devinternal;Inventory;Locations;9;FL-Author;1;Add Location;0
+devinternal;Inventory;Locations;9;FL-Author;2;Edit Location;0
+devinternal;Inventory;Locations;9;FL-Author;3;Move Location Contents;0
+devinternal;Inventory;Locations;9;FL-Author;4;Move Location;0
+devinternal;Inventory;Locations;9;FL-Author;5;Delete Location;0
+devinternal;Inventory;Locations;10;Gxp Recipe Builder;1;Add Location;0
+devinternal;Inventory;Locations;10;Gxp Recipe Builder;2;Edit Location;0
+devinternal;Inventory;Locations;10;Gxp Recipe Builder;3;Move Location Contents;0
+devinternal;Inventory;Locations;10;Gxp Recipe Builder;4;Move Location;0
+devinternal;Inventory;Locations;10;Gxp Recipe Builder;5;Delete Location;0
+devinternal;Inventory;Locations;11;GxP Std User;1;Add Location;0
+devinternal;Inventory;Locations;11;GxP Std User;2;Edit Location;0
+devinternal;Inventory;Locations;11;GxP Std User;3;Move Location Contents;0
+devinternal;Inventory;Locations;11;GxP Std User;4;Move Location;0
+devinternal;Inventory;Locations;11;GxP Std User;5;Delete Location;0
+devinternal;Inventory;Locations;12;GxP Superuser;1;Add Location;0
+devinternal;Inventory;Locations;12;GxP Superuser;2;Edit Location;0
+devinternal;Inventory;Locations;12;GxP Superuser;3;Move Location Contents;0
+devinternal;Inventory;Locations;12;GxP Superuser;4;Move Location;0
+devinternal;Inventory;Locations;12;GxP Superuser;5;Delete Location;0
+devinternal;Inventory;Locations;13;Gxp-Active Directory Sync Test Role;1;Add Location;0
+devinternal;Inventory;Locations;13;Gxp-Active Directory Sync Test Role;2;Edit Location;0
+devinternal;Inventory;Locations;13;Gxp-Active Directory Sync Test Role;3;Move Location Contents;0
+devinternal;Inventory;Locations;13;Gxp-Active Directory Sync Test Role;4;Move Location;0
+devinternal;Inventory;Locations;13;Gxp-Active Directory Sync Test Role;5;Delete Location;0
+devinternal;Inventory;Locations;14;HELM User;1;Add Location;0
+devinternal;Inventory;Locations;14;HELM User;2;Edit Location;0
+devinternal;Inventory;Locations;14;HELM User;3;Move Location Contents;0
+devinternal;Inventory;Locations;14;HELM User;4;Move Location;0
+devinternal;Inventory;Locations;14;HELM User;5;Delete Location;0
+devinternal;Inventory;Locations;15;Janssen Internal User;1;Add Location;0
+devinternal;Inventory;Locations;15;Janssen Internal User;2;Edit Location;0
+devinternal;Inventory;Locations;15;Janssen Internal User;3;Move Location Contents;0
+devinternal;Inventory;Locations;15;Janssen Internal User;4;Move Location;0
+devinternal;Inventory;Locations;15;Janssen Internal User;5;Delete Location;0
+devinternal;Inventory;Locations;16;LAC User;1;Add Location;0
+devinternal;Inventory;Locations;16;LAC User;2;Edit Location;0
+devinternal;Inventory;Locations;16;LAC User;3;Move Location Contents;0
+devinternal;Inventory;Locations;16;LAC User;4;Move Location;0
+devinternal;Inventory;Locations;16;LAC User;5;Delete Location;0
+devinternal;Inventory;Locations;17;ML Key User;1;Add Location;0
+devinternal;Inventory;Locations;17;ML Key User;2;Edit Location;0
+devinternal;Inventory;Locations;17;ML Key User;3;Move Location Contents;0
+devinternal;Inventory;Locations;17;ML Key User;4;Move Location;0
+devinternal;Inventory;Locations;17;ML Key User;5;Delete Location;0
+devinternal;Inventory;Locations;18;Non-GxP Standard User;1;Add Location;0
+devinternal;Inventory;Locations;18;Non-GxP Standard User;2;Edit Location;0
+devinternal;Inventory;Locations;18;Non-GxP Standard User;3;Move Location Contents;0
+devinternal;Inventory;Locations;18;Non-GxP Standard User;4;Move Location;0
+devinternal;Inventory;Locations;18;Non-GxP Standard User;5;Delete Location;0
+devinternal;Inventory;Locations;19;PMP test;1;Add Location;0
+devinternal;Inventory;Locations;19;PMP test;2;Edit Location;0
+devinternal;Inventory;Locations;19;PMP test;3;Move Location Contents;0
+devinternal;Inventory;Locations;19;PMP test;4;Move Location;0
+devinternal;Inventory;Locations;19;PMP test;5;Delete Location;0
+devinternal;Inventory;Locations;20;ReseachCenterManager;1;Add Location;1
+devinternal;Inventory;Locations;20;ReseachCenterManager;2;Edit Location;0
+devinternal;Inventory;Locations;20;ReseachCenterManager;3;Move Location Contents;0
+devinternal;Inventory;Locations;20;ReseachCenterManager;4;Move Location;0
+devinternal;Inventory;Locations;20;ReseachCenterManager;5;Delete Location;0
+devinternal;Inventory;Locations;21;ResearchCenterUser;1;Add Location;1
+devinternal;Inventory;Locations;21;ResearchCenterUser;2;Edit Location;0
+devinternal;Inventory;Locations;21;ResearchCenterUser;3;Move Location Contents;0
+devinternal;Inventory;Locations;21;ResearchCenterUser;4;Move Location;0
+devinternal;Inventory;Locations;21;ResearchCenterUser;5;Delete Location;0
+devinternal;Inventory;Locations;22;ResearchCenterViewer;1;Add Location;0
+devinternal;Inventory;Locations;22;ResearchCenterViewer;2;Edit Location;0
+devinternal;Inventory;Locations;22;ResearchCenterViewer;3;Move Location Contents;0
+devinternal;Inventory;Locations;22;ResearchCenterViewer;4;Move Location;0
+devinternal;Inventory;Locations;22;ResearchCenterViewer;5;Delete Location;0
+devinternal;Inventory;Locations;23;Sign & 2 Stage Review;1;Add Location;0
+devinternal;Inventory;Locations;23;Sign & 2 Stage Review;2;Edit Location;0
+devinternal;Inventory;Locations;23;Sign & 2 Stage Review;3;Move Location Contents;0
+devinternal;Inventory;Locations;23;Sign & 2 Stage Review;4;Move Location;0
+devinternal;Inventory;Locations;23;Sign & 2 Stage Review;5;Delete Location;0
+devinternal;Inventory;Locations;24;Sign & Close;1;Add Location;0
+devinternal;Inventory;Locations;24;Sign & Close;2;Edit Location;0
+devinternal;Inventory;Locations;24;Sign & Close;3;Move Location Contents;0
+devinternal;Inventory;Locations;24;Sign & Close;4;Move Location;0
+devinternal;Inventory;Locations;24;Sign & Close;5;Delete Location;0
+devinternal;Inventory;Locations;25;Standard User NON-GxP;1;Add Location;0
+devinternal;Inventory;Locations;25;Standard User NON-GxP;2;Edit Location;0
+devinternal;Inventory;Locations;25;Standard User NON-GxP;3;Move Location Contents;0
+devinternal;Inventory;Locations;25;Standard User NON-GxP;4;Move Location;0
+devinternal;Inventory;Locations;25;Standard User NON-GxP;5;Delete Location;0
+devinternal;Inventory;Locations;26;Super User;1;Add Location;0
+devinternal;Inventory;Locations;26;Super User;2;Edit Location;0
+devinternal;Inventory;Locations;26;Super User;3;Move Location Contents;0
+devinternal;Inventory;Locations;26;Super User;4;Move Location;0
+devinternal;Inventory;Locations;26;Super User;5;Delete Location;0
+devinternal;Inventory;Locations;27;Super User Admin;1;Add Location;0
+devinternal;Inventory;Locations;27;Super User Admin;2;Edit Location;0
+devinternal;Inventory;Locations;27;Super User Admin;3;Move Location Contents;0
+devinternal;Inventory;Locations;27;Super User Admin;4;Move Location;0
+devinternal;Inventory;Locations;27;Super User Admin;5;Delete Location;0
+devinternal;Inventory;Locations;28;Template Manager;1;Add Location;0
+devinternal;Inventory;Locations;28;Template Manager;2;Edit Location;0
+devinternal;Inventory;Locations;28;Template Manager;3;Move Location Contents;0
+devinternal;Inventory;Locations;28;Template Manager;4;Move Location;0
+devinternal;Inventory;Locations;28;Template Manager;5;Delete Location;0
+devinternal;Inventory;Locations;29;test;1;Add Location;0
+devinternal;Inventory;Locations;29;test;2;Edit Location;0
+devinternal;Inventory;Locations;29;test;3;Move Location Contents;0
+devinternal;Inventory;Locations;29;test;4;Move Location;0
+devinternal;Inventory;Locations;29;test;5;Delete Location;0
+devinternal;Inventory;Containers;1;System Admin;1;Add Container;1
+devinternal;Inventory;Containers;1;System Admin;2;Edit Container;1
+devinternal;Inventory;Containers;1;System Admin;3;Aliquot Container;1
+devinternal;Inventory;Containers;1;System Admin;4;Update Amount;1
+devinternal;Inventory;Containers;1;System Admin;5;Export Containers;1
+devinternal;Inventory;Containers;1;System Admin;6;Update Home;1
+devinternal;Inventory;Containers;1;System Admin;7;Delete Container;1
+devinternal;Inventory;Containers;1;System Admin;8;Final Dispose;1
+devinternal;Inventory;Containers;2;Inventory Admin;1;Add Container;1
+devinternal;Inventory;Containers;2;Inventory Admin;2;Edit Container;1
+devinternal;Inventory;Containers;2;Inventory Admin;3;Aliquot Container;1
+devinternal;Inventory;Containers;2;Inventory Admin;4;Update Amount;1
+devinternal;Inventory;Containers;2;Inventory Admin;5;Export Containers;1
+devinternal;Inventory;Containers;2;Inventory Admin;6;Update Home;1
+devinternal;Inventory;Containers;2;Inventory Admin;7;Delete Container;1
+devinternal;Inventory;Containers;2;Inventory Admin;8;Final Dispose;1
+devinternal;Inventory;Containers;3;Standard User;1;Add Container;0
+devinternal;Inventory;Containers;3;Standard User;2;Edit Container;0
+devinternal;Inventory;Containers;3;Standard User;3;Aliquot Container;0
+devinternal;Inventory;Containers;3;Standard User;4;Update Amount;0
+devinternal;Inventory;Containers;3;Standard User;5;Export Containers;0
+devinternal;Inventory;Containers;3;Standard User;6;Update Home;0
+devinternal;Inventory;Containers;3;Standard User;7;Delete Container;0
+devinternal;Inventory;Containers;3;Standard User;8;Final Dispose;0
+devinternal;Inventory;Containers;4;Archivist;1;Add Container;0
+devinternal;Inventory;Containers;4;Archivist;2;Edit Container;0
+devinternal;Inventory;Containers;4;Archivist;3;Aliquot Container;0
+devinternal;Inventory;Containers;4;Archivist;4;Update Amount;0
+devinternal;Inventory;Containers;4;Archivist;5;Export Containers;0
+devinternal;Inventory;Containers;4;Archivist;6;Update Home;0
+devinternal;Inventory;Containers;4;Archivist;7;Delete Container;0
+devinternal;Inventory;Containers;4;Archivist;8;Final Dispose;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;1;Add Container;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;2;Edit Container;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;3;Aliquot Container;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;4;Update Amount;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;5;Export Containers;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;6;Update Home;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;7;Delete Container;0
+devinternal;Inventory;Containers;5;Disc Pharm Super User;8;Final Dispose;0
+devinternal;Inventory;Containers;6;Disc Pharm User;1;Add Container;0
+devinternal;Inventory;Containers;6;Disc Pharm User;2;Edit Container;0
+devinternal;Inventory;Containers;6;Disc Pharm User;3;Aliquot Container;0
+devinternal;Inventory;Containers;6;Disc Pharm User;4;Update Amount;0
+devinternal;Inventory;Containers;6;Disc Pharm User;5;Export Containers;0
+devinternal;Inventory;Containers;6;Disc Pharm User;6;Update Home;0
+devinternal;Inventory;Containers;6;Disc Pharm User;7;Delete Container;0
+devinternal;Inventory;Containers;6;Disc Pharm User;8;Final Dispose;0
+devinternal;Inventory;Containers;7;FL-Approver;1;Add Container;0
+devinternal;Inventory;Containers;7;FL-Approver;2;Edit Container;0
+devinternal;Inventory;Containers;7;FL-Approver;3;Aliquot Container;0
+devinternal;Inventory;Containers;7;FL-Approver;4;Update Amount;0
+devinternal;Inventory;Containers;7;FL-Approver;5;Export Containers;0
+devinternal;Inventory;Containers;7;FL-Approver;6;Update Home;0
+devinternal;Inventory;Containers;7;FL-Approver;7;Delete Container;0
+devinternal;Inventory;Containers;7;FL-Approver;8;Final Dispose;0
+devinternal;Inventory;Containers;8;FL-Archivist;1;Add Container;0
+devinternal;Inventory;Containers;8;FL-Archivist;2;Edit Container;0
+devinternal;Inventory;Containers;8;FL-Archivist;3;Aliquot Container;0
+devinternal;Inventory;Containers;8;FL-Archivist;4;Update Amount;0
+devinternal;Inventory;Containers;8;FL-Archivist;5;Export Containers;0
+devinternal;Inventory;Containers;8;FL-Archivist;6;Update Home;0
+devinternal;Inventory;Containers;8;FL-Archivist;7;Delete Container;0
+devinternal;Inventory;Containers;8;FL-Archivist;8;Final Dispose;0
+devinternal;Inventory;Containers;9;FL-Author;1;Add Container;0
+devinternal;Inventory;Containers;9;FL-Author;2;Edit Container;0
+devinternal;Inventory;Containers;9;FL-Author;3;Aliquot Container;0
+devinternal;Inventory;Containers;9;FL-Author;4;Update Amount;0
+devinternal;Inventory;Containers;9;FL-Author;5;Export Containers;0
+devinternal;Inventory;Containers;9;FL-Author;6;Update Home;0
+devinternal;Inventory;Containers;9;FL-Author;7;Delete Container;0
+devinternal;Inventory;Containers;9;FL-Author;8;Final Dispose;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;1;Add Container;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;2;Edit Container;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;3;Aliquot Container;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;4;Update Amount;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;5;Export Containers;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;6;Update Home;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;7;Delete Container;0
+devinternal;Inventory;Containers;10;Gxp Recipe Builder;8;Final Dispose;0
+devinternal;Inventory;Containers;11;GxP Std User;1;Add Container;1
+devinternal;Inventory;Containers;11;GxP Std User;2;Edit Container;1
+devinternal;Inventory;Containers;11;GxP Std User;3;Aliquot Container;0
+devinternal;Inventory;Containers;11;GxP Std User;4;Update Amount;1
+devinternal;Inventory;Containers;11;GxP Std User;5;Export Containers;1
+devinternal;Inventory;Containers;11;GxP Std User;6;Update Home;0
+devinternal;Inventory;Containers;11;GxP Std User;7;Delete Container;0
+devinternal;Inventory;Containers;11;GxP Std User;8;Final Dispose;0
+devinternal;Inventory;Containers;12;GxP Superuser;1;Add Container;0
+devinternal;Inventory;Containers;12;GxP Superuser;2;Edit Container;0
+devinternal;Inventory;Containers;12;GxP Superuser;3;Aliquot Container;0
+devinternal;Inventory;Containers;12;GxP Superuser;4;Update Amount;0
+devinternal;Inventory;Containers;12;GxP Superuser;5;Export Containers;0
+devinternal;Inventory;Containers;12;GxP Superuser;6;Update Home;0
+devinternal;Inventory;Containers;12;GxP Superuser;7;Delete Container;0
+devinternal;Inventory;Containers;12;GxP Superuser;8;Final Dispose;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;1;Add Container;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;2;Edit Container;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;3;Aliquot Container;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;4;Update Amount;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;5;Export Containers;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;6;Update Home;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;7;Delete Container;0
+devinternal;Inventory;Containers;13;Gxp-Active Directory Sync Test Role;8;Final Dispose;0
+devinternal;Inventory;Containers;14;HELM User;1;Add Container;0
+devinternal;Inventory;Containers;14;HELM User;2;Edit Container;0
+devinternal;Inventory;Containers;14;HELM User;3;Aliquot Container;0
+devinternal;Inventory;Containers;14;HELM User;4;Update Amount;0
+devinternal;Inventory;Containers;14;HELM User;5;Export Containers;0
+devinternal;Inventory;Containers;14;HELM User;6;Update Home;0
+devinternal;Inventory;Containers;14;HELM User;7;Delete Container;0
+devinternal;Inventory;Containers;14;HELM User;8;Final Dispose;0
+devinternal;Inventory;Containers;15;Janssen Internal User;1;Add Container;0
+devinternal;Inventory;Containers;15;Janssen Internal User;2;Edit Container;0
+devinternal;Inventory;Containers;15;Janssen Internal User;3;Aliquot Container;0
+devinternal;Inventory;Containers;15;Janssen Internal User;4;Update Amount;0
+devinternal;Inventory;Containers;15;Janssen Internal User;5;Export Containers;0
+devinternal;Inventory;Containers;15;Janssen Internal User;6;Update Home;0
+devinternal;Inventory;Containers;15;Janssen Internal User;7;Delete Container;0
+devinternal;Inventory;Containers;15;Janssen Internal User;8;Final Dispose;0
+devinternal;Inventory;Containers;16;LAC User;1;Add Container;0
+devinternal;Inventory;Containers;16;LAC User;2;Edit Container;0
+devinternal;Inventory;Containers;16;LAC User;3;Aliquot Container;0
+devinternal;Inventory;Containers;16;LAC User;4;Update Amount;0
+devinternal;Inventory;Containers;16;LAC User;5;Export Containers;0
+devinternal;Inventory;Containers;16;LAC User;6;Update Home;0
+devinternal;Inventory;Containers;16;LAC User;7;Delete Container;0
+devinternal;Inventory;Containers;16;LAC User;8;Final Dispose;0
+devinternal;Inventory;Containers;17;ML Key User;1;Add Container;0
+devinternal;Inventory;Containers;17;ML Key User;2;Edit Container;0
+devinternal;Inventory;Containers;17;ML Key User;3;Aliquot Container;0
+devinternal;Inventory;Containers;17;ML Key User;4;Update Amount;0
+devinternal;Inventory;Containers;17;ML Key User;5;Export Containers;0
+devinternal;Inventory;Containers;17;ML Key User;6;Update Home;0
+devinternal;Inventory;Containers;17;ML Key User;7;Delete Container;0
+devinternal;Inventory;Containers;17;ML Key User;8;Final Dispose;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;1;Add Container;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;2;Edit Container;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;3;Aliquot Container;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;4;Update Amount;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;5;Export Containers;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;6;Update Home;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;7;Delete Container;0
+devinternal;Inventory;Containers;18;Non-GxP Standard User;8;Final Dispose;0
+devinternal;Inventory;Containers;19;PMP test;1;Add Container;0
+devinternal;Inventory;Containers;19;PMP test;2;Edit Container;0
+devinternal;Inventory;Containers;19;PMP test;3;Aliquot Container;0
+devinternal;Inventory;Containers;19;PMP test;4;Update Amount;0
+devinternal;Inventory;Containers;19;PMP test;5;Export Containers;0
+devinternal;Inventory;Containers;19;PMP test;6;Update Home;0
+devinternal;Inventory;Containers;19;PMP test;7;Delete Container;0
+devinternal;Inventory;Containers;19;PMP test;8;Final Dispose;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;1;Add Container;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;2;Edit Container;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;3;Aliquot Container;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;4;Update Amount;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;5;Export Containers;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;6;Update Home;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;7;Delete Container;0
+devinternal;Inventory;Containers;20;ReseachCenterManager;8;Final Dispose;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;1;Add Container;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;2;Edit Container;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;3;Aliquot Container;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;4;Update Amount;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;5;Export Containers;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;6;Update Home;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;7;Delete Container;0
+devinternal;Inventory;Containers;21;ResearchCenterUser;8;Final Dispose;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;1;Add Container;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;2;Edit Container;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;3;Aliquot Container;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;4;Update Amount;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;5;Export Containers;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;6;Update Home;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;7;Delete Container;0
+devinternal;Inventory;Containers;22;ResearchCenterViewer;8;Final Dispose;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;1;Add Container;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;2;Edit Container;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;3;Aliquot Container;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;4;Update Amount;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;5;Export Containers;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;6;Update Home;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;7;Delete Container;0
+devinternal;Inventory;Containers;23;Sign & 2 Stage Review;8;Final Dispose;0
+devinternal;Inventory;Containers;24;Sign & Close;1;Add Container;0
+devinternal;Inventory;Containers;24;Sign & Close;2;Edit Container;0
+devinternal;Inventory;Containers;24;Sign & Close;3;Aliquot Container;0
+devinternal;Inventory;Containers;24;Sign & Close;4;Update Amount;0
+devinternal;Inventory;Containers;24;Sign & Close;5;Export Containers;0
+devinternal;Inventory;Containers;24;Sign & Close;6;Update Home;0
+devinternal;Inventory;Containers;24;Sign & Close;7;Delete Container;0
+devinternal;Inventory;Containers;24;Sign & Close;8;Final Dispose;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;1;Add Container;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;2;Edit Container;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;3;Aliquot Container;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;4;Update Amount;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;5;Export Containers;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;6;Update Home;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;7;Delete Container;0
+devinternal;Inventory;Containers;25;Standard User NON-GxP;8;Final Dispose;0
+devinternal;Inventory;Containers;26;Super User;1;Add Container;0
+devinternal;Inventory;Containers;26;Super User;2;Edit Container;0
+devinternal;Inventory;Containers;26;Super User;3;Aliquot Container;0
+devinternal;Inventory;Containers;26;Super User;4;Update Amount;0
+devinternal;Inventory;Containers;26;Super User;5;Export Containers;0
+devinternal;Inventory;Containers;26;Super User;6;Update Home;0
+devinternal;Inventory;Containers;26;Super User;7;Delete Container;0
+devinternal;Inventory;Containers;26;Super User;8;Final Dispose;0
+devinternal;Inventory;Containers;27;Super User Admin;1;Add Container;0
+devinternal;Inventory;Containers;27;Super User Admin;2;Edit Container;0
+devinternal;Inventory;Containers;27;Super User Admin;3;Aliquot Container;0
+devinternal;Inventory;Containers;27;Super User Admin;4;Update Amount;0
+devinternal;Inventory;Containers;27;Super User Admin;5;Export Containers;0
+devinternal;Inventory;Containers;27;Super User Admin;6;Update Home;0
+devinternal;Inventory;Containers;27;Super User Admin;7;Delete Container;0
+devinternal;Inventory;Containers;27;Super User Admin;8;Final Dispose;0
+devinternal;Inventory;Containers;28;Template Manager;1;Add Container;0
+devinternal;Inventory;Containers;28;Template Manager;2;Edit Container;0
+devinternal;Inventory;Containers;28;Template Manager;3;Aliquot Container;0
+devinternal;Inventory;Containers;28;Template Manager;4;Update Amount;0
+devinternal;Inventory;Containers;28;Template Manager;5;Export Containers;0
+devinternal;Inventory;Containers;28;Template Manager;6;Update Home;0
+devinternal;Inventory;Containers;28;Template Manager;7;Delete Container;0
+devinternal;Inventory;Containers;28;Template Manager;8;Final Dispose;0
+devinternal;Inventory;Containers;29;test;1;Add Container;0
+devinternal;Inventory;Containers;29;test;2;Edit Container;0
+devinternal;Inventory;Containers;29;test;3;Aliquot Container;0
+devinternal;Inventory;Containers;29;test;4;Update Amount;0
+devinternal;Inventory;Containers;29;test;5;Export Containers;0
+devinternal;Inventory;Containers;29;test;6;Update Home;0
+devinternal;Inventory;Containers;29;test;7;Delete Container;0
+devinternal;Inventory;Containers;29;test;8;Final Dispose;0
+devinternal;HELM Monomer Libraries;;1;System Admin;1;Create & Manage Libraries;1
+devinternal;HELM Monomer Libraries;;1;System Admin;2;Add New Monomers;1
+devinternal;HELM Monomer Libraries;;1;System Admin;3;Access Monomer Curation App;1
+devinternal;HELM Monomer Libraries;;2;Inventory Admin;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;2;Inventory Admin;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;2;Inventory Admin;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;3;Standard User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;3;Standard User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;3;Standard User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;4;Archivist;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;4;Archivist;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;4;Archivist;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;5;Disc Pharm Super User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;5;Disc Pharm Super User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;5;Disc Pharm Super User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;6;Disc Pharm User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;6;Disc Pharm User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;6;Disc Pharm User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;7;FL-Approver;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;7;FL-Approver;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;7;FL-Approver;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;8;FL-Archivist;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;8;FL-Archivist;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;8;FL-Archivist;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;9;FL-Author;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;9;FL-Author;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;9;FL-Author;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;10;Gxp Recipe Builder;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;10;Gxp Recipe Builder;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;10;Gxp Recipe Builder;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;11;GxP Std User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;11;GxP Std User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;11;GxP Std User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;12;GxP Superuser;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;12;GxP Superuser;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;12;GxP Superuser;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;13;Gxp-Active Directory Sync Test Role;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;13;Gxp-Active Directory Sync Test Role;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;13;Gxp-Active Directory Sync Test Role;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;14;HELM User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;14;HELM User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;14;HELM User;3;Access Monomer Curation App;1
+devinternal;HELM Monomer Libraries;;15;Janssen Internal User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;15;Janssen Internal User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;15;Janssen Internal User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;16;LAC User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;16;LAC User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;16;LAC User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;17;ML Key User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;17;ML Key User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;17;ML Key User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;18;Non-GxP Standard User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;18;Non-GxP Standard User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;18;Non-GxP Standard User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;19;PMP test;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;19;PMP test;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;19;PMP test;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;20;ReseachCenterManager;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;20;ReseachCenterManager;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;20;ReseachCenterManager;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;21;ResearchCenterUser;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;21;ResearchCenterUser;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;21;ResearchCenterUser;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;22;ResearchCenterViewer;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;22;ResearchCenterViewer;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;22;ResearchCenterViewer;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;23;Sign & 2 Stage Review;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;23;Sign & 2 Stage Review;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;23;Sign & 2 Stage Review;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;24;Sign & Close;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;24;Sign & Close;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;24;Sign & Close;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;25;Standard User NON-GxP;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;25;Standard User NON-GxP;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;25;Standard User NON-GxP;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;26;Super User;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;26;Super User;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;26;Super User;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;27;Super User Admin;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;27;Super User Admin;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;27;Super User Admin;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;28;Template Manager;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;28;Template Manager;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;28;Template Manager;3;Access Monomer Curation App;0
+devinternal;HELM Monomer Libraries;;29;test;1;Create & Manage Libraries;0
+devinternal;HELM Monomer Libraries;;29;test;2;Add New Monomers;0
+devinternal;HELM Monomer Libraries;;29;test;3;Access Monomer Curation App;0
+jnj-test;Administration;;1;System Admin;1;Configure System;1
+jnj-test;Administration;;1;System Admin;2;Manage System Templates;1
+jnj-test;Administration;;1;System Admin;3;Manage Groups;1
+jnj-test;Administration;;1;System Admin;4;Manage Attributes;1
+jnj-test;Administration;;1;System Admin;5;Manage ADOs;1
+jnj-test;Administration;;2;Inventory Admin;1;Configure System;1
+jnj-test;Administration;;2;Inventory Admin;2;Manage System Templates;1
+jnj-test;Administration;;2;Inventory Admin;3;Manage Groups;0
+jnj-test;Administration;;2;Inventory Admin;4;Manage Attributes;1
+jnj-test;Administration;;2;Inventory Admin;5;Manage ADOs;0
+jnj-test;Administration;;3;Standard User;1;Configure System;0
+jnj-test;Administration;;3;Standard User;2;Manage System Templates;0
+jnj-test;Administration;;3;Standard User;3;Manage Groups;0
+jnj-test;Administration;;3;Standard User;4;Manage Attributes;0
+jnj-test;Administration;;3;Standard User;5;Manage ADOs;0
+jnj-test;Administration;;4;FL-Approver;1;Configure System;0
+jnj-test;Administration;;4;FL-Approver;2;Manage System Templates;0
+jnj-test;Administration;;4;FL-Approver;3;Manage Groups;0
+jnj-test;Administration;;4;FL-Approver;4;Manage Attributes;0
+jnj-test;Administration;;4;FL-Approver;5;Manage ADOs;0
+jnj-test;Administration;;5;FL-Archivist;1;Configure System;0
+jnj-test;Administration;;5;FL-Archivist;2;Manage System Templates;0
+jnj-test;Administration;;5;FL-Archivist;3;Manage Groups;0
+jnj-test;Administration;;5;FL-Archivist;4;Manage Attributes;0
+jnj-test;Administration;;5;FL-Archivist;5;Manage ADOs;0
+jnj-test;Administration;;6;FL-Author;1;Configure System;0
+jnj-test;Administration;;6;FL-Author;2;Manage System Templates;0
+jnj-test;Administration;;6;FL-Author;3;Manage Groups;0
+jnj-test;Administration;;6;FL-Author;4;Manage Attributes;0
+jnj-test;Administration;;6;FL-Author;5;Manage ADOs;0
+jnj-test;Administration;;7;GxP Std User;1;Configure System;0
+jnj-test;Administration;;7;GxP Std User;2;Manage System Templates;0
+jnj-test;Administration;;7;GxP Std User;3;Manage Groups;0
+jnj-test;Administration;;7;GxP Std User;4;Manage Attributes;0
+jnj-test;Administration;;7;GxP Std User;5;Manage ADOs;0
+jnj-test;Administration;;8;GxP Superuser;1;Configure System;0
+jnj-test;Administration;;8;GxP Superuser;2;Manage System Templates;0
+jnj-test;Administration;;8;GxP Superuser;3;Manage Groups;1
+jnj-test;Administration;;8;GxP Superuser;4;Manage Attributes;0
+jnj-test;Administration;;8;GxP Superuser;5;Manage ADOs;0
+jnj-test;Administration;;9;Janssen Internal User;1;Configure System;0
+jnj-test;Administration;;9;Janssen Internal User;2;Manage System Templates;0
+jnj-test;Administration;;9;Janssen Internal User;3;Manage Groups;0
+jnj-test;Administration;;9;Janssen Internal User;4;Manage Attributes;0
+jnj-test;Administration;;9;Janssen Internal User;5;Manage ADOs;0
+jnj-test;Administration;;10;Non-GxP Standard User;1;Configure System;0
+jnj-test;Administration;;10;Non-GxP Standard User;2;Manage System Templates;0
+jnj-test;Administration;;10;Non-GxP Standard User;3;Manage Groups;0
+jnj-test;Administration;;10;Non-GxP Standard User;4;Manage Attributes;0
+jnj-test;Administration;;10;Non-GxP Standard User;5;Manage ADOs;0
+jnj-test;Administration;;11;Recipe Builder;1;Configure System;1
+jnj-test;Administration;;11;Recipe Builder;2;Manage System Templates;1
+jnj-test;Administration;;11;Recipe Builder;3;Manage Groups;0
+jnj-test;Administration;;11;Recipe Builder;4;Manage Attributes;0
+jnj-test;Administration;;11;Recipe Builder;5;Manage ADOs;0
+jnj-test;Administration;;12;ResearchCenterManager;1;Configure System;0
+jnj-test;Administration;;12;ResearchCenterManager;2;Manage System Templates;0
+jnj-test;Administration;;12;ResearchCenterManager;3;Manage Groups;0
+jnj-test;Administration;;12;ResearchCenterManager;4;Manage Attributes;0
+jnj-test;Administration;;12;ResearchCenterManager;5;Manage ADOs;0
+jnj-test;Administration;;13;ResearchCenterUser;1;Configure System;0
+jnj-test;Administration;;13;ResearchCenterUser;2;Manage System Templates;0
+jnj-test;Administration;;13;ResearchCenterUser;3;Manage Groups;0
+jnj-test;Administration;;13;ResearchCenterUser;4;Manage Attributes;0
+jnj-test;Administration;;13;ResearchCenterUser;5;Manage ADOs;0
+jnj-test;Administration;;14;ResearchCenterViewer;1;Configure System;0
+jnj-test;Administration;;14;ResearchCenterViewer;2;Manage System Templates;0
+jnj-test;Administration;;14;ResearchCenterViewer;3;Manage Groups;0
+jnj-test;Administration;;14;ResearchCenterViewer;4;Manage Attributes;0
+jnj-test;Administration;;14;ResearchCenterViewer;5;Manage ADOs;0
+jnj-test;Administration;;15;Sign & 2 Stage Review;1;Configure System;0
+jnj-test;Administration;;15;Sign & 2 Stage Review;2;Manage System Templates;0
+jnj-test;Administration;;15;Sign & 2 Stage Review;3;Manage Groups;0
+jnj-test;Administration;;15;Sign & 2 Stage Review;4;Manage Attributes;0
+jnj-test;Administration;;15;Sign & 2 Stage Review;5;Manage ADOs;0
+jnj-test;Administration;;16;Sign & Close;1;Configure System;0
+jnj-test;Administration;;16;Sign & Close;2;Manage System Templates;0
+jnj-test;Administration;;16;Sign & Close;3;Manage Groups;0
+jnj-test;Administration;;16;Sign & Close;4;Manage Attributes;0
+jnj-test;Administration;;16;Sign & Close;5;Manage ADOs;0
+jnj-test;Administration;;17;Superuser;1;Configure System;0
+jnj-test;Administration;;17;Superuser;2;Manage System Templates;0
+jnj-test;Administration;;17;Superuser;3;Manage Groups;1
+jnj-test;Administration;;17;Superuser;4;Manage Attributes;0
+jnj-test;Administration;;17;Superuser;5;Manage ADOs;0
+jnj-test;Administration;;18;TEST USER ROLES;1;Configure System;0
+jnj-test;Administration;;18;TEST USER ROLES;2;Manage System Templates;0
+jnj-test;Administration;;18;TEST USER ROLES;3;Manage Groups;0
+jnj-test;Administration;;18;TEST USER ROLES;4;Manage Attributes;0
+jnj-test;Administration;;18;TEST USER ROLES;5;Manage ADOs;0
+jnj-test;Author;;1;System Admin;1;Share;1
+jnj-test;Author;;1;System Admin;2;Read Dependent Share;1
+jnj-test;Author;;1;System Admin;3;Add/Edit/Delete comments;1
+jnj-test;Author;;1;System Admin;4;Broad User Search;1
+jnj-test;Author;;1;System Admin;5;Share Templates;1
+jnj-test;Author;;1;System Admin;6;Move Experiments;1
+jnj-test;Author;;1;System Admin;7;Trash Experiments;1
+jnj-test;Author;;1;System Admin;8;Trash Notebooks;1
+jnj-test;Author;;1;System Admin;9;Export Notebooks;1
+jnj-test;Author;;1;System Admin;10;Trash Requests;1
+jnj-test;Author;;1;System Admin;11;Delete Samples;1
+jnj-test;Author;;1;System Admin;12;Close/Cancel Samples;1
+jnj-test;Author;;1;System Admin;13;Reopen Samples;1
+jnj-test;Author;;1;System Admin;14;Add Parallel Experiments;1
+jnj-test;Author;;1;System Admin;15;Move Parallel Experiments;1
+jnj-test;Author;;1;System Admin;16;Export Parallel Experiments;1
+jnj-test;Author;;1;System Admin;17;Trash Parallel Experiments;1
+jnj-test;Author;;1;System Admin;18;Archive;1
+jnj-test;Author;;1;System Admin;19;Return From Archive;1
+jnj-test;Author;;1;System Admin;20;Trash Mandatory Entities;1
+jnj-test;Author;;1;System Admin;21;Clone Entities;1
+jnj-test;Author;;1;System Admin;22;Save as Template;1
+jnj-test;Author;;1;System Admin;23;Update Definition;1
+jnj-test;Author;;2;Inventory Admin;1;Share;0
+jnj-test;Author;;2;Inventory Admin;2;Read Dependent Share;0
+jnj-test;Author;;2;Inventory Admin;3;Add/Edit/Delete comments;0
+jnj-test;Author;;2;Inventory Admin;4;Broad User Search;0
+jnj-test;Author;;2;Inventory Admin;5;Share Templates;0
+jnj-test;Author;;2;Inventory Admin;6;Move Experiments;0
+jnj-test;Author;;2;Inventory Admin;7;Trash Experiments;0
+jnj-test;Author;;2;Inventory Admin;8;Trash Notebooks;0
+jnj-test;Author;;2;Inventory Admin;9;Export Notebooks;0
+jnj-test;Author;;2;Inventory Admin;10;Trash Requests;0
+jnj-test;Author;;2;Inventory Admin;11;Delete Samples;0
+jnj-test;Author;;2;Inventory Admin;12;Close/Cancel Samples;0
+jnj-test;Author;;2;Inventory Admin;13;Reopen Samples;0
+jnj-test;Author;;2;Inventory Admin;14;Add Parallel Experiments;0
+jnj-test;Author;;2;Inventory Admin;15;Move Parallel Experiments;0
+jnj-test;Author;;2;Inventory Admin;16;Export Parallel Experiments;0
+jnj-test;Author;;2;Inventory Admin;17;Trash Parallel Experiments;0
+jnj-test;Author;;2;Inventory Admin;18;Archive;0
+jnj-test;Author;;2;Inventory Admin;19;Return From Archive;0
+jnj-test;Author;;2;Inventory Admin;20;Trash Mandatory Entities;0
+jnj-test;Author;;2;Inventory Admin;21;Clone Entities;0
+jnj-test;Author;;2;Inventory Admin;22;Save as Template;0
+jnj-test;Author;;2;Inventory Admin;23;Update Definition;0
+jnj-test;Author;;3;Standard User;1;Share;0
+jnj-test;Author;;3;Standard User;2;Read Dependent Share;0
+jnj-test;Author;;3;Standard User;3;Add/Edit/Delete comments;1
+jnj-test;Author;;3;Standard User;4;Broad User Search;0
+jnj-test;Author;;3;Standard User;5;Share Templates;0
+jnj-test;Author;;3;Standard User;6;Move Experiments;1
+jnj-test;Author;;3;Standard User;7;Trash Experiments;0
+jnj-test;Author;;3;Standard User;8;Trash Notebooks;0
+jnj-test;Author;;3;Standard User;9;Export Notebooks;1
+jnj-test;Author;;3;Standard User;10;Trash Requests;0
+jnj-test;Author;;3;Standard User;11;Delete Samples;0
+jnj-test;Author;;3;Standard User;12;Close/Cancel Samples;0
+jnj-test;Author;;3;Standard User;13;Reopen Samples;0
+jnj-test;Author;;3;Standard User;14;Add Parallel Experiments;0
+jnj-test;Author;;3;Standard User;15;Move Parallel Experiments;0
+jnj-test;Author;;3;Standard User;16;Export Parallel Experiments;0
+jnj-test;Author;;3;Standard User;17;Trash Parallel Experiments;0
+jnj-test;Author;;3;Standard User;18;Archive;0
+jnj-test;Author;;3;Standard User;19;Return From Archive;0
+jnj-test;Author;;3;Standard User;20;Trash Mandatory Entities;0
+jnj-test;Author;;3;Standard User;21;Clone Entities;1
+jnj-test;Author;;3;Standard User;22;Save as Template;1
+jnj-test;Author;;3;Standard User;23;Update Definition;1
+jnj-test;Author;;4;FL-Approver;1;Share;0
+jnj-test;Author;;4;FL-Approver;2;Read Dependent Share;0
+jnj-test;Author;;4;FL-Approver;3;Add/Edit/Delete comments;0
+jnj-test;Author;;4;FL-Approver;4;Broad User Search;0
+jnj-test;Author;;4;FL-Approver;5;Share Templates;0
+jnj-test;Author;;4;FL-Approver;6;Move Experiments;0
+jnj-test;Author;;4;FL-Approver;7;Trash Experiments;0
+jnj-test;Author;;4;FL-Approver;8;Trash Notebooks;0
+jnj-test;Author;;4;FL-Approver;9;Export Notebooks;0
+jnj-test;Author;;4;FL-Approver;10;Trash Requests;0
+jnj-test;Author;;4;FL-Approver;11;Delete Samples;0
+jnj-test;Author;;4;FL-Approver;12;Close/Cancel Samples;0
+jnj-test;Author;;4;FL-Approver;13;Reopen Samples;0
+jnj-test;Author;;4;FL-Approver;14;Add Parallel Experiments;0
+jnj-test;Author;;4;FL-Approver;15;Move Parallel Experiments;0
+jnj-test;Author;;4;FL-Approver;16;Export Parallel Experiments;0
+jnj-test;Author;;4;FL-Approver;17;Trash Parallel Experiments;0
+jnj-test;Author;;4;FL-Approver;18;Archive;0
+jnj-test;Author;;4;FL-Approver;19;Return From Archive;0
+jnj-test;Author;;4;FL-Approver;20;Trash Mandatory Entities;0
+jnj-test;Author;;4;FL-Approver;21;Clone Entities;0
+jnj-test;Author;;4;FL-Approver;22;Save as Template;0
+jnj-test;Author;;4;FL-Approver;23;Update Definition;0
+jnj-test;Author;;5;FL-Archivist;1;Share;0
+jnj-test;Author;;5;FL-Archivist;2;Read Dependent Share;0
+jnj-test;Author;;5;FL-Archivist;3;Add/Edit/Delete comments;0
+jnj-test;Author;;5;FL-Archivist;4;Broad User Search;0
+jnj-test;Author;;5;FL-Archivist;5;Share Templates;0
+jnj-test;Author;;5;FL-Archivist;6;Move Experiments;0
+jnj-test;Author;;5;FL-Archivist;7;Trash Experiments;0
+jnj-test;Author;;5;FL-Archivist;8;Trash Notebooks;0
+jnj-test;Author;;5;FL-Archivist;9;Export Notebooks;0
+jnj-test;Author;;5;FL-Archivist;10;Trash Requests;0
+jnj-test;Author;;5;FL-Archivist;11;Delete Samples;0
+jnj-test;Author;;5;FL-Archivist;12;Close/Cancel Samples;0
+jnj-test;Author;;5;FL-Archivist;13;Reopen Samples;0
+jnj-test;Author;;5;FL-Archivist;14;Add Parallel Experiments;0
+jnj-test;Author;;5;FL-Archivist;15;Move Parallel Experiments;0
+jnj-test;Author;;5;FL-Archivist;16;Export Parallel Experiments;0
+jnj-test;Author;;5;FL-Archivist;17;Trash Parallel Experiments;0
+jnj-test;Author;;5;FL-Archivist;18;Archive;1
+jnj-test;Author;;5;FL-Archivist;19;Return From Archive;1
+jnj-test;Author;;5;FL-Archivist;20;Trash Mandatory Entities;0
+jnj-test;Author;;5;FL-Archivist;21;Clone Entities;0
+jnj-test;Author;;5;FL-Archivist;22;Save as Template;0
+jnj-test;Author;;5;FL-Archivist;23;Update Definition;0
+jnj-test;Author;;6;FL-Author;1;Share;0
+jnj-test;Author;;6;FL-Author;2;Read Dependent Share;0
+jnj-test;Author;;6;FL-Author;3;Add/Edit/Delete comments;0
+jnj-test;Author;;6;FL-Author;4;Broad User Search;0
+jnj-test;Author;;6;FL-Author;5;Share Templates;0
+jnj-test;Author;;6;FL-Author;6;Move Experiments;0
+jnj-test;Author;;6;FL-Author;7;Trash Experiments;0
+jnj-test;Author;;6;FL-Author;8;Trash Notebooks;0
+jnj-test;Author;;6;FL-Author;9;Export Notebooks;0
+jnj-test;Author;;6;FL-Author;10;Trash Requests;0
+jnj-test;Author;;6;FL-Author;11;Delete Samples;0
+jnj-test;Author;;6;FL-Author;12;Close/Cancel Samples;0
+jnj-test;Author;;6;FL-Author;13;Reopen Samples;0
+jnj-test;Author;;6;FL-Author;14;Add Parallel Experiments;0
+jnj-test;Author;;6;FL-Author;15;Move Parallel Experiments;0
+jnj-test;Author;;6;FL-Author;16;Export Parallel Experiments;0
+jnj-test;Author;;6;FL-Author;17;Trash Parallel Experiments;0
+jnj-test;Author;;6;FL-Author;18;Archive;0
+jnj-test;Author;;6;FL-Author;19;Return From Archive;0
+jnj-test;Author;;6;FL-Author;20;Trash Mandatory Entities;0
+jnj-test;Author;;6;FL-Author;21;Clone Entities;0
+jnj-test;Author;;6;FL-Author;22;Save as Template;0
+jnj-test;Author;;6;FL-Author;23;Update Definition;0
+jnj-test;Author;;7;GxP Std User;1;Share;0
+jnj-test;Author;;7;GxP Std User;2;Read Dependent Share;0
+jnj-test;Author;;7;GxP Std User;3;Add/Edit/Delete comments;1
+jnj-test;Author;;7;GxP Std User;4;Broad User Search;0
+jnj-test;Author;;7;GxP Std User;5;Share Templates;0
+jnj-test;Author;;7;GxP Std User;6;Move Experiments;1
+jnj-test;Author;;7;GxP Std User;7;Trash Experiments;0
+jnj-test;Author;;7;GxP Std User;8;Trash Notebooks;0
+jnj-test;Author;;7;GxP Std User;9;Export Notebooks;1
+jnj-test;Author;;7;GxP Std User;10;Trash Requests;0
+jnj-test;Author;;7;GxP Std User;11;Delete Samples;0
+jnj-test;Author;;7;GxP Std User;12;Close/Cancel Samples;0
+jnj-test;Author;;7;GxP Std User;13;Reopen Samples;0
+jnj-test;Author;;7;GxP Std User;14;Add Parallel Experiments;0
+jnj-test;Author;;7;GxP Std User;15;Move Parallel Experiments;0
+jnj-test;Author;;7;GxP Std User;16;Export Parallel Experiments;0
+jnj-test;Author;;7;GxP Std User;17;Trash Parallel Experiments;0
+jnj-test;Author;;7;GxP Std User;18;Archive;0
+jnj-test;Author;;7;GxP Std User;19;Return From Archive;0
+jnj-test;Author;;7;GxP Std User;20;Trash Mandatory Entities;0
+jnj-test;Author;;7;GxP Std User;21;Clone Entities;0
+jnj-test;Author;;7;GxP Std User;22;Save as Template;0
+jnj-test;Author;;7;GxP Std User;23;Update Definition;0
+jnj-test;Author;;8;GxP Superuser;1;Share;1
+jnj-test;Author;;8;GxP Superuser;2;Read Dependent Share;0
+jnj-test;Author;;8;GxP Superuser;3;Add/Edit/Delete comments;0
+jnj-test;Author;;8;GxP Superuser;4;Broad User Search;0
+jnj-test;Author;;8;GxP Superuser;5;Share Templates;1
+jnj-test;Author;;8;GxP Superuser;6;Move Experiments;0
+jnj-test;Author;;8;GxP Superuser;7;Trash Experiments;0
+jnj-test;Author;;8;GxP Superuser;8;Trash Notebooks;0
+jnj-test;Author;;8;GxP Superuser;9;Export Notebooks;1
+jnj-test;Author;;8;GxP Superuser;10;Trash Requests;0
+jnj-test;Author;;8;GxP Superuser;11;Delete Samples;0
+jnj-test;Author;;8;GxP Superuser;12;Close/Cancel Samples;0
+jnj-test;Author;;8;GxP Superuser;13;Reopen Samples;0
+jnj-test;Author;;8;GxP Superuser;14;Add Parallel Experiments;0
+jnj-test;Author;;8;GxP Superuser;15;Move Parallel Experiments;0
+jnj-test;Author;;8;GxP Superuser;16;Export Parallel Experiments;0
+jnj-test;Author;;8;GxP Superuser;17;Trash Parallel Experiments;0
+jnj-test;Author;;8;GxP Superuser;18;Archive;0
+jnj-test;Author;;8;GxP Superuser;19;Return From Archive;0
+jnj-test;Author;;8;GxP Superuser;20;Trash Mandatory Entities;0
+jnj-test;Author;;8;GxP Superuser;21;Clone Entities;0
+jnj-test;Author;;8;GxP Superuser;22;Save as Template;0
+jnj-test;Author;;8;GxP Superuser;23;Update Definition;0
+jnj-test;Author;;9;Janssen Internal User;1;Share;0
+jnj-test;Author;;9;Janssen Internal User;2;Read Dependent Share;0
+jnj-test;Author;;9;Janssen Internal User;3;Add/Edit/Delete comments;0
+jnj-test;Author;;9;Janssen Internal User;4;Broad User Search;0
+jnj-test;Author;;9;Janssen Internal User;5;Share Templates;0
+jnj-test;Author;;9;Janssen Internal User;6;Move Experiments;1
+jnj-test;Author;;9;Janssen Internal User;7;Trash Experiments;0
+jnj-test;Author;;9;Janssen Internal User;8;Trash Notebooks;0
+jnj-test;Author;;9;Janssen Internal User;9;Export Notebooks;1
+jnj-test;Author;;9;Janssen Internal User;10;Trash Requests;0
+jnj-test;Author;;9;Janssen Internal User;11;Delete Samples;0
+jnj-test;Author;;9;Janssen Internal User;12;Close/Cancel Samples;0
+jnj-test;Author;;9;Janssen Internal User;13;Reopen Samples;0
+jnj-test;Author;;9;Janssen Internal User;14;Add Parallel Experiments;1
+jnj-test;Author;;9;Janssen Internal User;15;Move Parallel Experiments;0
+jnj-test;Author;;9;Janssen Internal User;16;Export Parallel Experiments;1
+jnj-test;Author;;9;Janssen Internal User;17;Trash Parallel Experiments;0
+jnj-test;Author;;9;Janssen Internal User;18;Archive;0
+jnj-test;Author;;9;Janssen Internal User;19;Return From Archive;0
+jnj-test;Author;;9;Janssen Internal User;20;Trash Mandatory Entities;0
+jnj-test;Author;;9;Janssen Internal User;21;Clone Entities;0
+jnj-test;Author;;9;Janssen Internal User;22;Save as Template;0
+jnj-test;Author;;9;Janssen Internal User;23;Update Definition;0
+jnj-test;Author;;10;Non-GxP Standard User;1;Share;0
+jnj-test;Author;;10;Non-GxP Standard User;2;Read Dependent Share;0
+jnj-test;Author;;10;Non-GxP Standard User;3;Add/Edit/Delete comments;0
+jnj-test;Author;;10;Non-GxP Standard User;4;Broad User Search;0
+jnj-test;Author;;10;Non-GxP Standard User;5;Share Templates;0
+jnj-test;Author;;10;Non-GxP Standard User;6;Move Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;7;Trash Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;8;Trash Notebooks;0
+jnj-test;Author;;10;Non-GxP Standard User;9;Export Notebooks;0
+jnj-test;Author;;10;Non-GxP Standard User;10;Trash Requests;0
+jnj-test;Author;;10;Non-GxP Standard User;11;Delete Samples;0
+jnj-test;Author;;10;Non-GxP Standard User;12;Close/Cancel Samples;0
+jnj-test;Author;;10;Non-GxP Standard User;13;Reopen Samples;0
+jnj-test;Author;;10;Non-GxP Standard User;14;Add Parallel Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;15;Move Parallel Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;16;Export Parallel Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;17;Trash Parallel Experiments;0
+jnj-test;Author;;10;Non-GxP Standard User;18;Archive;0
+jnj-test;Author;;10;Non-GxP Standard User;19;Return From Archive;0
+jnj-test;Author;;10;Non-GxP Standard User;20;Trash Mandatory Entities;0
+jnj-test;Author;;10;Non-GxP Standard User;21;Clone Entities;0
+jnj-test;Author;;10;Non-GxP Standard User;22;Save as Template;0
+jnj-test;Author;;10;Non-GxP Standard User;23;Update Definition;0
+jnj-test;Author;;11;Recipe Builder;1;Share;0
+jnj-test;Author;;11;Recipe Builder;2;Read Dependent Share;0
+jnj-test;Author;;11;Recipe Builder;3;Add/Edit/Delete comments;0
+jnj-test;Author;;11;Recipe Builder;4;Broad User Search;0
+jnj-test;Author;;11;Recipe Builder;5;Share Templates;0
+jnj-test;Author;;11;Recipe Builder;6;Move Experiments;0
+jnj-test;Author;;11;Recipe Builder;7;Trash Experiments;0
+jnj-test;Author;;11;Recipe Builder;8;Trash Notebooks;0
+jnj-test;Author;;11;Recipe Builder;9;Export Notebooks;0
+jnj-test;Author;;11;Recipe Builder;10;Trash Requests;0
+jnj-test;Author;;11;Recipe Builder;11;Delete Samples;0
+jnj-test;Author;;11;Recipe Builder;12;Close/Cancel Samples;0
+jnj-test;Author;;11;Recipe Builder;13;Reopen Samples;0
+jnj-test;Author;;11;Recipe Builder;14;Add Parallel Experiments;0
+jnj-test;Author;;11;Recipe Builder;15;Move Parallel Experiments;0
+jnj-test;Author;;11;Recipe Builder;16;Export Parallel Experiments;0
+jnj-test;Author;;11;Recipe Builder;17;Trash Parallel Experiments;0
+jnj-test;Author;;11;Recipe Builder;18;Archive;0
+jnj-test;Author;;11;Recipe Builder;19;Return From Archive;0
+jnj-test;Author;;11;Recipe Builder;20;Trash Mandatory Entities;0
+jnj-test;Author;;11;Recipe Builder;21;Clone Entities;0
+jnj-test;Author;;11;Recipe Builder;22;Save as Template;0
+jnj-test;Author;;11;Recipe Builder;23;Update Definition;0
+jnj-test;Author;;12;ResearchCenterManager;1;Share;0
+jnj-test;Author;;12;ResearchCenterManager;2;Read Dependent Share;0
+jnj-test;Author;;12;ResearchCenterManager;3;Add/Edit/Delete comments;0
+jnj-test;Author;;12;ResearchCenterManager;4;Broad User Search;0
+jnj-test;Author;;12;ResearchCenterManager;5;Share Templates;0
+jnj-test;Author;;12;ResearchCenterManager;6;Move Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;7;Trash Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;8;Trash Notebooks;0
+jnj-test;Author;;12;ResearchCenterManager;9;Export Notebooks;0
+jnj-test;Author;;12;ResearchCenterManager;10;Trash Requests;0
+jnj-test;Author;;12;ResearchCenterManager;11;Delete Samples;0
+jnj-test;Author;;12;ResearchCenterManager;12;Close/Cancel Samples;0
+jnj-test;Author;;12;ResearchCenterManager;13;Reopen Samples;0
+jnj-test;Author;;12;ResearchCenterManager;14;Add Parallel Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;15;Move Parallel Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;16;Export Parallel Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;17;Trash Parallel Experiments;0
+jnj-test;Author;;12;ResearchCenterManager;18;Archive;0
+jnj-test;Author;;12;ResearchCenterManager;19;Return From Archive;0
+jnj-test;Author;;12;ResearchCenterManager;20;Trash Mandatory Entities;0
+jnj-test;Author;;12;ResearchCenterManager;21;Clone Entities;0
+jnj-test;Author;;12;ResearchCenterManager;22;Save as Template;0
+jnj-test;Author;;12;ResearchCenterManager;23;Update Definition;0
+jnj-test;Author;;13;ResearchCenterUser;1;Share;0
+jnj-test;Author;;13;ResearchCenterUser;2;Read Dependent Share;0
+jnj-test;Author;;13;ResearchCenterUser;3;Add/Edit/Delete comments;0
+jnj-test;Author;;13;ResearchCenterUser;4;Broad User Search;0
+jnj-test;Author;;13;ResearchCenterUser;5;Share Templates;0
+jnj-test;Author;;13;ResearchCenterUser;6;Move Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;7;Trash Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;8;Trash Notebooks;0
+jnj-test;Author;;13;ResearchCenterUser;9;Export Notebooks;0
+jnj-test;Author;;13;ResearchCenterUser;10;Trash Requests;0
+jnj-test;Author;;13;ResearchCenterUser;11;Delete Samples;0
+jnj-test;Author;;13;ResearchCenterUser;12;Close/Cancel Samples;0
+jnj-test;Author;;13;ResearchCenterUser;13;Reopen Samples;0
+jnj-test;Author;;13;ResearchCenterUser;14;Add Parallel Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;15;Move Parallel Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;16;Export Parallel Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;17;Trash Parallel Experiments;0
+jnj-test;Author;;13;ResearchCenterUser;18;Archive;0
+jnj-test;Author;;13;ResearchCenterUser;19;Return From Archive;0
+jnj-test;Author;;13;ResearchCenterUser;20;Trash Mandatory Entities;0
+jnj-test;Author;;13;ResearchCenterUser;21;Clone Entities;0
+jnj-test;Author;;13;ResearchCenterUser;22;Save as Template;0
+jnj-test;Author;;13;ResearchCenterUser;23;Update Definition;0
+jnj-test;Author;;14;ResearchCenterViewer;1;Share;0
+jnj-test;Author;;14;ResearchCenterViewer;2;Read Dependent Share;0
+jnj-test;Author;;14;ResearchCenterViewer;3;Add/Edit/Delete comments;0
+jnj-test;Author;;14;ResearchCenterViewer;4;Broad User Search;0
+jnj-test;Author;;14;ResearchCenterViewer;5;Share Templates;0
+jnj-test;Author;;14;ResearchCenterViewer;6;Move Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;7;Trash Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;8;Trash Notebooks;0
+jnj-test;Author;;14;ResearchCenterViewer;9;Export Notebooks;0
+jnj-test;Author;;14;ResearchCenterViewer;10;Trash Requests;0
+jnj-test;Author;;14;ResearchCenterViewer;11;Delete Samples;0
+jnj-test;Author;;14;ResearchCenterViewer;12;Close/Cancel Samples;0
+jnj-test;Author;;14;ResearchCenterViewer;13;Reopen Samples;0
+jnj-test;Author;;14;ResearchCenterViewer;14;Add Parallel Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;15;Move Parallel Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;16;Export Parallel Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;17;Trash Parallel Experiments;0
+jnj-test;Author;;14;ResearchCenterViewer;18;Archive;0
+jnj-test;Author;;14;ResearchCenterViewer;19;Return From Archive;0
+jnj-test;Author;;14;ResearchCenterViewer;20;Trash Mandatory Entities;0
+jnj-test;Author;;14;ResearchCenterViewer;21;Clone Entities;0
+jnj-test;Author;;14;ResearchCenterViewer;22;Save as Template;0
+jnj-test;Author;;14;ResearchCenterViewer;23;Update Definition;0
+jnj-test;Author;;15;Sign & 2 Stage Review;1;Share;0
+jnj-test;Author;;15;Sign & 2 Stage Review;2;Read Dependent Share;0
+jnj-test;Author;;15;Sign & 2 Stage Review;3;Add/Edit/Delete comments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;4;Broad User Search;0
+jnj-test;Author;;15;Sign & 2 Stage Review;5;Share Templates;0
+jnj-test;Author;;15;Sign & 2 Stage Review;6;Move Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;7;Trash Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;8;Trash Notebooks;0
+jnj-test;Author;;15;Sign & 2 Stage Review;9;Export Notebooks;0
+jnj-test;Author;;15;Sign & 2 Stage Review;10;Trash Requests;0
+jnj-test;Author;;15;Sign & 2 Stage Review;11;Delete Samples;0
+jnj-test;Author;;15;Sign & 2 Stage Review;12;Close/Cancel Samples;0
+jnj-test;Author;;15;Sign & 2 Stage Review;13;Reopen Samples;0
+jnj-test;Author;;15;Sign & 2 Stage Review;14;Add Parallel Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;15;Move Parallel Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;16;Export Parallel Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;17;Trash Parallel Experiments;0
+jnj-test;Author;;15;Sign & 2 Stage Review;18;Archive;0
+jnj-test;Author;;15;Sign & 2 Stage Review;19;Return From Archive;0
+jnj-test;Author;;15;Sign & 2 Stage Review;20;Trash Mandatory Entities;0
+jnj-test;Author;;15;Sign & 2 Stage Review;21;Clone Entities;0
+jnj-test;Author;;15;Sign & 2 Stage Review;22;Save as Template;0
+jnj-test;Author;;15;Sign & 2 Stage Review;23;Update Definition;0
+jnj-test;Author;;16;Sign & Close;1;Share;0
+jnj-test;Author;;16;Sign & Close;2;Read Dependent Share;0
+jnj-test;Author;;16;Sign & Close;3;Add/Edit/Delete comments;0
+jnj-test;Author;;16;Sign & Close;4;Broad User Search;0
+jnj-test;Author;;16;Sign & Close;5;Share Templates;0
+jnj-test;Author;;16;Sign & Close;6;Move Experiments;0
+jnj-test;Author;;16;Sign & Close;7;Trash Experiments;0
+jnj-test;Author;;16;Sign & Close;8;Trash Notebooks;0
+jnj-test;Author;;16;Sign & Close;9;Export Notebooks;0
+jnj-test;Author;;16;Sign & Close;10;Trash Requests;0
+jnj-test;Author;;16;Sign & Close;11;Delete Samples;0
+jnj-test;Author;;16;Sign & Close;12;Close/Cancel Samples;0
+jnj-test;Author;;16;Sign & Close;13;Reopen Samples;0
+jnj-test;Author;;16;Sign & Close;14;Add Parallel Experiments;0
+jnj-test;Author;;16;Sign & Close;15;Move Parallel Experiments;0
+jnj-test;Author;;16;Sign & Close;16;Export Parallel Experiments;0
+jnj-test;Author;;16;Sign & Close;17;Trash Parallel Experiments;0
+jnj-test;Author;;16;Sign & Close;18;Archive;0
+jnj-test;Author;;16;Sign & Close;19;Return From Archive;0
+jnj-test;Author;;16;Sign & Close;20;Trash Mandatory Entities;0
+jnj-test;Author;;16;Sign & Close;21;Clone Entities;0
+jnj-test;Author;;16;Sign & Close;22;Save as Template;0
+jnj-test;Author;;16;Sign & Close;23;Update Definition;0
+jnj-test;Author;;17;Superuser;1;Share;1
+jnj-test;Author;;17;Superuser;2;Read Dependent Share;0
+jnj-test;Author;;17;Superuser;3;Add/Edit/Delete comments;0
+jnj-test;Author;;17;Superuser;4;Broad User Search;0
+jnj-test;Author;;17;Superuser;5;Share Templates;1
+jnj-test;Author;;17;Superuser;6;Move Experiments;1
+jnj-test;Author;;17;Superuser;7;Trash Experiments;0
+jnj-test;Author;;17;Superuser;8;Trash Notebooks;0
+jnj-test;Author;;17;Superuser;9;Export Notebooks;1
+jnj-test;Author;;17;Superuser;10;Trash Requests;0
+jnj-test;Author;;17;Superuser;11;Delete Samples;1
+jnj-test;Author;;17;Superuser;12;Close/Cancel Samples;0
+jnj-test;Author;;17;Superuser;13;Reopen Samples;0
+jnj-test;Author;;17;Superuser;14;Add Parallel Experiments;1
+jnj-test;Author;;17;Superuser;15;Move Parallel Experiments;1
+jnj-test;Author;;17;Superuser;16;Export Parallel Experiments;1
+jnj-test;Author;;17;Superuser;17;Trash Parallel Experiments;0
+jnj-test;Author;;17;Superuser;18;Archive;0
+jnj-test;Author;;17;Superuser;19;Return From Archive;0
+jnj-test;Author;;17;Superuser;20;Trash Mandatory Entities;0
+jnj-test;Author;;17;Superuser;21;Clone Entities;0
+jnj-test;Author;;17;Superuser;22;Save as Template;0
+jnj-test;Author;;17;Superuser;23;Update Definition;0
+jnj-test;Author;;18;TEST USER ROLES;1;Share;0
+jnj-test;Author;;18;TEST USER ROLES;2;Read Dependent Share;0
+jnj-test;Author;;18;TEST USER ROLES;3;Add/Edit/Delete comments;1
+jnj-test;Author;;18;TEST USER ROLES;4;Broad User Search;0
+jnj-test;Author;;18;TEST USER ROLES;5;Share Templates;0
+jnj-test;Author;;18;TEST USER ROLES;6;Move Experiments;1
+jnj-test;Author;;18;TEST USER ROLES;7;Trash Experiments;0
+jnj-test;Author;;18;TEST USER ROLES;8;Trash Notebooks;0
+jnj-test;Author;;18;TEST USER ROLES;9;Export Notebooks;1
+jnj-test;Author;;18;TEST USER ROLES;10;Trash Requests;0
+jnj-test;Author;;18;TEST USER ROLES;11;Delete Samples;0
+jnj-test;Author;;18;TEST USER ROLES;12;Close/Cancel Samples;0
+jnj-test;Author;;18;TEST USER ROLES;13;Reopen Samples;0
+jnj-test;Author;;18;TEST USER ROLES;14;Add Parallel Experiments;0
+jnj-test;Author;;18;TEST USER ROLES;15;Move Parallel Experiments;0
+jnj-test;Author;;18;TEST USER ROLES;16;Export Parallel Experiments;0
+jnj-test;Author;;18;TEST USER ROLES;17;Trash Parallel Experiments;0
+jnj-test;Author;;18;TEST USER ROLES;18;Archive;0
+jnj-test;Author;;18;TEST USER ROLES;19;Return From Archive;0
+jnj-test;Author;;18;TEST USER ROLES;20;Trash Mandatory Entities;0
+jnj-test;Author;;18;TEST USER ROLES;21;Clone Entities;0
+jnj-test;Author;;18;TEST USER ROLES;22;Save as Template;0
+jnj-test;Author;;18;TEST USER ROLES;23;Update Definition;0
+jnj-test;Materials;;1;System Admin;1;Manage Material Libraries;1
+jnj-test;Materials;;1;System Admin;2;View Materials;1
+jnj-test;Materials;;1;System Admin;3;Add Materials;1
+jnj-test;Materials;;1;System Admin;4;Edit Materials;1
+jnj-test;Materials;;1;System Admin;5;Delete Materials;1
+jnj-test;Materials;;1;System Admin;6;Export Materials;1
+jnj-test;Materials;;2;Inventory Admin;1;Manage Material Libraries;0
+jnj-test;Materials;;2;Inventory Admin;2;View Materials;1
+jnj-test;Materials;;2;Inventory Admin;3;Add Materials;1
+jnj-test;Materials;;2;Inventory Admin;4;Edit Materials;1
+jnj-test;Materials;;2;Inventory Admin;5;Delete Materials;1
+jnj-test;Materials;;2;Inventory Admin;6;Export Materials;0
+jnj-test;Materials;;3;Standard User;1;Manage Material Libraries;0
+jnj-test;Materials;;3;Standard User;2;View Materials;0
+jnj-test;Materials;;3;Standard User;3;Add Materials;0
+jnj-test;Materials;;3;Standard User;4;Edit Materials;0
+jnj-test;Materials;;3;Standard User;5;Delete Materials;0
+jnj-test;Materials;;3;Standard User;6;Export Materials;0
+jnj-test;Materials;;4;FL-Approver;1;Manage Material Libraries;0
+jnj-test;Materials;;4;FL-Approver;2;View Materials;0
+jnj-test;Materials;;4;FL-Approver;3;Add Materials;0
+jnj-test;Materials;;4;FL-Approver;4;Edit Materials;0
+jnj-test;Materials;;4;FL-Approver;5;Delete Materials;0
+jnj-test;Materials;;4;FL-Approver;6;Export Materials;0
+jnj-test;Materials;;5;FL-Archivist;1;Manage Material Libraries;0
+jnj-test;Materials;;5;FL-Archivist;2;View Materials;0
+jnj-test;Materials;;5;FL-Archivist;3;Add Materials;0
+jnj-test;Materials;;5;FL-Archivist;4;Edit Materials;0
+jnj-test;Materials;;5;FL-Archivist;5;Delete Materials;0
+jnj-test;Materials;;5;FL-Archivist;6;Export Materials;0
+jnj-test;Materials;;6;FL-Author;1;Manage Material Libraries;0
+jnj-test;Materials;;6;FL-Author;2;View Materials;0
+jnj-test;Materials;;6;FL-Author;3;Add Materials;0
+jnj-test;Materials;;6;FL-Author;4;Edit Materials;0
+jnj-test;Materials;;6;FL-Author;5;Delete Materials;0
+jnj-test;Materials;;6;FL-Author;6;Export Materials;0
+jnj-test;Materials;;7;GxP Std User;1;Manage Material Libraries;0
+jnj-test;Materials;;7;GxP Std User;2;View Materials;1
+jnj-test;Materials;;7;GxP Std User;3;Add Materials;1
+jnj-test;Materials;;7;GxP Std User;4;Edit Materials;1
+jnj-test;Materials;;7;GxP Std User;5;Delete Materials;0
+jnj-test;Materials;;7;GxP Std User;6;Export Materials;1
+jnj-test;Materials;;8;GxP Superuser;1;Manage Material Libraries;0
+jnj-test;Materials;;8;GxP Superuser;2;View Materials;0
+jnj-test;Materials;;8;GxP Superuser;3;Add Materials;0
+jnj-test;Materials;;8;GxP Superuser;4;Edit Materials;0
+jnj-test;Materials;;8;GxP Superuser;5;Delete Materials;0
+jnj-test;Materials;;8;GxP Superuser;6;Export Materials;0
+jnj-test;Materials;;9;Janssen Internal User;1;Manage Material Libraries;0
+jnj-test;Materials;;9;Janssen Internal User;2;View Materials;0
+jnj-test;Materials;;9;Janssen Internal User;3;Add Materials;0
+jnj-test;Materials;;9;Janssen Internal User;4;Edit Materials;0
+jnj-test;Materials;;9;Janssen Internal User;5;Delete Materials;0
+jnj-test;Materials;;9;Janssen Internal User;6;Export Materials;0
+jnj-test;Materials;;10;Non-GxP Standard User;1;Manage Material Libraries;0
+jnj-test;Materials;;10;Non-GxP Standard User;2;View Materials;0
+jnj-test;Materials;;10;Non-GxP Standard User;3;Add Materials;0
+jnj-test;Materials;;10;Non-GxP Standard User;4;Edit Materials;0
+jnj-test;Materials;;10;Non-GxP Standard User;5;Delete Materials;0
+jnj-test;Materials;;10;Non-GxP Standard User;6;Export Materials;0
+jnj-test;Materials;;11;Recipe Builder;1;Manage Material Libraries;0
+jnj-test;Materials;;11;Recipe Builder;2;View Materials;0
+jnj-test;Materials;;11;Recipe Builder;3;Add Materials;0
+jnj-test;Materials;;11;Recipe Builder;4;Edit Materials;0
+jnj-test;Materials;;11;Recipe Builder;5;Delete Materials;0
+jnj-test;Materials;;11;Recipe Builder;6;Export Materials;0
+jnj-test;Materials;;12;ResearchCenterManager;1;Manage Material Libraries;0
+jnj-test;Materials;;12;ResearchCenterManager;2;View Materials;1
+jnj-test;Materials;;12;ResearchCenterManager;3;Add Materials;1
+jnj-test;Materials;;12;ResearchCenterManager;4;Edit Materials;1
+jnj-test;Materials;;12;ResearchCenterManager;5;Delete Materials;0
+jnj-test;Materials;;12;ResearchCenterManager;6;Export Materials;1
+jnj-test;Materials;;13;ResearchCenterUser;1;Manage Material Libraries;0
+jnj-test;Materials;;13;ResearchCenterUser;2;View Materials;1
+jnj-test;Materials;;13;ResearchCenterUser;3;Add Materials;1
+jnj-test;Materials;;13;ResearchCenterUser;4;Edit Materials;0
+jnj-test;Materials;;13;ResearchCenterUser;5;Delete Materials;0
+jnj-test;Materials;;13;ResearchCenterUser;6;Export Materials;1
+jnj-test;Materials;;14;ResearchCenterViewer;1;Manage Material Libraries;0
+jnj-test;Materials;;14;ResearchCenterViewer;2;View Materials;1
+jnj-test;Materials;;14;ResearchCenterViewer;3;Add Materials;0
+jnj-test;Materials;;14;ResearchCenterViewer;4;Edit Materials;0
+jnj-test;Materials;;14;ResearchCenterViewer;5;Delete Materials;0
+jnj-test;Materials;;14;ResearchCenterViewer;6;Export Materials;1
+jnj-test;Materials;;15;Sign & 2 Stage Review;1;Manage Material Libraries;0
+jnj-test;Materials;;15;Sign & 2 Stage Review;2;View Materials;0
+jnj-test;Materials;;15;Sign & 2 Stage Review;3;Add Materials;0
+jnj-test;Materials;;15;Sign & 2 Stage Review;4;Edit Materials;0
+jnj-test;Materials;;15;Sign & 2 Stage Review;5;Delete Materials;0
+jnj-test;Materials;;15;Sign & 2 Stage Review;6;Export Materials;0
+jnj-test;Materials;;16;Sign & Close;1;Manage Material Libraries;0
+jnj-test;Materials;;16;Sign & Close;2;View Materials;0
+jnj-test;Materials;;16;Sign & Close;3;Add Materials;0
+jnj-test;Materials;;16;Sign & Close;4;Edit Materials;0
+jnj-test;Materials;;16;Sign & Close;5;Delete Materials;0
+jnj-test;Materials;;16;Sign & Close;6;Export Materials;0
+jnj-test;Materials;;17;Superuser;1;Manage Material Libraries;0
+jnj-test;Materials;;17;Superuser;2;View Materials;0
+jnj-test;Materials;;17;Superuser;3;Add Materials;0
+jnj-test;Materials;;17;Superuser;4;Edit Materials;0
+jnj-test;Materials;;17;Superuser;5;Delete Materials;0
+jnj-test;Materials;;17;Superuser;6;Export Materials;0
+jnj-test;Materials;;18;TEST USER ROLES;1;Manage Material Libraries;0
+jnj-test;Materials;;18;TEST USER ROLES;2;View Materials;1
+jnj-test;Materials;;18;TEST USER ROLES;3;Add Materials;1
+jnj-test;Materials;;18;TEST USER ROLES;4;Edit Materials;0
+jnj-test;Materials;;18;TEST USER ROLES;5;Delete Materials;0
+jnj-test;Materials;;18;TEST USER ROLES;6;Export Materials;0
+jnj-test;Inventory;Application;1;System Admin;1;Inventory App;1
+jnj-test;Inventory;Application;1;System Admin;2;Manage Inventory;1
+jnj-test;Inventory;Application;1;System Admin;3;Manage Inventory Attributes;1
+jnj-test;Inventory;Application;2;Inventory Admin;1;Inventory App;1
+jnj-test;Inventory;Application;2;Inventory Admin;2;Manage Inventory;1
+jnj-test;Inventory;Application;2;Inventory Admin;3;Manage Inventory Attributes;1
+jnj-test;Inventory;Application;3;Standard User;1;Inventory App;0
+jnj-test;Inventory;Application;3;Standard User;2;Manage Inventory;0
+jnj-test;Inventory;Application;3;Standard User;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;4;FL-Approver;1;Inventory App;0
+jnj-test;Inventory;Application;4;FL-Approver;2;Manage Inventory;0
+jnj-test;Inventory;Application;4;FL-Approver;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;5;FL-Archivist;1;Inventory App;0
+jnj-test;Inventory;Application;5;FL-Archivist;2;Manage Inventory;0
+jnj-test;Inventory;Application;5;FL-Archivist;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;6;FL-Author;1;Inventory App;0
+jnj-test;Inventory;Application;6;FL-Author;2;Manage Inventory;0
+jnj-test;Inventory;Application;6;FL-Author;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;7;GxP Std User;1;Inventory App;1
+jnj-test;Inventory;Application;7;GxP Std User;2;Manage Inventory;0
+jnj-test;Inventory;Application;7;GxP Std User;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;8;GxP Superuser;1;Inventory App;0
+jnj-test;Inventory;Application;8;GxP Superuser;2;Manage Inventory;0
+jnj-test;Inventory;Application;8;GxP Superuser;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;9;Janssen Internal User;1;Inventory App;0
+jnj-test;Inventory;Application;9;Janssen Internal User;2;Manage Inventory;0
+jnj-test;Inventory;Application;9;Janssen Internal User;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;10;Non-GxP Standard User;1;Inventory App;0
+jnj-test;Inventory;Application;10;Non-GxP Standard User;2;Manage Inventory;0
+jnj-test;Inventory;Application;10;Non-GxP Standard User;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;11;Recipe Builder;1;Inventory App;0
+jnj-test;Inventory;Application;11;Recipe Builder;2;Manage Inventory;0
+jnj-test;Inventory;Application;11;Recipe Builder;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;12;ResearchCenterManager;1;Inventory App;0
+jnj-test;Inventory;Application;12;ResearchCenterManager;2;Manage Inventory;0
+jnj-test;Inventory;Application;12;ResearchCenterManager;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;13;ResearchCenterUser;1;Inventory App;0
+jnj-test;Inventory;Application;13;ResearchCenterUser;2;Manage Inventory;0
+jnj-test;Inventory;Application;13;ResearchCenterUser;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;14;ResearchCenterViewer;1;Inventory App;0
+jnj-test;Inventory;Application;14;ResearchCenterViewer;2;Manage Inventory;0
+jnj-test;Inventory;Application;14;ResearchCenterViewer;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;15;Sign & 2 Stage Review;1;Inventory App;0
+jnj-test;Inventory;Application;15;Sign & 2 Stage Review;2;Manage Inventory;0
+jnj-test;Inventory;Application;15;Sign & 2 Stage Review;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;16;Sign & Close;1;Inventory App;0
+jnj-test;Inventory;Application;16;Sign & Close;2;Manage Inventory;0
+jnj-test;Inventory;Application;16;Sign & Close;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;17;Superuser;1;Inventory App;0
+jnj-test;Inventory;Application;17;Superuser;2;Manage Inventory;0
+jnj-test;Inventory;Application;17;Superuser;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Application;18;TEST USER ROLES;1;Inventory App;1
+jnj-test;Inventory;Application;18;TEST USER ROLES;2;Manage Inventory;0
+jnj-test;Inventory;Application;18;TEST USER ROLES;3;Manage Inventory Attributes;0
+jnj-test;Inventory;Locations;1;System Admin;1;Add Location;1
+jnj-test;Inventory;Locations;1;System Admin;2;Edit Location;1
+jnj-test;Inventory;Locations;1;System Admin;3;Move Location Contents;1
+jnj-test;Inventory;Locations;1;System Admin;4;Move Location;1
+jnj-test;Inventory;Locations;1;System Admin;5;Delete Location;1
+jnj-test;Inventory;Locations;2;Inventory Admin;1;Add Location;1
+jnj-test;Inventory;Locations;2;Inventory Admin;2;Edit Location;1
+jnj-test;Inventory;Locations;2;Inventory Admin;3;Move Location Contents;1
+jnj-test;Inventory;Locations;2;Inventory Admin;4;Move Location;1
+jnj-test;Inventory;Locations;2;Inventory Admin;5;Delete Location;1
+jnj-test;Inventory;Locations;3;Standard User;1;Add Location;0
+jnj-test;Inventory;Locations;3;Standard User;2;Edit Location;0
+jnj-test;Inventory;Locations;3;Standard User;3;Move Location Contents;0
+jnj-test;Inventory;Locations;3;Standard User;4;Move Location;0
+jnj-test;Inventory;Locations;3;Standard User;5;Delete Location;0
+jnj-test;Inventory;Locations;4;FL-Approver;1;Add Location;0
+jnj-test;Inventory;Locations;4;FL-Approver;2;Edit Location;0
+jnj-test;Inventory;Locations;4;FL-Approver;3;Move Location Contents;0
+jnj-test;Inventory;Locations;4;FL-Approver;4;Move Location;0
+jnj-test;Inventory;Locations;4;FL-Approver;5;Delete Location;0
+jnj-test;Inventory;Locations;5;FL-Archivist;1;Add Location;0
+jnj-test;Inventory;Locations;5;FL-Archivist;2;Edit Location;0
+jnj-test;Inventory;Locations;5;FL-Archivist;3;Move Location Contents;0
+jnj-test;Inventory;Locations;5;FL-Archivist;4;Move Location;0
+jnj-test;Inventory;Locations;5;FL-Archivist;5;Delete Location;0
+jnj-test;Inventory;Locations;6;FL-Author;1;Add Location;0
+jnj-test;Inventory;Locations;6;FL-Author;2;Edit Location;0
+jnj-test;Inventory;Locations;6;FL-Author;3;Move Location Contents;0
+jnj-test;Inventory;Locations;6;FL-Author;4;Move Location;0
+jnj-test;Inventory;Locations;6;FL-Author;5;Delete Location;0
+jnj-test;Inventory;Locations;7;GxP Std User;1;Add Location;0
+jnj-test;Inventory;Locations;7;GxP Std User;2;Edit Location;0
+jnj-test;Inventory;Locations;7;GxP Std User;3;Move Location Contents;0
+jnj-test;Inventory;Locations;7;GxP Std User;4;Move Location;0
+jnj-test;Inventory;Locations;7;GxP Std User;5;Delete Location;0
+jnj-test;Inventory;Locations;8;GxP Superuser;1;Add Location;0
+jnj-test;Inventory;Locations;8;GxP Superuser;2;Edit Location;0
+jnj-test;Inventory;Locations;8;GxP Superuser;3;Move Location Contents;0
+jnj-test;Inventory;Locations;8;GxP Superuser;4;Move Location;0
+jnj-test;Inventory;Locations;8;GxP Superuser;5;Delete Location;0
+jnj-test;Inventory;Locations;9;Janssen Internal User;1;Add Location;0
+jnj-test;Inventory;Locations;9;Janssen Internal User;2;Edit Location;0
+jnj-test;Inventory;Locations;9;Janssen Internal User;3;Move Location Contents;0
+jnj-test;Inventory;Locations;9;Janssen Internal User;4;Move Location;0
+jnj-test;Inventory;Locations;9;Janssen Internal User;5;Delete Location;0
+jnj-test;Inventory;Locations;10;Non-GxP Standard User;1;Add Location;0
+jnj-test;Inventory;Locations;10;Non-GxP Standard User;2;Edit Location;0
+jnj-test;Inventory;Locations;10;Non-GxP Standard User;3;Move Location Contents;0
+jnj-test;Inventory;Locations;10;Non-GxP Standard User;4;Move Location;0
+jnj-test;Inventory;Locations;10;Non-GxP Standard User;5;Delete Location;0
+jnj-test;Inventory;Locations;11;Recipe Builder;1;Add Location;0
+jnj-test;Inventory;Locations;11;Recipe Builder;2;Edit Location;0
+jnj-test;Inventory;Locations;11;Recipe Builder;3;Move Location Contents;0
+jnj-test;Inventory;Locations;11;Recipe Builder;4;Move Location;0
+jnj-test;Inventory;Locations;11;Recipe Builder;5;Delete Location;0
+jnj-test;Inventory;Locations;12;ResearchCenterManager;1;Add Location;1
+jnj-test;Inventory;Locations;12;ResearchCenterManager;2;Edit Location;0
+jnj-test;Inventory;Locations;12;ResearchCenterManager;3;Move Location Contents;0
+jnj-test;Inventory;Locations;12;ResearchCenterManager;4;Move Location;0
+jnj-test;Inventory;Locations;12;ResearchCenterManager;5;Delete Location;0
+jnj-test;Inventory;Locations;13;ResearchCenterUser;1;Add Location;1
+jnj-test;Inventory;Locations;13;ResearchCenterUser;2;Edit Location;0
+jnj-test;Inventory;Locations;13;ResearchCenterUser;3;Move Location Contents;0
+jnj-test;Inventory;Locations;13;ResearchCenterUser;4;Move Location;0
+jnj-test;Inventory;Locations;13;ResearchCenterUser;5;Delete Location;0
+jnj-test;Inventory;Locations;14;ResearchCenterViewer;1;Add Location;0
+jnj-test;Inventory;Locations;14;ResearchCenterViewer;2;Edit Location;0
+jnj-test;Inventory;Locations;14;ResearchCenterViewer;3;Move Location Contents;0
+jnj-test;Inventory;Locations;14;ResearchCenterViewer;4;Move Location;0
+jnj-test;Inventory;Locations;14;ResearchCenterViewer;5;Delete Location;0
+jnj-test;Inventory;Locations;15;Sign & 2 Stage Review;1;Add Location;0
+jnj-test;Inventory;Locations;15;Sign & 2 Stage Review;2;Edit Location;0
+jnj-test;Inventory;Locations;15;Sign & 2 Stage Review;3;Move Location Contents;0
+jnj-test;Inventory;Locations;15;Sign & 2 Stage Review;4;Move Location;0
+jnj-test;Inventory;Locations;15;Sign & 2 Stage Review;5;Delete Location;0
+jnj-test;Inventory;Locations;16;Sign & Close;1;Add Location;0
+jnj-test;Inventory;Locations;16;Sign & Close;2;Edit Location;0
+jnj-test;Inventory;Locations;16;Sign & Close;3;Move Location Contents;0
+jnj-test;Inventory;Locations;16;Sign & Close;4;Move Location;0
+jnj-test;Inventory;Locations;16;Sign & Close;5;Delete Location;0
+jnj-test;Inventory;Locations;17;Superuser;1;Add Location;0
+jnj-test;Inventory;Locations;17;Superuser;2;Edit Location;0
+jnj-test;Inventory;Locations;17;Superuser;3;Move Location Contents;0
+jnj-test;Inventory;Locations;17;Superuser;4;Move Location;0
+jnj-test;Inventory;Locations;17;Superuser;5;Delete Location;0
+jnj-test;Inventory;Locations;18;TEST USER ROLES;1;Add Location;0
+jnj-test;Inventory;Locations;18;TEST USER ROLES;2;Edit Location;0
+jnj-test;Inventory;Locations;18;TEST USER ROLES;3;Move Location Contents;0
+jnj-test;Inventory;Locations;18;TEST USER ROLES;4;Move Location;0
+jnj-test;Inventory;Locations;18;TEST USER ROLES;5;Delete Location;0
+jnj-test;Inventory;Containers;1;System Admin;1;Add Container;1
+jnj-test;Inventory;Containers;1;System Admin;2;Edit Container;1
+jnj-test;Inventory;Containers;1;System Admin;3;Aliquot Container;1
+jnj-test;Inventory;Containers;1;System Admin;4;Update Amount;1
+jnj-test;Inventory;Containers;1;System Admin;5;Export Containers;1
+jnj-test;Inventory;Containers;1;System Admin;6;Update Home;1
+jnj-test;Inventory;Containers;1;System Admin;7;Delete Container;1
+jnj-test;Inventory;Containers;1;System Admin;8;Final Dispose;1
+jnj-test;Inventory;Containers;2;Inventory Admin;1;Add Container;1
+jnj-test;Inventory;Containers;2;Inventory Admin;2;Edit Container;1
+jnj-test;Inventory;Containers;2;Inventory Admin;3;Aliquot Container;1
+jnj-test;Inventory;Containers;2;Inventory Admin;4;Update Amount;1
+jnj-test;Inventory;Containers;2;Inventory Admin;5;Export Containers;1
+jnj-test;Inventory;Containers;2;Inventory Admin;6;Update Home;1
+jnj-test;Inventory;Containers;2;Inventory Admin;7;Delete Container;1
+jnj-test;Inventory;Containers;2;Inventory Admin;8;Final Dispose;1
+jnj-test;Inventory;Containers;3;Standard User;1;Add Container;0
+jnj-test;Inventory;Containers;3;Standard User;2;Edit Container;0
+jnj-test;Inventory;Containers;3;Standard User;3;Aliquot Container;0
+jnj-test;Inventory;Containers;3;Standard User;4;Update Amount;0
+jnj-test;Inventory;Containers;3;Standard User;5;Export Containers;0
+jnj-test;Inventory;Containers;3;Standard User;6;Update Home;0
+jnj-test;Inventory;Containers;3;Standard User;7;Delete Container;0
+jnj-test;Inventory;Containers;3;Standard User;8;Final Dispose;0
+jnj-test;Inventory;Containers;4;FL-Approver;1;Add Container;0
+jnj-test;Inventory;Containers;4;FL-Approver;2;Edit Container;0
+jnj-test;Inventory;Containers;4;FL-Approver;3;Aliquot Container;0
+jnj-test;Inventory;Containers;4;FL-Approver;4;Update Amount;0
+jnj-test;Inventory;Containers;4;FL-Approver;5;Export Containers;0
+jnj-test;Inventory;Containers;4;FL-Approver;6;Update Home;0
+jnj-test;Inventory;Containers;4;FL-Approver;7;Delete Container;0
+jnj-test;Inventory;Containers;4;FL-Approver;8;Final Dispose;0
+jnj-test;Inventory;Containers;5;FL-Archivist;1;Add Container;0
+jnj-test;Inventory;Containers;5;FL-Archivist;2;Edit Container;0
+jnj-test;Inventory;Containers;5;FL-Archivist;3;Aliquot Container;0
+jnj-test;Inventory;Containers;5;FL-Archivist;4;Update Amount;0
+jnj-test;Inventory;Containers;5;FL-Archivist;5;Export Containers;0
+jnj-test;Inventory;Containers;5;FL-Archivist;6;Update Home;0
+jnj-test;Inventory;Containers;5;FL-Archivist;7;Delete Container;0
+jnj-test;Inventory;Containers;5;FL-Archivist;8;Final Dispose;0
+jnj-test;Inventory;Containers;6;FL-Author;1;Add Container;0
+jnj-test;Inventory;Containers;6;FL-Author;2;Edit Container;0
+jnj-test;Inventory;Containers;6;FL-Author;3;Aliquot Container;0
+jnj-test;Inventory;Containers;6;FL-Author;4;Update Amount;0
+jnj-test;Inventory;Containers;6;FL-Author;5;Export Containers;0
+jnj-test;Inventory;Containers;6;FL-Author;6;Update Home;0
+jnj-test;Inventory;Containers;6;FL-Author;7;Delete Container;0
+jnj-test;Inventory;Containers;6;FL-Author;8;Final Dispose;0
+jnj-test;Inventory;Containers;7;GxP Std User;1;Add Container;1
+jnj-test;Inventory;Containers;7;GxP Std User;2;Edit Container;1
+jnj-test;Inventory;Containers;7;GxP Std User;3;Aliquot Container;0
+jnj-test;Inventory;Containers;7;GxP Std User;4;Update Amount;1
+jnj-test;Inventory;Containers;7;GxP Std User;5;Export Containers;1
+jnj-test;Inventory;Containers;7;GxP Std User;6;Update Home;0
+jnj-test;Inventory;Containers;7;GxP Std User;7;Delete Container;0
+jnj-test;Inventory;Containers;7;GxP Std User;8;Final Dispose;0
+jnj-test;Inventory;Containers;8;GxP Superuser;1;Add Container;0
+jnj-test;Inventory;Containers;8;GxP Superuser;2;Edit Container;0
+jnj-test;Inventory;Containers;8;GxP Superuser;3;Aliquot Container;0
+jnj-test;Inventory;Containers;8;GxP Superuser;4;Update Amount;0
+jnj-test;Inventory;Containers;8;GxP Superuser;5;Export Containers;0
+jnj-test;Inventory;Containers;8;GxP Superuser;6;Update Home;0
+jnj-test;Inventory;Containers;8;GxP Superuser;7;Delete Container;0
+jnj-test;Inventory;Containers;8;GxP Superuser;8;Final Dispose;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;1;Add Container;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;2;Edit Container;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;3;Aliquot Container;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;4;Update Amount;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;5;Export Containers;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;6;Update Home;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;7;Delete Container;0
+jnj-test;Inventory;Containers;9;Janssen Internal User;8;Final Dispose;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;1;Add Container;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;2;Edit Container;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;3;Aliquot Container;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;4;Update Amount;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;5;Export Containers;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;6;Update Home;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;7;Delete Container;0
+jnj-test;Inventory;Containers;10;Non-GxP Standard User;8;Final Dispose;0
+jnj-test;Inventory;Containers;11;Recipe Builder;1;Add Container;0
+jnj-test;Inventory;Containers;11;Recipe Builder;2;Edit Container;0
+jnj-test;Inventory;Containers;11;Recipe Builder;3;Aliquot Container;0
+jnj-test;Inventory;Containers;11;Recipe Builder;4;Update Amount;0
+jnj-test;Inventory;Containers;11;Recipe Builder;5;Export Containers;0
+jnj-test;Inventory;Containers;11;Recipe Builder;6;Update Home;0
+jnj-test;Inventory;Containers;11;Recipe Builder;7;Delete Container;0
+jnj-test;Inventory;Containers;11;Recipe Builder;8;Final Dispose;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;1;Add Container;1
+jnj-test;Inventory;Containers;12;ResearchCenterManager;2;Edit Container;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;3;Aliquot Container;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;4;Update Amount;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;5;Export Containers;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;6;Update Home;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;7;Delete Container;0
+jnj-test;Inventory;Containers;12;ResearchCenterManager;8;Final Dispose;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;1;Add Container;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;2;Edit Container;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;3;Aliquot Container;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;4;Update Amount;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;5;Export Containers;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;6;Update Home;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;7;Delete Container;0
+jnj-test;Inventory;Containers;13;ResearchCenterUser;8;Final Dispose;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;1;Add Container;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;2;Edit Container;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;3;Aliquot Container;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;4;Update Amount;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;5;Export Containers;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;6;Update Home;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;7;Delete Container;0
+jnj-test;Inventory;Containers;14;ResearchCenterViewer;8;Final Dispose;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;1;Add Container;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;2;Edit Container;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;3;Aliquot Container;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;4;Update Amount;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;5;Export Containers;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;6;Update Home;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;7;Delete Container;0
+jnj-test;Inventory;Containers;15;Sign & 2 Stage Review;8;Final Dispose;0
+jnj-test;Inventory;Containers;16;Sign & Close;1;Add Container;0
+jnj-test;Inventory;Containers;16;Sign & Close;2;Edit Container;0
+jnj-test;Inventory;Containers;16;Sign & Close;3;Aliquot Container;0
+jnj-test;Inventory;Containers;16;Sign & Close;4;Update Amount;0
+jnj-test;Inventory;Containers;16;Sign & Close;5;Export Containers;0
+jnj-test;Inventory;Containers;16;Sign & Close;6;Update Home;0
+jnj-test;Inventory;Containers;16;Sign & Close;7;Delete Container;0
+jnj-test;Inventory;Containers;16;Sign & Close;8;Final Dispose;0
+jnj-test;Inventory;Containers;17;Superuser;1;Add Container;0
+jnj-test;Inventory;Containers;17;Superuser;2;Edit Container;0
+jnj-test;Inventory;Containers;17;Superuser;3;Aliquot Container;0
+jnj-test;Inventory;Containers;17;Superuser;4;Update Amount;0
+jnj-test;Inventory;Containers;17;Superuser;5;Export Containers;0
+jnj-test;Inventory;Containers;17;Superuser;6;Update Home;0
+jnj-test;Inventory;Containers;17;Superuser;7;Delete Container;0
+jnj-test;Inventory;Containers;17;Superuser;8;Final Dispose;0
+jnj-test;Inventory;Containers;18;TEST USER ROLES;1;Add Container;1
+jnj-test;Inventory;Containers;18;TEST USER ROLES;2;Edit Container;1
+jnj-test;Inventory;Containers;18;TEST USER ROLES;3;Aliquot Container;0
+jnj-test;Inventory;Containers;18;TEST USER ROLES;4;Update Amount;1
+jnj-test;Inventory;Containers;18;TEST USER ROLES;5;Export Containers;1
+jnj-test;Inventory;Containers;18;TEST USER ROLES;6;Update Home;0
+jnj-test;Inventory;Containers;18;TEST USER ROLES;7;Delete Container;0
+jnj-test;Inventory;Containers;18;TEST USER ROLES;8;Final Dispose;0
+jnj-test;HELM Monomer Libraries;;1;System Admin;1;Create & Manage Libraries;1
+jnj-test;HELM Monomer Libraries;;1;System Admin;2;Add New Monomers;1
+jnj-test;HELM Monomer Libraries;;1;System Admin;3;Access Monomer Curation App;1
+jnj-test;HELM Monomer Libraries;;2;Inventory Admin;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;2;Inventory Admin;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;2;Inventory Admin;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;3;Standard User;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;3;Standard User;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;3;Standard User;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;4;FL-Approver;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;4;FL-Approver;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;4;FL-Approver;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;5;FL-Archivist;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;5;FL-Archivist;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;5;FL-Archivist;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;6;FL-Author;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;6;FL-Author;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;6;FL-Author;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;7;GxP Std User;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;7;GxP Std User;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;7;GxP Std User;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;8;GxP Superuser;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;8;GxP Superuser;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;8;GxP Superuser;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;9;Janssen Internal User;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;9;Janssen Internal User;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;9;Janssen Internal User;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;10;Non-GxP Standard User;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;10;Non-GxP Standard User;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;10;Non-GxP Standard User;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;11;Recipe Builder;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;11;Recipe Builder;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;11;Recipe Builder;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;12;ResearchCenterManager;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;12;ResearchCenterManager;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;12;ResearchCenterManager;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;13;ResearchCenterUser;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;13;ResearchCenterUser;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;13;ResearchCenterUser;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;14;ResearchCenterViewer;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;14;ResearchCenterViewer;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;14;ResearchCenterViewer;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;15;Sign & 2 Stage Review;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;15;Sign & 2 Stage Review;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;15;Sign & 2 Stage Review;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;16;Sign & Close;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;16;Sign & Close;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;16;Sign & Close;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;17;Superuser;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;17;Superuser;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;17;Superuser;3;Access Monomer Curation App;0
+jnj-test;HELM Monomer Libraries;;18;TEST USER ROLES;1;Create & Manage Libraries;0
+jnj-test;HELM Monomer Libraries;;18;TEST USER ROLES;2;Add New Monomers;0
+jnj-test;HELM Monomer Libraries;;18;TEST USER ROLES;3;Access Monomer Curation App;0

@@ -1,0 +1,217 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+jnj-test;Experiment Privileges;2;System Admin;1;Share;1
+jnj-test;Experiment Privileges;2;System Admin;2;Share Templates;1
+jnj-test;Experiment Privileges;2;System Admin;3;Move Experiments;1
+jnj-test;Experiment Privileges;2;System Admin;4;Trash Experiments;1
+jnj-test;Experiment Privileges;2;System Admin;5;Add Reviewers and Keep OpenExperiments;1
+jnj-test;Experiment Privileges;2;System Admin;6;Sign and Add ReviewersExperiments;1
+jnj-test;Experiment Privileges;2;System Admin;7;Sign and Keep Open Experiments;1
+jnj-test;Experiment Privileges;2;System Admin;8;Void Experiments;1
+jnj-test;Experiment Privileges;2;System Admin;9;Sign and Close Without WitnessingExperiments;1
+jnj-test;Experiment Privileges;2;System Admin;10;Close Without SigningExperiments;1
+jnj-test;Experiment Privileges;2;System Admin;11;Two Stage Review Experiments;1
+jnj-test;Experiment Privileges;2;System Admin;12;Approve Experiments;1
+jnj-test;Experiment Privileges;3;Inventory Admin;1;Share;0
+jnj-test;Experiment Privileges;3;Inventory Admin;2;Share Templates;0
+jnj-test;Experiment Privileges;3;Inventory Admin;3;Move Experiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;4;Trash Experiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;8;Void Experiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;3;Inventory Admin;12;Approve Experiments;0
+jnj-test;Experiment Privileges;4;Standard User;1;Share;0
+jnj-test;Experiment Privileges;4;Standard User;2;Share Templates;0
+jnj-test;Experiment Privileges;4;Standard User;3;Move Experiments;1
+jnj-test;Experiment Privileges;4;Standard User;4;Trash Experiments;0
+jnj-test;Experiment Privileges;4;Standard User;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;4;Standard User;6;Sign and Add ReviewersExperiments;1
+jnj-test;Experiment Privileges;4;Standard User;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;4;Standard User;8;Void Experiments;1
+jnj-test;Experiment Privileges;4;Standard User;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;4;Standard User;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;4;Standard User;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;4;Standard User;12;Approve Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;1;Share;0
+jnj-test;Experiment Privileges;5;FL-Approver;2;Share Templates;0
+jnj-test;Experiment Privileges;5;FL-Approver;3;Move Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;4;Trash Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;8;Void Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;5;FL-Approver;12;Approve Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;1;Share;0
+jnj-test;Experiment Privileges;6;FL-Archivist;2;Share Templates;0
+jnj-test;Experiment Privileges;6;FL-Archivist;3;Move Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;4;Trash Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;8;Void Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;6;FL-Archivist;12;Approve Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;1;Share;0
+jnj-test;Experiment Privileges;7;FL-Author;2;Share Templates;0
+jnj-test;Experiment Privileges;7;FL-Author;3;Move Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;4;Trash Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;7;FL-Author;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;7;FL-Author;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;8;Void Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;7;FL-Author;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;7;FL-Author;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;7;FL-Author;12;Approve Experiments;0
+jnj-test;Experiment Privileges;8;GxP Std User;1;Share;0
+jnj-test;Experiment Privileges;8;GxP Std User;2;Share Templates;0
+jnj-test;Experiment Privileges;8;GxP Std User;3;Move Experiments;1
+jnj-test;Experiment Privileges;8;GxP Std User;4;Trash Experiments;0
+jnj-test;Experiment Privileges;8;GxP Std User;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;8;GxP Std User;6;Sign and Add ReviewersExperiments;1
+jnj-test;Experiment Privileges;8;GxP Std User;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;8;GxP Std User;8;Void Experiments;1
+jnj-test;Experiment Privileges;8;GxP Std User;9;Sign and Close Without WitnessingExperiments;1
+jnj-test;Experiment Privileges;8;GxP Std User;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;8;GxP Std User;11;Two Stage Review Experiments;1
+jnj-test;Experiment Privileges;8;GxP Std User;12;Approve Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;1;Share;1
+jnj-test;Experiment Privileges;9;GxP Superuser;2;Share Templates;1
+jnj-test;Experiment Privileges;9;GxP Superuser;3;Move Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;4;Trash Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;8;Void Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;9;GxP Superuser;12;Approve Experiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;1;Share;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;2;Share Templates;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;3;Move Experiments;1
+jnj-test;Experiment Privileges;10;Janssen Internal User;4;Trash Experiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;8;Void Experiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;10;Janssen Internal User;12;Approve Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;1;Share;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;2;Share Templates;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;3;Move Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;4;Trash Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;8;Void Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;11;Non-GxP Standard User;12;Approve Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;1;Share;0
+jnj-test;Experiment Privileges;12;Recipe Builder;2;Share Templates;0
+jnj-test;Experiment Privileges;12;Recipe Builder;3;Move Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;4;Trash Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;8;Void Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;12;Recipe Builder;12;Approve Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;1;Share;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;2;Share Templates;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;3;Move Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;4;Trash Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;8;Void Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;13;ResearchCenterManager;12;Approve Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;1;Share;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;2;Share Templates;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;3;Move Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;4;Trash Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;8;Void Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;14;ResearchCenterUser;12;Approve Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;1;Share;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;2;Share Templates;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;3;Move Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;4;Trash Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;8;Void Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;15;ResearchCenterViewer;12;Approve Experiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;1;Share;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;2;Share Templates;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;3;Move Experiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;4;Trash Experiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;8;Void Experiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;11;Two Stage Review Experiments;1
+jnj-test;Experiment Privileges;16;Sign & 2 Stage Review;12;Approve Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;1;Share;0
+jnj-test;Experiment Privileges;17;Sign & Close;2;Share Templates;0
+jnj-test;Experiment Privileges;17;Sign & Close;3;Move Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;4;Trash Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;8;Void Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;9;Sign and Close Without WitnessingExperiments;1
+jnj-test;Experiment Privileges;17;Sign & Close;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;17;Sign & Close;12;Approve Experiments;0
+jnj-test;Experiment Privileges;18;Superuser;1;Share;1
+jnj-test;Experiment Privileges;18;Superuser;2;Share Templates;1
+jnj-test;Experiment Privileges;18;Superuser;3;Move Experiments;1
+jnj-test;Experiment Privileges;18;Superuser;4;Trash Experiments;0
+jnj-test;Experiment Privileges;18;Superuser;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;18;Superuser;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;18;Superuser;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;18;Superuser;8;Void Experiments;0
+jnj-test;Experiment Privileges;18;Superuser;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;18;Superuser;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;18;Superuser;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;18;Superuser;12;Approve Experiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;1;Share;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;2;Share Templates;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;3;Move Experiments;1
+jnj-test;Experiment Privileges;19;TEST USER ROLES;4;Trash Experiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;5;Add Reviewers and Keep OpenExperiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;6;Sign and Add ReviewersExperiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;7;Sign and Keep Open Experiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;8;Void Experiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;9;Sign and Close Without WitnessingExperiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;10;Close Without SigningExperiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;11;Two Stage Review Experiments;0
+jnj-test;Experiment Privileges;19;TEST USER ROLES;12;Approve Experiments;0

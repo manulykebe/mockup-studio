@@ -1,0 +1,88 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+devinternal;Notebook Privileges;2;System Admin;1;Share;1
+devinternal;Notebook Privileges;2;System Admin;2;Trash Notebooks;1
+devinternal;Notebook Privileges;2;System Admin;3;Export Notebooks;1
+devinternal;Notebook Privileges;3;Inventory Admin;1;Share;0
+devinternal;Notebook Privileges;3;Inventory Admin;2;Trash Notebooks;0
+devinternal;Notebook Privileges;3;Inventory Admin;3;Export Notebooks;0
+devinternal;Notebook Privileges;4;Standard User;1;Share;0
+devinternal;Notebook Privileges;4;Standard User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;4;Standard User;3;Export Notebooks;1
+devinternal;Notebook Privileges;5;Archivist;1;Share;0
+devinternal;Notebook Privileges;5;Archivist;2;Trash Notebooks;0
+devinternal;Notebook Privileges;5;Archivist;3;Export Notebooks;0
+devinternal;Notebook Privileges;6;Disc Pharm Super User;1;Share;1
+devinternal;Notebook Privileges;6;Disc Pharm Super User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;6;Disc Pharm Super User;3;Export Notebooks;0
+devinternal;Notebook Privileges;7;Disc Pharm User;1;Share;0
+devinternal;Notebook Privileges;7;Disc Pharm User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;7;Disc Pharm User;3;Export Notebooks;1
+devinternal;Notebook Privileges;8;FL-Approver;1;Share;0
+devinternal;Notebook Privileges;8;FL-Approver;2;Trash Notebooks;0
+devinternal;Notebook Privileges;8;FL-Approver;3;Export Notebooks;0
+devinternal;Notebook Privileges;9;FL-Archivist;1;Share;0
+devinternal;Notebook Privileges;9;FL-Archivist;2;Trash Notebooks;0
+devinternal;Notebook Privileges;9;FL-Archivist;3;Export Notebooks;0
+devinternal;Notebook Privileges;10;FL-Author;1;Share;0
+devinternal;Notebook Privileges;10;FL-Author;2;Trash Notebooks;0
+devinternal;Notebook Privileges;10;FL-Author;3;Export Notebooks;0
+devinternal;Notebook Privileges;11;Gxp Recipe Builder;1;Share;1
+devinternal;Notebook Privileges;11;Gxp Recipe Builder;2;Trash Notebooks;0
+devinternal;Notebook Privileges;11;Gxp Recipe Builder;3;Export Notebooks;0
+devinternal;Notebook Privileges;12;GxP Std User;1;Share;0
+devinternal;Notebook Privileges;12;GxP Std User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;12;GxP Std User;3;Export Notebooks;1
+devinternal;Notebook Privileges;13;GxP Superuser;1;Share;1
+devinternal;Notebook Privileges;13;GxP Superuser;2;Trash Notebooks;0
+devinternal;Notebook Privileges;13;GxP Superuser;3;Export Notebooks;1
+devinternal;Notebook Privileges;14;Gxp-Active Directory Sync Test Role;1;Share;0
+devinternal;Notebook Privileges;14;Gxp-Active Directory Sync Test Role;2;Trash Notebooks;0
+devinternal;Notebook Privileges;14;Gxp-Active Directory Sync Test Role;3;Export Notebooks;0
+devinternal;Notebook Privileges;15;HELM User;1;Share;0
+devinternal;Notebook Privileges;15;HELM User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;15;HELM User;3;Export Notebooks;0
+devinternal;Notebook Privileges;16;Janssen Internal User;1;Share;0
+devinternal;Notebook Privileges;16;Janssen Internal User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;16;Janssen Internal User;3;Export Notebooks;1
+devinternal;Notebook Privileges;17;LAC User;1;Share;0
+devinternal;Notebook Privileges;17;LAC User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;17;LAC User;3;Export Notebooks;0
+devinternal;Notebook Privileges;18;ML Key User;1;Share;0
+devinternal;Notebook Privileges;18;ML Key User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;18;ML Key User;3;Export Notebooks;0
+devinternal;Notebook Privileges;19;Non-GxP Standard User;1;Share;0
+devinternal;Notebook Privileges;19;Non-GxP Standard User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;19;Non-GxP Standard User;3;Export Notebooks;1
+devinternal;Notebook Privileges;20;PMP test;1;Share;0
+devinternal;Notebook Privileges;20;PMP test;2;Trash Notebooks;0
+devinternal;Notebook Privileges;20;PMP test;3;Export Notebooks;0
+devinternal;Notebook Privileges;21;ReseachCenterManager;1;Share;0
+devinternal;Notebook Privileges;21;ReseachCenterManager;2;Trash Notebooks;0
+devinternal;Notebook Privileges;21;ReseachCenterManager;3;Export Notebooks;0
+devinternal;Notebook Privileges;22;ResearchCenterUser;1;Share;0
+devinternal;Notebook Privileges;22;ResearchCenterUser;2;Trash Notebooks;0
+devinternal;Notebook Privileges;22;ResearchCenterUser;3;Export Notebooks;0
+devinternal;Notebook Privileges;23;ResearchCenterViewer;1;Share;0
+devinternal;Notebook Privileges;23;ResearchCenterViewer;2;Trash Notebooks;0
+devinternal;Notebook Privileges;23;ResearchCenterViewer;3;Export Notebooks;0
+devinternal;Notebook Privileges;24;Sign & 2 Stage Review;1;Share;0
+devinternal;Notebook Privileges;24;Sign & 2 Stage Review;2;Trash Notebooks;0
+devinternal;Notebook Privileges;24;Sign & 2 Stage Review;3;Export Notebooks;0
+devinternal;Notebook Privileges;25;Sign & Close;1;Share;0
+devinternal;Notebook Privileges;25;Sign & Close;2;Trash Notebooks;0
+devinternal;Notebook Privileges;25;Sign & Close;3;Export Notebooks;0
+devinternal;Notebook Privileges;26;Standard User NON-GxP;1;Share;0
+devinternal;Notebook Privileges;26;Standard User NON-GxP;2;Trash Notebooks;0
+devinternal;Notebook Privileges;26;Standard User NON-GxP;3;Export Notebooks;0
+devinternal;Notebook Privileges;27;Super User;1;Share;1
+devinternal;Notebook Privileges;27;Super User;2;Trash Notebooks;0
+devinternal;Notebook Privileges;27;Super User;3;Export Notebooks;1
+devinternal;Notebook Privileges;28;Super User Admin;1;Share;1
+devinternal;Notebook Privileges;28;Super User Admin;2;Trash Notebooks;1
+devinternal;Notebook Privileges;28;Super User Admin;3;Export Notebooks;1
+devinternal;Notebook Privileges;29;Template Manager;1;Share;0
+devinternal;Notebook Privileges;29;Template Manager;2;Trash Notebooks;0
+devinternal;Notebook Privileges;29;Template Manager;3;Export Notebooks;0
+devinternal;Notebook Privileges;30;test;1;Share;0
+devinternal;Notebook Privileges;30;test;2;Trash Notebooks;0
+devinternal;Notebook Privileges;30;test;3;Export Notebooks;0

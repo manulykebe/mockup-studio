@@ -1,0 +1,55 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+jnj-test;Samples Privileges;2;System Admin;1;Delete Samples;1
+jnj-test;Samples Privileges;2;System Admin;2;Close/Cancel Samples;1
+jnj-test;Samples Privileges;2;System Admin;3;Reopen Samples;1
+jnj-test;Samples Privileges;3;Inventory Admin;1;Delete Samples;0
+jnj-test;Samples Privileges;3;Inventory Admin;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;3;Inventory Admin;3;Reopen Samples;0
+jnj-test;Samples Privileges;4;Standard User;1;Delete Samples;0
+jnj-test;Samples Privileges;4;Standard User;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;4;Standard User;3;Reopen Samples;0
+jnj-test;Samples Privileges;5;FL-Approver;1;Delete Samples;0
+jnj-test;Samples Privileges;5;FL-Approver;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;5;FL-Approver;3;Reopen Samples;0
+jnj-test;Samples Privileges;6;FL-Archivist;1;Delete Samples;0
+jnj-test;Samples Privileges;6;FL-Archivist;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;6;FL-Archivist;3;Reopen Samples;0
+jnj-test;Samples Privileges;7;FL-Author;1;Delete Samples;0
+jnj-test;Samples Privileges;7;FL-Author;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;7;FL-Author;3;Reopen Samples;0
+jnj-test;Samples Privileges;8;GxP Std User;1;Delete Samples;0
+jnj-test;Samples Privileges;8;GxP Std User;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;8;GxP Std User;3;Reopen Samples;0
+jnj-test;Samples Privileges;9;GxP Superuser;1;Delete Samples;0
+jnj-test;Samples Privileges;9;GxP Superuser;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;9;GxP Superuser;3;Reopen Samples;0
+jnj-test;Samples Privileges;10;Janssen Internal User;1;Delete Samples;0
+jnj-test;Samples Privileges;10;Janssen Internal User;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;10;Janssen Internal User;3;Reopen Samples;0
+jnj-test;Samples Privileges;11;Non-GxP Standard User;1;Delete Samples;0
+jnj-test;Samples Privileges;11;Non-GxP Standard User;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;11;Non-GxP Standard User;3;Reopen Samples;0
+jnj-test;Samples Privileges;12;Recipe Builder;1;Delete Samples;0
+jnj-test;Samples Privileges;12;Recipe Builder;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;12;Recipe Builder;3;Reopen Samples;0
+jnj-test;Samples Privileges;13;ResearchCenterManager;1;Delete Samples;0
+jnj-test;Samples Privileges;13;ResearchCenterManager;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;13;ResearchCenterManager;3;Reopen Samples;0
+jnj-test;Samples Privileges;14;ResearchCenterUser;1;Delete Samples;0
+jnj-test;Samples Privileges;14;ResearchCenterUser;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;14;ResearchCenterUser;3;Reopen Samples;0
+jnj-test;Samples Privileges;15;ResearchCenterViewer;1;Delete Samples;0
+jnj-test;Samples Privileges;15;ResearchCenterViewer;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;15;ResearchCenterViewer;3;Reopen Samples;0
+jnj-test;Samples Privileges;16;Sign & 2 Stage Review;1;Delete Samples;0
+jnj-test;Samples Privileges;16;Sign & 2 Stage Review;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;16;Sign & 2 Stage Review;3;Reopen Samples;0
+jnj-test;Samples Privileges;17;Sign & Close;1;Delete Samples;0
+jnj-test;Samples Privileges;17;Sign & Close;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;17;Sign & Close;3;Reopen Samples;0
+jnj-test;Samples Privileges;18;Superuser;1;Delete Samples;1
+jnj-test;Samples Privileges;18;Superuser;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;18;Superuser;3;Reopen Samples;0
+jnj-test;Samples Privileges;19;TEST USER ROLES;1;Delete Samples;0
+jnj-test;Samples Privileges;19;TEST USER ROLES;2;Close/Cancel Samples;0
+jnj-test;Samples Privileges;19;TEST USER ROLES;3;Reopen Samples;0

@@ -1,0 +1,307 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+jnj-test;GxP Request Privileges;2;System Admin;1;View;1
+jnj-test;GxP Request Privileges;2;System Admin;2;Add;1
+jnj-test;GxP Request Privileges;2;System Admin;3;Edit;1
+jnj-test;GxP Request Privileges;2;System Admin;4;Move;1
+jnj-test;GxP Request Privileges;2;System Admin;5;Export;1
+jnj-test;GxP Request Privileges;2;System Admin;6;Share;1
+jnj-test;GxP Request Privileges;2;System Admin;7;Read Dependent Share;1
+jnj-test;GxP Request Privileges;2;System Admin;8;Trash;1
+jnj-test;GxP Request Privileges;2;System Admin;9;Share Templates;1
+jnj-test;GxP Request Privileges;2;System Admin;10;Add Reviewers and Keep Open;1
+jnj-test;GxP Request Privileges;2;System Admin;11;Sign and Add Reviewers;1
+jnj-test;GxP Request Privileges;2;System Admin;12;Sign and Keep Open;1
+jnj-test;GxP Request Privileges;2;System Admin;13;Void;1
+jnj-test;GxP Request Privileges;2;System Admin;14;Sign and Close Without Witnessing;1
+jnj-test;GxP Request Privileges;2;System Admin;15;Two Stage Review;1
+jnj-test;GxP Request Privileges;2;System Admin;16;Close Without Signing;1
+jnj-test;GxP Request Privileges;2;System Admin;17;Approve;1
+jnj-test;GxP Request Privileges;3;Inventory Admin;1;View;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;2;Add;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;3;Edit;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;4;Move;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;5;Export;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;6;Share;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;8;Trash;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;9;Share Templates;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;13;Void;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;3;Inventory Admin;17;Approve;0
+jnj-test;GxP Request Privileges;4;Standard User;1;View;0
+jnj-test;GxP Request Privileges;4;Standard User;2;Add;0
+jnj-test;GxP Request Privileges;4;Standard User;3;Edit;0
+jnj-test;GxP Request Privileges;4;Standard User;4;Move;0
+jnj-test;GxP Request Privileges;4;Standard User;5;Export;0
+jnj-test;GxP Request Privileges;4;Standard User;6;Share;0
+jnj-test;GxP Request Privileges;4;Standard User;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;4;Standard User;8;Trash;0
+jnj-test;GxP Request Privileges;4;Standard User;9;Share Templates;0
+jnj-test;GxP Request Privileges;4;Standard User;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;4;Standard User;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;4;Standard User;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;4;Standard User;13;Void;0
+jnj-test;GxP Request Privileges;4;Standard User;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;4;Standard User;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;4;Standard User;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;4;Standard User;17;Approve;0
+jnj-test;GxP Request Privileges;5;FL-Approver;1;View;0
+jnj-test;GxP Request Privileges;5;FL-Approver;2;Add;0
+jnj-test;GxP Request Privileges;5;FL-Approver;3;Edit;0
+jnj-test;GxP Request Privileges;5;FL-Approver;4;Move;0
+jnj-test;GxP Request Privileges;5;FL-Approver;5;Export;0
+jnj-test;GxP Request Privileges;5;FL-Approver;6;Share;0
+jnj-test;GxP Request Privileges;5;FL-Approver;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;5;FL-Approver;8;Trash;0
+jnj-test;GxP Request Privileges;5;FL-Approver;9;Share Templates;0
+jnj-test;GxP Request Privileges;5;FL-Approver;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;5;FL-Approver;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;5;FL-Approver;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;5;FL-Approver;13;Void;0
+jnj-test;GxP Request Privileges;5;FL-Approver;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;5;FL-Approver;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;5;FL-Approver;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;5;FL-Approver;17;Approve;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;1;View;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;2;Add;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;3;Edit;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;4;Move;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;5;Export;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;6;Share;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;8;Trash;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;9;Share Templates;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;13;Void;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;6;FL-Archivist;17;Approve;0
+jnj-test;GxP Request Privileges;7;FL-Author;1;View;0
+jnj-test;GxP Request Privileges;7;FL-Author;2;Add;0
+jnj-test;GxP Request Privileges;7;FL-Author;3;Edit;0
+jnj-test;GxP Request Privileges;7;FL-Author;4;Move;0
+jnj-test;GxP Request Privileges;7;FL-Author;5;Export;0
+jnj-test;GxP Request Privileges;7;FL-Author;6;Share;0
+jnj-test;GxP Request Privileges;7;FL-Author;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;7;FL-Author;8;Trash;0
+jnj-test;GxP Request Privileges;7;FL-Author;9;Share Templates;0
+jnj-test;GxP Request Privileges;7;FL-Author;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;7;FL-Author;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;7;FL-Author;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;7;FL-Author;13;Void;0
+jnj-test;GxP Request Privileges;7;FL-Author;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;7;FL-Author;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;7;FL-Author;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;7;FL-Author;17;Approve;0
+jnj-test;GxP Request Privileges;8;GxP Std User;1;View;1
+jnj-test;GxP Request Privileges;8;GxP Std User;2;Add;1
+jnj-test;GxP Request Privileges;8;GxP Std User;3;Edit;1
+jnj-test;GxP Request Privileges;8;GxP Std User;4;Move;0
+jnj-test;GxP Request Privileges;8;GxP Std User;5;Export;1
+jnj-test;GxP Request Privileges;8;GxP Std User;6;Share;0
+jnj-test;GxP Request Privileges;8;GxP Std User;7;Read Dependent Share;1
+jnj-test;GxP Request Privileges;8;GxP Std User;8;Trash;0
+jnj-test;GxP Request Privileges;8;GxP Std User;9;Share Templates;0
+jnj-test;GxP Request Privileges;8;GxP Std User;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;8;GxP Std User;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;8;GxP Std User;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;8;GxP Std User;13;Void;1
+jnj-test;GxP Request Privileges;8;GxP Std User;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;8;GxP Std User;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;8;GxP Std User;16;Close Without Signing;1
+jnj-test;GxP Request Privileges;8;GxP Std User;17;Approve;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;1;View;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;2;Add;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;3;Edit;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;4;Move;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;5;Export;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;6;Share;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;8;Trash;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;9;Share Templates;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;13;Void;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;9;GxP Superuser;17;Approve;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;1;View;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;2;Add;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;3;Edit;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;4;Move;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;5;Export;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;6;Share;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;8;Trash;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;9;Share Templates;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;13;Void;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;10;Janssen Internal User;17;Approve;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;1;View;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;2;Add;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;3;Edit;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;4;Move;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;5;Export;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;6;Share;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;8;Trash;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;9;Share Templates;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;13;Void;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;11;Non-GxP Standard User;17;Approve;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;1;View;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;2;Add;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;3;Edit;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;4;Move;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;5;Export;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;6;Share;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;8;Trash;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;9;Share Templates;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;13;Void;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;12;Recipe Builder;17;Approve;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;1;View;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;2;Add;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;3;Edit;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;4;Move;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;5;Export;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;6;Share;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;8;Trash;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;9;Share Templates;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;13;Void;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;13;ResearchCenterManager;17;Approve;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;1;View;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;2;Add;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;3;Edit;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;4;Move;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;5;Export;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;6;Share;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;8;Trash;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;9;Share Templates;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;13;Void;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;14;ResearchCenterUser;17;Approve;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;1;View;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;2;Add;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;3;Edit;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;4;Move;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;5;Export;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;6;Share;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;8;Trash;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;9;Share Templates;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;13;Void;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;15;ResearchCenterViewer;17;Approve;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;1;View;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;2;Add;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;3;Edit;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;4;Move;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;5;Export;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;6;Share;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;8;Trash;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;9;Share Templates;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;13;Void;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;16;Sign & 2 Stage Review;17;Approve;0
+jnj-test;GxP Request Privileges;17;Sign & Close;1;View;0
+jnj-test;GxP Request Privileges;17;Sign & Close;2;Add;0
+jnj-test;GxP Request Privileges;17;Sign & Close;3;Edit;0
+jnj-test;GxP Request Privileges;17;Sign & Close;4;Move;0
+jnj-test;GxP Request Privileges;17;Sign & Close;5;Export;0
+jnj-test;GxP Request Privileges;17;Sign & Close;6;Share;0
+jnj-test;GxP Request Privileges;17;Sign & Close;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;17;Sign & Close;8;Trash;0
+jnj-test;GxP Request Privileges;17;Sign & Close;9;Share Templates;0
+jnj-test;GxP Request Privileges;17;Sign & Close;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;17;Sign & Close;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;17;Sign & Close;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;17;Sign & Close;13;Void;0
+jnj-test;GxP Request Privileges;17;Sign & Close;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;17;Sign & Close;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;17;Sign & Close;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;17;Sign & Close;17;Approve;0
+jnj-test;GxP Request Privileges;18;Superuser;1;View;0
+jnj-test;GxP Request Privileges;18;Superuser;2;Add;0
+jnj-test;GxP Request Privileges;18;Superuser;3;Edit;0
+jnj-test;GxP Request Privileges;18;Superuser;4;Move;0
+jnj-test;GxP Request Privileges;18;Superuser;5;Export;0
+jnj-test;GxP Request Privileges;18;Superuser;6;Share;0
+jnj-test;GxP Request Privileges;18;Superuser;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;18;Superuser;8;Trash;0
+jnj-test;GxP Request Privileges;18;Superuser;9;Share Templates;0
+jnj-test;GxP Request Privileges;18;Superuser;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;18;Superuser;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;18;Superuser;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;18;Superuser;13;Void;0
+jnj-test;GxP Request Privileges;18;Superuser;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;18;Superuser;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;18;Superuser;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;18;Superuser;17;Approve;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;1;View;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;2;Add;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;3;Edit;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;4;Move;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;5;Export;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;6;Share;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;7;Read Dependent Share;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;8;Trash;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;9;Share Templates;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;10;Add Reviewers and Keep Open;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;11;Sign and Add Reviewers;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;12;Sign and Keep Open;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;13;Void;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;14;Sign and Close Without Witnessing;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;15;Two Stage Review;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;16;Close Without Signing;0
+jnj-test;GxP Request Privileges;19;TEST USER ROLES;17;Approve;0

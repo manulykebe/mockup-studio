@@ -1,0 +1,88 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+devinternal;Samples Privileges;2;System Admin;1;Delete Samples;1
+devinternal;Samples Privileges;2;System Admin;2;Close/Cancel Samples;1
+devinternal;Samples Privileges;2;System Admin;3;Reopen Samples;1
+devinternal;Samples Privileges;3;Inventory Admin;1;Delete Samples;0
+devinternal;Samples Privileges;3;Inventory Admin;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;3;Inventory Admin;3;Reopen Samples;0
+devinternal;Samples Privileges;4;Standard User;1;Delete Samples;0
+devinternal;Samples Privileges;4;Standard User;2;Close/Cancel Samples;1
+devinternal;Samples Privileges;4;Standard User;3;Reopen Samples;1
+devinternal;Samples Privileges;5;Archivist;1;Delete Samples;0
+devinternal;Samples Privileges;5;Archivist;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;5;Archivist;3;Reopen Samples;0
+devinternal;Samples Privileges;6;Disc Pharm Super User;1;Delete Samples;0
+devinternal;Samples Privileges;6;Disc Pharm Super User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;6;Disc Pharm Super User;3;Reopen Samples;0
+devinternal;Samples Privileges;7;Disc Pharm User;1;Delete Samples;0
+devinternal;Samples Privileges;7;Disc Pharm User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;7;Disc Pharm User;3;Reopen Samples;0
+devinternal;Samples Privileges;8;FL-Approver;1;Delete Samples;0
+devinternal;Samples Privileges;8;FL-Approver;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;8;FL-Approver;3;Reopen Samples;0
+devinternal;Samples Privileges;9;FL-Archivist;1;Delete Samples;0
+devinternal;Samples Privileges;9;FL-Archivist;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;9;FL-Archivist;3;Reopen Samples;0
+devinternal;Samples Privileges;10;FL-Author;1;Delete Samples;0
+devinternal;Samples Privileges;10;FL-Author;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;10;FL-Author;3;Reopen Samples;0
+devinternal;Samples Privileges;11;Gxp Recipe Builder;1;Delete Samples;0
+devinternal;Samples Privileges;11;Gxp Recipe Builder;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;11;Gxp Recipe Builder;3;Reopen Samples;0
+devinternal;Samples Privileges;12;GxP Std User;1;Delete Samples;0
+devinternal;Samples Privileges;12;GxP Std User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;12;GxP Std User;3;Reopen Samples;0
+devinternal;Samples Privileges;13;GxP Superuser;1;Delete Samples;0
+devinternal;Samples Privileges;13;GxP Superuser;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;13;GxP Superuser;3;Reopen Samples;0
+devinternal;Samples Privileges;14;Gxp-Active Directory Sync Test Role;1;Delete Samples;0
+devinternal;Samples Privileges;14;Gxp-Active Directory Sync Test Role;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;14;Gxp-Active Directory Sync Test Role;3;Reopen Samples;0
+devinternal;Samples Privileges;15;HELM User;1;Delete Samples;0
+devinternal;Samples Privileges;15;HELM User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;15;HELM User;3;Reopen Samples;0
+devinternal;Samples Privileges;16;Janssen Internal User;1;Delete Samples;1
+devinternal;Samples Privileges;16;Janssen Internal User;2;Close/Cancel Samples;1
+devinternal;Samples Privileges;16;Janssen Internal User;3;Reopen Samples;1
+devinternal;Samples Privileges;17;LAC User;1;Delete Samples;0
+devinternal;Samples Privileges;17;LAC User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;17;LAC User;3;Reopen Samples;0
+devinternal;Samples Privileges;18;ML Key User;1;Delete Samples;0
+devinternal;Samples Privileges;18;ML Key User;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;18;ML Key User;3;Reopen Samples;0
+devinternal;Samples Privileges;19;Non-GxP Standard User;1;Delete Samples;0
+devinternal;Samples Privileges;19;Non-GxP Standard User;2;Close/Cancel Samples;1
+devinternal;Samples Privileges;19;Non-GxP Standard User;3;Reopen Samples;1
+devinternal;Samples Privileges;20;PMP test;1;Delete Samples;0
+devinternal;Samples Privileges;20;PMP test;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;20;PMP test;3;Reopen Samples;0
+devinternal;Samples Privileges;21;ReseachCenterManager;1;Delete Samples;0
+devinternal;Samples Privileges;21;ReseachCenterManager;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;21;ReseachCenterManager;3;Reopen Samples;0
+devinternal;Samples Privileges;22;ResearchCenterUser;1;Delete Samples;0
+devinternal;Samples Privileges;22;ResearchCenterUser;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;22;ResearchCenterUser;3;Reopen Samples;0
+devinternal;Samples Privileges;23;ResearchCenterViewer;1;Delete Samples;0
+devinternal;Samples Privileges;23;ResearchCenterViewer;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;23;ResearchCenterViewer;3;Reopen Samples;0
+devinternal;Samples Privileges;24;Sign & 2 Stage Review;1;Delete Samples;0
+devinternal;Samples Privileges;24;Sign & 2 Stage Review;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;24;Sign & 2 Stage Review;3;Reopen Samples;0
+devinternal;Samples Privileges;25;Sign & Close;1;Delete Samples;0
+devinternal;Samples Privileges;25;Sign & Close;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;25;Sign & Close;3;Reopen Samples;0
+devinternal;Samples Privileges;26;Standard User NON-GxP;1;Delete Samples;0
+devinternal;Samples Privileges;26;Standard User NON-GxP;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;26;Standard User NON-GxP;3;Reopen Samples;0
+devinternal;Samples Privileges;27;Super User;1;Delete Samples;1
+devinternal;Samples Privileges;27;Super User;2;Close/Cancel Samples;1
+devinternal;Samples Privileges;27;Super User;3;Reopen Samples;1
+devinternal;Samples Privileges;28;Super User Admin;1;Delete Samples;0
+devinternal;Samples Privileges;28;Super User Admin;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;28;Super User Admin;3;Reopen Samples;0
+devinternal;Samples Privileges;29;Template Manager;1;Delete Samples;0
+devinternal;Samples Privileges;29;Template Manager;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;29;Template Manager;3;Reopen Samples;0
+devinternal;Samples Privileges;30;test;1;Delete Samples;0
+devinternal;Samples Privileges;30;test;2;Close/Cancel Samples;0
+devinternal;Samples Privileges;30;test;3;Reopen Samples;0

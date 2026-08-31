@@ -1,0 +1,349 @@
+Environment;Object;Role Index;Role;Privilege Index;Privilege;Value
+devinternal;Experiment Privileges;2;System Admin;1;Share;1
+devinternal;Experiment Privileges;2;System Admin;2;Share Templates;1
+devinternal;Experiment Privileges;2;System Admin;3;Move Experiments;1
+devinternal;Experiment Privileges;2;System Admin;4;Trash Experiments;1
+devinternal;Experiment Privileges;2;System Admin;5;Add Reviewers and Keep OpenExperiments;1
+devinternal;Experiment Privileges;2;System Admin;6;Sign and Add ReviewersExperiments;1
+devinternal;Experiment Privileges;2;System Admin;7;Sign and Keep Open Experiments;1
+devinternal;Experiment Privileges;2;System Admin;8;Void Experiments;1
+devinternal;Experiment Privileges;2;System Admin;9;Sign and Close Without WitnessingExperiments;1
+devinternal;Experiment Privileges;2;System Admin;10;Close Without SigningExperiments;1
+devinternal;Experiment Privileges;2;System Admin;11;Two Stage Review Experiments;1
+devinternal;Experiment Privileges;2;System Admin;12;Approve Experiments;1
+devinternal;Experiment Privileges;3;Inventory Admin;1;Share;0
+devinternal;Experiment Privileges;3;Inventory Admin;2;Share Templates;0
+devinternal;Experiment Privileges;3;Inventory Admin;3;Move Experiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;4;Trash Experiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;8;Void Experiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;3;Inventory Admin;12;Approve Experiments;0
+devinternal;Experiment Privileges;4;Standard User;1;Share;0
+devinternal;Experiment Privileges;4;Standard User;2;Share Templates;0
+devinternal;Experiment Privileges;4;Standard User;3;Move Experiments;1
+devinternal;Experiment Privileges;4;Standard User;4;Trash Experiments;0
+devinternal;Experiment Privileges;4;Standard User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;4;Standard User;6;Sign and Add ReviewersExperiments;1
+devinternal;Experiment Privileges;4;Standard User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;4;Standard User;8;Void Experiments;1
+devinternal;Experiment Privileges;4;Standard User;9;Sign and Close Without WitnessingExperiments;1
+devinternal;Experiment Privileges;4;Standard User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;4;Standard User;11;Two Stage Review Experiments;1
+devinternal;Experiment Privileges;4;Standard User;12;Approve Experiments;0
+devinternal;Experiment Privileges;5;Archivist;1;Share;0
+devinternal;Experiment Privileges;5;Archivist;2;Share Templates;0
+devinternal;Experiment Privileges;5;Archivist;3;Move Experiments;0
+devinternal;Experiment Privileges;5;Archivist;4;Trash Experiments;0
+devinternal;Experiment Privileges;5;Archivist;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;5;Archivist;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;5;Archivist;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;5;Archivist;8;Void Experiments;0
+devinternal;Experiment Privileges;5;Archivist;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;5;Archivist;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;5;Archivist;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;5;Archivist;12;Approve Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;1;Share;1
+devinternal;Experiment Privileges;6;Disc Pharm Super User;2;Share Templates;1
+devinternal;Experiment Privileges;6;Disc Pharm Super User;3;Move Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;4;Trash Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;8;Void Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;6;Disc Pharm Super User;12;Approve Experiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;1;Share;0
+devinternal;Experiment Privileges;7;Disc Pharm User;2;Share Templates;0
+devinternal;Experiment Privileges;7;Disc Pharm User;3;Move Experiments;1
+devinternal;Experiment Privileges;7;Disc Pharm User;4;Trash Experiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;6;Sign and Add ReviewersExperiments;1
+devinternal;Experiment Privileges;7;Disc Pharm User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;8;Void Experiments;1
+devinternal;Experiment Privileges;7;Disc Pharm User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;7;Disc Pharm User;11;Two Stage Review Experiments;1
+devinternal;Experiment Privileges;7;Disc Pharm User;12;Approve Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;1;Share;0
+devinternal;Experiment Privileges;8;FL-Approver;2;Share Templates;0
+devinternal;Experiment Privileges;8;FL-Approver;3;Move Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;4;Trash Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;8;FL-Approver;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;8;FL-Approver;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;8;Void Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;8;FL-Approver;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;8;FL-Approver;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;8;FL-Approver;12;Approve Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;1;Share;0
+devinternal;Experiment Privileges;9;FL-Archivist;2;Share Templates;0
+devinternal;Experiment Privileges;9;FL-Archivist;3;Move Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;4;Trash Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;8;Void Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;9;FL-Archivist;12;Approve Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;1;Share;0
+devinternal;Experiment Privileges;10;FL-Author;2;Share Templates;0
+devinternal;Experiment Privileges;10;FL-Author;3;Move Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;4;Trash Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;10;FL-Author;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;10;FL-Author;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;8;Void Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;10;FL-Author;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;10;FL-Author;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;10;FL-Author;12;Approve Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;1;Share;1
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;2;Share Templates;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;3;Move Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;4;Trash Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;8;Void Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;11;Gxp Recipe Builder;12;Approve Experiments;0
+devinternal;Experiment Privileges;12;GxP Std User;1;Share;0
+devinternal;Experiment Privileges;12;GxP Std User;2;Share Templates;0
+devinternal;Experiment Privileges;12;GxP Std User;3;Move Experiments;1
+devinternal;Experiment Privileges;12;GxP Std User;4;Trash Experiments;0
+devinternal;Experiment Privileges;12;GxP Std User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;12;GxP Std User;6;Sign and Add ReviewersExperiments;1
+devinternal;Experiment Privileges;12;GxP Std User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;12;GxP Std User;8;Void Experiments;1
+devinternal;Experiment Privileges;12;GxP Std User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;12;GxP Std User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;12;GxP Std User;11;Two Stage Review Experiments;1
+devinternal;Experiment Privileges;12;GxP Std User;12;Approve Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;1;Share;1
+devinternal;Experiment Privileges;13;GxP Superuser;2;Share Templates;1
+devinternal;Experiment Privileges;13;GxP Superuser;3;Move Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;4;Trash Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;8;Void Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;13;GxP Superuser;12;Approve Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;1;Share;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;2;Share Templates;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;3;Move Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;4;Trash Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;8;Void Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;14;Gxp-Active Directory Sync Test Role;12;Approve Experiments;0
+devinternal;Experiment Privileges;15;HELM User;1;Share;0
+devinternal;Experiment Privileges;15;HELM User;2;Share Templates;0
+devinternal;Experiment Privileges;15;HELM User;3;Move Experiments;0
+devinternal;Experiment Privileges;15;HELM User;4;Trash Experiments;0
+devinternal;Experiment Privileges;15;HELM User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;15;HELM User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;15;HELM User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;15;HELM User;8;Void Experiments;0
+devinternal;Experiment Privileges;15;HELM User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;15;HELM User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;15;HELM User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;15;HELM User;12;Approve Experiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;1;Share;0
+devinternal;Experiment Privileges;16;Janssen Internal User;2;Share Templates;0
+devinternal;Experiment Privileges;16;Janssen Internal User;3;Move Experiments;1
+devinternal;Experiment Privileges;16;Janssen Internal User;4;Trash Experiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;8;Void Experiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;16;Janssen Internal User;12;Approve Experiments;0
+devinternal;Experiment Privileges;17;LAC User;1;Share;0
+devinternal;Experiment Privileges;17;LAC User;2;Share Templates;0
+devinternal;Experiment Privileges;17;LAC User;3;Move Experiments;0
+devinternal;Experiment Privileges;17;LAC User;4;Trash Experiments;0
+devinternal;Experiment Privileges;17;LAC User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;17;LAC User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;17;LAC User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;17;LAC User;8;Void Experiments;0
+devinternal;Experiment Privileges;17;LAC User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;17;LAC User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;17;LAC User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;17;LAC User;12;Approve Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;1;Share;0
+devinternal;Experiment Privileges;18;ML Key User;2;Share Templates;0
+devinternal;Experiment Privileges;18;ML Key User;3;Move Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;4;Trash Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;18;ML Key User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;18;ML Key User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;8;Void Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;18;ML Key User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;18;ML Key User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;18;ML Key User;12;Approve Experiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;1;Share;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;2;Share Templates;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;3;Move Experiments;1
+devinternal;Experiment Privileges;19;Non-GxP Standard User;4;Trash Experiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;8;Void Experiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;19;Non-GxP Standard User;12;Approve Experiments;0
+devinternal;Experiment Privileges;20;PMP test;1;Share;0
+devinternal;Experiment Privileges;20;PMP test;2;Share Templates;0
+devinternal;Experiment Privileges;20;PMP test;3;Move Experiments;0
+devinternal;Experiment Privileges;20;PMP test;4;Trash Experiments;0
+devinternal;Experiment Privileges;20;PMP test;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;20;PMP test;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;20;PMP test;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;20;PMP test;8;Void Experiments;0
+devinternal;Experiment Privileges;20;PMP test;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;20;PMP test;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;20;PMP test;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;20;PMP test;12;Approve Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;1;Share;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;2;Share Templates;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;3;Move Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;4;Trash Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;8;Void Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;21;ReseachCenterManager;12;Approve Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;1;Share;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;2;Share Templates;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;3;Move Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;4;Trash Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;8;Void Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;22;ResearchCenterUser;12;Approve Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;1;Share;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;2;Share Templates;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;3;Move Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;4;Trash Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;8;Void Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;23;ResearchCenterViewer;12;Approve Experiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;1;Share;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;2;Share Templates;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;3;Move Experiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;4;Trash Experiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;8;Void Experiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;11;Two Stage Review Experiments;1
+devinternal;Experiment Privileges;24;Sign & 2 Stage Review;12;Approve Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;1;Share;0
+devinternal;Experiment Privileges;25;Sign & Close;2;Share Templates;0
+devinternal;Experiment Privileges;25;Sign & Close;3;Move Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;4;Trash Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;25;Sign & Close;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;25;Sign & Close;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;8;Void Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;9;Sign and Close Without WitnessingExperiments;1
+devinternal;Experiment Privileges;25;Sign & Close;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;25;Sign & Close;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;25;Sign & Close;12;Approve Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;1;Share;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;2;Share Templates;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;3;Move Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;4;Trash Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;8;Void Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;26;Standard User NON-GxP;12;Approve Experiments;0
+devinternal;Experiment Privileges;27;Super User;1;Share;1
+devinternal;Experiment Privileges;27;Super User;2;Share Templates;1
+devinternal;Experiment Privileges;27;Super User;3;Move Experiments;1
+devinternal;Experiment Privileges;27;Super User;4;Trash Experiments;0
+devinternal;Experiment Privileges;27;Super User;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;27;Super User;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;27;Super User;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;27;Super User;8;Void Experiments;0
+devinternal;Experiment Privileges;27;Super User;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;27;Super User;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;27;Super User;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;27;Super User;12;Approve Experiments;0
+devinternal;Experiment Privileges;28;Super User Admin;1;Share;1
+devinternal;Experiment Privileges;28;Super User Admin;2;Share Templates;1
+devinternal;Experiment Privileges;28;Super User Admin;3;Move Experiments;1
+devinternal;Experiment Privileges;28;Super User Admin;4;Trash Experiments;1
+devinternal;Experiment Privileges;28;Super User Admin;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;28;Super User Admin;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;28;Super User Admin;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;28;Super User Admin;8;Void Experiments;0
+devinternal;Experiment Privileges;28;Super User Admin;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;28;Super User Admin;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;28;Super User Admin;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;28;Super User Admin;12;Approve Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;1;Share;0
+devinternal;Experiment Privileges;29;Template Manager;2;Share Templates;0
+devinternal;Experiment Privileges;29;Template Manager;3;Move Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;4;Trash Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;29;Template Manager;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;29;Template Manager;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;8;Void Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;29;Template Manager;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;29;Template Manager;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;29;Template Manager;12;Approve Experiments;0
+devinternal;Experiment Privileges;30;test;1;Share;0
+devinternal;Experiment Privileges;30;test;2;Share Templates;1
+devinternal;Experiment Privileges;30;test;3;Move Experiments;0
+devinternal;Experiment Privileges;30;test;4;Trash Experiments;0
+devinternal;Experiment Privileges;30;test;5;Add Reviewers and Keep OpenExperiments;0
+devinternal;Experiment Privileges;30;test;6;Sign and Add ReviewersExperiments;0
+devinternal;Experiment Privileges;30;test;7;Sign and Keep Open Experiments;0
+devinternal;Experiment Privileges;30;test;8;Void Experiments;0
+devinternal;Experiment Privileges;30;test;9;Sign and Close Without WitnessingExperiments;0
+devinternal;Experiment Privileges;30;test;10;Close Without SigningExperiments;0
+devinternal;Experiment Privileges;30;test;11;Two Stage Review Experiments;0
+devinternal;Experiment Privileges;30;test;12;Approve Experiments;0
