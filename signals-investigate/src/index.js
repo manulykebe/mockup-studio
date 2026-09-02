@@ -999,6 +999,99 @@ async function exportPrivilegesToCsv(options = {}) {
 }
 
 
+const USER_ROW_SELECTOR = '.record-browser-row';
+const USER_PAGINATION_ITEM_SELECTOR = 'ul.pagination li.page-item';
+
+function getUserRows(root = document) {
+  return Array.from(root.querySelectorAll(USER_ROW_SELECTOR));
+}
+
+// Finds the pagination <li> whose hidden accessible label matches (e.g. "Next"), since the
+// visible glyph (›) alone isn't a reliable way to identify it.
+function findPaginationItem(label) {
+  return Array.from(document.querySelectorAll(USER_PAGINATION_ITEM_SELECTOR))
+    .find((li) => li.querySelector('.visually-hidden')?.textContent.trim() === label);
+}
+
+function parseUserRow(row) {
+  const name = row.querySelector('.user-info-name')?.textContent.trim() ?? '';
+
+  const [lastLoginCol, createdCol] = Array.from(row.querySelectorAll(':scope > .col-sm-1'));
+  const readDateTime = (col) => col
+    ? Array.from(col.children).map((child) => child.textContent.trim()).filter(Boolean).join(' ')
+    : '';
+
+  const [groupsCol, rolesCol] = Array.from(row.querySelectorAll(':scope > .col-sm-2'));
+  const readList = (col) => {
+    const text = col?.querySelector('span')?.textContent.trim() ?? '';
+    return text ? text.split(',').map((value) => value.trim()).filter(Boolean) : [];
+  };
+
+  const notebookChecked = row.querySelector('input[name="SIGNALS_NOTEBOOK"]')?.checked ?? false;
+
+  return {
+    name,
+    lastLogin: readDateTime(lastLoginCol),
+    created: readDateTime(createdCol),
+    groups: readList(groupsCol),
+    roles: readList(rolesCol),
+    notebookChecked,
+  };
+}
+
+// Pagination re-renders the row list asynchronously (no full page navigation), so wait for the
+// first row's user name to actually change before reading the next page.
+async function waitForUserRowsChange(previousFirstName, timeoutMs = 10000) {
+  await waitForCondition(() => {
+    const rows = getUserRows();
+    const firstName = rows[0]?.querySelector('.user-info-name')?.textContent.trim() ?? '';
+    return !!firstName && firstName !== previousFirstName;
+  }, timeoutMs);
+}
+
+// Walks every page of the Users list (Configuration > Users), reading each row's Last Login,
+// Created, Groups, Roles and Notebook license values, and exports the transposed result as CSV:
+// one "User"/"Property"/"Value"/"Index" record per data point (Index only used for the
+// multi-value Groups/Roles properties).
+async function exportUserToCsv() {
+  const users = [];
+  let pageCount = 1;
+
+  while (true) {
+    const rows = getUserRows();
+    rows.forEach((row) => users.push(parseUserRow(row)));
+
+    const nextItem = findPaginationItem('Next');
+    const nextLink = nextItem?.querySelector('a.page-link');
+    if (!nextItem || nextItem.classList.contains('disabled') || !nextLink) {
+      break;
+    }
+
+    const previousFirstName = rows[0]?.querySelector('.user-info-name')?.textContent.trim() ?? '';
+    nextLink.click();
+    await waitForUserRowsChange(previousFirstName);
+    pageCount += 1;
+  }
+
+  const outputRows = [];
+  users.forEach(({ name, lastLogin, created, groups, roles, notebookChecked }) => {
+    outputRows.push([name, 'Last Login', lastLogin, '']);
+    outputRows.push([name, 'Created', created, '']);
+    groups.forEach((value, index) => outputRows.push([name, 'Groups', value, String(index)]));
+    roles.forEach((value, index) => outputRows.push([name, 'Roles', value, String(index)]));
+    outputRows.push([name, 'Notebook', notebookChecked ? '1' : '0', '']);
+  });
+
+  const csv = toCsv(outputRows, ['User', 'Property', 'Value', 'Index']);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#users#${timestamp}.csv`);
+
+  console.log(`Extracted ${users.length} user(s) across ${pageCount} page(s), ${outputRows.length} row(s) total.`);
+  console.table(outputRows.map(([User, Property, Value, Index]) => ({ User, Property, Value, Index })));
+
+  return outputRows;
+}
+
 const SYSTEM_OBJECTS_SERVER = 'https://devinternal.srppvt4s3r.revvitycloud.eu/';
 const SYSTEM_OBJECTS_PATH = 'snconfig/objects';
 const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
@@ -1040,6 +1133,7 @@ window.extract = {
   exportFocusedElementImagesFromToc,
   exportRolesToCsv,
   exportPrivilegesToCsv,
+  exportUserToCsv,
   listSystemObjects,
   openToolbarPopup,
   closePopup,
