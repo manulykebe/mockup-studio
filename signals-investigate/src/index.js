@@ -1079,7 +1079,7 @@ async function exportUserToCsv() {
 
   while (true) {
     const rows = getUserRows();
-    rows.forEach((row) => users.push(parseUserRow(row)));
+    rows.map(parseUserRow).filter((user) => user.username).forEach((user) => users.push(user));
 
     const nextItem = findPaginationItem('Next');
     const nextLink = nextItem?.querySelector('a.page-link');
