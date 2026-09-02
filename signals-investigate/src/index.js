@@ -266,6 +266,38 @@ function getTable(selector = 'table', tableName) {
   return extractTable(table, tableName);
 }
 
+// Renders a resolved <table> element to SVG and JPG at the same time (via focusedElementToImageAssets,
+// which clones the table with its computed inline styles so the exported images keep the table's
+// on-page formatting), then downloads both files under matching names.
+async function extractTableAsImage(table, tableName, imageScale = 2) {
+  const imageAssets = await focusedElementToImageAssets(table, imageScale);
+  const filenameSuffix = tableName ? `table-${tableName}` : 'table';
+  const templateTitle = getTitleFromElement(document.getElementsByClassName('inline-input ms-1 toolbar__name text-primary')[0]) || 'TemplateUNK';
+  const timestamp = formatIsoDateTimeLocal();
+  const baseName = `${getUrlPrefix(window.location)}#${templateTitle}#${filenameSuffix}#${timestamp}`;
+
+  imageAssets.forEach((asset) => downloadBlob(asset.blob, `${baseName}.${asset.extension}`));
+
+  const jpgFilename = imageAssets.find((asset) => asset.extension === 'jpg') ? `${baseName}.jpg` : '';
+  const svgFilename = `${baseName}.svg`;
+
+  console.log(`Exported table as image: ${svgFilename}${jpgFilename ? `, ${jpgFilename}` : ''}`);
+
+  return { svgFilename, jpgFilename };
+}
+
+// Grabs the last element matching `selector` (popups render after the main content) and exports it as
+// SVG + JPG images, preserving the table's formatting. Same lookup convention as getTable.
+function getTableAsImage(selector = 'table', tableName, imageScale = 2) {
+  const tables = Array.from(document.querySelectorAll(selector));
+  const table = tables[tables.length - 1];
+  if (!table) {
+    throw new Error(`No element found matching selector "${selector}".`);
+  }
+
+  return extractTableAsImage(table, tableName, imageScale);
+}
+
 // Monitored chain: open the Fields popup, wait for its table to actually render, grab it, then close the popup.
 // The table is identified by diffing against tables that existed before the popup opened, since DOM order
 // alone isn't a reliable way to tell the popup's table apart from tables already on the page.
@@ -1146,6 +1178,7 @@ window.extract = {
   ...window.extract,
   getToc,
   // getTable,
+  getTableAsImage,
   getFieldsTable,
   getTables_Fields_Properties,
   getHistoryRecords,
