@@ -1013,13 +1013,33 @@ function findPaginationItem(label) {
     .find((li) => li.querySelector('.visually-hidden')?.textContent.trim() === label);
 }
 
+// Converts the row's separately-rendered "Sep 15, 2025" + "10:17 AM" text nodes into an
+// ISO 8601 local date-time string (e.g. "2025-09-15T10:17:00"); falls back to the raw text
+// if the browser can't parse it.
+function parseIso8601(dateText, timeText) {
+  const combined = [dateText, timeText].filter(Boolean).join(' ').trim();
+  if (!combined) {
+    return '';
+  }
+  const date = new Date(combined);
+  if (Number.isNaN(date.getTime())) {
+    return combined;
+  }
+  const pad = (value) => String(value).padStart(2, '0');
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
+}
+
 function parseUserRow(row) {
-  const name = row.querySelector('.user-info-name')?.textContent.trim() ?? '';
+  const email = row.querySelector('.smaller.gray-500')?.textContent.trim() ?? '';
 
   const [lastLoginCol, createdCol] = Array.from(row.querySelectorAll(':scope > .col-sm-1'));
-  const readDateTime = (col) => col
-    ? Array.from(col.children).map((child) => child.textContent.trim()).filter(Boolean).join(' ')
-    : '';
+  const readDateTime = (col) => {
+    if (!col) {
+      return '';
+    }
+    const [dateText, timeText] = Array.from(col.children).map((child) => child.textContent.trim());
+    return parseIso8601(dateText, timeText);
+  };
 
   const [groupsCol, rolesCol] = Array.from(row.querySelectorAll(':scope > .col-sm-2'));
   const readList = (col) => {
@@ -1030,7 +1050,7 @@ function parseUserRow(row) {
   const notebookChecked = row.querySelector('input[name="SIGNALS_NOTEBOOK"]')?.checked ?? false;
 
   return {
-    name,
+    username: email,
     lastLogin: readDateTime(lastLoginCol),
     created: readDateTime(createdCol),
     groups: readList(groupsCol),
@@ -1040,12 +1060,12 @@ function parseUserRow(row) {
 }
 
 // Pagination re-renders the row list asynchronously (no full page navigation), so wait for the
-// first row's user name to actually change before reading the next page.
-async function waitForUserRowsChange(previousFirstName, timeoutMs = 10000) {
+// first row's user email to actually change before reading the next page.
+async function waitForUserRowsChange(previousFirstEmail, timeoutMs = 10000) {
   await waitForCondition(() => {
     const rows = getUserRows();
-    const firstName = rows[0]?.querySelector('.user-info-name')?.textContent.trim() ?? '';
-    return !!firstName && firstName !== previousFirstName;
+    const firstEmail = rows[0]?.querySelector('.smaller.gray-500')?.textContent.trim() ?? '';
+    return !!firstEmail && firstEmail !== previousFirstEmail;
   }, timeoutMs);
 }
 
@@ -1067,19 +1087,19 @@ async function exportUserToCsv() {
       break;
     }
 
-    const previousFirstName = rows[0]?.querySelector('.user-info-name')?.textContent.trim() ?? '';
+    const previousFirstEmail = rows[0]?.querySelector('.smaller.gray-500')?.textContent.trim() ?? '';
     nextLink.click();
-    await waitForUserRowsChange(previousFirstName);
+    await waitForUserRowsChange(previousFirstEmail);
     pageCount += 1;
   }
 
   const outputRows = [];
-  users.forEach(({ name, lastLogin, created, groups, roles, notebookChecked }) => {
-    outputRows.push([name, 'Last Login', lastLogin, '']);
-    outputRows.push([name, 'Created', created, '']);
-    groups.forEach((value, index) => outputRows.push([name, 'Groups', value, String(index)]));
-    roles.forEach((value, index) => outputRows.push([name, 'Roles', value, String(index)]));
-    outputRows.push([name, 'Notebook', notebookChecked ? '1' : '0', '']);
+  users.forEach(({ username, lastLogin, created, groups, roles, notebookChecked }) => {
+    outputRows.push([username, 'Last Login', lastLogin, '']);
+    outputRows.push([username, 'Created', created, '']);
+    groups.forEach((value, index) => outputRows.push([username, 'Groups', value, String(index)]));
+    roles.forEach((value, index) => outputRows.push([username, 'Roles', value, String(index)]));
+    outputRows.push([username, 'Notebook', notebookChecked ? '1' : '0', '']);
   });
 
   const csv = toCsv(outputRows, ['User', 'Property', 'Value', 'Index']);
