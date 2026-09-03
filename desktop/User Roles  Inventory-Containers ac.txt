@@ -1,0 +1,10 @@
+These roles must likely be set before/beginning of IQ
+
+User Roles / Inventory-Containers
+Add Container	
+Edit Container
+
+User Roles / Materials
+Add Materials	
+Edit Materials	
+Export Materials
