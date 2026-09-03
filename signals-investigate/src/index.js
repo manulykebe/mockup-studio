@@ -1062,6 +1062,7 @@ function parseIso8601(dateText, timeText) {
 }
 
 function parseUserRow(row) {
+  const name = row.querySelector('.user-info-name')?.textContent.trim() ?? '';
   const email = row.querySelector('.smaller.gray-500')?.textContent.trim() ?? '';
 
   const [lastLoginCol, createdCol] = Array.from(row.querySelectorAll(':scope > .col-sm-1'));
@@ -1082,6 +1083,7 @@ function parseUserRow(row) {
   const notebookChecked = row.querySelector('input[name="SIGNALS_NOTEBOOK"]')?.checked ?? false;
 
   return {
+    name,
     username: email,
     lastLogin: readDateTime(lastLoginCol),
     created: readDateTime(createdCol),
@@ -1103,7 +1105,7 @@ async function waitForUserRowsChange(previousFirstEmail, timeoutMs = 10000) {
 
 // Walks every page of the Users list (Configuration > Users), reading each row's Last Login,
 // Created, Groups, Roles and Notebook license values, and exports the transposed result as CSV:
-// one "User"/"Property"/"Value"/"Index" record per data point (Index only used for the
+// one "Name"/"User"/"Property"/"Value"/"Index" record per data point (Index only used for the
 // multi-value Groups/Roles properties).
 async function exportUserToCsv() {
   const users = [];
@@ -1126,20 +1128,20 @@ async function exportUserToCsv() {
   }
 
   const outputRows = [];
-  users.forEach(({ username, lastLogin, created, groups, roles, notebookChecked }) => {
-    outputRows.push([username, 'Last Login', lastLogin, '']);
-    outputRows.push([username, 'Created', created, '']);
-    groups.forEach((value, index) => outputRows.push([username, 'Groups', value, String(index)]));
-    roles.forEach((value, index) => outputRows.push([username, 'Roles', value, String(index)]));
-    outputRows.push([username, 'Notebook', notebookChecked ? '1' : '0', '']);
+  users.forEach(({ name, username, lastLogin, created, groups, roles, notebookChecked }) => {
+    outputRows.push([name, username, 'Last Login', lastLogin, '']);
+    outputRows.push([name, username, 'Created', created, '']);
+    groups.forEach((value, index) => outputRows.push([name, username, 'Groups', value, String(index)]));
+    roles.forEach((value, index) => outputRows.push([name, username, 'Roles', value, String(index)]));
+    outputRows.push([name, username, 'Notebook', notebookChecked ? '1' : '0', '']);
   });
 
-  const csv = toCsv(outputRows, ['User', 'Property', 'Value', 'Index']);
+  const csv = toCsv(outputRows, ['Name', 'User', 'Property', 'Value', 'Index']);
   const timestamp = formatIsoDateTimeLocal();
   downloadCsv(csv, `${getUrlPrefix(window.location)}#users#${timestamp}.csv`);
 
   console.log(`Extracted ${users.length} user(s) across ${pageCount} page(s), ${outputRows.length} row(s) total.`);
-  console.table(outputRows.map(([User, Property, Value, Index]) => ({ User, Property, Value, Index })));
+  console.table(outputRows.map(([Name, User, Property, Value, Index]) => ({ Name, User, Property, Value, Index })));
 
   return outputRows;
 }
