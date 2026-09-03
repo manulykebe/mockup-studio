@@ -56,6 +56,46 @@
             background: #fff4cc
         }
 
+        .multi-value {
+            background-color: #ebebeb;
+            border-radius: 4px;
+            margin-right: 12px;
+            padding: 4px
+        }
+
+        .ag-ltr .ag-cell {
+    border-right: var(--ag-cell-horizontal-border);
+}
+.ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group, .ag-row>.ag-cell-wrapper {
+    padding-left: calc(var(--ag-cell-horizontal-padding) - 1px);
+    padding-right: calc(var(--ag-cell-horizontal-padding) - 1px);
+}
+.ag-cell, .ag-full-width-row .ag-cell-wrapper.ag-row-group {
+    --ag-internal-calculated-line-height: var(--ag-line-height, calc(var(--ag-row-height) - var(--ag-row-border-width)));
+    --ag-internal-padded-row-height: calc(var(--ag-row-height) - var(--ag-row-border-width));
+    border: 1px solid transparent;
+    line-height: min(var(--ag-internal-calculated-line-height), var(--ag-internal-padded-row-height));
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+[class^=ag-], [class^=ag-]:after, [class^=ag-]:before, [class^=ag-]:focus {
+    box-sizing: border-box;
+    outline: none;
+}
+.ag-cell-value, .ag-group-value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.ag-cell-value {
+    flex: 1 1 auto;
+}
+.ag-cell {
+    display: inline-block;
+    height: 100%;
+    position: absolute;
+    white-space: nowrap;
+}
+
         #sortableTable,
         #measurementSelectTable {
             font-size: .82rem;
@@ -781,7 +821,7 @@
                     </div>
                 </div>
             </div>
-            <div>
+            <!-- <div>
                 <pre><textarea>
 pivot: {
     "rows": [
@@ -851,7 +891,7 @@ pivot: {
     "panelCollapsed": true
 }
                 </textarea></pre>
-            </div>
+            </div> -->
 
 
             <div class="panel-actions">
@@ -1881,17 +1921,10 @@ pivot: {
         // --- Step 2: Select Measurement (dummy data) ---
         const measurementSelectTableElement = document.getElementById('measurementSelectTable');
         const measurementSelectRows = [
-            ['QAS3001-b - Result 1', '2015-04-10T08:52:38.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', 'QAS3001-b', 'J. Alvarez', '2015-04-10'],
-            ['QAS3001-b - Result 2', '2015-04-10T08:53:15.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', 'QAS3001-b', 'J. Alvarez', '2015-04-10'],
-            ['15222759 BDH 1 - Result 1', '2015-04-10T10:25:34.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '15222759 BDH 1', 'M. Chen', '2015-04-10'],
-            ['15222759 BDH 2 - Result 1', '2015-04-10T11:07:23.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '15222759 BDH 2', 'M. Chen', '2015-04-10'],
-            ['14GN973 - Result 1', '2015-04-13T14:48:42.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '14GN973', 'S. Kapoor', '2015-04-13'],
-            ['14GN973 - Result 2', '2015-04-13T15:01:54.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '14GN973', 'S. Kapoor', '2015-04-13'],
-            ['13NN430 - Result 1', '2015-04-13T15:15:51.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '13NN430', 'S. Kapoor', '2015-04-13'],
-            ['13EN930 - Result 1', '2015-04-13T15:29:11.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '13EN930', 'R. Novak', '2015-04-13'],
-            ['14CN689 - Result 1', '2015-04-14T10:13:34.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '14CN689', 'R. Novak', '2015-04-14'],
-            ['14EN903 - Result 1', '2015-04-14T10:25:42.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '14EN903', 'J. Alvarez', '2015-04-14']
-        ];
+            ['Zontal testing- D9838-1-12.csv.asm', '2026/Mar/24 18:04:17 (+01:00)', 'Mastersizer_2000_VNF', 'MALC74967', '<div role="gridcell" col-id="sampleName" class="ag-cell ag-cell-not-inline-editing ag-cell-normal-height ag-cell-value" aria-colindex="8" style="left: 1259px; width: 179px;"><span><span class="multi-value">15222759 BDH 4</span><span class="multi-value">15222759 EMD 3</span></span></div>', 'tknight4', '2015-04-10'],
+            ['Zontal testing- D9838-1-19.csv.asm', '2026/Mar/24 18:03:13 (+01:00)', 'Mastersizer_2000_VNF', 'MALC74967', 'QAS3001-b', 'spowel20', '2015-04-10'],
+            ['Zontal testing- D9838-1-19.csv', '2026/Mar/24 18:00:20 (+01:00)', 'Generic_JSC_Archive', 'MALC74967', '15222759 BDH 1', 'spowel20', '2015-04-10'],
+            ['Zontal testing- D9838-1-12.csv', '2026/Mar/24 18:00:17 (+01:00)', 'Generic_JSC_Archive', 'MALC74967', '15222759 BDH 2', 'tknight4', '2015-04-10']];
 
         const selectedMeasurementKeys = new Set();
         const continueToResultsBtn = document.getElementById('continueToResultsBtn');
@@ -2043,7 +2076,7 @@ pivot: {
             const sampleIdList = document.getElementById('sampleId');
             // const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347',
             //     'S1252752', 'S1254079', 'S1254780   ', 'S1265421', 'S1267076'];
-            const experimentSampleIds = ['QAS3001-b','QAS4000'];
+            const experimentSampleIds = ['QAS3001-b', 'QAS4000'];
             let selectedSampleIds = new Set(experimentSampleIds);
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
