@@ -56,32 +56,42 @@
             background: #fff4cc
         }
 
-        #sortableTable {
+        #sortableTable,
+        #measurementSelectTable {
             font-size: .82rem;
         }
 
         #sortableTable th,
-        #sortableTable td {
+        #sortableTable td,
+        #measurementSelectTable th,
+        #measurementSelectTable td {
             line-height: 1.2;
             padding: .3rem .45rem;
         }
 
-        #sortableTable th {
+        #sortableTable th,
+        #measurementSelectTable th {
             font-size: .78rem;
         }
 
-        #panel-result .dt-layout-row {
+        #panel-result .dt-layout-row,
+        #panel-select-measurement .dt-layout-row {
             margin: .45rem 0;
         }
 
         #panel-result .dt-length,
         #panel-result .dt-search,
         #panel-result .dt-info,
-        #panel-result .dt-paging {
+        #panel-result .dt-paging,
+        #panel-select-measurement .dt-length,
+        #panel-select-measurement .dt-search,
+        #panel-select-measurement .dt-info,
+        #panel-select-measurement .dt-paging {
             font-size: .78rem;
         }
 
-        #panel-result .dt-paging-button {
+        #panel-result .dt-paging-button,
+        #panel-select-measurement .dt-paging-button {
             min-width: 1.8rem;
             padding: .25rem .45rem;
         }
@@ -616,7 +626,7 @@
     <section class="panel" id="panel-measurement">
         <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-measurement-body">
             <span class="panel-chevron" aria-hidden="true">&#9662;</span>
-            <span class="panel-title">1. Select Measurement</span>
+            <span class="panel-title">1. Filter Measurement</span>
             <span class="panel-summary" id="measurementSummary">No filters applied</span>
         </button>
         <div class="panel-body" id="panel-measurement-body">
@@ -626,7 +636,7 @@
                     <label for="measurementDate">Measurement date</label>
                     <button type="button" class="help-button" id="dateHelpButton" aria-expanded="false"
                         aria-controls="dateHelp" title="Explain date operators">?</button>
-                        <label> taken from experiment.createDate?</label>
+                    <label> taken from experiment.createDate?</label>
                 </div>
                 <div class="date-help" id="dateHelp" role="dialog" aria-modal="true" aria-labelledby="dateHelpTitle"
                     hidden>
@@ -847,6 +857,37 @@ pivot: {
             <div class="panel-actions">
                 <button type="button" class="btn-primary" id="showResultsBtn" disabled hidden>
                     <span class="loading-spinner" aria-hidden="true" hidden></span>
+                    <span>Show measurements</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="panel collapsed" id="panel-select-measurement" data-disabled="true">
+        <button type="button" class="panel-header" aria-expanded="false" aria-controls="panel-select-measurement-body"
+            disabled>
+            <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+            <span class="panel-title">2. Select Measurement</span>
+            <span class="panel-summary" id="selectMeasurementSummary">Complete step 1 first</span>
+        </button>
+        <div class="panel-body" id="panel-select-measurement-body">
+            <table id="measurementSelectTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Preferred Label</th>
+                        <th scope="col">Created On</th>
+                        <th scope="col">Information Package Profile</th>
+                        <th scope="col">Instrument ID</th>
+                        <th scope="col">Sample Name</th>
+                        <th scope="col">Analyst Name</th>
+                        <th scope="col">Experiment Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <div class="panel-actions">
+                <button type="button" class="btn-primary" id="continueToResultsBtn" disabled hidden>
+                    <span class="loading-spinner" aria-hidden="true" hidden></span>
                     <span>Show results</span>
                 </button>
             </div>
@@ -856,8 +897,8 @@ pivot: {
     <section class="panel collapsed" id="panel-result" data-disabled="true">
         <button type="button" class="panel-header" aria-expanded="false" aria-controls="panel-result-body" disabled>
             <span class="panel-chevron" aria-hidden="true">&#9662;</span>
-            <span class="panel-title">2. Select Result</span>
-            <span class="panel-summary" id="resultSummary">Complete step 1 first</span>
+            <span class="panel-title">3. Select Result</span>
+            <span class="panel-summary" id="resultSummary">Complete step 2 first</span>
         </button>
         <div class="panel-body" id="panel-result-body">
             <table id="sortableTable">
@@ -1836,6 +1877,153 @@ pivot: {
 
         dataTable.on('draw', refreshSelectionUi);
         refreshSelectionUi();
+
+        // --- Step 2: Select Measurement (dummy data) ---
+        const measurementSelectTableElement = document.getElementById('measurementSelectTable');
+        const measurementSelectRows = [
+            ['QAS3001-b - Result 1', '2015-04-10T08:52:38.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', 'QAS3001-b', 'J. Alvarez', '2015-04-10'],
+            ['QAS3001-b - Result 2', '2015-04-10T08:53:15.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', 'QAS3001-b', 'J. Alvarez', '2015-04-10'],
+            ['15222759 BDH 1 - Result 1', '2015-04-10T10:25:34.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '15222759 BDH 1', 'M. Chen', '2015-04-10'],
+            ['15222759 BDH 2 - Result 1', '2015-04-10T11:07:23.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '15222759 BDH 2', 'M. Chen', '2015-04-10'],
+            ['14GN973 - Result 1', '2015-04-13T14:48:42.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '14GN973', 'S. Kapoor', '2015-04-13'],
+            ['14GN973 - Result 2', '2015-04-13T15:01:54.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '14GN973', 'S. Kapoor', '2015-04-13'],
+            ['13NN430 - Result 1', '2015-04-13T15:15:51.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '13NN430', 'S. Kapoor', '2015-04-13'],
+            ['13EN930 - Result 1', '2015-04-13T15:29:11.000Z', 'Mastersizer 3000 IP Profile', 'Mastersizer 3000', '13EN930', 'R. Novak', '2015-04-13'],
+            ['14CN689 - Result 1', '2015-04-14T10:13:34.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '14CN689', 'R. Novak', '2015-04-14'],
+            ['14EN903 - Result 1', '2015-04-14T10:25:42.000Z', 'Mastersizer 2000 IP Profile', 'Mastersizer 2000', '14EN903', 'J. Alvarez', '2015-04-14']
+        ];
+
+        const selectedMeasurementKeys = new Set();
+        const continueToResultsBtn = document.getElementById('continueToResultsBtn');
+
+        const measurementDataTable = new DataTable(measurementSelectTableElement, {
+            data: measurementSelectRows,
+            columns: [
+                {
+                    title: '<input type="checkbox" id="selectAllMeasurements" aria-label="Select all visible rows">',
+                    data: null,
+                    orderable: true,
+                    searchable: false,
+                    type: 'num',
+                    render: (data, type, row) => {
+                        const key = row[0];
+                        const isSelected = selectedMeasurementKeys.has(key);
+
+                        if (type === 'display') {
+                            const checked = isSelected ? ' checked' : '';
+                            return `<input type="checkbox" class="measurement-row-select" value="${key}" aria-label="Select measurement ${key}"${checked}>`;
+                        }
+
+                        return isSelected ? 1 : 0;
+                    }
+                },
+                { title: 'Preferred Label', data: 0 },
+                { title: 'Created On', data: 1, render: DataTable.render.date('YYYY-MM-DD HH:mm:ss') },
+                { title: 'Information Package Profile', data: 2 },
+                { title: 'Instrument ID', data: 3 },
+                { title: 'Sample Name', data: 4 },
+                { title: 'Analyst Name', data: 5 },
+                { title: 'Experiment Date', data: 6 }
+            ],
+            order: [],
+            pageLength: 10,
+            lengthMenu: [5, 10, 15, 20],
+            searchBuilder: {
+                // exclude the checkbox column (index 0), whose title is markup rather than a label
+                columns: [1, 2, 3, 4, 5, 6, 7]
+            },
+            layout: {
+                topStart: 'pageLength',
+                topEnd: 'search',
+                bottomStart: 'info',
+                bottomEnd: 'paging'
+            }
+        });
+
+        const selectAllMeasurementsCheckbox = document.getElementById('selectAllMeasurements');
+
+        function getVisibleMeasurementCheckboxes() {
+            return measurementDataTable.rows({ page: 'current' }).nodes().toArray()
+                .map((row) => row.querySelector('.measurement-row-select'));
+        }
+
+        function updateContinueBtnState() {
+            continueToResultsBtn.disabled = selectedMeasurementKeys.size === 0;
+        }
+
+        function updateSelectAllMeasurementsState() {
+            const visibleCheckboxes = getVisibleMeasurementCheckboxes();
+            const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedMeasurementKeys.has(cb.value)).length;
+            selectAllMeasurementsCheckbox.checked = visibleCheckboxes.length > 0 && selectedVisibleCount === visibleCheckboxes.length;
+            selectAllMeasurementsCheckbox.indeterminate = selectedVisibleCount > 0 && selectedVisibleCount < visibleCheckboxes.length;
+        }
+
+        function syncVisibleMeasurementCheckboxes() {
+            getVisibleMeasurementCheckboxes().forEach((checkbox) => {
+                checkbox.checked = selectedMeasurementKeys.has(checkbox.value);
+            });
+        }
+
+        function updateMeasurementSelectInfoText() {
+            const infoNode = measurementDataTable.table().container().querySelector('.dt-info');
+            if (!infoNode) {
+                return;
+            }
+
+            const info = measurementDataTable.page.info();
+            const selectedVisibleCount = getVisibleMeasurementCheckboxes().filter((cb) => selectedMeasurementKeys.has(cb.value)).length;
+            const base = info.recordsDisplay === 0
+                ? 'Showing 0 to 0 of 0 entries'
+                : `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`;
+            const filtered = info.recordsDisplay !== info.recordsTotal
+                ? ` (filtered from ${info.recordsTotal} total entries)`
+                : '';
+            infoNode.innerHTML = `${base}${filtered} — <strong>${selectedMeasurementKeys.size}</strong> selected ` +
+                `(<strong>${selectedVisibleCount}</strong> on this page)`;
+        }
+
+        function refreshMeasurementSelectionUi() {
+            syncVisibleMeasurementCheckboxes();
+            updateSelectAllMeasurementsState();
+            updateMeasurementSelectInfoText();
+            updateContinueBtnState();
+        }
+
+        measurementSelectTableElement.addEventListener('change', (event) => {
+            if (!event.target.classList.contains('measurement-row-select')) {
+                return;
+            }
+
+            const key = event.target.value;
+            if (event.target.checked) {
+                selectedMeasurementKeys.add(key);
+            } else {
+                selectedMeasurementKeys.delete(key);
+            }
+
+            measurementDataTable.cell(event.target.closest('td')).invalidate();
+            refreshMeasurementSelectionUi();
+        });
+
+        selectAllMeasurementsCheckbox.addEventListener('click', (event) => event.stopPropagation());
+
+        selectAllMeasurementsCheckbox.addEventListener('change', () => {
+            const checked = selectAllMeasurementsCheckbox.checked;
+            getVisibleMeasurementCheckboxes().forEach((checkbox) => {
+                checkbox.checked = checked;
+                if (checked) {
+                    selectedMeasurementKeys.add(checkbox.value);
+                } else {
+                    selectedMeasurementKeys.delete(checkbox.value);
+                }
+            });
+
+            measurementDataTable.rows({ page: 'current' }).invalidate();
+            refreshMeasurementSelectionUi();
+        });
+
+        measurementDataTable.on('draw', refreshMeasurementSelectionUi);
+        refreshMeasurementSelectionUi();
     </script>
 
     <script>
@@ -1844,7 +2032,7 @@ pivot: {
                 'Calorimeter': ['CAL-001', 'CAL-002', 'CAL-014'],
                 'Cell Counter': ['CC-3100', 'CC-3200'],
                 'Diffractometer': ['DIFF-A1', 'DIFF-B2'],
-                'Particle sizer': ['MASTERSIZER-2000', 'MASTERSIZER-3000'],
+                'Particle sizer': ['Mastersizer 2000', 'Mastersizer 3000'],
                 'Spectrophotometer': ['UV-1800', 'UV-2600'],
                 'XRPD': ['XRPD-01', 'XRPD-02']
             };
@@ -1853,8 +2041,9 @@ pivot: {
             const instrumentIdOptions = document.getElementById('instrumentIdOptions');
             const instrumentIdSpinner = document.getElementById('instrumentIdSpinner');
             const sampleIdList = document.getElementById('sampleId');
-            const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347',
-                'S1252752', 'S1254079', 'S1254780   ', 'S1265421', 'S1267076'];
+            // const experimentSampleIds = ['S0033337', 'S0033338', 'S0033339', 'S0033342', 'S0033347',
+            //     'S1252752', 'S1254079', 'S1254780   ', 'S1265421', 'S1267076'];
+            const experimentSampleIds = ['QAS3001-b','QAS4000'];
             let selectedSampleIds = new Set(experimentSampleIds);
             const dateOperatorInputs = document.querySelectorAll('input[name="dateOperator"]');
             const dateNotToggle = document.getElementById('dateNot');
@@ -1869,6 +2058,9 @@ pivot: {
             const showResultsSpinner = showResultsBtn.querySelector('.loading-spinner');
             const urlLoadingModal = document.getElementById('urlLoadingModal');
             const measurementPanel = document.getElementById('panel-measurement');
+            const selectMeasurementPanel = document.getElementById('panel-select-measurement');
+            const selectMeasurementSummary = document.getElementById('selectMeasurementSummary');
+            const continueToResultsSpinner = continueToResultsBtn.querySelector('.loading-spinner');
             const resultPanel = document.getElementById('panel-result');
             const resultSummary = document.getElementById('resultSummary');
             const operatorLabels = { equal: 'on', before: 'before', after: 'after', between: 'between' };
@@ -1878,7 +2070,7 @@ pivot: {
             const selectPreSearchValues = new WeakMap();
             const SEARCH_OPTION_VALUE = '__dropdown_search__';
 
-            const allPanels = [measurementPanel, resultPanel];
+            const allPanels = [measurementPanel, selectMeasurementPanel, resultPanel];
 
             // renders every experiment sample ID as a toggleable chip, all selected (ON) by default
             function renderSampleIds() {
@@ -2204,6 +2396,22 @@ pivot: {
                 resultSummary.textContent = '';
             }
 
+            // once measurements have been shown, any further filter change invalidates step 2 (and cascades to step 3)
+            function resetSelectMeasurementPanel() {
+                resetResultsPanel();
+                if (selectMeasurementPanel.dataset.disabled === 'true') {
+                    return;
+                }
+                selectMeasurementPanel.dataset.disabled = 'true';
+                selectMeasurementPanel.querySelector('.panel-header').disabled = true;
+                setPanelExpanded(selectMeasurementPanel, false);
+                selectMeasurementSummary.textContent = '';
+                continueToResultsBtn.hidden = true;
+                selectedMeasurementKeys.clear();
+                measurementDataTable.rows().invalidate();
+                refreshMeasurementSelectionUi();
+            }
+
             // only allow running a search once at least one instrument ID and one sample ID are picked
             function updateShowResultsAvailability() {
                 const canShowResults = selectedInstrumentIds.size > 0 && selectedSampleIds.size > 0;
@@ -2238,7 +2446,7 @@ pivot: {
                 }
 
                 measurementSummary.textContent = parts.length ? parts.join(' • ') : 'No filters applied';
-                resetResultsPanel();
+                resetSelectMeasurementPanel();
                 updateShowResultsAvailability();
             }
 
@@ -2251,16 +2459,43 @@ pivot: {
                 showResultsSpinner.hidden = false;
                 urlLoadingModal.hidden = false;
                 window.setTimeout(() => {
-                    resultPanel.dataset.disabled = 'false';
-                    resultPanel.querySelector('.panel-header').disabled = false;
-                    setPanelExpanded(resultPanel, true);
+                    selectMeasurementPanel.dataset.disabled = 'false';
+                    selectMeasurementPanel.querySelector('.panel-header').disabled = false;
+                    setPanelExpanded(selectMeasurementPanel, true);
                     setPanelExpanded(measurementPanel, false);
-                    resultSummary.textContent = measurementSummary.textContent === 'No filters applied'
+                    selectMeasurementSummary.textContent = measurementSummary.textContent === 'No filters applied'
                         ? 'All measurements'
                         : measurementSummary.textContent;
+                    continueToResultsBtn.hidden = false;
+                    updateContinueBtnState();
 
                     showResultsSpinner.hidden = true;
                     showResultsBtn.disabled = false;
+                    urlLoadingModal.hidden = true;
+
+                    // the panel was hidden while DataTable computed initial column widths, recalc now that it's visible
+                    measurementDataTable.columns.adjust().draw(false);
+                }, 650);
+            });
+
+            continueToResultsBtn.addEventListener('click', () => {
+                if (continueToResultsBtn.disabled) {
+                    return;
+                }
+
+                continueToResultsBtn.disabled = true;
+                continueToResultsSpinner.hidden = false;
+                urlLoadingModal.hidden = false;
+                window.setTimeout(() => {
+                    resultPanel.dataset.disabled = 'false';
+                    resultPanel.querySelector('.panel-header').disabled = false;
+                    setPanelExpanded(resultPanel, true);
+                    setPanelExpanded(selectMeasurementPanel, false);
+                    resultSummary.textContent = `${selectedMeasurementKeys.size} measurement`
+                        + `${selectedMeasurementKeys.size === 1 ? '' : 's'} selected`;
+
+                    continueToResultsSpinner.hidden = true;
+                    continueToResultsBtn.disabled = false;
                     urlLoadingModal.hidden = true;
 
                     // the results panel was hidden while DataTable computed initial column widths, recalc now that it's visible
