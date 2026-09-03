@@ -1,9 +1,23 @@
-add badges in id="sampleId",
+"Share: Allows users to share experiments with others of their choosing.", _
+"Share Templates: Allows user to share experiment templates.", _
+"Move Experiments: Allows user to move experiments to another notebook.", _
+"Trash Experiments: Allows user to trash experiments.", _
+"Add Reviewers and Keep Open Experiments: Allows user to add reviewers and keep open experiments.", _
+"Sign and Add Reviewers Experiments: Allows user to sign experiments with witnessing.", _
+"Sign and Keep Open Experiments: Allows user to sign and keep open experiments.", _
+"Void Experiments: Allows user to void experiments.", _
+"Sign and Close Without Witnessing Experiments: Allows user to sign and close experiments without witnessing.", _
+"Close Without Signing Experiments: Allows user closing experiments without signing.", _
+"Two Stage Review Experiments: Allows user to use the two stage review while reviewing experiments.", _
+"Approve Experiments: Allows user to approve experiments."
 
-S0033337
-S0033338
-S0033339
-S0033342
-S0033347
 
-these badges have a x icon to remove them from the list.
+"Share: Allows users to share notebooks with others of their choosing.", _
+"Trash Notebooks: Allows user to trash notebooks.", _
+"Export Notebooks: Allows user to export notebooks to zip file."
+
+
+
+"Delete Samples: Allows users to delete samples.", _
+"Close/Cancel Samples: Allows users to close or cancel the active samples.", _
+"Reopen Samples: Allows users to reopen closed or cancelled samples."
