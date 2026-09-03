@@ -1759,7 +1759,8 @@ pivot: {
             updateImportElnButtonState();
         }
 
-        function syncUrlWithState() {
+        // each wizard step's state is serialized as its own JSON blob so the whole flow can be resumed from a URL
+        function buildFilterState() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const selectedInstrumentChips = document
                 .querySelectorAll('#instrumentIdOptions .instrument-id-chip[aria-pressed="true"]');
@@ -1767,38 +1768,49 @@ pivot: {
             const dateNotToggle = document.getElementById('dateNot');
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
-            const params = new URLSearchParams();
-            const selectedList = Array.from(selectedIris).join(',');
-
-            if (instrumentClassSelect && instrumentClassSelect.value) {
-                params.set('instrumentClass', instrumentClassSelect.value);
-            }
-            if (selectedInstrumentChips.length) {
-                params.set('instrumentId', Array.from(selectedInstrumentChips, (chip) => chip.dataset.instrumentId)
-                    .join(','));
-            }
+            const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
             const sampleIds = sampleIdList
                 ? Array.from(sampleIdList.querySelectorAll('.sample-id-chip[aria-pressed="true"]'),
                     (chip) => chip.dataset.sampleId)
                 : [];
-            if (sampleIds.length) {
-                params.set('sampleId', sampleIds.join(','));
+
+            return {
+                instrumentClass: instrumentClassSelect ? instrumentClassSelect.value : '',
+                instrumentIds: Array.from(selectedInstrumentChips, (chip) => chip.dataset.instrumentId),
+                sampleIds,
+                dateOperator: dateOperator ? dateOperator.value : 'equal',
+                dateNot: Boolean(dateNotToggle && dateNotToggle.getAttribute('aria-pressed') === 'true'),
+                dateValue1: (dateValue1 && dateValue1.value) || '',
+                dateValue2: (dateValue2 && dateValue2.value) || ''
+            };
+        }
+
+        function parseJsonParam(raw) {
+            if (!raw) {
+                return null;
             }
-            const dateOperator = document.querySelector('input[name="dateOperator"]:checked');
-            if (dateOperator) {
-                params.set('dateOperator', dateOperator.value);
+            try {
+                return JSON.parse(raw);
+            } catch (error) {
+                console.warn('Ignoring invalid JSON in URL parameter', error);
+                return null;
             }
-            if (dateNotToggle) {
-                params.set('dateNot', String(dateNotToggle.getAttribute('aria-pressed') === 'true'));
+        }
+
+        function syncUrlWithState() {
+            const params = new URLSearchParams();
+            const filterState = buildFilterState();
+
+            // instrument class is the required field that gates the whole flow, so use it to decide whether
+            // there's any meaningful filter state worth putting in the URL
+            if (filterState.instrumentClass) {
+                params.set('filter', JSON.stringify(filterState));
             }
-            if (dateValue1 && dateValue1.value) {
-                params.set('dateValue1', dateValue1.value);
+            if (selectedMeasurementKeys.size) {
+                params.set('measurement', JSON.stringify({ selected: Array.from(selectedMeasurementKeys) }));
             }
-            if (dateValue2 && dateValue2.value) {
-                params.set('dateValue2', dateValue2.value);
-            }
-            if (selectedList) {
-                params.set('selected', selectedList);
+            if (selectedIris.size) {
+                params.set('result', JSON.stringify({ selected: Array.from(selectedIris) }));
             }
 
             const nextUrl = `${window.location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
@@ -1808,6 +1820,8 @@ pivot: {
             }
         }
 
+        // applies the "filter" JSON blob and hands back the "measurement"/"result" blobs so the caller can
+        // cascade the wizard forward (each step only exists once the previous one has been advanced through)
         async function applyStateFromUrl() {
             const instrumentClassSelect = document.getElementById('instrumentClass');
             const sampleIdList = document.getElementById('sampleId');
@@ -1815,59 +1829,41 @@ pivot: {
             const dateValue1 = document.getElementById('dateValue1');
             const dateValue2 = document.getElementById('dateValue2');
             const params = new URLSearchParams(window.location.search);
-            const classParam = params.get('instrumentClass');
-            const instrumentIdParam = params.get('instrumentId');
-            const sampleIdParam = params.get('sampleId');
-            const dateOperatorParam = params.get('dateOperator');
-            const dateNotParam = params.get('dateNot') === 'true';
-            const dateValue1Param = params.get('dateValue1') || '';
-            const dateValue2Param = params.get('dateValue2') || '';
-            const selectedParam = params.get('selected') || '';
+            const filterState = parseJsonParam(params.get('filter'));
+            const measurementState = parseJsonParam(params.get('measurement'));
+            const resultState = parseJsonParam(params.get('result'));
 
-            if (classParam && instrumentClassSelect) {
-                instrumentClassSelect.value = classParam;
+            if (filterState && filterState.instrumentClass && instrumentClassSelect) {
+                instrumentClassSelect.value = filterState.instrumentClass;
                 if (typeof window.loadInstrumentIds === 'function') {
-                    await window.loadInstrumentIds(classParam);
+                    await window.loadInstrumentIds(filterState.instrumentClass);
                 }
             }
 
-            if (instrumentIdParam && typeof window.setSelectedInstrumentIds === 'function') {
-                window.setSelectedInstrumentIds(instrumentIdParam.split(',').filter(Boolean));
+            if (filterState && Array.isArray(filterState.instrumentIds) && typeof window.setSelectedInstrumentIds === 'function') {
+                window.setSelectedInstrumentIds(filterState.instrumentIds);
             }
 
-            if (sampleIdList && sampleIdParam !== null && typeof window.setExperimentSampleIds === 'function') {
-                window.setExperimentSampleIds(sampleIdParam.split(',').filter(Boolean));
+            if (filterState && sampleIdList && Array.isArray(filterState.sampleIds) && typeof window.setExperimentSampleIds === 'function') {
+                window.setExperimentSampleIds(filterState.sampleIds);
             }
 
-            if (dateOperatorParam) {
-                const radio = document.querySelector(`input[name="dateOperator"][value="${dateOperatorParam}"]`);
+            if (filterState && filterState.dateOperator) {
+                const radio = document.querySelector(`input[name="dateOperator"][value="${filterState.dateOperator}"]`);
                 if (radio) {
                     radio.checked = true;
                 }
             }
 
             if (dateNotToggle) {
-                dateNotToggle.setAttribute('aria-pressed', String(dateNotParam));
+                dateNotToggle.setAttribute('aria-pressed', String(Boolean(filterState && filterState.dateNot)));
             }
             if (dateValue1) {
-                dateValue1.value = dateValue1Param;
+                dateValue1.value = (filterState && filterState.dateValue1) || '';
             }
             if (dateValue2) {
-                dateValue2.value = dateValue2Param;
+                dateValue2.value = (filterState && filterState.dateValue2) || '';
             }
-
-            selectedIris.clear();
-            selectedParam.split(',')
-                .filter((iri) => availableIris.has(iri))
-                .forEach((iri) => selectedIris.add(iri));
-
-            if (dataTable) {
-                dataTable.draw(false);
-            }
-
-            document.querySelectorAll('.row-select').forEach((checkbox) => {
-                checkbox.checked = selectedIris.has(checkbox.value);
-            });
 
             if (typeof updateDateInputsVisibility === 'function') {
                 updateDateInputsVisibility();
@@ -1875,6 +1871,8 @@ pivot: {
             if (typeof updateMeasurementSummary === 'function') {
                 updateMeasurementSummary();
             }
+
+            return { measurementState, resultState };
         }
 
         window.syncUrlWithState = syncUrlWithState;
@@ -1927,6 +1925,7 @@ pivot: {
             ['Zontal testing- D9838-1-12.csv', '2026/Mar/24 18:00:17 (+01:00)', 'Generic_JSC_Archive', 'MALC74967', '15222759 BDH 2', 'tknight4', '2015-04-10']];
 
         const selectedMeasurementKeys = new Set();
+        const availableMeasurementKeys = new Set(measurementSelectRows.map((row) => row[0]));
         const continueToResultsBtn = document.getElementById('continueToResultsBtn');
 
         const measurementDataTable = new DataTable(measurementSelectTableElement, {
@@ -2483,57 +2482,73 @@ pivot: {
                 updateShowResultsAvailability();
             }
 
+            // advances step 1 -> step 2; returns a promise so the URL-restore flow can await it before
+            // restoring step 2's own state
+            function advanceToStep2() {
+                return new Promise((resolve) => {
+                    showResultsBtn.disabled = true;
+                    showResultsSpinner.hidden = false;
+                    urlLoadingModal.hidden = false;
+                    window.setTimeout(() => {
+                        selectMeasurementPanel.dataset.disabled = 'false';
+                        selectMeasurementPanel.querySelector('.panel-header').disabled = false;
+                        setPanelExpanded(selectMeasurementPanel, true);
+                        setPanelExpanded(measurementPanel, false);
+                        selectMeasurementSummary.textContent = measurementSummary.textContent === 'No filters applied'
+                            ? 'All measurements'
+                            : measurementSummary.textContent;
+                        continueToResultsBtn.hidden = false;
+                        updateContinueBtnState();
+
+                        showResultsSpinner.hidden = true;
+                        showResultsBtn.disabled = false;
+                        urlLoadingModal.hidden = true;
+
+                        // the panel was hidden while DataTable computed initial column widths, recalc now that it's visible
+                        measurementDataTable.columns.adjust().draw(false);
+                        resolve();
+                    }, 650);
+                });
+            }
+
             showResultsBtn.addEventListener('click', () => {
                 if (showResultsBtn.disabled) {
                     return;
                 }
-
-                showResultsBtn.disabled = true;
-                showResultsSpinner.hidden = false;
-                urlLoadingModal.hidden = false;
-                window.setTimeout(() => {
-                    selectMeasurementPanel.dataset.disabled = 'false';
-                    selectMeasurementPanel.querySelector('.panel-header').disabled = false;
-                    setPanelExpanded(selectMeasurementPanel, true);
-                    setPanelExpanded(measurementPanel, false);
-                    selectMeasurementSummary.textContent = measurementSummary.textContent === 'No filters applied'
-                        ? 'All measurements'
-                        : measurementSummary.textContent;
-                    continueToResultsBtn.hidden = false;
-                    updateContinueBtnState();
-
-                    showResultsSpinner.hidden = true;
-                    showResultsBtn.disabled = false;
-                    urlLoadingModal.hidden = true;
-
-                    // the panel was hidden while DataTable computed initial column widths, recalc now that it's visible
-                    measurementDataTable.columns.adjust().draw(false);
-                }, 650);
+                advanceToStep2();
             });
+
+            // advances step 2 -> step 3; returns a promise so the URL-restore flow can await it before
+            // restoring step 3's own state
+            function advanceToStep3() {
+                return new Promise((resolve) => {
+                    continueToResultsBtn.disabled = true;
+                    continueToResultsSpinner.hidden = false;
+                    urlLoadingModal.hidden = false;
+                    window.setTimeout(() => {
+                        resultPanel.dataset.disabled = 'false';
+                        resultPanel.querySelector('.panel-header').disabled = false;
+                        setPanelExpanded(resultPanel, true);
+                        setPanelExpanded(selectMeasurementPanel, false);
+                        resultSummary.textContent = `${selectedMeasurementKeys.size} measurement`
+                            + `${selectedMeasurementKeys.size === 1 ? '' : 's'} selected`;
+
+                        continueToResultsSpinner.hidden = true;
+                        continueToResultsBtn.disabled = false;
+                        urlLoadingModal.hidden = true;
+
+                        // the results panel was hidden while DataTable computed initial column widths, recalc now that it's visible
+                        dataTable.columns.adjust().draw(false);
+                        resolve();
+                    }, 650);
+                });
+            }
 
             continueToResultsBtn.addEventListener('click', () => {
                 if (continueToResultsBtn.disabled) {
                     return;
                 }
-
-                continueToResultsBtn.disabled = true;
-                continueToResultsSpinner.hidden = false;
-                urlLoadingModal.hidden = false;
-                window.setTimeout(() => {
-                    resultPanel.dataset.disabled = 'false';
-                    resultPanel.querySelector('.panel-header').disabled = false;
-                    setPanelExpanded(resultPanel, true);
-                    setPanelExpanded(selectMeasurementPanel, false);
-                    resultSummary.textContent = `${selectedMeasurementKeys.size} measurement`
-                        + `${selectedMeasurementKeys.size === 1 ? '' : 's'} selected`;
-
-                    continueToResultsSpinner.hidden = true;
-                    continueToResultsBtn.disabled = false;
-                    urlLoadingModal.hidden = true;
-
-                    // the results panel was hidden while DataTable computed initial column widths, recalc now that it's visible
-                    dataTable.columns.adjust().draw(false);
-                }, 650);
+                advanceToStep3();
             });
 
             dateOperatorInputs.forEach((input) => {
@@ -2550,19 +2565,41 @@ pivot: {
             }
 
             restoringUrlState = true;
-            await applyStateFromUrl();
+            const { measurementState, resultState } = await applyStateFromUrl();
             restoringUrlState = false;
             updateDateInputsVisibility();
             updateMeasurementSummary();
 
+            // cascade forward through steps 2 and 3, restoring each step's own selections only once it's reachable
             if (!showResultsBtn.disabled) {
-                showResultsBtn.click();
+                await advanceToStep2();
+
+                if (measurementState && Array.isArray(measurementState.selected)) {
+                    selectedMeasurementKeys.clear();
+                    measurementState.selected
+                        .filter((key) => availableMeasurementKeys.has(key))
+                        .forEach((key) => selectedMeasurementKeys.add(key));
+                    measurementDataTable.rows().invalidate();
+                    measurementDataTable.draw(false);
+                    refreshMeasurementSelectionUi();
+                }
+
+                if (!continueToResultsBtn.disabled) {
+                    await advanceToStep3();
+
+                    if (resultState && Array.isArray(resultState.selected)) {
+                        selectedIris.clear();
+                        resultState.selected
+                            .filter((iri) => availableIris.has(iri))
+                            .forEach((iri) => selectedIris.add(iri));
+                        dataTable.rows().invalidate();
+                        dataTable.draw(false);
+                        refreshSelectionUi();
+                    }
+                }
             }
 
-            if (loadingFromUrl) {
-                await new Promise((resolve) => window.setTimeout(resolve, showResultsBtn.disabled ? 0 : 700));
-                urlLoadingModal.hidden = true;
-            }
+            urlLoadingModal.hidden = true;
         })();
     </script>
 </body>
