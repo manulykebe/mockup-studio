@@ -1,10 +1,22 @@
-These roles must likely be set before/beginning of IQ
+Sample ID	Sample Name	Compound ID	Lot Number	Storage Requirements	Handling Instructions	PbOEL	Sample Comment	Comments
+S0033794	BRN-2026-001A	TMC-001428	L-2026-0814A	-20C	PF Light	PbOEL1	Sample fully dissolved in 10 mL DMSO after 5 min sonication.	Vial tightly sealed with a crimp cap and teflon-lined septum.
+S0033795	REF-STD-v04	TMC-001429	L-2026-0814B	-70C	PF Light/Moisture	PbOEL2	Precipitate observed after adding dropwise 1M HCl at 0C.	Amber vial used to prevent photodegradation of the compound.
+S0033796	Compound-48B	TMC-0984-A	L-REF-0042	-80C	PF Light	PbOEL3a*	HPLC analysis shows 98.4% purity for the target compound.	Slight hairline crack observed at the base of the glass vial.
+S0033797	PBS-pH7.4-B12	TMC-0984-B	L-STD-991	-20C	PF Light/Moisture	PbOEL3a	Re-centrifuged at 4000 rpm for 10 min to clear the supernatant.	Transferred into a pre-weighed 2 mL Eppendorf tube.
+S0033798	SMPL-BLANK-01	TMC-883102	L-CMPD-48B	-70C	PF Light	PbOEL3b	pH adjusted from 6.2 to 7.4 using 0.5M NaOH buffer solution.	Container label became partially illegible after ethanol wash.
+S0033799	LIV-MIC-H-q02	TMC-883103	L-BUFF-7412	-80C	PF Light/Moisture	PbOEL4	Exothermic reaction observed; internal temp spiked to 42C.	Lot split across three separate 5 mL borosilicate vials.
+S0033800	STAB-T48-40C	TMC-REF-01	L-BLNK-001	-20C	PF Light	PbOEL1	Transferred 500 uL of stock solution to a clean amber vial.	Condensation detected inside the vial cap prior to sampling.
+S0033801	C18-WASH-FR03	TMC-STD-99	L-MIC-H002	-70C	PF Light/Moisture	PbOEL2	Color shifted from pale yellow to deep orange upon heating.	Conical bottom vial selected for maximum sample recovery.
+S0033802	PEPT-95-PURE	TMC-X42-01	L-STAB-40C	-80C	PF Light	PbOEL3a*	Column pressure exceeded limits; run aborted at 12.4 min.	Screw cap stripped during automated torque capping sequence.
+S0033803	MET-METAB-X2	TMC-X42-02	L-FRAC-003	-20C	PF Light/Moisture	PbOEL3a	Stored the final purified peptide fraction at -80C room 4.	Stored in a nitrogen-purged hermetically sealed container.
+S0033804	CTRL-NEG-005	TMC-9521-P	L-PEPT-95P	-70C	PF Light	PbOEL3b	Baseline drift detected during blank injection; re-zeroed.	Vial tare weight recorded as 4.312g before adding compound.
+S0033805	SOLV-DMSO-99	TMC-MET-03	L-MET-X02	-80C	PF Light/Moisture	PbOEL4	Mass spec confirms expected molecular weight of 432.5 Da.	Rubber septum showing signs of coring after multiple injections.
+S0033806	BATCH-042-REC	TMC-CTRL-N	L-CTRL-NEG	-20C	PF Light	PbOEL3a	Slight degradation noticed after 48h at room temperature.	Static charge on vial walls causing powder sticking issues.
+S0033807	UNKNOWN-PK-X	TMC-UNK-77	L-UNK-PK1	-70C	PF Light/Moisture	PbOEL3b	Color shifted from pale yellow to deep orange upon heating.	Container integrity verified; vacuum seal remained intact.
 
-User Roles / Inventory-Containers
-Add Container	
-Edit Container
 
-User Roles / Materials
-Add Materials	
-Edit Materials	
-Export Materials
+curl -X 'GET' \
+  'https://zontaldev.jnj.com/api/search/informationPackages/?query=QAS4001' \
+  -H 'accept: */*' \
+  -H 'Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMHFKUW5XTTNxUHdOLVZSbUQzZWNGMnVXZU5PR0hlNThERDFaaUc2aHQ4In0.eyJleHAiOjE3ODg1MjMyODIsImlhdCI6MTc4ODUyMjY4MiwianRpIjoiYWQxMGZjNjktNGFiYi00NTBiLThiMTktM2U3ZDY4MTRjZTg5IiwiaXNzIjoiaHR0cHM6Ly96b250YWxkZXYuam5qLmNvbS9hdXRoL3JlYWxtcy96b250YWwtc3BhY2UiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiYTU4NjAyMjYtN2MyOS00MDg4LTlmYzMtOTYyNjM0OGUxMThlIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoicmV2dml0eS1zaWduYWxzLWFwaSIsImFjciI6IjEiLCJhbGxvd2VkLW9yaWdpbnMiOlsiLyoiXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInpvbnRhbC1zcGFjZS11c2VyIiwib2ZmbGluZV9hY2Nlc3MiLCJ1bWFfYXV0aG9yaXphdGlvbiIsImRlZmF1bHQtcm9sZXMtem9udGFsLXNwYWNlIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnsiYWNjb3VudCI6eyJyb2xlcyI6WyJtYW5hZ2UtYWNjb3VudCIsIm1hbmFnZS1hY2NvdW50LWxpbmtzIiwidmlldy1wcm9maWxlIl19fSwic2NvcGUiOiJvcGVuaWQgZW1haWwgcHJvZmlsZSIsImNsaWVudEhvc3QiOiIxMC4yMjEuMTA3LjEzOCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiem9udGFsLXNwYWNlIjp7InNwYWNlLWNhcnJpZXItdXJsIjoiZHVtbXkiLCJzcGFjZS11c2VyIjp7ImFjY291bnROYW1lIjpbInpvbnRhbF9zcGFjZV9ib3QiXSwicHJlZkxhYmVsIjp7ImRlIjoiWk9OVEFMIFNwYWNlIEJvdCIsImVuIjoiWk9OVEFMIFNwYWNlIEJvdCJ9LCJnaXZlbk5hbWUiOm51bGwsImZhbWlseU5hbWUiOm51bGwsIm5hbWUiOiJaT05UQUwgU3BhY2UgQWRtaW5pc3RyYXRvciIsImlkIjoiaHR0cHM6Ly96b250YWxkZXYuam5qLmNvbS9hcGkvdXNlcnMvem9udGFsX3NwYWNlX2JvdCIsIm1ib3giOltdLCJhdXRob3JpdGllcyI6bnVsbH0sInN1YiI6InpvbnRhbF9zcGFjZV9ib3QiLCJzcGFjZS1wZXJtcyI6eyIvYXBpL2luZm9ybWF0aW9uUGFja2FnZVByb2ZpbGVzLyI6WyJSZWFkIl0sIi9hcGkvaW5mb3JtYXRpb25Tb3VyY2VzLyI6WyJSZWFkIl0sIi9hcGkvaW5mb3JtYXRpb25QYWNrYWdlcy8iOlsiUmVhZCJdLCIvYXBpL2Rvd25sb2FkLyI6WyJSZWFkIl0sIi9hcGkvbm90aWZpY2F0aW9ucy8iOlsiQ3JlYXRlIl0sIi9hcGkvaW5mb3JtYXRpb25QYWNrYWdlRG93bmxvYWRzLyI6WyJSZWFkIl0sIi9hcGkvaW5mb3JtYXRpb25QYWNrYWdlVXBsb2Fkcy8iOlsiUmVhZCJdLCIvYXBpL2FwcGxpY2F0aW9ucy8iOlsiUmVhZCJdLCIvYXBpL3N0YXR1c1BvbGljaWVzLyI6WyJSZWFkIl0sIi9hcGkvdHJhbnNpdGlvblBvbGljaWVzLyI6WyJSZWFkIl0sIi9hcGkvc2VhcmNoL2luZm9ybWF0aW9uUGFja2FnZXMvIjpbIlJlYWQiXSwiL2FwaS9zZWFyY2gvZGlnaXRhbE9iamVjdHMvIjpbIlJlYWQiXSwiL2FwaS9lbGVjdHJvbmljU2lnbmF0dXJlcy8iOlsiUmVhZCJdfSwic3BhY2UtZ3JvdXBzIjpbInNvZnR3YXJlX2JvdHMiXSwic3BhY2UtaWQiOiJ6b250YWxfc3BhY2VfYm90Iiwic3BhY2Utcm9sZXMiOlsic3VwZXJ1c2VyIiwiYmFzaWNfZXNfcm9sZSIsInNvZnR3YXJlX2JvdCJdLCJleHAiOjIxNDc0ODM2NDYsInVzZXJuYW1lIjoiem9udGFsX3NwYWNlX2JvdCIsInNwYWNlLXBmcnMiOlsic29mdHdhcmVfYm90Iiwic3lzdGVtX2FkbWluaXN0cmF0b3IiXX0sInByZWZlcnJlZF91c2VybmFtZSI6InNlcnZpY2UtYWNjb3VudC1yZXZ2aXR5LXNpZ25hbHMtYXBpIiwiY2xpZW50QWRkcmVzcyI6IjEwLjIyMS4xMDcuMTM4IiwiY2xpZW50X2lkIjoicmV2dml0eS1zaWduYWxzLWFwaSJ9.geaRPXCCZFTfG983UOJpwBkhstm68GWwJJS3WXUBEqbjSivKdb2NCUSSiCg7bhT4eAmj-NbAHzNtIi3FBXW_tde4j3r1SIneQY1L8p-0vZGug2fRO6O31KPxsL4jpA6WkavXOpKqKAqvRpOihKYcSkNWKQMdt6C0Twpu-4f07-QSy4eaKdUi6Tp6CgE2nlvkVSRCVsJig2LFBNkgjfn0zJ1hbE-N9aENHawlUhudlzXP3tZ5E7O1Zwir5Uub7fso3xe6H3z3gjzGRb9e3dGZvJrhWdn7d3GbPr53BT4dbrzFBUyERs5TdjmQNtLvASMdxRNZGWwPb4m94YRCOGee3w'
+  
