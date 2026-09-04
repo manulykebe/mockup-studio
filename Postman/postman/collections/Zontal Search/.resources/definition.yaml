@@ -1,0 +1,6 @@
+$kind: collection
+description: Search requests for the Zontal API at zontaldev.jnj.com
+variables:
+  - key: supabase_service_role_api_key_0s1f
+    secret: true
+    disabled: false

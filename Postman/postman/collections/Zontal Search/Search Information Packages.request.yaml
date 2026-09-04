@@ -1,0 +1,108 @@
+$kind: http-request
+name: 'Search Information Packages'
+method: POST
+url: 'https://zontaldev.jnj.com/api/search/informationPackages/'
+order: 1000
+headers:
+  - key: includeDigitalObjects
+    value: 'false'
+  - key: Authorization
+    value: 'Bearer {{vault:zontal}}'
+body:
+  type: json
+  content: |-
+    {
+        "size": 25,
+        "query": "QAS3001-b",
+        "filter": [
+            {
+                "filterType": "range",
+                "propertyName": "createdOn",
+                "to": "2026-06-01T23:59:59.999+02:00",
+                "from": "2026-06-01T00:00:00.000+02:00",
+                "operator": null
+            },
+            {
+                "propertyName": "lifecycleStatus",
+                "value": [
+                    "Submitted",
+                    "Archived",
+                    "Deleted",
+                    "New",
+                    "Purged"
+                ],
+                "filterType": "terms",
+                "operator": null
+            },
+            {
+                "propertyName": "informationPackageProfile",
+                "value": [
+                    "empower_results_vnf"
+                ],
+                "filterType": "terms",
+                "operator": null
+            }
+        ],
+        "sortField": [
+            "createdOn"
+        ],
+        "sortOrder": [
+            "desc"
+        ]
+    }
+scripts:
+  - type: beforeRequest
+    language: text/javascript
+    code: |-
+      // ── Zontal Bearer Token Guard ──────────────────────────────────────────
+      // Checks if the token stored in vault:zontal is still valid (not expired).
+      // JWTs carry an "exp" claim (Unix timestamp). If the token is missing,
+      // not a JWT, or expired, execution is halted and you are prompted to
+      // paste a fresh token into Postman Vault → "zontal".
+      //
+      // HOW TO REFRESH:
+      //   1. Log in to your Zontal portal / copy the token from browser DevTools.
+      //   2. Open Postman Vault (lock icon, bottom bar).
+      //   3. Update the "zontal" secret with the new token.
+      //   4. Re-send this request.
+      // ──────────────────────────────────────────────────────────────────────
+
+      const BUFFER_SECONDS = 60; // treat token as expired 60 s before actual expiry
+
+      function parseJwtExpiry(token) {
+          if (!token || typeof token !== 'string') return null;
+          const parts = token.split('.');
+          if (parts.length !== 3) return null; // not a JWT
+          try {
+              const payload = JSON.parse(atob(parts[1]));
+              return typeof payload.exp === 'number' ? payload.exp : null;
+          } catch (e) {
+              return null;
+          }
+      }
+
+      const token = pm.vault.get('zontal');
+
+      if (!token) {
+          console.error('[Auth] vault:zontal is empty. Paste a fresh Bearer token into Postman Vault.');
+          pm.execution.skipRequest();
+      } else {
+          const exp = parseJwtExpiry(token);
+          if (exp === null) {
+              // Not a JWT (e.g. opaque token) — cannot check expiry, let it through
+              console.warn('[Auth] vault:zontal does not appear to be a JWT; skipping expiry check.');
+          } else {
+              const nowSeconds = Math.floor(Date.now() / 1000);
+              const secondsLeft = exp - nowSeconds;
+              if (secondsLeft < BUFFER_SECONDS) {
+                  console.error(
+                      '[Auth] vault:zontal token is expired or about to expire (' +
+                      secondsLeft + 's remaining). ' +
+                      'Paste a fresh token into Postman Vault → "zontal" and re-send.'
+                  );
+                  pm.execution.skipRequest();
+              } else {
+                  console.log('[Auth] Token valid for ' + secondsLeft + 's.');
+              }
+          }
+      }

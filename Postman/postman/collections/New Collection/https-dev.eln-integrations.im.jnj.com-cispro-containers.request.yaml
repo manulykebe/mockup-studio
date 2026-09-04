@@ -1,0 +1,17 @@
+$kind: http-request
+name: https://dev.eln-integrations.im.jnj.com/cispro/containers
+description: ""
+url: https://dev.eln-integrations.im.jnj.com/cispro/containers?username=mvannest
+method: GET
+headers:
+  x-api-key: Dfjhvcxi435kfshj(*FJ8dh34
+queryParams:
+  - key: username
+    value: mvannest
+    disabled: false
+    description: ""
+  - key: user_alias
+    value: "{user_alias}"
+    disabled: true
+    description: ""
+order: 1788523146170

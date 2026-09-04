@@ -1,0 +1,54 @@
+$kind: http-request
+name: https://zontaldev.jnj.com/api/search/informationPackages/
+description: ""
+url: https://zontaldev.jnj.com/api/search/informationPackages/
+method: POST
+headers:
+  Authorization: Bearer {{vault:zontal}}
+  includeDigitalObjects: "false"
+  query: '"QAS3001-b"'
+body:
+  type: json
+  content: |-
+    {
+        "size": 25,
+        "query": "QAS3001-b",
+        "filter": [
+            {
+                "filterType": "range",
+                "propertyName": "createdOn",
+                "to": "2026-06-01T23:59:59.999+02:00",
+                "from": "2026-06-01T00:00:00.000+02:00",
+                "operator": null
+            },
+            {
+                "propertyName": "lifecycleStatus",
+                "value": [
+                    "Submitted",
+                    "Archived",
+                    "Deleted",
+                    "New",
+                    "Purged"
+                ],
+                "filterType": "terms",
+                "operator": null
+            },
+            {
+                "propertyName": "informationPackageProfile",
+                "value": [
+                    "empower_results_vnf"
+                ],
+                "filterType": "terms",
+                "operator": null
+            }
+        ],
+        "sortField": [
+            "createdOn"
+        ],
+        "sortOrder": [
+            "desc"
+        ]
+    }
+auth:
+  type: bearer
+order: 1698400988824174
