@@ -4,20 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signals Preparations Picker</title>
+    <link rel="stylesheet" href="vendor/datatables/dataTables.dataTables.min.css">
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            margin: 2rem;
+            color: #202124
+        }
 
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 100%;
+            font-size: .95rem
+        }
+
+        th,
+        td {
+            border: 1px solid #d9d9d9;
+            padding: .3rem .5rem;
+            text-align: left;
+            vertical-align: top
+        }
+
+        th {
+            background: #f1f3f4;
+            position: sticky;
+            top: 0;
+            white-space: nowrap
+        }
+
+        tr:nth-child(even) {
+            background: #fafafa
+        }
+
+        tr:hover {
+            background: #fff4cc
+        }
+
+        .panel {
+            border: 1px solid #d9d9d9;
+            border-radius: 0;
+            margin-bottom: 0;
+            overflow: hidden;
+            background: #fff
+        }
+
+        .panel-header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: .6rem;
+            padding: 0.25rem 0.25rem;
+            background: #f1f3f4;
+            border: none;
+            cursor: pointer;
+            font: inherit;
+            text-align: left;
+            color: #202124
+        }
+
+        .panel-header:hover {
+            background: #e3e7ea
+        }
+
+        .panel-chevron {
+            display: inline-block;
+            transition: transform .15s ease;
+            width: 1rem
+        }
+
+        .panel.collapsed .panel-chevron {
+            transform: rotate(-90deg)
+        }
+
+        .panel-title {
+            font-weight: 600;
+            flex: 0 0 auto
+        }
+
+        .panel-summary {
+            margin-left: auto;
+            color: #5f6368;
+            font-size: .85rem;
+            font-weight: 400;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .panel-body {
+            padding: .5rem;
+            border-top: 1px solid #d9d9d9
+        }
+
+        .panel.collapsed .panel-body {
+            display: none
+        }
+
+        .panel table {
+            font-size: .82rem;
+        }
+
+        .panel th,
+        .panel td {
+            line-height: 1.1;
+            padding: .15rem .35rem;
+        }
+
+        .panel .dt-layout-row {
+            margin: .25rem 0;
+        }
+
+        .panel .dt-length,
+        .panel .dt-search,
+        .panel .dt-info,
+        .panel .dt-paging {
+            font-size: .78rem;
+        }
+
+        .panel .dt-paging-button {
+            min-width: 1.6rem;
+            padding: .15rem .35rem;
+        }
+
+        .drag-handle-cell {
+            width: 1%;
+            text-align: center;
+            cursor: grab;
+        }
+
+        .drag-handle {
+            color: #9aa0a6;
+            font-size: .7rem;
+            line-height: 1;
+        }
+
+        .row-number-cell {
+            width: 1%;
+            text-align: center;
+        }
+
+        .row-number-input {
+            width: 2.6rem;
+            font: inherit;
+            font-size: .78rem;
+            border: 1px solid #d9d9d9;
+            border-radius: 3px;
+            padding: .1rem .25rem;
+            text-align: center;
+        }
+
+        .row-number-input:disabled {
+            background: #f1f3f4;
+            color: #9aa0a6;
+            cursor: not-allowed;
+        }
+
+        .panel table.reorder-disabled .drag-handle-cell {
+            cursor: not-allowed;
+            opacity: .4;
+        }
+
+        .panel tbody tr.dragging-row {
+            opacity: .5;
+        }
+
+        .panel tbody tr.drop-before>td {
+            border-top: 2px solid #1a73e8;
+        }
+
+        .panel tbody tr.drop-after>td {
+            border-bottom: 2px solid #1a73e8;
+        }
+    </style>
 </head>
 
 <body>
     <div id="root">
         <div class="min-h-screen bg-base-200 py-8 px-4">
             <div class="max-w-7xl mx-auto">
-                <div class="card bg-base-100 shadow-xl mb-6">
-                    <div class="card-body">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="card-title">Material/Lot/Container</h2>
-                        </div>
+                                <section class="panel" id="panel-preparations">
+                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-preparations-body">
+                        <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+                        <span class="panel-title">Preparations</span>
+                        <span class="panel-summary" data-entry-summary></span>
+                    </button>
+                    <div class="panel-body" id="panel-preparations-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra">
+                            <table class="table table-zebra" id="preparationsTable">
+                                <thead>
+                                    <tr>
+
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Total Amount</th>
+                                        <th>Comment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                        <td>SC001493</td>
+                                        <td>tryout</td>
+                                        <td>17 g</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel" id="panel-material">
+                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-material-body">
+                        <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+                        <span class="panel-title">Material/Lot/Container</span>
+                        <span class="panel-summary" data-entry-summary></span>
+                    </button>
+                    <div class="panel-body" id="panel-material-body">
+                        <div class="overflow-x-auto">
+                            <table class="table table-zebra" id="materialTable">
                                 <thead>
                                     <tr>
 
@@ -30,14 +236,14 @@
                                 <tbody>
                                     <tr>
 
-                                        <td>C007901</td>
+                                        <td>C007901-row1</td>
                                         <td>JNJ-12345678 Conjugation / Janssen R&amp;D (PPD) /</td>
                                         <td>ABCD-1234</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C004726</td>
+                                        <td>C004726-row2</td>
                                         <td>Glacial acetic acid 100 % / Merck (back up: Sigma-aldrich) / 1000631000
                                             (back up: 45727)</td>
                                         <td>K51300663 913</td>
@@ -45,21 +251,21 @@
                                     </tr>
                                     <tr>
 
-                                        <td>C004746</td>
+                                        <td>C004746-row3</td>
                                         <td>Dulbecco's phosphate buffered saline / Sigma-Aldrich / D8537-500mL</td>
                                         <td>RNBJ7479</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C005184</td>
+                                        <td>C005184-row4</td>
                                         <td>JNJ-63705473 BCMA DPC / Malvern Panalytical /</td>
                                         <td>LM-RP3-01805</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C005150</td>
+                                        <td>C005150-row5</td>
                                         <td>c-MET Protein, Human, Recombinant (His Tag) / Sino biological inc, /
                                             10692-H08H (50µg)</td>
                                         <td>LC13AP1208</td>
@@ -67,7 +273,7 @@
                                     </tr>
                                     <tr>
 
-                                        <td>C005155</td>
+                                        <td>C005155-row6</td>
                                         <td>IL3RA Protein, Human, Recombinant (His Tag) / Sino biological inc, /
                                             10518-H08H-50</td>
                                         <td>LC13FE0105</td>
@@ -75,21 +281,21 @@
                                     </tr>
                                     <tr>
 
-                                        <td>C005121</td>
+                                        <td>C005121-row7</td>
                                         <td>C168J anti-idiotype (Remicade) / Janssen R&amp;D (PPD) /</td>
                                         <td>LM-RP2-00981</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C005032</td>
+                                        <td>C005032-row8</td>
                                         <td>Human IgG (-002) / Jackson ImmunoResearch / 009-000-002</td>
                                         <td>146615</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C004999</td>
+                                        <td>C004999-row9</td>
                                         <td>Peroxidase AffiniPure Goat Anti-Human IgG F(ab')₂ fragment specific /
                                             Jackson ImmunoResearch / 109-035-097</td>
                                         <td>142501</td>
@@ -97,21 +303,21 @@
                                     </tr>
                                     <tr>
 
-                                        <td>C004939</td>
+                                        <td>C004939-row10   </td>
                                         <td>Anti-mouse-Fc-HRP / Jackson ImmunoResearch / 115-035-071</td>
                                         <td>146577</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C004850</td>
+                                        <td>C004850-row11</td>
                                         <td>Goat anti mouse IgG (H+L) / Jackson ImmunoResearch / 115-005-062</td>
                                         <td>149245</td>
                                         <td></td>
                                     </tr>
                                     <tr>
 
-                                        <td>C004792</td>
+                                        <td>C004792-row12</td>
                                         <td>Human IgG( -003) / Jackson ImmunoResearch / 009-000-003</td>
                                         <td>149979</td>
                                         <td></td>
@@ -120,14 +326,16 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="card bg-base-100 shadow-xl mb-6">
-                    <div class="card-body">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="card-title">Samples</h2>
-                        </div>
+                </section>
+                <section class="panel" id="panel-samples">
+                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-samples-body">
+                        <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+                        <span class="panel-title">Samples</span>
+                        <span class="panel-summary" data-entry-summary></span>
+                    </button>
+                    <div class="panel-body" id="panel-samples-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra">
+                            <table class="table table-zebra" id="samplesTable">
                                 <thead>
                                     <tr>
 
@@ -240,43 +448,16 @@
                             </table>
                         </div>
                     </div>
-                </div>
-                <div class="card bg-base-100 shadow-xl mb-6">
-                    <div class="card-body">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="card-title">Preparations</h2>
-                        </div>
+                </section>
+                <section class="panel" id="panel-equipment">
+                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-equipment-body">
+                        <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+                        <span class="panel-title">Equipment</span>
+                        <span class="panel-summary" data-entry-summary></span>
+                    </button>
+                    <div class="panel-body" id="panel-equipment-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra">
-                                <thead>
-                                    <tr>
-
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Total Amount</th>
-                                        <th>Comment</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-
-                                        <td>SC001493</td>
-                                        <td>tryout</td>
-                                        <td>17 g</td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="card bg-base-100 shadow-xl mb-6">
-                    <div class="card-body">
-                        <div class="flex justify-between items-center mb-4">
-                            <h2 class="card-title">Equipment</h2>
-                        </div>
-                        <div class="overflow-x-auto">
-                            <table class="table table-zebra">
+                            <table class="table table-zebra" id="equipmentTable">
                                 <thead>
                                     <tr>
 
@@ -333,14 +514,317 @@
                             </table>
                         </div>
                     </div>
-                </div>
+                </section>
                 <div class="flex justify-end gap-4 mt-6"><button class="btn">Cancel</button><button
                         class="btn btn-primary " disabled="">Add Selected Items</button></div>
             </div>
         </div>
     </div>
 
+    <script>
+        // each panel's header toggles its own body independently; summary shows the row count
+        document.querySelectorAll('.panel').forEach((panel) => {
+            const header = panel.querySelector('.panel-header');
+            const summary = panel.querySelector('[data-entry-summary]');
+            const rowCount = panel.querySelectorAll('.panel-body tbody tr').length;
+            if (summary) {
+                summary.textContent = `${rowCount} entr${rowCount === 1 ? 'y' : 'ies'}`;
+            }
+            header.addEventListener('click', () => {
+                const expanded = header.getAttribute('aria-expanded') === 'true';
+                header.setAttribute('aria-expanded', String(!expanded));
+                panel.classList.toggle('collapsed', expanded);
+            });
+        });
+    </script>
+    <script src="vendor/datatables/jquery-3.7.1.min.js"></script>
+    <script src="vendor/datatables/dataTables.min.js"></script>
+    <script>
+        // turns a plain table into a sortable/searchable/paginated DataTable with a row-selection
+        // checkbox column, matching the Select Measurement/Select Result tables in zontal-eln-mockup.html
+        function makeSelectableTable(tableId) {
+            const tableElement = document.getElementById(tableId);
+            const headers = Array.from(tableElement.tHead.rows[0].cells, (th) => th.textContent.trim());
+            const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
+                Array.from(row.cells, (cell) => cell.textContent.trim()));
 
+            // each row gets a persistent 1-based manual order number, appended after the visible columns
+            const orderFieldIndex = headers.length;
+            tableData.forEach((row, index) => row.push(index + 1));
+
+            const selectedKeys = new Set();
+
+            const columns = [
+                {
+                    title: '',
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+                    className: 'drag-handle-cell',
+                    render: () => '<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span>'
+                },
+                {
+                    title: '#',
+                    data: null,
+                    orderable: true,
+                    searchable: false,
+                    type: 'num',
+                    className: 'row-number-cell',
+                    render: (data, type, row) => {
+                        const orderValue = row[orderFieldIndex];
+                        if (type === 'display') {
+                            return `<input type="number" class="row-number-input" min="1" step="1" value="${orderValue}" aria-label="Row number">`;
+                        }
+                        return orderValue;
+                    }
+                },
+                {
+                    title: '<input type="checkbox" class="select-all-visible" aria-label="Select all visible rows">',
+                    data: null,
+                    orderable: true,
+                    searchable: false,
+                    type: 'num',
+                    render: (data, type, row) => {
+                        const key = row[0];
+                        const isSelected = selectedKeys.has(key);
+
+                        if (type === 'display') {
+                            const checked = isSelected ? ' checked' : '';
+                            return `<input type="checkbox" class="row-select" value="${key}" aria-label="Select row ${key}"${checked}>`;
+                        }
+
+                        // sort/type/filter requests need a plain comparable value, not markup
+                        return isSelected ? 1 : 0;
+                    }
+                },
+                ...headers.map((title, index) => ({ title, data: index }))
+            ];
+
+            // renumbers every row 1..N to match its current array position, keeping the "#" input in sync
+            function renumberRows(rows) {
+                rows.forEach((row, index) => {
+                    row[orderFieldIndex] = index + 1;
+                });
+            }
+
+            // dragging a row reorders the underlying data and falls back to that manual order (no column sort)
+            function reorderRows(draggedKey, targetKey, insertBefore) {
+                if (draggedKey === targetKey) {
+                    return;
+                }
+                const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+                const fromIndex = allRows.findIndex((row) => row[0] === draggedKey);
+                if (fromIndex === -1) {
+                    return;
+                }
+                const [movedRow] = allRows.splice(fromIndex, 1);
+                let toIndex = allRows.findIndex((row) => row[0] === targetKey);
+                if (toIndex === -1) {
+                    return;
+                }
+                if (!insertBefore) {
+                    toIndex += 1;
+                }
+                allRows.splice(toIndex, 0, movedRow);
+                renumberRows(allRows);
+                dataTable.clear();
+                dataTable.rows.add(allRows);
+                dataTable.order([]).draw(false);
+            }
+
+            // moves a row to the 1-based position typed into its "#" input
+            function setManualRowNumber(key, targetPosition) {
+                const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+                const fromIndex = allRows.findIndex((row) => row[0] === key);
+                if (fromIndex === -1) {
+                    return;
+                }
+                const [movedRow] = allRows.splice(fromIndex, 1);
+                const insertIndex = Math.min(Math.max(targetPosition - 1, 0), allRows.length);
+                allRows.splice(insertIndex, 0, movedRow);
+                renumberRows(allRows);
+                dataTable.clear();
+                dataTable.rows.add(allRows);
+                dataTable.order([]).draw(false);
+            }
+
+            function applyManualRowNumber(inputEl) {
+                const rowData = dataTable.row(inputEl.closest('tr')).data();
+                const totalRows = dataTable.rows().count();
+                let target = parseInt(inputEl.value, 10);
+                if (!Number.isFinite(target)) {
+                    target = rowData[orderFieldIndex];
+                }
+                target = Math.min(Math.max(target, 1), totalRows);
+                setManualRowNumber(rowData[0], target);
+            }
+
+            function clearDropIndicators() {
+                tableElement.querySelectorAll('.drop-before, .drop-after').forEach((row) => {
+                    row.classList.remove('drop-before', 'drop-after');
+                });
+            }
+
+            // reordering (drag or typed "#") is only allowed while every record is on one page
+            function updateDragInteractivity() {
+                const showingAll = dataTable.page.len() === -1;
+                tableElement.classList.toggle('reorder-disabled', !showingAll);
+                tableElement.querySelectorAll('tbody tr').forEach((row) => {
+                    row.draggable = showingAll;
+                });
+                tableElement.querySelectorAll('.row-number-input').forEach((input) => {
+                    input.disabled = !showingAll;
+                });
+            }
+
+            const dataTable = new DataTable(tableElement, {
+                data: tableData,
+                columns,
+                order: [],
+                pageLength: 5,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, 'All']],
+                layout: {
+                    topStart: 'pageLength',
+                    topEnd: 'search',
+                    bottomStart: 'info',
+                    bottomEnd: 'paging'
+                },
+                // wires up native drag-and-drop reordering on every row as it's (re)created
+                createdRow: (row, data) => {
+                    row.draggable = true;
+                    row.addEventListener('dragstart', (event) => {
+                        event.dataTransfer.effectAllowed = 'move';
+                        event.dataTransfer.setData('text/plain', data[0]);
+                        row.classList.add('dragging-row');
+                    });
+                    row.addEventListener('dragend', () => {
+                        row.classList.remove('dragging-row');
+                        clearDropIndicators();
+                    });
+                    row.addEventListener('dragover', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        row.classList.toggle('drop-before', before);
+                        row.classList.toggle('drop-after', !before);
+                    });
+                    row.addEventListener('dragleave', () => row.classList.remove('drop-before', 'drop-after'));
+                    row.addEventListener('drop', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        clearDropIndicators();
+                        const draggedKey = event.dataTransfer.getData('text/plain');
+                        if (draggedKey) {
+                            reorderRows(draggedKey, data[0], before);
+                        }
+                    });
+                }
+            });
+
+            const selectAllCheckbox = tableElement.closest('.panel-body').querySelector('.select-all-visible');
+
+            function getVisibleRowCheckboxes() {
+                return dataTable.rows({ page: 'current' }).nodes().toArray()
+                    .map((row) => row.querySelector('.row-select'));
+            }
+
+            function updateSelectAllState() {
+                const visibleCheckboxes = getVisibleRowCheckboxes();
+                const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedKeys.has(cb.value)).length;
+                selectAllCheckbox.checked = visibleCheckboxes.length > 0 && selectedVisibleCount === visibleCheckboxes.length;
+                selectAllCheckbox.indeterminate = selectedVisibleCount > 0 && selectedVisibleCount < visibleCheckboxes.length;
+            }
+
+            function syncVisibleRowCheckboxes() {
+                getVisibleRowCheckboxes().forEach((checkbox) => {
+                    checkbox.checked = selectedKeys.has(checkbox.value);
+                });
+            }
+
+            // rebuilds just the info text's selection suffix, without a full draw() that would re-sort rows
+            function updateInfoText() {
+                const infoNode = dataTable.table().container().querySelector('.dt-info');
+                if (!infoNode) {
+                    return;
+                }
+
+                const info = dataTable.page.info();
+                const selectedVisibleCount = getVisibleRowCheckboxes().filter((cb) => selectedKeys.has(cb.value)).length;
+                const base = info.recordsDisplay === 0
+                    ? 'Showing 0 to 0 of 0 entries'
+                    : `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`;
+                const filtered = info.recordsDisplay !== info.recordsTotal
+                    ? ` (filtered from ${info.recordsTotal} total entries)`
+                    : '';
+                infoNode.innerHTML = `${base}${filtered} — <strong>${selectedKeys.size}</strong> selected ` +
+                    `(<strong>${selectedVisibleCount}</strong> on this page)`;
+            }
+
+            function refreshSelectionUi() {
+                syncVisibleRowCheckboxes();
+                updateSelectAllState();
+                updateInfoText();
+            }
+
+            tableElement.addEventListener('change', (event) => {
+                if (event.target.classList.contains('row-number-input')) {
+                    applyManualRowNumber(event.target);
+                    return;
+                }
+
+                if (!event.target.classList.contains('row-select')) {
+                    return;
+                }
+
+                const key = event.target.value;
+                if (event.target.checked) {
+                    selectedKeys.add(key);
+                } else {
+                    selectedKeys.delete(key);
+                }
+
+                // keep the sort/type data fresh for the next real sort, but don't reorder rows just from selecting
+                dataTable.cell(event.target.closest('td')).invalidate();
+                refreshSelectionUi();
+            });
+
+            // Enter commits the typed row number immediately instead of waiting for blur
+            tableElement.addEventListener('keydown', (event) => {
+                if (event.target.classList.contains('row-number-input') && event.key === 'Enter') {
+                    event.preventDefault();
+                    event.target.blur();
+                }
+            });
+
+            // stop header th click-to-sort from firing when the checkbox itself is clicked
+            selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
+
+            selectAllCheckbox.addEventListener('change', () => {
+                const checked = selectAllCheckbox.checked;
+                getVisibleRowCheckboxes().forEach((checkbox) => {
+                    checkbox.checked = checked;
+                    if (checked) {
+                        selectedKeys.add(checkbox.value);
+                    } else {
+                        selectedKeys.delete(checkbox.value);
+                    }
+                });
+
+                dataTable.rows({ page: 'current' }).invalidate();
+                refreshSelectionUi();
+            });
+
+            dataTable.on('draw', () => {
+                refreshSelectionUi();
+                updateDragInteractivity();
+            });
+            refreshSelectionUi();
+            updateDragInteractivity();
+
+            return { dataTable, selectedKeys };
+        }
+
+        ['materialTable', 'samplesTable', 'preparationsTable', 'equipmentTable'].forEach(makeSelectableTable);
+    </script>
 </body>
 
 </html>
