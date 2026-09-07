@@ -5,14 +5,19 @@
  * @returns {Promise<Object>} The JSON response from the server.
  */
 async function searchInformationPackages(queryTerm) {
-  const url = `https://jnj.com{encodeURIComponent(queryTerm)}`;
-  const token = "eyJhbGciOiJSUzI1NiIsInR5..."; // Paste your long token here
+  const url = `https://zontaldev.jnj.com/api/search/informationPackages/{encodeURIComponent(queryTerm)}`;
+  const token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMHFKUW5XTTNxUHdOLVZSbUQzZWNGMnVXZU5PR0hlNThERDFaaUc2aHQ4In0";
+  const usr = 'revvity-signals-api';
+  const pwd = '3waw70uCqYaXtQlfpVL6Q9kv8B8BDJDk';
+  // 1. Base64 encode the credentials using btoa()
+  const credentials = btoa(`${usr}:${pwd}`);
 
   try {
     const response = await fetch(url, {
       method: 'GET',
       headers: {
         'accept': '*/*',
+        // 'Authorization': `Basic ${credentials}`
         'Authorization': `Bearer ${token}`
       }
     });

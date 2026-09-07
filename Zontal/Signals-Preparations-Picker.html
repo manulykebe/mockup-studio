@@ -8,7 +8,6 @@
     <style>
         body {
             font-family: system-ui, sans-serif;
-            margin: 2rem;
             color: #202124
         }
 
@@ -42,8 +41,13 @@
             background: #fff4cc
         }
 
+        .dt-input {
+            padding: 0 !important;
+            font-size: .78rem !important;
+        }
+
         .panel {
-            border: 1px solid #d9d9d9;
+            border-top: 1px solid #d9d9d9;
             border-radius: 0;
             margin-bottom: 0;
             overflow: hidden;
@@ -55,13 +59,17 @@
             display: flex;
             align-items: center;
             gap: .6rem;
-            padding: 0.25rem 0.25rem;
+            /* padding: 0.25rem 0.25rem; */
+
             background: #f1f3f4;
             border: none;
             cursor: pointer;
             font: inherit;
             text-align: left;
-            color: #202124
+            color: #202124;
+            border-left: 1px solid #d9d9d9;
+            border-right: 1px solid #d9d9d9;
+            border-bottom: 1px solid #d9d9d9;
         }
 
         .panel-header:hover {
@@ -80,7 +88,8 @@
 
         .panel-title {
             font-weight: 600;
-            flex: 0 0 auto
+            flex: 0 0 auto;
+            color: #0D6EFD;
         }
 
         .panel-summary {
@@ -94,8 +103,11 @@
         }
 
         .panel-body {
-            padding: .5rem;
-            border-top: 1px solid #d9d9d9
+            padding-left: 2rem;
+        }
+
+        .panel.collapsed {
+            margin-bottom: 1px;
         }
 
         .panel.collapsed .panel-body {
@@ -113,7 +125,7 @@
         }
 
         .panel .dt-layout-row {
-            margin: .25rem 0;
+            margin: .25rem 0 !important;
         }
 
         .panel .dt-length,
@@ -184,15 +196,16 @@
     <div id="root">
         <div class="min-h-screen bg-base-200 py-8 px-4">
             <div class="max-w-7xl mx-auto">
-                                <section class="panel" id="panel-preparations">
-                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-preparations-body">
+                <section class="panel" id="panel-preparations">
+                    <button type="button" class="panel-header" aria-expanded="true"
+                        aria-controls="panel-preparations-body">
                         <span class="panel-chevron" aria-hidden="true">&#9662;</span>
                         <span class="panel-title">Preparations</span>
                         <span class="panel-summary" data-entry-summary></span>
                     </button>
                     <div class="panel-body" id="panel-preparations-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra" id="preparationsTable">
+                            <table class="table table-zebra compact" id="preparationsTable">
                                 <thead>
                                     <tr>
 
@@ -215,15 +228,16 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel" id="panel-material">
-                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-material-body">
+                <section class="panel collapsed" id="panel-material">
+                    <button type="button" class="panel-header" aria-expanded="false"
+                        aria-controls="panel-material-body">
                         <span class="panel-chevron" aria-hidden="true">&#9662;</span>
                         <span class="panel-title">Material/Lot/Container</span>
                         <span class="panel-summary" data-entry-summary></span>
                     </button>
                     <div class="panel-body" id="panel-material-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra" id="materialTable">
+                            <table class="table table-zebra compact" id="materialTable">
                                 <thead>
                                     <tr>
 
@@ -303,7 +317,7 @@
                                     </tr>
                                     <tr>
 
-                                        <td>C004939-row10   </td>
+                                        <td>C004939-row10 </td>
                                         <td>Anti-mouse-Fc-HRP / Jackson ImmunoResearch / 115-035-071</td>
                                         <td>146577</td>
                                         <td></td>
@@ -327,15 +341,15 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel" id="panel-samples">
-                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-samples-body">
+                <section class="panel collapsed" id="panel-samples">
+                    <button type="button" class="panel-header" aria-expanded="false" aria-controls="panel-samples-body">
                         <span class="panel-chevron" aria-hidden="true">&#9662;</span>
                         <span class="panel-title">Samples</span>
                         <span class="panel-summary" data-entry-summary></span>
                     </button>
                     <div class="panel-body" id="panel-samples-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra" id="samplesTable">
+                            <table class="table table-zebra compact" id="samplesTable">
                                 <thead>
                                     <tr>
 
@@ -449,15 +463,16 @@
                         </div>
                     </div>
                 </section>
-                <section class="panel" id="panel-equipment">
-                    <button type="button" class="panel-header" aria-expanded="true" aria-controls="panel-equipment-body">
+                <section class="panel collapsed" id="panel-equipment">
+                    <button type="button" class="panel-header" aria-expanded="false"
+                        aria-controls="panel-equipment-body">
                         <span class="panel-chevron" aria-hidden="true">&#9662;</span>
                         <span class="panel-title">Equipment</span>
                         <span class="panel-summary" data-entry-summary></span>
                     </button>
                     <div class="panel-body" id="panel-equipment-body">
                         <div class="overflow-x-auto">
-                            <table class="table table-zebra" id="equipmentTable">
+                            <table class="table table-zebra compact" id="equipmentTable">
                                 <thead>
                                     <tr>
 
@@ -515,8 +530,9 @@
                         </div>
                     </div>
                 </section>
-                <div class="flex justify-end gap-4 mt-6"><button class="btn">Cancel</button><button
-                        class="btn btn-primary " disabled="">Add Selected Items</button></div>
+                <div class="flex justify-end gap-4 mt-6">
+                    <button class="btn btn-primary ">Update Prep. Sub</button>
+                </div>
             </div>
         </div>
     </div>

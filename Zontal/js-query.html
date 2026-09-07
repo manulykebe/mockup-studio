@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <script>
+        /**
+ * Searches information packages using the Zontal API.
+ * @param {string} queryTerm - The term to search for (e.g., 'QAS4001').
+ * @param {string} token - The Bearer authorization token.
+ * @returns {Promise<Object>} The JSON response from the server.
+ */
+        async function searchInformationPackages(queryTerm) {
+            const url = `https://zontaldev.jnj.com/api/search/informationPackages/{encodeURIComponent(queryTerm)}`;
+            const token = "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJVMHFKUW5XTTNxUHdOLVZSbUQzZWNGMnVXZU5PR0hlNThERDFaaUc2aHQ4In0";
+            const usr = 'revvity-signals-api';
+            const pwd = '3waw70uCqYaXtQlfpVL6Q9kv8B8BDJDk';
+            // 1. Base64 encode the credentials using btoa()
+            const credentials = btoa(`${usr}:${pwd}`);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'accept': '*/*',
+                        // 'Authorization': `Basic ${credentials}`
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                return await response.json();
+            } catch (error) {
+                console.error('Failed to fetch information packages:', error);
+                throw error;
+            }
+        }
+
+
+        searchInformationPackages('QAS3001-b')
+            .then(data => console.log('Search Results:', data))
+            .catch(err => console.error(err));
+
+
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
