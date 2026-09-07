@@ -1,0 +1,17 @@
+info:
+  name: get IP
+  type: http
+  seq: 2
+
+http:
+  method: GET
+  url: https://{{ZONTAL_HOST}}/api/informationPackages/{{IPID}}
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

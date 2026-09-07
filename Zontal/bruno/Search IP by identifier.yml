@@ -1,0 +1,70 @@
+info:
+  name: Search IP by identifier
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/api/search/informationPackages/
+  body:
+    type: json
+    data: |-
+      {
+        "size": 25,
+        "query": "",
+        "filter": [
+          {
+            "propertyName": "instrumentId",
+            "value": [
+              "US104582"
+            ],
+            "filterType": "terms",
+            "operator": null
+          },
+          {
+            "propertyName": "informationPackageProfile",
+            "value": [
+              "ChemoMetec_XM30_VNF"
+            ],
+            "filterType": "terms",
+            "operator": null
+          },
+          {
+            "propertyName": "sampleId",
+            "value": [
+              "Sh1323-DGF-TR1-S1213453"
+            ],
+            "filterType": "terms",
+            "operator": null
+          },
+          {
+            "propertyName": "createdOn",
+            "from": "2025-01-01T00:00:00.000+00:00",
+            "to": "2025-12-01T00:00:00.000+00:00",
+            "filterType": "range",
+            "operator": null
+          }
+        ],
+        "sortField": [
+          "createdOn"
+        ],
+        "sortOrder": [
+          "desc"
+        ]
+      }
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setEnvVar('IPTitle',res.getBody().member[0].title)
+        bru.setEnvVar('IPID',res.getBody().member[0].identifier)
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

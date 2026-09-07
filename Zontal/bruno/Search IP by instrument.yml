@@ -1,0 +1,56 @@
+info:
+  name: Search IP by instrument
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/api/search/informationPackages/
+  body:
+    type: json
+    data: |-
+      {
+        "size": 25,
+        "query": "",
+        "filter": [
+          {
+            "propertyName": "instrumentId",
+            "value": [
+              "MALC74967"
+            ],
+            "filterType": "terms",
+            "operator": null
+          },
+          {
+            "propertyName": "informationPackageProfile",
+            "value": [
+              "Mastersizer_2000_VNF"
+            ],
+            "filterType": "terms",
+            "operator": null
+          }
+        ],
+        "sortField": [
+          "createdOn"
+        ],
+        "sortOrder": [
+          "desc"
+        ]
+      }
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        // bru.setEnvVar('IPTitle',res.getBody().member[0].title)
+        // bru.setEnvVar('IPID',res.getBody().member[0].identifier)
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

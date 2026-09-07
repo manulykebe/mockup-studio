@@ -1,0 +1,32 @@
+info:
+  name: Search DATA by IP
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/api/download/
+  headers:
+    - name: Authorization
+      value: Bearer {{zontal_access_token}}
+  body:
+    type: json
+    data: |-
+      {
+        "title": "{{IPTitle}}",
+        "informationPackage": [
+          {
+            "identifier": "{{IPID}}"
+          }
+        ],
+        "digitalObjectsOnly": true
+      }
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

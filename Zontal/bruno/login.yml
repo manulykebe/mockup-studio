@@ -1,0 +1,28 @@
+info:
+  name: login
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/auth/realms/zontal-space/protocol/openid-connect/token
+  body:
+    type: form-urlencoded
+    data:
+      - name: grant_type
+        value: client_credentials
+      - name: client_id
+        value: "{{client_id}}"
+      - name: client_secret
+        value: "{{client_secret}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: bru.setEnvVar('zontal_access_token',res.getBody().access_token)
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
