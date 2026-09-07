@@ -1,5 +1,6 @@
 <html lang="en">
 <!-- https://jnj-test.srpstgkj7h.revvitycloud.eu/elements/entity/ado-4:ebb86b99-47e8-450c-b40c-240d7cf949b8?focus=grid%3A0377167e-8805-4444-8ac8-35b4e8dadc10 -->
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -160,7 +161,7 @@
         }
 
         .col-comment {
-            width: 20rem;
+            width: 32rem;
         }
 
         .drag-handle {
@@ -205,6 +206,14 @@
 
         .panel tbody tr.drop-after>td {
             border-bottom: 2px solid #1a73e8;
+        }
+
+        .panel tbody tr.row-disabled {
+            opacity: .5;
+        }
+
+        .row-select:disabled {
+            cursor: not-allowed;
         }
 
         .loading-spinner {
@@ -266,6 +275,112 @@
         .prep-tooltip[hidden] {
             display: none;
         }
+
+        .selection-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 1.5rem;
+            transform: translateX(-50%) translateY(.5rem);
+            background: #202124;
+            color: #fff;
+            font-size: .85rem;
+            padding: .5rem .9rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, .3);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .15s ease, transform .15s ease;
+            z-index: 30;
+        }
+
+        .selection-toast.visible {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .selection-toast.warning {
+            background: #b3261e;
+        }
+
+        .prep-graph-panel {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 40;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+            width: 230px;
+        }
+
+        .prep-graph-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .45rem .7rem;
+            background: #f1f3f4;
+            border-bottom: 1px solid #d9d9d9;
+            border-radius: 6px 6px 0 0;
+            cursor: move;
+            user-select: none;
+        }
+
+        .prep-graph-panel.collapsed .prep-graph-header {
+            border-bottom: none;
+            border-radius: 6px;
+        }
+
+        .prep-graph-title {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .prep-graph-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .8rem;
+            line-height: 1;
+            color: #5f6368;
+            padding: 0 .2rem;
+        }
+
+        .prep-graph-body {
+            padding: .6rem .7rem;
+        }
+
+        .prep-graph-panel.collapsed .prep-graph-body {
+            display: none;
+        }
+
+        .prep-graph-legend {
+            display: flex;
+            gap: .7rem;
+            font-size: .68rem;
+            color: #5f6368;
+            margin-top: .3rem;
+        }
+
+        .prep-graph-legend span {
+            display: inline-flex;
+            align-items: center;
+            gap: .25rem;
+        }
+
+        .prep-graph-legend-swatch {
+            width: .6rem;
+            height: .6rem;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .prep-graph-node-label {
+            font-size: 12px;
+            font-weight: 600;
+            font-family: inherit;
+        }
     </style>
 </head>
 
@@ -280,6 +395,120 @@
     <div id="root">
         <div class="min-h-screen bg-base-200 py-8 px-4">
             <div class="max-w-7xl mx-auto">
+                <section class="panel" id="panel-preparation-master">
+                    <button type="button" class="panel-header" aria-expanded="true"
+                        aria-controls="panel-preparation-master-body">
+                        <span class="panel-chevron" aria-hidden="true">&#9662;</span>
+                        <span class="panel-title">Preparation Master</span>
+                        <span class="panel-summary" data-entry-summary></span>
+                    </button>
+                    <div class="panel-body" id="panel-preparation-master-body">
+                        <div class="overflow-x-auto">
+                            <table class="table table-zebra compact" id="preparationMasterTable">
+                                <thead>
+                                    <tr>
+                                        <th>Preparation Name |Ref</th>
+                                        <th>Prep ID</th>
+                                        <th>PbOEL</th>
+                                        <th>Preparation Date</th>
+                                        <th>Expiration Date</th>
+                                        <th>Storage Requirements</th>
+                                        <th>Handling Instructions</th>
+                                        <th>Total Amt</th>
+                                        <th>Target pH</th>
+                                        <th>Actual pH |RfC</th>
+                                        <th>Actual Temp |RfC</th>
+                                        <th>Compound ID</th>
+                                        <th>Fit for GxP</th>
+                                        <th>Prep Comment</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>prepname_m01</td>
+                                        <td>SC001225</td>
+                                        <td>PbOEL3a</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>25 &deg;C</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>3</td>
+                                        <td>2.988</td>
+                                        <td>21.1 &deg;C</td>
+                                        <td></td>
+                                        <td>NO</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prepname_m02</td>
+                                        <td>SC001226</td>
+                                        <td>PbOEL2</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>25 &deg;C</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>5.097</td>
+                                        <td>21.1 &deg;C</td>
+                                        <td></td>
+                                        <td>NO</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prepname_m03</td>
+                                        <td>SC001227</td>
+                                        <td>PbOEL3a*</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>40 &deg;C</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>5.096</td>
+                                        <td>21.1 &deg;C</td>
+                                        <td></td>
+                                        <td>NO</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prepname_m04</td>
+                                        <td>SC001228</td>
+                                        <td>PbOEL4</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>Jun 25, 2026, 04:47 PM</td>
+                                        <td>RT</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>3</td>
+                                        <td>2.988</td>
+                                        <td>21.1 &deg;C</td>
+                                        <td></td>
+                                        <td>NO</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>prepname_m05</td>
+                                        <td>SC001233</td>
+                                        <td>PbOEL3a</td>
+                                        <td>Jun 26, 2026, 07:26 AM</td>
+                                        <td>Jun 26, 2026, 07:26 AM</td>
+                                        <td>-80 &deg;C</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>5</td>
+                                        <td>5.096</td>
+                                        <td>21.1 &deg;C</td>
+                                        <td></td>
+                                        <td>NO</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
                 <section class="panel" id="panel-preparations">
                     <button type="button" class="panel-header" aria-expanded="true"
                         aria-controls="panel-preparations-body">
@@ -302,22 +531,38 @@
                                 <tbody>
                                     <tr>
 
-                                        <td>SC001493</td>
-                                        <td>tryout</td>
-                                        <td>Re-slurry trial for polymorph screening; hold at RT prior to LC-MS check.</td>
+                                        <td>SC001225</td>
+                                        <td>prepname_m01</td>
+                                        <td>Re-slurry trial for polymorph screening; hold at RT prior to LC-MS check.
+                                        </td>
                                         <td>17 g</td>
                                     </tr>
                                     <tr>
 
-                                        <td>SC001494</td>
-                                        <td>tryout</td>
-                                        <td>Repeat prep after OOS pH reading on first attempt; verify against SOP-042.</td>
+                                        <td>SC001226</td>
+                                        <td>prepname_m02</td>
+                                        <td>Repeat prep after OOS pH reading on first attempt; verify against SOP-042.
+                                        </td>
                                         <td>17 g</td>
                                     </tr>
                                     <tr>
 
-                                        <td>SC001495</td>
-                                        <td>tryout</td>
+                                        <td>SC001227</td>
+                                        <td>prepname_m03</td>
+                                        <td>Scale-up feasibility batch for Step 3 intermediate; QC sample pulled.</td>
+                                        <td>17 g</td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>SC001228</td>
+                                        <td>prepname_m04</td>
+                                        <td>Scale-up feasibility batch for Step 3 intermediate; QC sample pulled.</td>
+                                        <td>17 g</td>
+                                    </tr>
+                                    <tr>
+
+                                        <td>SC001229</td>
+                                        <td>prepname_m05</td>
                                         <td>Scale-up feasibility batch for Step 3 intermediate; QC sample pulled.</td>
                                         <td>17 g</td>
                                     </tr>
@@ -656,8 +901,33 @@
     <script>
         // turns a plain table into a sortable/searchable/paginated DataTable with a row-selection
         // checkbox column, matching the Select Measurement/Select Result tables in zontal-eln-mockup.html
-        function makeSelectableTable(tableId) {
+        // singleSelect: only one row may be checked at a time, unless the user holds Shift while clicking
+
+        // shows/updates a single toast at the bottom of the page for the most recent selection change
+        let toastElement = null;
+        let toastHideTimeoutId = null;
+        function showToast(message, { variant = 'info' } = {}) {
+            if (!toastElement) {
+                toastElement = document.createElement('div');
+                toastElement.className = 'selection-toast';
+                document.body.appendChild(toastElement);
+            }
+            toastElement.textContent = message;
+            toastElement.classList.toggle('warning', variant === 'warning');
+            toastElement.classList.add('visible');
+            if (toastHideTimeoutId) {
+                clearTimeout(toastHideTimeoutId);
+            }
+            toastHideTimeoutId = setTimeout(() => {
+                toastElement.classList.remove('visible');
+                toastHideTimeoutId = null;
+            }, variant === 'warning' ? 4000 : 2500);
+        }
+
+        function makeSelectableTable(tableId, { singleSelect = false } = {}) {
             const tableElement = document.getElementById(tableId);
+            const panelTitleEl = tableElement.closest('.panel')?.querySelector('.panel-title');
+            const tableLabel = panelTitleEl ? panelTitleEl.textContent.trim() : tableId;
             const headers = Array.from(tableElement.tHead.rows[0].cells, (th) => th.textContent.trim());
             const tableData = Array.from(tableElement.tBodies[0].rows, (row) =>
                 Array.from(row.cells, (cell) => cell.textContent.trim()));
@@ -669,6 +939,8 @@
             const selectedKeys = new Set();
             // keys whose linked preparations only partially cover them (tri-state on the last 3 tables)
             const indeterminateKeys = new Set();
+            // keys that must not be independently selectable, e.g. a Preparation row that IS the selected parent
+            const disabledKeys = new Set();
 
             const columns = [
                 {
@@ -695,7 +967,7 @@
                     }
                 },
                 {
-                    title: '<input type="checkbox" class="select-all-visible" aria-label="Select all visible rows">',
+                    title: singleSelect ? '' : '<input type="checkbox" class="select-all-visible" aria-label="Select all visible rows">',
                     data: null,
                     orderable: true,
                     searchable: false,
@@ -852,6 +1124,9 @@
             }
 
             function updateSelectAllState() {
+                if (!selectAllCheckbox) {
+                    return;
+                }
                 const visibleCheckboxes = getVisibleRowCheckboxes();
                 const selectedVisibleCount = visibleCheckboxes.filter((cb) => selectedKeys.has(cb.value)).length;
                 const indeterminateVisibleCount = visibleCheckboxes.filter((cb) => indeterminateKeys.has(cb.value)).length;
@@ -864,7 +1139,25 @@
                 getVisibleRowCheckboxes().forEach((checkbox) => {
                     checkbox.checked = selectedKeys.has(checkbox.value);
                     checkbox.indeterminate = indeterminateKeys.has(checkbox.value);
+                    checkbox.disabled = disabledKeys.has(checkbox.value);
+                    checkbox.closest('tr').classList.toggle('row-disabled', checkbox.disabled);
                 });
+            }
+
+            // prevents the given keys from being (de)selected, e.g. because the row is already the
+            // selected parent record elsewhere; also clears any existing selection on them
+            function setDisabledKeys(keys) {
+                disabledKeys.clear();
+                keys.forEach((key) => disabledKeys.add(key));
+                let changed = false;
+                disabledKeys.forEach((key) => {
+                    if (selectedKeys.delete(key)) changed = true;
+                    if (indeterminateKeys.delete(key)) changed = true;
+                });
+                if (changed) {
+                    dataTable.rows().invalidate();
+                }
+                refreshSelectionUi();
             }
 
             // replaces every row's checked/indeterminate state in one go, e.g. after picking preparations
@@ -907,6 +1200,15 @@
                 updateInfoText();
             }
 
+            // tracks whether Shift was held on the most recent row-select click, to let singleSelect
+            // tables opt into multi-selection just for that click
+            let lastRowSelectClickShiftKey = false;
+            tableElement.addEventListener('click', (event) => {
+                if (event.target.classList.contains('row-select')) {
+                    lastRowSelectClickShiftKey = event.shiftKey;
+                }
+            });
+
             tableElement.addEventListener('change', (event) => {
                 if (event.target.classList.contains('row-number-input')) {
                     applyManualRowNumber(event.target);
@@ -918,16 +1220,24 @@
                 }
 
                 const key = event.target.value;
+                const checked = event.target.checked;
                 // a manual click always resolves the row to a definite state
                 indeterminateKeys.delete(key);
-                if (event.target.checked) {
+                if (checked && singleSelect && !lastRowSelectClickShiftKey) {
+                    // default single-select mode: this row replaces any previous selection
+                    selectedKeys.clear();
+                    indeterminateKeys.clear();
                     selectedKeys.add(key);
+                    dataTable.rows().invalidate();
                 } else {
-                    selectedKeys.delete(key);
+                    if (checked) {
+                        selectedKeys.add(key);
+                    } else {
+                        selectedKeys.delete(key);
+                    }
+                    // keep the sort/type data fresh for the next real sort, but don't reorder rows just from selecting
+                    dataTable.cell(event.target.closest('td')).invalidate();
                 }
-
-                // keep the sort/type data fresh for the next real sort, but don't reorder rows just from selecting
-                dataTable.cell(event.target.closest('td')).invalidate();
                 refreshSelectionUi();
             });
 
@@ -940,22 +1250,29 @@
             });
 
             // stop header th click-to-sort from firing when the checkbox itself is clicked
-            selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
+            if (selectAllCheckbox) {
+                selectAllCheckbox.addEventListener('click', (event) => event.stopPropagation());
 
-            selectAllCheckbox.addEventListener('change', () => {
-                const checked = selectAllCheckbox.checked;
-                getVisibleRowCheckboxes().forEach((checkbox) => {
-                    checkbox.checked = checked;
-                    if (checked) {
-                        selectedKeys.add(checkbox.value);
-                    } else {
-                        selectedKeys.delete(checkbox.value);
-                    }
+                selectAllCheckbox.addEventListener('change', () => {
+                    const checked = selectAllCheckbox.checked;
+                    let affectedCount = 0;
+                    getVisibleRowCheckboxes().forEach((checkbox) => {
+                        if (checkbox.disabled) {
+                            return;
+                        }
+                        checkbox.checked = checked;
+                        affectedCount += 1;
+                        if (checked) {
+                            selectedKeys.add(checkbox.value);
+                        } else {
+                            selectedKeys.delete(checkbox.value);
+                        }
+                    });
+
+                    dataTable.rows({ page: 'current' }).invalidate();
+                    refreshSelectionUi();
                 });
-
-                dataTable.rows({ page: 'current' }).invalidate();
-                refreshSelectionUi();
-            });
+            }
 
             dataTable.on('draw', () => {
                 refreshSelectionUi();
@@ -964,31 +1281,17 @@
             refreshSelectionUi();
             updateDragInteractivity();
 
-            return { dataTable, selectedKeys, indeterminateKeys, setRowStates };
+            return { dataTable, selectedKeys, indeterminateKeys, setRowStates, setDisabledKeys };
         }
 
         const tables = {};
-        ['materialTable', 'samplesTable', 'preparationsTable', 'equipmentTable'].forEach((tableId) => {
-            tables[tableId] = makeSelectableTable(tableId);
+        ['preparationMasterTable', 'materialTable', 'samplesTable', 'preparationsTable', 'equipmentTable'].forEach((tableId) => {
+            tables[tableId] = makeSelectableTable(tableId, { singleSelect: tableId === 'preparationMasterTable' });
         });
 
-        // sample linkage data: which material/sample/equipment rows belong to each preparation
+        // sample linkage   data: which material/sample/equipment rows belong to each preparation (keyed by the
+        // Preparation Master's "Preparation Name |Ref" column, which now drives child-record selection)
         const preparationLinks = {
-            SC001493: {
-                materialTable: ['C007901-row1', 'C004726-row2', 'C004792-row12'],
-                samplesTable: ['S0033930', 'S0033934'],
-                equipmentTable: ['001-400000014006', '001-400000024172']
-            },
-            SC001494: {
-                materialTable: ['C007901-row1', 'C004726-row2', 'C005184-row4'],
-                samplesTable: ['S0033930', 'S0033934', 'S0033932'],
-                equipmentTable: ['001-400000014006', '001-400000024172']
-            },
-            SC001495: {
-                materialTable: ['C007901-row1', 'C004726-row2', 'C005150-row5'],
-                samplesTable: ['S0033930', 'S0033934', 'S0033932'],
-                equipmentTable: ['001-400000014006', '001-400000024172', 'pH_Equip-0203']
-            }
         };
 
         // groups, per row key, which of the selected preparations link to it
@@ -1006,10 +1309,36 @@
             return linksByItem;
         }
 
+        // adds/removes a child row from every currently selected parent's link list, so preparationLinks
+        // stays in sync whenever the user manually (un)checks a child row
+        function updatePreparationLinkForChildChange(tableId, key, checked) {
+            Array.from(tables.preparationMasterTable.selectedKeys).forEach((prepId) => {
+                if (!preparationLinks[prepId]) {
+                    preparationLinks[prepId] = { materialTable: [], samplesTable: [], equipmentTable: [], preparationsTable: [] };
+                }
+                const links = preparationLinks[prepId][tableId] || (preparationLinks[prepId][tableId] = []);
+                const index = links.indexOf(key);
+                if (checked && index === -1) {
+                    links.push(key);
+                } else if (!checked && index !== -1) {
+                    links.splice(index, 1);
+                }
+            });
+        }
+
+        // in-memory snapshot of the current parent (Preparation Master) selection and the child rows it
+        // reflects, inspectable via window.selectionStore
+        const selectionStore = {
+            parent: [],
+            children: { materialTable: [], samplesTable: [], equipmentTable: [], preparationsTable: [] }
+        };
+        window.selectionStore = selectionStore;
+
         // checked when every selected preparation links to the row, indeterminate when only some do
         function applyLinkedSelections() {
-            const selectedPrepIds = Array.from(tables.preparationsTable.selectedKeys);
-            ['materialTable', 'samplesTable', 'equipmentTable'].forEach((tableId) => {
+            const selectedPrepIds = Array.from(tables.preparationMasterTable.selectedKeys);
+            const childSelections = {};
+            ['materialTable', 'samplesTable', 'equipmentTable', 'preparationsTable'].forEach((tableId) => {
                 const linksByItem = computeLinkedItems(selectedPrepIds, tableId);
                 const states = new Map();
                 linksByItem.forEach((prepIds, itemKey) => {
@@ -1017,7 +1346,27 @@
                 });
                 tables[tableId].rowPreparations = linksByItem;
                 tables[tableId].setRowStates(states);
+                childSelections[tableId] = Array.from(states.keys()).filter((key) => states.get(key) === 'checked');
             });
+
+            // a Preparation row that IS one of the selected parents, or that would close a loop back
+            // to one of them, can't be picked as a child
+            const disabledPreparationIds = new Set(
+                selectedPrepIds.map((prepId) => preparationRecordIdByName.get(prepId)).filter(Boolean)
+            );
+            preparationNameByRecordId.forEach((name, recordId) => {
+                if (!disabledPreparationIds.has(recordId) &&
+                    selectedPrepIds.some((parentPrepId) => wouldCreateCircularReference(name, parentPrepId))) {
+                    disabledPreparationIds.add(recordId);
+                }
+            });
+            tables.preparationsTable.setDisabledKeys(Array.from(disabledPreparationIds));
+
+            selectionStore.parent = selectedPrepIds.map((prepId) => preparationDetailsById.get(prepId) || { id: prepId });
+            selectionStore.children = childSelections;
+            if (typeof renderPreparationRelationshipGraph === 'function') {
+                renderPreparationRelationshipGraph();
+            }
         }
 
         const preparationLoadingModal = document.getElementById('preparationLoadingModal');
@@ -1043,7 +1392,7 @@
             }, 5000);
         }
 
-        document.getElementById('preparationsTable').addEventListener('change', (event) => {
+        document.getElementById('preparationMasterTable').addEventListener('change', (event) => {
             if (event.target.classList.contains('row-select') || event.target.classList.contains('select-all-visible')) {
                 reloadPreparationDetails();
             }
@@ -1054,9 +1403,219 @@
 
         // ID/Name/Comment for each preparation, used to describe checkboxes in the hover tooltip
         const preparationDetailsById = new Map();
-        tables.preparationsTable.dataTable.rows().data().toArray().forEach((row) => {
-            preparationDetailsById.set(row[0], { id: row[0], name: row[1], comment: row[2] });
+        tables.preparationMasterTable.dataTable.rows().data().toArray().forEach((row) => {
+            preparationDetailsById.set(row[0], { id: row[0], name: row[1], comment: row[13] });
         });
+
+        // Preparations-table row ID keyed by its Name, so the row matching a selected Preparation Master
+        // parent can be disabled (it IS that parent, not an independent child)
+        const preparationRecordIdByName = new Map();
+        const preparationNameByRecordId = new Map();
+        tables.preparationsTable.dataTable.rows().data().toArray().forEach((row) => {
+            preparationRecordIdByName.set(row[1], row[0]);
+            preparationNameByRecordId.set(row[0], row[1]);
+        });
+
+        // always-on-top top-right panel showing an SVG node graph of Preparation Master <-> Preparation links;
+        // draggable via its header and collapsible via the toggle button
+        const prepGraphPanel = document.createElement('div');
+        prepGraphPanel.className = 'prep-graph-panel';
+        prepGraphPanel.innerHTML = `
+            <div class="prep-graph-header">
+                <span class="prep-graph-title">Preparation Links</span>
+                <button type="button" class="prep-graph-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
+            </div>
+            <div class="prep-graph-body">
+                <svg viewBox="0 0 220 220" width="210" height="210" aria-label="Preparation relationship graph"></svg>
+                <div class="prep-graph-legend">
+                    <span><i class="prep-graph-legend-swatch" style="background:#1a73e8"></i>Selected parent</span>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(prepGraphPanel);
+        const prepGraphSvg = prepGraphPanel.querySelector('svg');
+        const svgNs = 'http://www.w3.org/2000/svg';
+
+        // drag-to-move: mousedown on the header switches from right-anchored to left/top positioning
+        const prepGraphHeader = prepGraphPanel.querySelector('.prep-graph-header');
+        let isDraggingGraphPanel = false;
+        let graphDragOffsetX = 0;
+        let graphDragOffsetY = 0;
+
+        prepGraphHeader.addEventListener('mousedown', (event) => {
+            if (event.target.closest('.prep-graph-toggle')) {
+                return;
+            }
+            const rect = prepGraphPanel.getBoundingClientRect();
+            graphDragOffsetX = event.clientX - rect.left;
+            graphDragOffsetY = event.clientY - rect.top;
+            prepGraphPanel.style.left = `${rect.left}px`;
+            prepGraphPanel.style.top = `${rect.top}px`;
+            prepGraphPanel.style.right = 'auto';
+            isDraggingGraphPanel = true;
+            event.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (!isDraggingGraphPanel) {
+                return;
+            }
+            const maxLeft = window.innerWidth - prepGraphPanel.offsetWidth;
+            const maxTop = window.innerHeight - prepGraphPanel.offsetHeight;
+            const left = Math.min(Math.max(event.clientX - graphDragOffsetX, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(event.clientY - graphDragOffsetY, 0), Math.max(maxTop, 0));
+            prepGraphPanel.style.left = `${left}px`;
+            prepGraphPanel.style.top = `${top}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingGraphPanel = false;
+        });
+
+        // re-clamps the panel back on screen if a resize (e.g. collapsing) leaves it partly off-viewport
+        function keepGraphPanelOnScreen() {
+            const rect = prepGraphPanel.getBoundingClientRect();
+            const maxLeft = window.innerWidth - rect.width;
+            const maxTop = window.innerHeight - rect.height;
+            const left = Math.min(Math.max(rect.left, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(rect.top, 0), Math.max(maxTop, 0));
+            if (left !== rect.left || top !== rect.top) {
+                prepGraphPanel.style.left = `${left}px`;
+                prepGraphPanel.style.top = `${top}px`;
+                prepGraphPanel.style.right = 'auto';
+            }
+        }
+        window.addEventListener('resize', keepGraphPanelOnScreen);
+        keepGraphPanelOnScreen();
+
+        // collapsing hides the body but keeps the header (and its drag handle) visible
+        const prepGraphToggle = prepGraphPanel.querySelector('.prep-graph-toggle');
+        prepGraphToggle.addEventListener('click', () => {
+            const collapsed = prepGraphPanel.classList.toggle('collapsed');
+            prepGraphToggle.setAttribute('aria-expanded', String(!collapsed));
+            prepGraphToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
+            keepGraphPanelOnScreen();
+        });
+
+        // redraws every Preparation Master node and the edges derived from preparationLinks.preparationsTable
+        function renderPreparationRelationshipGraph() {
+            const names = Array.from(preparationDetailsById.keys());
+            const nodeCount = names.length;
+            const center = 110;
+            const radius = 80;
+            const nodeRadius = 16;
+            const positions = new Map();
+            names.forEach((name, index) => {
+                const angle = (2 * Math.PI * index / nodeCount) - Math.PI / 2;
+                positions.set(name, {
+                    x: center + radius * Math.cos(angle),
+                    y: center + radius * Math.sin(angle)
+                });
+            });
+
+            const selectedParents = new Set(tables.preparationMasterTable.selectedKeys);
+            const edges = [];
+            names.forEach((prepId) => {
+                const links = (preparationLinks[prepId] && preparationLinks[prepId].preparationsTable) || [];
+                links.forEach((recordId) => {
+                    const childName = preparationNameByRecordId.get(recordId);
+                    if (childName && positions.has(childName)) {
+                        edges.push({ from: prepId, to: childName, circular: wouldCreateCircularReference(childName, prepId) });
+                    }
+                });
+            });
+
+            prepGraphSvg.innerHTML = `
+                <defs>
+                    <marker id="prep-graph-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="#9aa0a6"></path>
+                    </marker>
+                    <marker id="prep-graph-arrow-warn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M0,0 L10,5 L0,10 z" fill="#b3261e"></path>
+                    </marker>
+                </defs>
+            `;
+
+            edges.forEach((edge) => {
+                const from = positions.get(edge.from);
+                const to = positions.get(edge.to);
+                const dx = to.x - from.x;
+                const dy = to.y - from.y;
+                const dist = Math.hypot(dx, dy) || 1;
+                const line = document.createElementNS(svgNs, 'line');
+                line.setAttribute('x1', from.x + (dx / dist) * (nodeRadius + 6));
+                line.setAttribute('y1', from.y + (dy / dist) * (nodeRadius + 6));
+                line.setAttribute('x2', to.x - (dx / dist) * nodeRadius);
+                line.setAttribute('y2', to.y - (dy / dist) * nodeRadius);
+                line.setAttribute('stroke', edge.circular ? '#b3261e' : '#9aa0a6');
+                line.setAttribute('stroke-width', edge.circular ? '2' : '1.4');
+                line.setAttribute('marker-start', edge.circular ? 'url(#prep-graph-arrow-warn)' : 'url(#prep-graph-arrow)');
+                prepGraphSvg.appendChild(line);
+            });
+
+            names.forEach((name) => {
+                const pos = positions.get(name);
+                const isSelected = selectedParents.has(name);
+                const circle = document.createElementNS(svgNs, 'circle');
+                circle.setAttribute('cx', pos.x);
+                circle.setAttribute('cy', pos.y);
+                circle.setAttribute('r', nodeRadius);
+                circle.setAttribute('fill', isSelected ? '#1a73e855' : '#fff');
+                circle.setAttribute('stroke', isSelected ? '#1a73e8' : '#9aa0a6');
+                circle.setAttribute('stroke-width', '1.5');
+                prepGraphSvg.appendChild(circle);
+
+                const label = document.createElementNS(svgNs, 'text');
+                label.setAttribute('x', pos.x);
+                label.setAttribute('y', pos.y + 3);
+                label.setAttribute('text-anchor', 'middle');
+                label.setAttribute('class', 'prep-graph-node-label');
+                label.setAttribute('fill', isSelected ? '#1a73e8' : '#202124');
+                label.textContent = (preparationDetailsById.get(name) || {}).name || name;
+                prepGraphSvg.appendChild(label);
+            });
+        }
+
+        // true if targetPrepId is already reachable from startPrepId by following existing
+        // preparationsTable links, i.e. linking startPrepId -> targetPrepId would close a loop
+        function wouldCreateCircularReference(startPrepId, targetPrepId) {
+            const visited = new Set();
+            const stack = [startPrepId];
+            while (stack.length) {
+                const current = stack.pop();
+                if (current === targetPrepId) {
+                    return true;
+                }
+                if (visited.has(current)) {
+                    continue;
+                }
+                visited.add(current);
+                const links = (preparationLinks[current] && preparationLinks[current].preparationsTable) || [];
+                links.forEach((recordId) => {
+                    const name = preparationNameByRecordId.get(recordId);
+                    if (name) {
+                        stack.push(name);
+                    }
+                });
+            }
+            return false;
+        }
+
+        // warns when checking this Preparations row would link one of the selected parents back to
+        // a preparation that (transitively) already links back to that same parent
+        function warnIfCircularReference(preparationRecordId) {
+            const childName = preparationNameByRecordId.get(preparationRecordId);
+            if (!childName) {
+                return;
+            }
+            const circularParents = Array.from(tables.preparationMasterTable.selectedKeys)
+                .filter((parentPrepId) => wouldCreateCircularReference(childName, parentPrepId));
+            if (circularParents.length > 0) {
+                showToast(`\u26a0 Circular reference: ${childName} already links back to ${circularParents.join(', ')}`, { variant: 'warning' });
+            }
+        }
+
+        renderPreparationRelationshipGraph();
 
         const preparationTooltip = document.createElement('div');
         preparationTooltip.className = 'prep-tooltip';
@@ -1093,7 +1652,7 @@
             preparationTooltip.style.top = `${rect.top}px`;
         }
 
-        ['materialTable', 'samplesTable', 'equipmentTable'].forEach((tableId) => {
+        ['materialTable', 'samplesTable', 'equipmentTable', 'preparationsTable'].forEach((tableId) => {
             const tableElement = document.getElementById(tableId);
             tableElement.addEventListener('mouseover', (event) => {
                 const checkbox = event.target.closest('.row-select');
@@ -1104,6 +1663,27 @@
             tableElement.addEventListener('mouseout', (event) => {
                 if (event.target.closest('.row-select')) {
                     hidePreparationTooltip();
+                }
+            });
+
+            // manual (un)checks here edit preparationLinks for the currently selected parent(s), then
+            // re-derive every table's checked/indeterminate state from the updated links
+            tableElement.addEventListener('change', (event) => {
+                if (event.target.classList.contains('select-all-visible')) {
+                    const checked = event.target.checked;
+                    tableElement.querySelectorAll('.row-select').forEach((checkbox) => {
+                        if (checked && tableId === 'preparationsTable') {
+                            warnIfCircularReference(checkbox.value);
+                        }
+                        updatePreparationLinkForChildChange(tableId, checkbox.value, checked);
+                    });
+                    applyLinkedSelections();
+                } else if (event.target.classList.contains('row-select')) {
+                    if (event.target.checked && tableId === 'preparationsTable') {
+                        warnIfCircularReference(event.target.value);
+                    }
+                    updatePreparationLinkForChildChange(tableId, event.target.value, event.target.checked);
+                    applyLinkedSelections();
                 }
             });
         });
