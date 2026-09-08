@@ -102,6 +102,7 @@ class ZontalClient {
         }
     }
 }
+const client = new ZontalClient('zontaldev.jnj.com/', 'revvity-signals-api', '3waw70uCqYaXtQlfpVL6Q9kv8B8BDJDk')
 
 
 
@@ -134,7 +135,6 @@ const payload = {
     ]
 };
 
-const client = new ZontalClient('zontaldev.jnj.com/','revvity-signals-api','3waw70uCqYaXtQlfpVL6Q9kv8B8BDJDk')
 client.authenticatedFetch('/api/search/informationPackages/', { body: payload })
     .then(res => console.log('result', res))
     .catch(err => console.error('fetch error', err));
