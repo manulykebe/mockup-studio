@@ -6,7 +6,7 @@ devinternal;Administration;;1;System Admin;4;Manage Attributes;1
 devinternal;Administration;;1;System Admin;5;Manage ADOs;1
 devinternal;Administration;;2;Inventory Admin;1;Configure System;1
 devinternal;Administration;;2;Inventory Admin;2;Manage System Templates;1
-devinternal;Administration;;2;Inventory Admin;3;Manage Groups;0
+devinternal;Administration;;2;Inventory Admin;3;Manage Groups;1
 devinternal;Administration;;2;Inventory Admin;4;Manage Attributes;0
 devinternal;Administration;;2;Inventory Admin;5;Manage ADOs;0
 devinternal;Administration;;3;Standard User;1;Configure System;0

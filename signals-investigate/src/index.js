@@ -1,6 +1,7 @@
 import { extractTocData, parseFieldEditForm } from './dom.js';
-import { toCsv } from './csv.js';
+import { toCsv, csvToObjects } from './csv.js';
 import { downloadCsv, getUrlPrefix } from './download.js';
+import { pickFile, readFileAsText } from './upload.js';
 import { openToolbarPopup, closePopup, waitForCondition } from './popup.js';
 import { parseHtmlTable } from './table.js';
 import { runChain } from './monitor.js';
@@ -886,6 +887,219 @@ async function exportRolesToCsv(options = {}) {
   return roleRows;
 }
 
+const CHANGED_VALUE_HIGHLIGHT_CLASS = 'extract-changed-value-highlight';
+
+// Injects (once) the CSS that draws a yellow ring around checkboxes changed by importRolesFromCsv.
+function ensureChangedValueHighlightStyle() {
+  if (document.getElementById('extract-changed-value-highlight-style')) {
+    return;
+  }
+
+  const style = document.createElement('style');
+  style.id = 'extract-changed-value-highlight-style';
+  style.textContent = `
+    .${CHANGED_VALUE_HIGHLIGHT_CLASS} {
+      outline: 3px solid #ffd400 !important;
+      outline-offset: 2px;
+      border-radius: 50%;
+      box-shadow: 0 0 4px 2px #ffd400 !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function isTruthyValue(value) {
+  return /^(1|true|yes|on|enabled|allow)$/i.test(String(value ?? '').trim());
+}
+
+// Reads the current role matrix table the same way readRoleMatrixFromTable does, but instead of
+// collecting rows it clicks any checkbox whose state doesn't match the imported CSV value (and only
+// those), highlighting each one it toggles. getTable is called before every checkbox lookup in case the
+// app re-renders the table on toggle, so indices stay in sync with the live DOM.
+async function applyRoleMatrixToTable(getTable, csvRows, delayMs = 120) {
+  const changed = [];
+
+  const readMeta = () => {
+    const table = getTable();
+    if (!table) {
+      return null;
+    }
+
+    const headerCells = Array.from(table.querySelectorAll('thead th, thead td, [role="columnheader"]'));
+    const rowHeaderCells = headerCells.length
+      ? headerCells
+      : Array.from(table.querySelectorAll('tr:first-child th, tr:first-child td'));
+    const headers = rowHeaderCells.map((cell) => cell.textContent.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    if (!headers.length || !headers.some((header) => /role name/i.test(header))) {
+      return null;
+    }
+
+    const roleNameIndex = headers.findIndex((header) => /role name/i.test(header));
+    const permissionHeaders = headers
+      .map((header, index) => ({ header, index }))
+      .filter(({ header, index }) => index !== roleNameIndex && !/role name|action/i.test(header));
+    const dataRows = Array.from(table.querySelectorAll('tbody tr, tr')).filter((tr) => {
+      const text = (tr.textContent || '').replace(/\s+/g, ' ').trim();
+      return !!text && !/^role name$/i.test(text) && !/action/i.test(text);
+    });
+
+    return { roleNameIndex, permissionHeaders, dataRows };
+  };
+
+  const initialMeta = readMeta();
+  if (!initialMeta) {
+    return changed;
+  }
+
+  for (let roleOrderIndex = 0; roleOrderIndex < initialMeta.dataRows.length; roleOrderIndex++) {
+    for (let permissionOrderIndex = 0; permissionOrderIndex < initialMeta.permissionHeaders.length; permissionOrderIndex++) {
+      const meta = readMeta();
+      const tr = meta?.dataRows[roleOrderIndex];
+      if (!tr) {
+        continue;
+      }
+
+      const cells = Array.from(tr.querySelectorAll('th, td'));
+      const roleCell = cells[meta.roleNameIndex] || null;
+      const roleText = roleCell
+        ? (roleCell.querySelector('.long-role-name, .role-name, [title], .truncate')?.textContent || roleCell.textContent || '')
+        : '';
+      const roleName = normalizeRoleName(roleText);
+      if (!roleName) {
+        continue;
+      }
+
+      const { header, index } = meta.permissionHeaders[permissionOrderIndex];
+      const permissionName = header.trim();
+      const checkbox = cells[index]?.querySelector('input[type="checkbox"]');
+      if (!permissionName || !checkbox) {
+        continue;
+      }
+
+      const csvRow = csvRows.find((row) => row.role === roleName && row.permission === permissionName);
+      if (!csvRow) {
+        continue;
+      }
+
+      const desired = isTruthyValue(csvRow.value);
+      const before = checkbox.checked;
+      if (before === desired) {
+        continue;
+      }
+
+      checkbox.click();
+      checkbox.classList.add(CHANGED_VALUE_HIGHLIGHT_CLASS);
+      changed.push([roleName, permissionName, before ? '1' : '0', desired ? '1' : '0']);
+      if (delayMs) {
+        await new Promise((resolve) => setTimeout(resolve, delayMs));
+      }
+    }
+  }
+
+  return changed;
+}
+
+// Inverse of exportRolesToCsv: reads a previously exported user-roles CSV and, for every tab/subtab it
+// covers, clicks only the checkboxes whose current state differs from the CSV, leaving everything else
+// untouched. Each toggled checkbox gets a yellow ring (see ensureChangedValueHighlightStyle) so changes
+// are easy to spot on screen. Pass { file } to skip the file picker (e.g. when scripting the import).
+async function importRolesFromCsv(options = {}) {
+  const { file } = options;
+
+  ensureChangedValueHighlightStyle();
+
+  const csvText = await readFileAsText(file || await pickFile());
+  const records = csvToObjects(csvText);
+  if (!records.length) {
+    throw new Error('No rows found in the roles CSV.');
+  }
+
+  const environment = window.location.hostname.split('.')[0] || 'unknown';
+  const csvEnvironment = records[0].Environment;
+  if (csvEnvironment && csvEnvironment !== environment) {
+    console.warn(`Importing a roles CSV exported from "${csvEnvironment}" into environment "${environment}".`);
+  }
+
+  const groups = new Map();
+  records.forEach((record) => {
+    const tabLabel = record.Tab || '';
+    const subTabLabel = record.SubTab || '';
+    const key = `${tabLabel}\u0000${subTabLabel}`;
+    if (!groups.has(key)) {
+      groups.set(key, []);
+    }
+    groups.get(key).push({
+      role: normalizeRoleName(record.Role),
+      permission: (record.Permission || '').trim(),
+      value: record.Value,
+    });
+  });
+
+  const tabButtons = Array.from(document.querySelectorAll('.nav.nav-tabs [role="tab"], .nav-tabs .nav-link, .nav-tabs button, .nav-tabs a'))
+    .filter((button) => {
+      const text = (button.textContent || '').replace(/\s+/g, ' ').trim();
+      return !!text;
+    });
+
+  const getSubTabs = (panel) => {
+    if (!panel) {
+      return [];
+    }
+
+    return Array.from(panel.querySelectorAll('.nav-item button, .nav-item a, [role="tab"], .nav-link'))
+      .map((button) => ({
+        button,
+        text: (button.textContent || '').replace(/\s+/g, ' ').trim(),
+      }))
+      .filter(({ text }) => !!text && !/delete role/i.test(text));
+  };
+
+  const allChanges = [];
+
+  if (tabButtons.length) {
+    for (const button of tabButtons) {
+      const tabLabel = (button.textContent || '').replace(/\s+/g, ' ').trim();
+      const panel = getTabPanelForTab(button);
+      const subTabs = getSubTabs(panel);
+      const tabsToProcess = subTabs.length ? subTabs : [{ button: null, text: '' }];
+
+      for (const { button: subTabButton, text: subTabLabel } of tabsToProcess) {
+        const group = groups.get(`${tabLabel}\u0000${subTabLabel || ''}`);
+        if (!group || !group.length) {
+          continue;
+        }
+
+        if (subTabButton) {
+          subTabButton.click();
+          await new Promise((resolve) => setTimeout(resolve, 150));
+        }
+
+        const getTable = () => panel?.querySelector('table') || document.querySelector('table');
+        const changed = await applyRoleMatrixToTable(getTable, group);
+        changed.forEach(([role, permission, from, to]) => allChanges.push([tabLabel, subTabLabel || '', role, permission, from, to]));
+      }
+    }
+  } else {
+    const group = groups.get('Current Tab\u0000');
+    if (group && group.length) {
+      const tables = Array.from(document.querySelectorAll('table'));
+      for (const table of tables) {
+        const changed = await applyRoleMatrixToTable(() => table, group);
+        changed.forEach(([role, permission, from, to]) => allChanges.push(['Current Tab', '', role, permission, from, to]));
+      }
+    }
+  }
+
+  if (!allChanges.length) {
+    console.log('Role import complete: no changes were needed (all values already matched).');
+  } else {
+    console.log(`Role import complete: ${allChanges.length} value(s) changed.`);
+    console.table(allChanges.map(([Tab, SubTab, Role, Permission, From, To]) => ({ Tab, SubTab, Role, Permission, From, To })));
+  }
+
+  return allChanges;
+}
+
 function readPrivilegeMatrixFromTable(table, objectName = 'Unknown Object') {
   if (!table) {
     return [];
@@ -1187,6 +1401,7 @@ window.extract = {
   getSectionMetadata,
   exportFocusedElementImagesFromToc,
   exportRolesToCsv,
+  importRolesFromCsv,
   exportPrivilegesToCsv,
   exportUserToCsv,
   listSystemObjects,
