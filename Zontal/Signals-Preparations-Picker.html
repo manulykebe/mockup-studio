@@ -1551,13 +1551,13 @@
         });
 
         // always-on-top top-right panel showing an SVG node graph of Preparation Master <-> Preparation links;
-        // draggable via its header and collapsible via the toggle button
+        // draggable via its header and collapsible via the toggle button; starts collapsed
         const prepGraphPanel = document.createElement('div');
-        prepGraphPanel.className = 'prep-graph-panel';
+        prepGraphPanel.className = 'prep-graph-panel collapsed';
         prepGraphPanel.innerHTML = `
             <div class="prep-graph-header">
-                <span class="prep-graph-title">Preparation Links</span>
-                <button type="button" class="prep-graph-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
+                <span class="prep-graph-title">Preparations Links</span>
+                <button type="button" class="prep-graph-toggle" aria-expanded="false" aria-label="Expand">&#9656;</button>
             </div>
             <div class="prep-graph-body">
                 <svg viewBox="0 0 220 220" width="210" height="210" aria-label="Preparation relationship graph"></svg>
@@ -1633,7 +1633,9 @@
 
         // always-on-top floating popup listing, per selected Preparation Master record, every child
         // row ticked in Preparations/Material/Samples/Equipment - a table view of preparationLinks,
-        // draggable via its header and collapsible via the toggle button, same behaviour as the graph panel
+        // draggable via its header and collapsible via the toggle button, same behaviour as the graph panel.
+        // Row sorting order in each table defaults to link order but can be manually overridden by the
+        // user (drag row handle, or type a value in the "#" row-number input) - see prepRecordOrder below.
         const prepRecordsPanel = document.createElement('div');
         prepRecordsPanel.className = 'prep-records-panel';
         prepRecordsPanel.innerHTML = `
