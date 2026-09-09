@@ -381,6 +381,105 @@
             font-weight: 600;
             font-family: inherit;
         }
+
+        .prep-records-panel {
+            position: fixed;
+            top: 300px;
+            right: 1rem;
+            z-index: 40;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+            width: 360px;
+        }
+
+        .prep-records-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .45rem .7rem;
+            background: #f1f3f4;
+            border-bottom: 1px solid #d9d9d9;
+            border-radius: 6px 6px 0 0;
+            cursor: move;
+            user-select: none;
+        }
+
+        .prep-records-panel.collapsed .prep-records-header {
+            border-bottom: none;
+            border-radius: 6px;
+        }
+
+        .prep-records-title {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .prep-records-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .8rem;
+            line-height: 1;
+            color: #5f6368;
+            padding: 0 .2rem;
+        }
+
+        .prep-records-body {
+            padding: .6rem .7rem;
+            max-height: 60vh;
+            overflow-y: auto;
+        }
+
+        .prep-records-panel.collapsed .prep-records-body {
+            display: none;
+        }
+
+        .prep-records-empty {
+            font-size: .8rem;
+            color: #5f6368;
+            margin: 0;
+        }
+
+        .prep-record-block+.prep-record-block {
+            margin-top: .8rem;
+            padding-top: .8rem;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .prep-record-heading {
+            font-size: .85rem;
+            font-weight: 700;
+            color: #1a73e8;
+            margin: 0 0 .4rem;
+        }
+
+        .prep-record-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .74rem;
+            margin-bottom: .3rem;
+        }
+
+        .prep-record-table th,
+        .prep-record-table td {
+            border: 1px solid #e6e6e6;
+            padding: .15rem .35rem;
+        }
+
+        .prep-record-table th {
+            background: #f8f9fa;
+            white-space: nowrap;
+            position: static;
+        }
+
+        .prep-record-source-cell {
+            text-align: center;
+            width: 1.6rem;
+            font-size: .85rem;
+        }
     </style>
 </head>
 
@@ -1367,6 +1466,9 @@
             if (typeof renderPreparationRelationshipGraph === 'function') {
                 renderPreparationRelationshipGraph();
             }
+            if (typeof renderPreparationRecordsPanel === 'function') {
+                renderPreparationRecordsPanel();
+            }
         }
 
         const preparationLoadingModal = document.getElementById('preparationLoadingModal');
@@ -1497,6 +1599,140 @@
             keepGraphPanelOnScreen();
         });
 
+        // always-on-top floating popup listing, per selected Preparation Master record, every child
+        // row ticked in Preparations/Material/Samples/Equipment - a table view of preparationLinks,
+        // draggable via its header and collapsible via the toggle button, same behaviour as the graph panel
+        const prepRecordsPanel = document.createElement('div');
+        prepRecordsPanel.className = 'prep-records-panel';
+        prepRecordsPanel.innerHTML = `
+            <div class="prep-records-header">
+                <span class="prep-records-title">Preparation Records</span>
+                <button type="button" class="prep-records-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
+            </div>
+            <div class="prep-records-body"></div>
+        `;
+        document.body.appendChild(prepRecordsPanel);
+        const prepRecordsBody = prepRecordsPanel.querySelector('.prep-records-body');
+
+        const prepRecordsHeader = prepRecordsPanel.querySelector('.prep-records-header');
+        let isDraggingRecordsPanel = false;
+        let recordsDragOffsetX = 0;
+        let recordsDragOffsetY = 0;
+
+        prepRecordsHeader.addEventListener('mousedown', (event) => {
+            if (event.target.closest('.prep-records-toggle')) {
+                return;
+            }
+            const rect = prepRecordsPanel.getBoundingClientRect();
+            recordsDragOffsetX = event.clientX - rect.left;
+            recordsDragOffsetY = event.clientY - rect.top;
+            prepRecordsPanel.style.left = `${rect.left}px`;
+            prepRecordsPanel.style.top = `${rect.top}px`;
+            prepRecordsPanel.style.right = 'auto';
+            isDraggingRecordsPanel = true;
+            event.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (!isDraggingRecordsPanel) {
+                return;
+            }
+            const maxLeft = window.innerWidth - prepRecordsPanel.offsetWidth;
+            const maxTop = window.innerHeight - prepRecordsPanel.offsetHeight;
+            const left = Math.min(Math.max(event.clientX - recordsDragOffsetX, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(event.clientY - recordsDragOffsetY, 0), Math.max(maxTop, 0));
+            prepRecordsPanel.style.left = `${left}px`;
+            prepRecordsPanel.style.top = `${top}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingRecordsPanel = false;
+        });
+
+        // re-clamps the panel back on screen if a resize (e.g. collapsing) leaves it partly off-viewport
+        function keepRecordsPanelOnScreen() {
+            const rect = prepRecordsPanel.getBoundingClientRect();
+            const maxLeft = window.innerWidth - rect.width;
+            const maxTop = window.innerHeight - rect.height;
+            const left = Math.min(Math.max(rect.left, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(rect.top, 0), Math.max(maxTop, 0));
+            if (left !== rect.left || top !== rect.top) {
+                prepRecordsPanel.style.left = `${left}px`;
+                prepRecordsPanel.style.top = `${top}px`;
+                prepRecordsPanel.style.right = 'auto';
+            }
+        }
+        window.addEventListener('resize', keepRecordsPanelOnScreen);
+        keepRecordsPanelOnScreen();
+
+        const prepRecordsToggle = prepRecordsPanel.querySelector('.prep-records-toggle');
+        prepRecordsToggle.addEventListener('click', () => {
+            const collapsed = prepRecordsPanel.classList.toggle('collapsed');
+            prepRecordsToggle.setAttribute('aria-expanded', String(!collapsed));
+            prepRecordsToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
+            keepRecordsPanelOnScreen();
+        });
+
+        // display metadata for each child source table: the icon/tooltip shown in the leftmost
+        // column of the combined table, identifying which source a row came from
+        const childTableMeta = {
+            preparationsTable: { label: 'Preparations', icon: '\u{1F9EA}' },
+            materialTable: { label: 'Material/Lot/Container', icon: '\u{1F4E6}' },
+            samplesTable: { label: 'Samples', icon: '\u{1F9EB}' },
+            equipmentTable: { label: 'Equipment', icon: '\u{1F527}' }
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
+        }
+
+        // builds the <tr> markup for the rows in tableId whose key is in itemKeys, in their current
+        // order, tagged with that source's icon in the leftmost column
+        function buildChildRecordRows(tableId, itemKeys) {
+            const meta = childTableMeta[tableId];
+            const rowsByKey = new Map(tables[tableId].dataTable.rows().data().toArray().map((row) => [row[0], row]));
+            return itemKeys.map((key) => rowsByKey.get(key)).filter(Boolean).map((row) => `
+                <tr>
+                    <td class="prep-record-source-cell" title="${escapeHtml(meta.label)}">${meta.icon}</td>
+                    <td>${escapeHtml(row[0])}</td>
+                    <td>${escapeHtml(row[1])}</td>
+                    <td>${escapeHtml(row[2])}</td>
+                </tr>
+            `).join('');
+        }
+
+        // rebuilds the popup: one block per selected Preparation Master record (titled with its
+        // Preparation Name), each with a single combined table of every ticked/linked row across
+        // Preparations/Material/Samples/Equipment - a live view of the preparationLinks in-memory store
+        function renderPreparationRecordsPanel() {
+            const selectedPrepIds = Array.from(tables.preparationMasterTable.selectedKeys);
+            if (selectedPrepIds.length === 0) {
+                prepRecordsBody.innerHTML = '<p class="prep-records-empty">Select a Preparation Master record to see its linked records.</p>';
+                return;
+            }
+
+            prepRecordsBody.innerHTML = selectedPrepIds.map((prepId) => {
+                const links = preparationLinks[prepId] || {};
+                const rows = Object.keys(childTableMeta)
+                    .map((tableId) => buildChildRecordRows(tableId, links[tableId] || []))
+                    .join('');
+                const body = rows
+                    ? `<table class="prep-record-table">
+                        <thead><tr><th></th><th>ID</th><th>Name</th><th>Comment</th></tr></thead>
+                        <tbody>${rows}</tbody>
+                    </table>`
+                    : '<p class="prep-records-empty">No linked records ticked yet.</p>';
+                return `
+                    <div class="prep-record-block">
+                        <h4 class="prep-record-heading">${escapeHtml(prepId)}</h4>
+                        ${body}
+                    </div>
+                `;
+            }).join('');
+        }
+
         // redraws every Preparation Master node and the edges derived from preparationLinks.preparationsTable
         function renderPreparationRelationshipGraph() {
             const names = Array.from(preparationDetailsById.keys());
@@ -1616,6 +1852,7 @@
         }
 
         renderPreparationRelationshipGraph();
+        renderPreparationRecordsPanel();
 
         const preparationTooltip = document.createElement('div');
         preparationTooltip.className = 'prep-tooltip';
