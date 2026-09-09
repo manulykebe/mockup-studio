@@ -10,32 +10,32 @@ http:
     type: json
     data: |-
       {
-        "size": 25,
-        "query": "",
-        "filter": [
-          {
-            "propertyName": "instrumentId",
-            "value": [
-              "MALC74967"
-            ],
-            "filterType": "terms",
-            "operator": null
-          },
-          {
-            "propertyName": "informationPackageProfile",
-            "value": [
-              "Mastersizer_2000_VNF"
-            ],
-            "filterType": "terms",
-            "operator": null
-          }
-        ],
-        "sortField": [
-          "createdOn"
-        ],
-        "sortOrder": [
-          "desc"
-        ]
+          "size": 25,
+          "query": "",
+          "filter": [
+              {
+                  "propertyName": "instrumentId",
+                  "value": [
+                      "MALC74967"
+                  ],
+                  "filterType": "terms",
+                  "operator": null
+              },
+              {
+                  "propertyName": "informationPackageProfile",
+                  "value": [
+                      "Mastersizer_2000_VNF"
+                  ],
+                  "filterType": "terms",
+                  "operator": null
+              }
+          ],
+          "sortField": [
+              "createdOn"
+          ],
+          "sortOrder": [
+              "desc"
+          ]
       }
   auth:
     type: bearer

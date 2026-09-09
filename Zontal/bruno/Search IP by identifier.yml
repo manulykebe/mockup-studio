@@ -14,34 +14,11 @@ http:
         "query": "",
         "filter": [
           {
-            "propertyName": "instrumentId",
+            "propertyName": "informationPackageIdentifier",
             "value": [
-              "US104582"
+              "0"
             ],
-            "filterType": "terms",
-            "operator": null
-          },
-          {
-            "propertyName": "informationPackageProfile",
-            "value": [
-              "ChemoMetec_XM30_VNF"
-            ],
-            "filterType": "terms",
-            "operator": null
-          },
-          {
-            "propertyName": "sampleId",
-            "value": [
-              "Sh1323-DGF-TR1-S1213453"
-            ],
-            "filterType": "terms",
-            "operator": null
-          },
-          {
-            "propertyName": "createdOn",
-            "from": "2025-01-01T00:00:00.000+00:00",
-            "to": "2025-12-01T00:00:00.000+00:00",
-            "filterType": "range",
+            "filterType": "prefix",
             "operator": null
           }
         ],
@@ -60,11 +37,12 @@ runtime:
   scripts:
     - type: after-response
       code: |-
-        bru.setEnvVar('IPTitle',res.getBody().member[0].title)
-        bru.setEnvVar('IPID',res.getBody().member[0].identifier)
+        // bru.setEnvVar('IPTitle',res.getBody().member[0].title)
+        // bru.setEnvVar('IPID',res.getBody().member[0].identifier)
 
 settings:
   encodeUrl: true
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

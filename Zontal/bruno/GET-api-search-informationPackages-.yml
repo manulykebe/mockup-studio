@@ -1,0 +1,115 @@
+info:
+  name: GET/api/search/informationPackages/
+  type: http
+  seq: 6
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/api/search/informationPackages/
+  body:
+    type: json
+    data: |-
+      // {
+      //   "query": "QAS3001-b",
+      //   "queryField": [
+      //     "sample_name","sampleName"
+      //   ]
+      // }
+
+      {
+      //   "query": "MAL1098134",
+      //   "queryField": [
+      //     "sample_name","sampleName"
+      //   ]
+        "filter": [
+          {
+            "propertyName": "sampleName",
+            "value": [
+              "QAS"
+      //         "QAS4001","QAS3001-b","QAS4001: TI_5599638"
+            ],
+            "filterType": "prefix", // 
+            "caseInsensitive": true
+      //       "from": "string",
+      //       "to": "string",
+      //       "format": "string",
+      //       "timeZone": "string",
+      //       "operator": "NOOP"
+          }
+        ]
+      //   "sortField": [
+      //     "string"
+      //   ],
+      //   "sortOrder": [
+      //     "asc"
+      //   ],
+      //   "searchAfter": "string",
+      //   "size": 10,
+      //   "digitalObjectQuery": {
+      //     "query": "string",
+      //     "queryField": [
+      //       "string"
+      //     ],
+      //     "filter": [
+      //       {
+      //         "propertyName": "string",
+      //         "value": [
+      //           "string"
+      //         ],
+      //         "filterType": "terms",
+      //         "caseInsensitive": true,
+      //         "from": "string",
+      //         "to": "string",
+      //         "format": "string",
+      //         "timeZone": "string",
+      //         "operator": "NOOP"
+      //       }
+      //     ]
+      //   }
+      }
+
+      // {
+      //     "size": 100
+      //     "query": "",
+      //     "filter": [
+      //         {
+      //             "propertyName": "instrumentId",
+      //             "value": [
+      //                 "MALC74967"
+      //             ],
+      //             "filterType": "terms",
+      //             "operator": null
+      //         },
+      //         {
+      //             "propertyName": "informationPackageProfile",
+      //             "value": [
+      //                 "Mastersizer_2000_VNF"
+      //             ],
+      //             "filterType": "terms",
+      //             "operator": null
+      //         }
+      //     ],
+      //     "sortField": [
+      //         "createdOn"
+      //     ],
+      //     "sortOrder": [
+      //         "desc"
+      //     ]
+      // }
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setEnvVar('reccount',res)
+        // bru.setEnvVar('IPID',res.getBody().member[0].identifier)
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
