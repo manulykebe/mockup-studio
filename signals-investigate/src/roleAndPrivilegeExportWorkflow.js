@@ -1,5 +1,5 @@
 // Automates the multi-page role/privilege export: navigates through a fixed list of admin/config
-// pages and runs extract.exportRolesToCsv()/extract.exportPrivilegesToCsv() on each. Progress is
+// pages and runs signals.exportRolesToCsv()/signals.exportPrivilegesToCsv() on each. Progress is
 // persisted in localStorage because every navigation reloads the page (and this script) from
 // scratch, and this script re-runs its resume check every time it is (re)injected.
 
@@ -40,10 +40,10 @@ function sameUrl(a, b) {
 
 async function runStepAction(action) {
   if (action === 'roles') {
-    return window.extract.exportRolesToCsv();
+    return window.signals.exportRolesToCsv();
   }
   if (action === 'privileges') {
-    return window.extract.exportPrivilegesToCsv();
+    return window.signals.exportPrivilegesToCsv();
   }
   throw new Error(`Unknown role/privilege export workflow action "${action}".`);
 }
@@ -78,7 +78,7 @@ async function advanceWorkflow(state) {
   window.location.href = WORKFLOW_STEPS[nextIndex].url;
 }
 
-// Starts the workflow from the console, e.g. extract.runRoleAndPrivilegeExportWorkflow().
+// Starts the workflow from the console, e.g. signals.runRoleAndPrivilegeExportWorkflow().
 async function runRoleAndPrivilegeExportWorkflow() {
   const state = loadState() || { stepIndex: 0 };
   saveState(state);
@@ -91,7 +91,7 @@ function resetRoleAndPrivilegeExportWorkflow() {
   console.log('Role/privilege export workflow: progress cleared.');
 }
 
-// Call once window.extract is fully assigned so a workflow left in progress by the previous
+// Call once window.signals is fully assigned so a workflow left in progress by the previous
 // page load continues automatically, without needing the console call again.
 function resumeRoleAndPrivilegeExportWorkflowIfPending() {
   const state = loadState();

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "esbuild src/index.js --bundle --format=iife  --minify --outfile=extract.js"
+    "build": "esbuild src/index.js --bundle --format=iife  --minify --outfile=signals.js"
   },
   "devDependencies": {
     "esbuild": "^0.28.1"

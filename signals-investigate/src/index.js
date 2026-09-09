@@ -875,7 +875,7 @@ async function exportRolesToCsv(options = {}) {
   }
 
   if (!roleRows.length) {
-    throw new Error('No role-permission rows with value 1 found. Use extract.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No role-permission rows with value 1 found. Use signals.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const csv = toCsv(roleRows, ['Environment', 'Tab', 'SubTab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
@@ -1224,14 +1224,14 @@ async function exportPrivilegesToCsv(options = {}) {
   const rows = readPrivilegeMatrixFromTable(table, objectName);
 
   if (!rows.length) {
-    throw new Error('No privilege rows found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No privilege rows found. Use signals.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const filtered = rows.filter((row) => includeZeroValues || row[row.length - 1] === '1')
     .map((row) => [environment, objectName, row[1], row[2], row[3], row[4], row[5]]);
 
   if (!filtered.length) {
-    throw new Error('No privilege rows with value 1 found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No privilege rows with value 1 found. Use signals.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const csv = toCsv(filtered, ['Environment', 'Object', 'Role Index', 'Role', 'Privilege Index', 'Privilege', 'Value']);
@@ -1370,7 +1370,7 @@ const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
 function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
   const targetUrl = `${server}${SYSTEM_OBJECTS_PATH}`;
   if (!window.location.href.startsWith(targetUrl)) {
-    console.log(`Navigating to ${targetUrl} — run extract.listSystemObjects() again once the page has loaded.`);
+    console.log(`Navigating to ${targetUrl} — run signals.listSystemObjects() again once the page has loaded.`);
     window.location.href = targetUrl;
     return null;
   }
@@ -1389,9 +1389,9 @@ function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
   return names;
 }
 
-// Expose for manual use in the console, e.g. extract.getToc(), extract.getTable(), or extract.openToolbarPopup('Fields').
-window.extract = {
-  ...window.extract,
+// Expose for manual use in the console, e.g. signals.getToc(), signals.getTable(), or signals.openToolbarPopup('Fields').
+window.signals = {
+  ...window.signals,
   getToc,
   // getTable,
   getTableAsImage,
@@ -1413,5 +1413,5 @@ window.extract = {
 };
 
 // Resume a role/privilege export workflow left in progress by the previous page load, now that
-// window.extract is fully assigned.
+// window.signals is fully assigned.
 resumeRoleAndPrivilegeExportWorkflowIfPending();
