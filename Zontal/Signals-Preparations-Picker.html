@@ -115,28 +115,28 @@
             display: none
         }
 
-        .panel table {
+        table {
             font-size: .82rem;
         }
 
-        .panel th,
-        .panel td {
+        th,
+        td {
             line-height: 1.1;
             padding: .15rem .35rem;
         }
 
-        .panel .dt-layout-row {
+        .dt-layout-row {
             margin: .25rem 0 !important;
         }
 
-        .panel .dt-length,
-        .panel .dt-search,
-        .panel .dt-info,
-        .panel .dt-paging {
+        .dt-length,
+        .dt-search,
+        .dt-info,
+        .dt-paging {
             font-size: .78rem;
         }
 
-        .panel .dt-paging-button {
+        .dt-paging-button {
             min-width: 1.6rem;
             padding: .15rem .35rem;
         }
@@ -191,24 +191,24 @@
             cursor: not-allowed;
         }
 
-        .panel table.reorder-disabled .drag-handle-cell {
+        table.reorder-disabled .drag-handle-cell {
             cursor: not-allowed;
             opacity: .4;
         }
 
-        .panel tbody tr.dragging-row {
+        tbody tr.dragging-row {
             opacity: .5;
         }
 
-        .panel tbody tr.drop-before>td {
+        tbody tr.drop-before>td {
             border-top: 2px solid #1a73e8;
         }
 
-        .panel tbody tr.drop-after>td {
+        tbody tr.drop-after>td {
             border-bottom: 2px solid #1a73e8;
         }
 
-        .panel tbody tr.row-disabled {
+        tbody tr.row-disabled {
             opacity: .5;
         }
 
@@ -1638,7 +1638,7 @@
         prepRecordsPanel.className = 'prep-records-panel';
         prepRecordsPanel.innerHTML = `
             <div class="prep-records-header">
-                <span class="prep-records-title">Preparation Records</span>
+                <span class="prep-records-title">Preparations</span>
                 <button type="button" class="prep-records-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
             </div>
             <div class="prep-records-body"></div>
@@ -1836,7 +1836,7 @@
         function createPrepRecordBlock(prepId) {
             const blockEl = document.createElement('div');
             blockEl.className = 'prep-record-block';
-            blockEl.innerHTML = `<h4 class="prep-record-heading">${escapeHtml(prepId)}</h4><table class="prep-record-table"></table>`;
+            blockEl.innerHTML = `<h4 class="prep-record-heading">${escapeHtml(prepId)}</h4><table class="prep-record-table compact"></table>`;
             prepRecordsBody.appendChild(blockEl);
             const tableElement = blockEl.querySelector('table');
 
