@@ -875,7 +875,7 @@ async function exportRolesToCsv(options = {}) {
   }
 
   if (!roleRows.length) {
-    throw new Error('No role-permission rows with value 1 found. Use extract.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No role-permission rows with value 1 found. Use signals.exportRolesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const csv = toCsv(roleRows, ['Environment', 'Tab', 'SubTab', 'Role Index', 'Role', 'Permission Index', 'Permission', 'Value']);
@@ -887,16 +887,16 @@ async function exportRolesToCsv(options = {}) {
   return roleRows;
 }
 
-const CHANGED_VALUE_HIGHLIGHT_CLASS = 'extract-changed-value-highlight';
+const CHANGED_VALUE_HIGHLIGHT_CLASS = 'signals-changed-value-highlight';
 
 // Injects (once) the CSS that draws a yellow ring around checkboxes changed by importRolesFromCsv.
 function ensureChangedValueHighlightStyle() {
-  if (document.getElementById('extract-changed-value-highlight-style')) {
+  if (document.getElementById('signals-changed-value-highlight-style')) {
     return;
   }
 
   const style = document.createElement('style');
-  style.id = 'extract-changed-value-highlight-style';
+  style.id = 'signals-changed-value-highlight-style';
   style.textContent = `
     .${CHANGED_VALUE_HIGHLIGHT_CLASS} {
       outline: 3px solid #ffd400 !important;
@@ -1224,14 +1224,14 @@ async function exportPrivilegesToCsv(options = {}) {
   const rows = readPrivilegeMatrixFromTable(table, objectName);
 
   if (!rows.length) {
-    throw new Error('No privilege rows found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No privilege rows found. Use signals.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const filtered = rows.filter((row) => includeZeroValues || row[row.length - 1] === '1')
     .map((row) => [environment, objectName, row[1], row[2], row[3], row[4], row[5]]);
 
   if (!filtered.length) {
-    throw new Error('No privilege rows with value 1 found. Use extract.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
+    throw new Error('No privilege rows with value 1 found. Use signals.exportPrivilegesToCsv({ includeZeroValues: true }) to include zero values.');
   }
 
   const csv = toCsv(filtered, ['Environment', 'Object', 'Role Index', 'Role', 'Privilege Index', 'Privilege', 'Value']);
@@ -1360,6 +1360,227 @@ async function exportUserToCsv() {
   return outputRows;
 }
 
+const ATTRIBUTES_PATH = '/snconfig/metadata';
+
+function getAttributeRows() {
+  return Array.from(document.querySelectorAll(USER_ROW_SELECTOR))
+    .filter((row) => !row.classList.contains('record-browser-row-col-header'));
+}
+
+function parseAttributeListRow(row) {
+  return {
+    name: row.querySelector('.metadata-name')?.textContent.trim() ?? '',
+    type: row.querySelector('.metadata-type')?.textContent.trim() ?? '',
+  };
+}
+
+// Pagination re-renders the row list asynchronously, so wait for the first row's name to actually
+// change before reading the next/restored page.
+async function waitForAttributeRowsChange(previousFirstName, timeoutMs = 10000) {
+  await waitForCondition(() => {
+    const firstName = parseAttributeListRow(getAttributeRows()[0] || {}).name;
+    return !!firstName && firstName !== previousFirstName;
+  }, timeoutMs);
+}
+
+// Opening an attribute is an in-app route change (no full reload), so wait for the toolbar name to
+// reflect the newly opened attribute, then give its type-specific content a moment to render (the
+// Parent List combobox in particular can populate its value a beat after the container appears).
+async function waitForAttributeDetail(name, timeoutMs = 15000) {
+  await waitForCondition(() => document.querySelector('.toolbar__name')?.textContent.trim() === name, timeoutMs);
+  await new Promise((resolve) => setTimeout(resolve, 900));
+}
+
+/** Reads a form control's current value as a string, mirroring dom.js's controlValue. */
+function readAttributeControlValue(control) {
+  if (!control) {
+    return '';
+  }
+  if (control.tagName === 'SELECT') {
+    return control.selectedOptions[0]?.textContent.trim() ?? '';
+  }
+  if (control.type === 'checkbox') {
+    return control.checked ? 'TRUE' : 'FALSE';
+  }
+  return control.value ?? '';
+}
+
+// Reads a "<span class="meta-label">Name:</span><span class="meta-value">...</span>" row from the
+// external-data-container's refresh summary (External List Source/Last Refreshed/etc.).
+function readExternalListMetaValue(container, label) {
+  const target = label.trim().toLowerCase();
+  const row = Array.from(container.querySelectorAll('.external-list-meta .row')).find((r) => {
+    const labelText = r.querySelector('.meta-label')?.textContent.replace(/\s+/g, ' ').trim().replace(/:\s*$/, '').toLowerCase();
+    return labelText === target;
+  });
+  return row?.querySelector('.meta-value')?.textContent.replace(/\s+/g, ' ').trim() ?? null;
+}
+
+// Reads the "Refresh Frequency" select and its paired "Time (GMT)" input from the
+// external-data-container's ".refresh-element" row.
+function readRefreshFrequencyProperties(container) {
+  const properties = [];
+  const refreshRow = container.querySelector('.refresh-element');
+  if (!refreshRow) {
+    return properties;
+  }
+
+  const frequencySelect = refreshRow.querySelector('#refresh-frequency');
+  if (frequencySelect) {
+    properties.push(['Refresh Frequency', readAttributeControlValue(frequencySelect)]);
+  }
+
+  const timeLabel = Array.from(refreshRow.querySelectorAll('label')).find((label) => /^time/i.test(label.textContent.trim()));
+  const timeInput = timeLabel?.closest('.col-sm-3')?.querySelector('input');
+  if (timeInput) {
+    properties.push(['Refresh Frequency > Time', timeInput.value.trim()]);
+  }
+
+  return properties;
+}
+
+// The Parent List combobox's value is prefixed with its own label (e.g. "Parent List  Some List"),
+// so that prefix is stripped; an empty/placeholder value means no parent is selected.
+function readParentListValue() {
+  const input = document.querySelector('[data-testid="hierarchical-attribute-list"] input#select-attribute');
+  const value = input?.value?.trim() ?? '';
+  return value ? value.replace(/^Parent List\s+/i, '').trim() : '';
+}
+
+// Each manually defined value renders its text twice (once for display, once in a hidden
+// width-measuring wrapper), so the wrapper is stripped before reading the row's text.
+function readManuallyDefinedValues() {
+  return Array.from(document.querySelectorAll('.editable-list [data-index] [data-role="content"]'))
+    .map((el) => {
+      const clone = el.cloneNode(true);
+      clone.querySelectorAll('.inline-input-hidden-wrapper').forEach((hidden) => hidden.remove());
+      return clone.textContent.replace(/\s+/g, ' ').trim();
+    })
+    .filter(Boolean);
+}
+
+// List Attributes come in two shapes, distinguished by which container renders: an external-data
+// (Data Source/Search) list with refresh metadata (".external-data-container"), or a Parent-List/
+// manually-defined list (".metadata-list") — see the module-level comment above exportAttributes.
+function extractListAttributeProperties() {
+  const externalContainer = document.querySelector('.external-data-container');
+  if (externalContainer) {
+    const properties = [];
+    ['External List Source', 'Last Refreshed', 'Last Refresh Status', 'Total Records', 'Next Scheduled Refresh'].forEach((label) => {
+      const value = readExternalListMetaValue(externalContainer, label);
+      if (value !== null) {
+        properties.push([label, value]);
+      }
+    });
+    properties.push(...readRefreshFrequencyProperties(externalContainer));
+    return properties;
+  }
+
+  const properties = [];
+
+  const parentList = readParentListValue();
+  if (parentList) {
+    properties.push(['Parent List', parentList]);
+  }
+
+  readManuallyDefinedValues().forEach((value, index) => {
+    properties.push(['Manually Defined Value', value, String(index)]);
+  });
+
+  return properties;
+}
+
+// Returns to the Attributes list via its nav link (a fresh mount that always resets to page 1,
+// unlike opening an attribute which is an in-app route change), then re-clicks "Next" back to
+// pageIndex so a multi-page walk can resume exactly where it left off.
+async function returnToAttributesListPage(pageIndex) {
+  const attributesLink = document.querySelector(`a[href$="${ATTRIBUTES_PATH}"]`);
+  if (!attributesLink) {
+    throw new Error(`Could not find the "Attributes" nav link to return to ${ATTRIBUTES_PATH}.`);
+  }
+  attributesLink.click();
+  await waitForCondition(() => getAttributeRows().length > 0, 15000);
+
+  for (let i = 0; i < pageIndex; i++) {
+    const previousFirstName = parseAttributeListRow(getAttributeRows()[0]).name;
+    const nextItem = findPaginationItem('Next');
+    const nextLink = nextItem?.querySelector('a.page-link');
+    if (!nextItem || nextItem.classList.contains('disabled') || !nextLink) {
+      throw new Error('Lost track of the Attributes page while returning to it.');
+    }
+    nextLink.click();
+    await waitForAttributeRowsChange(previousFirstName);
+  }
+
+  return getAttributeRows();
+}
+
+// Walks every page of Attributes (Configuration > Attributes), opening each attribute to read its
+// Name/Description/Type plus, for List Attributes, either its Search-Query refresh metadata or its
+// Parent List/manually defined values. Exports the transposed result as CSV: one
+// "Name"/"Description"/"Type"/"Property"/"Value"/"Index" record per data point (Index only used for
+// the multi-value manually defined values).
+async function exportAttributes() {
+  if (!window.location.pathname.startsWith(ATTRIBUTES_PATH)) {
+    throw new Error(`extract.exportAttributes() must be run on ${ATTRIBUTES_PATH}.`);
+  }
+
+  await waitForCondition(() => getAttributeRows().length > 0, 15000);
+
+  const outputRows = [];
+  let attributeCount = 0;
+  let pageIndex = 0;
+  let rows = getAttributeRows();
+
+  while (rows.length) {
+    for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+      const { name: listName, type } = parseAttributeListRow(rows[rowIndex]);
+      if (!listName) {
+        continue;
+      }
+
+      rows[rowIndex].click();
+      await waitForAttributeDetail(listName);
+
+      const description = document.querySelector('.toolbar__description')?.textContent.trim() ?? '';
+      const normalizedDescription = /^no description$/i.test(description) ? '' : description;
+      const properties = type === 'List' ? extractListAttributeProperties() : [];
+
+      if (properties.length === 0) {
+        outputRows.push([listName, normalizedDescription, type, '', '', '']);
+      } else {
+        properties.forEach(([property, value, index = '']) => {
+          outputRows.push([listName, normalizedDescription, type, property, value, index]);
+        });
+      }
+
+      attributeCount += 1;
+      rows = await returnToAttributesListPage(pageIndex);
+    }
+
+    const previousFirstName = parseAttributeListRow(rows[0]).name;
+    const nextItem = findPaginationItem('Next');
+    const nextLink = nextItem?.querySelector('a.page-link');
+    if (!nextItem || nextItem.classList.contains('disabled') || !nextLink) {
+      break;
+    }
+
+    nextLink.click();
+    await waitForAttributeRowsChange(previousFirstName);
+    pageIndex += 1;
+    rows = getAttributeRows();
+  }
+
+  const csv = toCsv(outputRows, ['Name', 'Description', 'Type', 'Property', 'Value', 'Index']);
+  const timestamp = formatIsoDateTimeLocal();
+  downloadCsv(csv, `${getUrlPrefix(window.location)}#attributes#${timestamp}.csv`);
+
+  console.log(`Extracted ${attributeCount} attribute(s), ${outputRows.length} row(s) total.`);
+  console.table(outputRows.map(([Name, Description, Type, Property, Value, Index]) => ({ Name, Description, Type, Property, Value, Index })));
+
+  return outputRows;
+}
+
 const SYSTEM_OBJECTS_SERVER = 'https://devinternal.srppvt4s3r.revvitycloud.eu/';
 const SYSTEM_OBJECTS_PATH = 'snconfig/objects';
 const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
@@ -1370,7 +1591,7 @@ const SYSTEM_OBJECT_NAME_SELECTOR = 'h4.entity-info-name span[title]';
 function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
   const targetUrl = `${server}${SYSTEM_OBJECTS_PATH}`;
   if (!window.location.href.startsWith(targetUrl)) {
-    console.log(`Navigating to ${targetUrl} — run extract.listSystemObjects() again once the page has loaded.`);
+    console.log(`Navigating to ${targetUrl} — run signals.listSystemObjects() again once the page has loaded.`);
     window.location.href = targetUrl;
     return null;
   }
@@ -1389,29 +1610,30 @@ function listSystemObjects(server = SYSTEM_OBJECTS_SERVER) {
   return names;
 }
 
-// Expose for manual use in the console, e.g. extract.getToc(), extract.getTable(), or extract.openToolbarPopup('Fields').
-window.extract = {
-  ...window.extract,
-  getToc,
+// Expose for manual use in the console, e.g. signals.getToc(), signals.getTable(), or signals.openToolbarPopup('Fields').
+window.signals = {
+  ...window.signals,
+  // getToc,
   // getTable,
-  getTableAsImage,
-  getFieldsTable,
-  getTables_Fields_Properties,
-  getHistoryRecords,
-  getSectionMetadata,
-  exportFocusedElementImagesFromToc,
+  // getTableAsImage,
+  // getFieldsTable,
+  // getTables_Fields_Properties,
+  // getHistoryRecords,
+  // getSectionMetadata,
+  // exportFocusedElementImagesFromToc,
   exportRolesToCsv,
-  importRolesFromCsv,
+  // importRolesFromCsv,
   exportPrivilegesToCsv,
   exportUserToCsv,
-  listSystemObjects,
-  openToolbarPopup,
-  closePopup,
-  runChain,
-  runRoleAndPrivilegeExportWorkflow,
-  resetRoleAndPrivilegeExportWorkflow,
+  // exportAttributes,
+  // listSystemObjects,
+  // openToolbarPopup,
+  // closePopup,
+  // runChain,
+  // runRoleAndPrivilegeExportWorkflow,
+  // resetRoleAndPrivilegeExportWorkflow,
 };
 
 // Resume a role/privilege export workflow left in progress by the previous page load, now that
-// window.extract is fully assigned.
-resumeRoleAndPrivilegeExportWorkflowIfPending();
+// window.signals is fully assigned.
+// resumeRoleAndPrivilegeExportWorkflowIfPending();
