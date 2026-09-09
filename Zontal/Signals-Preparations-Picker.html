@@ -392,6 +392,20 @@
             border-radius: 6px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
             width: 360px;
+            height: 420px;
+            min-width: 300px;
+            min-height: 160px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            resize: both;
+            overflow: hidden;
+        }
+
+        .prep-records-panel.collapsed {
+            resize: none;
+            height: auto !important;
         }
 
         .prep-records-header {
@@ -429,12 +443,30 @@
 
         .prep-records-body {
             padding: .6rem .7rem;
-            max-height: 60vh;
-            overflow-y: auto;
+            flex: 1 1 auto;
+            overflow: auto;
+            min-height: 0;
         }
 
         .prep-records-panel.collapsed .prep-records-body {
             display: none;
+        }
+
+        .prep-records-panel table.reorder-disabled .drag-handle-cell {
+            cursor: not-allowed;
+            opacity: .4;
+        }
+
+        .prep-records-panel tbody tr.dragging-row {
+            opacity: .5;
+        }
+
+        .prep-records-panel tbody tr.drop-before>td {
+            border-top: 2px solid #1a73e8;
+        }
+
+        .prep-records-panel tbody tr.drop-after>td {
+            border-bottom: 2px solid #1a73e8;
         }
 
         .prep-records-empty {
@@ -1688,19 +1720,224 @@
             }[ch]));
         }
 
-        // builds the <tr> markup for the rows in tableId whose key is in itemKeys, in their current
-        // order, tagged with that source's icon in the leftmost column
-        function buildChildRecordRows(tableId, itemKeys) {
-            const meta = childTableMeta[tableId];
-            const rowsByKey = new Map(tables[tableId].dataTable.rows().data().toArray().map((row) => [row[0], row]));
-            return itemKeys.map((key) => rowsByKey.get(key)).filter(Boolean).map((row) => `
-                <tr>
-                    <td class="prep-record-source-cell" title="${escapeHtml(meta.label)}">${meta.icon}</td>
-                    <td>${escapeHtml(row[0])}</td>
-                    <td>${escapeHtml(row[1])}</td>
-                    <td>${escapeHtml(row[2])}</td>
-                </tr>
-            `).join('');
+        // per-preparation manual display order for its combined records table (array of "tableId|key"
+        // composite keys), so drag-reorder / typed row numbers survive later refreshes triggered by
+        // unrelated tickbox changes elsewhere on the page
+        const prepRecordOrder = new Map();
+        // live DataTable instance per selected Preparation Master record, kept alive across refreshes
+        // so column sort/search/paging state also survives, exactly like the main-page tables
+        const prepRecordBlocks = new Map();
+
+        function clearRecordDropIndicators(tableElement) {
+            tableElement.querySelectorAll('.drop-before, .drop-after').forEach((row) => {
+                row.classList.remove('drop-before', 'drop-after');
+            });
+        }
+
+        // row shape is [tableId, key, name, comment, orderValue]; keeps the trailing order field in sync
+        function renumberRecordRows(rows) {
+            rows.forEach((row, index) => { row[4] = index + 1; });
+        }
+
+        function saveRecordOrder(prepId, rows) {
+            prepRecordOrder.set(prepId, rows.map((row) => `${row[0]}|${row[1]}`));
+        }
+
+        // returns [{ tableId, key, row }] for every currently linked child record of prepId, ordered
+        // per any stored manual order, with newly linked items appended and unlinked ones dropped
+        function getOrderedRecordEntries(prepId) {
+            const links = preparationLinks[prepId] || {};
+            const rowByCompositeKey = new Map();
+            const naturalOrder = [];
+            Object.keys(childTableMeta).forEach((tableId) => {
+                const rowsByKey = new Map(tables[tableId].dataTable.rows().data().toArray().map((row) => [row[0], row]));
+                (links[tableId] || []).forEach((key) => {
+                    const row = rowsByKey.get(key);
+                    if (!row) {
+                        return;
+                    }
+                    const compositeKey = `${tableId}|${key}`;
+                    naturalOrder.push(compositeKey);
+                    rowByCompositeKey.set(compositeKey, { tableId, key, row });
+                });
+            });
+
+            const naturalSet = new Set(naturalOrder);
+            const storedOrder = (prepRecordOrder.get(prepId) || []).filter((compositeKey) => naturalSet.has(compositeKey));
+            const storedSet = new Set(storedOrder);
+            const mergedOrder = storedOrder.concat(naturalOrder.filter((compositeKey) => !storedSet.has(compositeKey)));
+            prepRecordOrder.set(prepId, mergedOrder);
+
+            return mergedOrder.map((compositeKey) => rowByCompositeKey.get(compositeKey));
+        }
+
+        function reorderRecordRows(prepId, dataTable, draggedCompositeKey, targetCompositeKey, insertBefore) {
+            if (draggedCompositeKey === targetCompositeKey) {
+                return;
+            }
+            const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+            const fromIndex = allRows.findIndex((row) => `${row[0]}|${row[1]}` === draggedCompositeKey);
+            if (fromIndex === -1) {
+                return;
+            }
+            const [movedRow] = allRows.splice(fromIndex, 1);
+            let toIndex = allRows.findIndex((row) => `${row[0]}|${row[1]}` === targetCompositeKey);
+            if (toIndex === -1) {
+                return;
+            }
+            if (!insertBefore) {
+                toIndex += 1;
+            }
+            allRows.splice(toIndex, 0, movedRow);
+            renumberRecordRows(allRows);
+            saveRecordOrder(prepId, allRows);
+            dataTable.clear();
+            dataTable.rows.add(allRows);
+            dataTable.order([]).draw(false);
+        }
+
+        // moves a row to the 1-based position typed into its "#" input
+        function applyManualRecordRowNumber(prepId, dataTable, inputEl) {
+            const rowData = dataTable.row(inputEl.closest('tr')).data();
+            const totalRows = dataTable.rows().count();
+            let target = parseInt(inputEl.value, 10);
+            if (!Number.isFinite(target)) {
+                target = rowData[4];
+            }
+            target = Math.min(Math.max(target, 1), totalRows);
+
+            const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+            const fromIndex = allRows.findIndex((row) => row[0] === rowData[0] && row[1] === rowData[1]);
+            if (fromIndex === -1) {
+                return;
+            }
+            const [movedRow] = allRows.splice(fromIndex, 1);
+            const insertIndex = Math.min(Math.max(target - 1, 0), allRows.length);
+            allRows.splice(insertIndex, 0, movedRow);
+            renumberRecordRows(allRows);
+            saveRecordOrder(prepId, allRows);
+            dataTable.clear();
+            dataTable.rows.add(allRows);
+            dataTable.order([]).draw(false);
+        }
+
+        // reordering (drag or typed "#") is only allowed while every record is on one page, matching
+        // the main-page tables' behaviour
+        function updateRecordDragInteractivity(tableElement, dataTable) {
+            const showingAll = dataTable.page.len() === -1;
+            tableElement.classList.toggle('reorder-disabled', !showingAll);
+            tableElement.querySelectorAll('tbody tr').forEach((row) => { row.draggable = showingAll; });
+            tableElement.querySelectorAll('.row-number-input').forEach((input) => { input.disabled = !showingAll; });
+        }
+
+        // builds the combined, sortable/searchable/paginated/reorderable DataTable for one selected
+        // Preparation Master record - same feature set as the main-page tables (minus the checkboxes,
+        // since these rows are already the result of ticking boxes elsewhere)
+        function createPrepRecordBlock(prepId) {
+            const blockEl = document.createElement('div');
+            blockEl.className = 'prep-record-block';
+            blockEl.innerHTML = `<h4 class="prep-record-heading">${escapeHtml(prepId)}</h4><table class="prep-record-table"></table>`;
+            prepRecordsBody.appendChild(blockEl);
+            const tableElement = blockEl.querySelector('table');
+
+            const orderFieldIndex = 4;
+            const dataTable = new DataTable(tableElement, {
+                data: [],
+                columns: [
+                    {
+                        title: '', data: null, orderable: false, searchable: false,
+                        className: 'drag-handle-cell',
+                        render: () => '<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span>'
+                    },
+                    {
+                        title: '#', data: null, orderable: true, searchable: false, type: 'num',
+                        className: 'row-number-cell',
+                        render: (data, type, row) => {
+                            if (type === 'display') {
+                                return `<input type="number" class="row-number-input" min="1" step="1" value="${row[orderFieldIndex]}" aria-label="Row number">`;
+                            }
+                            return row[orderFieldIndex];
+                        }
+                    },
+                    {
+                        title: '', data: 0, className: 'prep-record-source-cell',
+                        render: (data, type) => {
+                            const meta = childTableMeta[data];
+                            if (type === 'display') {
+                                return `<span title="${escapeHtml(meta ? meta.label : data)}">${meta ? meta.icon : ''}</span>`;
+                            }
+                            return meta ? meta.label : data;
+                        }
+                    },
+                    { title: 'ID', data: 1, className: 'col-id' },
+                    { title: 'Name', data: 2, className: 'col-name' },
+                    { title: 'Comment', data: 3, className: 'col-comment' }
+                ],
+                order: [],
+                pageLength: 5,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, 'All']],
+                language: { emptyTable: 'No linked records ticked yet.' },
+                layout: {
+                    topStart: 'pageLength',
+                    topEnd: 'search',
+                    bottomStart: 'info',
+                    bottomEnd: 'paging'
+                },
+                createdRow: (row, data) => {
+                    row.draggable = true;
+                    row.addEventListener('dragstart', (event) => {
+                        event.dataTransfer.effectAllowed = 'move';
+                        event.dataTransfer.setData('text/plain', `${data[0]}|${data[1]}`);
+                        row.classList.add('dragging-row');
+                    });
+                    row.addEventListener('dragend', () => {
+                        row.classList.remove('dragging-row');
+                        clearRecordDropIndicators(tableElement);
+                    });
+                    row.addEventListener('dragover', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        row.classList.toggle('drop-before', before);
+                        row.classList.toggle('drop-after', !before);
+                    });
+                    row.addEventListener('dragleave', () => row.classList.remove('drop-before', 'drop-after'));
+                    row.addEventListener('drop', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        clearRecordDropIndicators(tableElement);
+                        const draggedKey = event.dataTransfer.getData('text/plain');
+                        if (draggedKey) {
+                            reorderRecordRows(prepId, dataTable, draggedKey, `${data[0]}|${data[1]}`, before);
+                        }
+                    });
+                }
+            });
+
+            tableElement.addEventListener('keydown', (event) => {
+                if (event.target.classList.contains('row-number-input') && event.key === 'Enter') {
+                    event.preventDefault();
+                    event.target.blur();
+                }
+            });
+            tableElement.addEventListener('change', (event) => {
+                if (event.target.classList.contains('row-number-input')) {
+                    applyManualRecordRowNumber(prepId, dataTable, event.target);
+                }
+            });
+
+            dataTable.on('draw', () => updateRecordDragInteractivity(tableElement, dataTable));
+
+            return { blockEl, dataTable, tableElement };
+        }
+
+        // feeds an existing block's DataTable with its current entries, preserving whatever
+        // column sort / search / paging state that instance already has
+        function updatePrepRecordTableData(entry, entries) {
+            const rows = entries.map(({ tableId, key, row }, index) => [tableId, key, row[1], row[2], index + 1]);
+            entry.dataTable.clear();
+            entry.dataTable.rows.add(rows);
+            entry.dataTable.draw(false);
+            updateRecordDragInteractivity(entry.tableElement, entry.dataTable);
         }
 
         // rebuilds the popup: one block per selected Preparation Master record (titled with its
@@ -1708,29 +1945,37 @@
         // Preparations/Material/Samples/Equipment - a live view of the preparationLinks in-memory store
         function renderPreparationRecordsPanel() {
             const selectedPrepIds = Array.from(tables.preparationMasterTable.selectedKeys);
+
+            Array.from(prepRecordBlocks.keys()).forEach((prepId) => {
+                if (!selectedPrepIds.includes(prepId)) {
+                    const entry = prepRecordBlocks.get(prepId);
+                    entry.dataTable.destroy();
+                    entry.blockEl.remove();
+                    prepRecordBlocks.delete(prepId);
+                    prepRecordOrder.delete(prepId);
+                }
+            });
+
             if (selectedPrepIds.length === 0) {
                 prepRecordsBody.innerHTML = '<p class="prep-records-empty">Select a Preparation Master record to see its linked records.</p>';
                 return;
             }
 
-            prepRecordsBody.innerHTML = selectedPrepIds.map((prepId) => {
-                const links = preparationLinks[prepId] || {};
-                const rows = Object.keys(childTableMeta)
-                    .map((tableId) => buildChildRecordRows(tableId, links[tableId] || []))
-                    .join('');
-                const body = rows
-                    ? `<table class="prep-record-table">
-                        <thead><tr><th></th><th>ID</th><th>Name</th><th>Comment</th></tr></thead>
-                        <tbody>${rows}</tbody>
-                    </table>`
-                    : '<p class="prep-records-empty">No linked records ticked yet.</p>';
-                return `
-                    <div class="prep-record-block">
-                        <h4 class="prep-record-heading">${escapeHtml(prepId)}</h4>
-                        ${body}
-                    </div>
-                `;
-            }).join('');
+            const emptyState = prepRecordsBody.querySelector('.prep-records-empty');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            selectedPrepIds.forEach((prepId) => {
+                let entry = prepRecordBlocks.get(prepId);
+                if (!entry) {
+                    entry = createPrepRecordBlock(prepId);
+                    prepRecordBlocks.set(prepId, entry);
+                } else {
+                    prepRecordsBody.appendChild(entry.blockEl);
+                }
+                updatePrepRecordTableData(entry, getOrderedRecordEntries(prepId));
+            });
         }
 
         // redraws every Preparation Master node and the edges derived from preparationLinks.preparationsTable
