@@ -5,6 +5,14 @@
 
 const STORAGE_KEY = 'signals-investigate:roleAndPrivilegeExportWorkflow';
 
+// const WORKFLOW_STEPS = [
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/roles?tab=administration', action: 'roles' },
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/experiment/privileges', action: 'privileges' },
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/ado/privileges?id=10', action: 'privileges' },
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/ado/privileges?id=11', action: 'privileges' },
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/sample/privileges', action: 'privileges' },
+//   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/notebook/privileges', action: 'privileges' },
+// ];
 const WORKFLOW_STEPS = [
   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/roles?tab=administration', action: 'roles' },
   { url: 'https://devinternal.srppvt4s3r.revvitycloud.eu/snconfig/objects/experiment/privileges', action: 'privileges' },
