@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Signals Preparations Picker - Acceptance Criteria</title>
+</head>
+<body>
+
+<p><b>User Story</b></p>
+<p><b>As a User</b>, I want to pick, reorder, link, and review preparations, materials, samples, and equipment in a unified split-screen interface,<br/>
+<b>So that</b> I can establish accurate parent-child preparation dependencies, prevent circular references, and maintain complete traceability across experiment subtables.</p>
+
+<p><b>Preconditions</b></p>
+<ul>
+    <li>Given the user has an active Signals session.</li>
+    <li>And the user opens an experiment containing a Preparation Master table and associated sub-entity tables (Preparations, Materials, Samples, Equipment).</li>
+    <li>And the user launches the Signals Preparations Picker interface.</li>
+</ul>
+
+<p><b>1) Split-screen layout and resizable divider</b></p>
+<p><b>As a User, I need to</b> adjust the workspace layout between the picker pane and details pane.<br/>
+<b>Given</b> the user has opened the Signals Preparations Picker page<br/>
+<b>When</b> the user drags the vertical split divider or uses the Left/Right arrow keys on the divider control<br/>
+<b>Then</b> the width ratio between the left picker pane and right details pane adjusts dynamically between 20% and 80%<br/>
+<b>And</b> table content within both panes resizes responsively.</p>
+
+<p><b>2) Expandable and collapsible entity panels</b></p>
+<p><b>As a User, I need to</b> expand or collapse entity categories to focus on relevant data tables.<br/>
+<b>Given</b> the user is viewing the picker pane containing panels for Preparation Master, Preparations, Material/Lot/Container, Samples, and Equipment<br/>
+<b>When</b> the user clicks on any panel header<br/>
+<b>Then</b> that panel toggles between expanded and collapsed states<br/>
+<b>And</b> the panel header displays an entry count summary (e.g. "5 entries", "14 entries") and a visual chevron indicator.</p>
+
+<p><b>3) Parent Preparation Master selection (Single and Multi-Select)</b></p>
+<p><b>As a User, I want to</b> select one or more parent Preparation Master records to manage their linked child items.<br/>
+<b>Given</b> the user is viewing the Preparation Master table<br/>
+<b>When</b> the user clicks a row selection checkbox without holding the Shift key<br/>
+<b>Then</b> the selected record becomes the sole active parent preparation and any prior selection is cleared<br/>
+<b>When</b> the user holds the Shift key and clicks additional row selection checkboxes<br/>
+<b>Then</b> multiple Preparation Master records can be selected simultaneously.</p>
+
+<p><b>4) Asynchronous preparation details loading indicator</b></p>
+<p><b>As a User, I need to</b> receive visual feedback when preparation details are being retrieved.<br/>
+<b>Given</b> the user selects or modifies a Preparation Master record selection for the first time<br/>
+<b>When</b> preparation details are loading<br/>
+<b>Then</b> an overlay loading modal with a spinner and the message "Loading Preparation Details" is displayed for 5 seconds<br/>
+<b>And</b> once loading completes, the modal is hidden and the updated child item selections are displayed.</p>
+
+<p><b>5) Automatic child record selection propagation and tri-state checkboxes</b></p>
+<p><b>As a User, I want to</b> see which child records belong to selected parent preparations.<br/>
+<b>Given</b> one or more Preparation Master records are selected<br/>
+<b>When</b> the user views the child tables (Preparations, Material/Lot/Container, Samples, Equipment)<br/>
+<b>Then</b> child records linked to all currently selected parent preparations are displayed with a checked checkbox<br/>
+<b>And</b> child records linked to some (but not all) currently selected parent preparations are displayed with an indeterminate (tri-state) checkbox<br/>
+<b>And</b> child records not linked to any selected parent preparation are displayed with an unchecked checkbox.</p>
+
+<p><b>6) Select all visible rows in child tables</b></p>
+<p><b>As a User, I want to</b> select or deselect all visible child records at once.<br/>
+<b>Given</b> a child table contains multiple rows on the current page<br/>
+<b>When</b> the user ticks the "Select all visible" checkbox in the table header<br/>
+<b>Then</b> all enabled visible rows on the current page are checked and linked to the active parent preparation(s)<br/>
+<b>When</b> the user unticks the header checkbox<br/>
+<b>Then</b> all visible enabled rows on the current page are unchecked and unlinked from the active parent preparation(s).</p>
+
+<p><b>7) Hover tooltips for linked child rows</b></p>
+<p><b>As a User, I need to</b> view which parent preparations are associated with a specific child record.<br/>
+<b>Given</b> a child record checkbox is in a checked or indeterminate state<br/>
+<b>When</b> the user hovers the cursor over the row selection checkbox<br/>
+<b>Then</b> a floating tooltip is displayed showing the Preparation ID, Name, and Comment for each parent preparation linked to that record.</p>
+
+<p><b>8) Drag-and-drop and manual row number reordering</b></p>
+<p><b>As a User, I want to</b> reorder records either by dragging row handles or typing a specific row position.<br/>
+<b>Given</b> a table is displaying all records on a single page (Page Length set to "All")<br/>
+<b>When</b> the user drags a row handle to a new position in the table<br/>
+<b>Then</b> the row is moved to the target position and all row numbers (#) update to 1..N order<br/>
+<b>When</b> the user enters a numeric value into the "#" row number input field and presses Enter or leaves the field<br/>
+<b>Then</b> the row is moved to the specified position and remaining rows are renumbered accordingly<br/>
+<b>And</b> reordering controls are disabled when pagination hides records across multiple pages.</p>
+
+<p><b>9) Circular reference prevention and warning notifications</b></p>
+<p><b>As a User, I need to</b> be prevented from creating circular preparation dependencies.<br/>
+<b>Given</b> a row in the Preparations child table represents the selected parent preparation or would form a closed dependency loop (e.g. Prep A &rarr; Prep B &rarr; Prep A)<br/>
+<b>When</b> the user inspects or attempts to select that preparation row<br/>
+<b>Then</b> the row checkbox is disabled to prevent selection<br/>
+<b>And</b> if a circular dependency is triggered, a warning toast notification (e.g. "&nbsp;&#9888; Circular reference: ...") is displayed at the bottom of the screen.</p>
+
+<p><b>10) Interactive preparation relationship node graph panel</b></p>
+<p><b>As a User, I want to</b> visualize parent-child preparation relationships in a graphical diagram.<br/>
+<b>Given</b> parent and child preparations exist in the session<br/>
+<b>When</b> the user views the floating "Preparations Links" panel in the top-right<br/>
+<b>Then</b> an SVG node graph renders all preparation records as circular nodes and dependency links as directed arrows<br/>
+<b>And</b> selected parent preparations are highlighted in blue<br/>
+<b>And</b> potential circular dependencies are displayed with red arrows<br/>
+<b>And</b> the graph panel can be collapsed/expanded or repositioned across the viewport by dragging its header.</p>
+
+<p><b>11) Consolidated preparation details view in right pane</b></p>
+<p><b>As a User, I want to</b> review a consolidated list of all linked child records for each selected parent preparation.<br/>
+<b>Given</b> one or more Preparation Master records are selected<br/>
+<b>When</b> the user inspects the right details pane<br/>
+<b>Then</b> a dedicated details block is rendered for each selected Preparation Master record<br/>
+<b>And</b> each block contains a combined table listing all linked records from Preparations, Material/Lot/Container, Samples, and Equipment<br/>
+<b>And</b> each row displays a source icon (🧪, 📦, 🧬, 🔧), ID, Name, and Comment<br/>
+<b>And</b> rows within the combined table support independent drag-and-drop reordering, manual row number input, sorting, search, and pagination<br/>
+<b>And</b> manual row reordering in the details pane is preserved across subsequent selection changes.</p>
+
+<p><b>12) Data table search, column sorting, and pagination</b></p>
+<p><b>As a User, I want to</b> filter, sort, and paginate through records across all tables.<br/>
+<b>Given</b> any table contains data records<br/>
+<b>When</b> the user enters a search term in the search input<br/>
+<b>Then</b> only rows matching the search term across visible columns are displayed<br/>
+<b>When</b> the user clicks a column header<br/>
+<b>Then</b> the table sorts ascending or descending by that column based on data type<br/>
+<b>When</b> the user selects a page size (5, 10, 25, All) or uses pagination buttons<br/>
+<b>Then</b> the table updates the displayed records and updates the selection counter in the table info text (e.g. "Showing 1 to 5 of 14 entries - X selected").</p>
+
+<p><b>13) Commit subtable updates</b></p>
+<p><b>As a User, I want to</b> save and commit updated preparation linkages back to the experiment session.<br/>
+<b>Given</b> the user has configured parent-child preparation selections and child entity linkages<br/>
+<b>When</b> the user clicks the "Update Prep. Sub" button<br/>
+<b>Then</b> all parent-child associations, row orderings, and linked subtable records are saved and committed to the experiment dataset.</p>
+
+</body>
+</html>
