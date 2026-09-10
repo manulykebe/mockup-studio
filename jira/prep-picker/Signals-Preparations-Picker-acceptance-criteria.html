@@ -119,5 +119,15 @@
 <b>When</b> the user clicks the "Update Prep. Sub" button<br/>
 <b>Then</b> all parent-child associations, row orderings, and linked subtable records are saved and committed to the experiment dataset.</p>
 
+<p><b>14) Data loss prevention via localStorage synchronization and pending update check</b></p>
+<p><b>As a User, I need to</b> avoid losing uncommitted preparation updates if my browser session is reloaded or closed unexpectedly.<br/>
+<b>Given</b> the user modifies parent-child selections, linkages, or row orderings in the picker interface<br/>
+<b>When</b> changes are made prior to clicking "Update Prep. Sub"<br/>
+<b>Then</b> the system automatically synchronizes the uncommitted working state to browser localStorage<br/>
+<b>When</b> the user opens or reloads the Signals Preparations Picker page<br/>
+<b>Then</b> the system checks localStorage for pending uncommitted updates<br/>
+<b>And</b> if non-committed updates are found, the system informs the user and restores the pending working state<br/>
+<b>And</b> upon clicking "Update Prep. Sub" to commit the updates, the pending state in localStorage is cleared.</p>
+
 </body>
 </html>
