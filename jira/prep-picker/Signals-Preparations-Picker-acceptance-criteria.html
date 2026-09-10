@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Signals Preparations Picker - Acceptance Criteria</title>
+    <title>Signals Preparations Selector - Acceptance Criteria</title>
 </head>
 <body>
 
@@ -14,19 +14,19 @@
 <ul>
     <li>Given the user has an active Signals session.</li>
     <li>And the user opens an experiment containing a Preparation Master table and associated sub-entity tables (Preparations, Materials, Samples, Equipment).</li>
-    <li>And the user launches the Signals Preparations Picker interface.</li>
+    <li>And the user launches the Signals Preparations Selector interface.</li>
 </ul>
 
 <p><b>1) Split-screen layout and resizable divider</b></p>
-<p><b>As a User, I need to</b> adjust the workspace layout between the picker pane and details pane.<br/>
-<b>Given</b> the user has opened the Signals Preparations Picker page<br/>
+<p><b>As a User, I need to</b> adjust the workspace layout between the selector pane and details pane.<br/>
+<b>Given</b> the user has opened the Signals Preparations Selector page<br/>
 <b>When</b> the user drags the vertical split divider or uses the Left/Right arrow keys on the divider control<br/>
-<b>Then</b> the width ratio between the left picker pane and right details pane adjusts dynamically between 20% and 80%<br/>
+<b>Then</b> the width ratio between the left selector pane and right details pane adjusts dynamically between 20% and 80%<br/>
 <b>And</b> table content within both panes resizes responsively.</p>
 
 <p><b>2) Expandable and collapsible entity panels</b></p>
 <p><b>As a User, I need to</b> expand or collapse entity categories to focus on relevant data tables.<br/>
-<b>Given</b> the user is viewing the picker pane containing panels for Preparation Master, Preparations, Material/Lot/Container, Samples, and Equipment<br/>
+<b>Given</b> the user is viewing the selector pane containing panels for Preparation Master, Preparations, Material/Lot/Container, Samples, and Equipment<br/>
 <b>When</b> the user clicks on any panel header<br/>
 <b>Then</b> that panel toggles between expanded and collapsed states<br/>
 <b>And</b> the panel header displays an entry count summary (e.g. "5 entries", "14 entries") and a visual chevron indicator.</p>
@@ -42,8 +42,8 @@
 <p><b>4) Initial launch via external action and loading settings for each preparation</b></p>
 <p><b>As a User, I want to</b> automatically load already defined compositions for each preparation when launching the interface.<br/>
 <b>Given</b> an experiment containing a Preparation Master table and associated subtables<br/>
-<b>When</b> the external action to trigger the Signals Preparations Picker is invoked for the first time<br/>
-<b>Then</b> the system launches the picker interface and automatically loads the pre-configured settings, properties, and linked subtable records for each preparation<br/>
+<b>When</b> the external action to trigger the Signals Preparations Selector is invoked for the first time<br/>
+<b>Then</b> the system launches the selector interface and automatically loads the pre-configured settings, properties, and linked subtable records for each preparation<br/>
 <b>And</b> the initial parent-child relationships and table selections are rendered accordingly.</p>
 
 <p><b>5) Asynchronous preparation details loading indicator</b></p>
@@ -137,10 +137,10 @@
 
 <p><b>16) Data loss prevention via localStorage synchronization and pending update check</b></p>
 <p><b>As a User, I need to</b> avoid losing uncommitted preparation updates if my browser session is reloaded or closed unexpectedly.<br/>
-<b>Given</b> the user modifies parent-child selections, linkages, or row orderings in the picker interface<br/>
+<b>Given</b> the user modifies parent-child selections, linkages, or row orderings in the selector interface<br/>
 <b>When</b> changes are made prior to clicking "Update Prep. Sub"<br/>
 <b>Then</b> the system automatically synchronizes the uncommitted working state to browser localStorage<br/>
-<b>When</b> the user opens or reloads the Signals Preparations Picker page<br/>
+<b>When</b> the user opens or reloads the Signals Preparations Selector page<br/>
 <b>Then</b> the system checks localStorage for pending uncommitted updates<br/>
 <b>And</b> if non-committed updates are found, the system informs the user and restores the pending working state<br/>
 <b>And</b> upon clicking "Update Prep. Sub" to commit the updates, the pending state in localStorage is cleared.</p>
