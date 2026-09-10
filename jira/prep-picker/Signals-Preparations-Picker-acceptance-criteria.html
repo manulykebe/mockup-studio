@@ -15,6 +15,7 @@
     <li>Given the user has an active Signals session.</li>
     <li>And the user opens an experiment containing a Preparation Master table and associated sub-entity tables (Preparations, Materials, Samples, Equipment).</li>
     <li>And the user launches the Signals Preparations Selector interface.</li>
+    <li>And the Signals Preparations Selector replaces the existing preparation selector external action for these tables.</li>
 </ul>
 
 <p><b>1) Split-screen layout and resizable divider</b></p>
@@ -39,87 +40,54 @@
 <b>When</b> the user holds the Shift key and clicks additional row selection checkboxes<br/>
 <b>Then</b> multiple Preparation Master records can be selected simultaneously.</p>
 
-<p><b>4) Initial launch via external action and loading settings for each preparation</b></p>
+<p><b>4) Initial launch via external action and loading existing preparation content</b></p>
 <p><b>As a User, I want to</b> automatically load already defined compositions for each preparation when launching the interface.<br/>
-<b>Given</b> an experiment containing a Preparation Master table and associated subtables<br/>
+<b>Given</b> an experiment containing a Preparation Master table and associated preparation, material, sample, and equipment tables<br/>
 <b>When</b> the external action to trigger the Signals Preparations Selector is invoked for the first time<br/>
-<b>Then</b> the system launches the selector interface and automatically loads the pre-configured settings, properties, and linked subtable records for each preparation<br/>
-<b>And</b> the initial parent-child relationships and table selections are rendered accordingly.</p>
+<b>Then</b> the system launches the selector interface and automatically loads the existing records, properties, current order, and links from those tables for each Preparation Master record<br/>
+<b>And</b> the initial parent-child relationships and table selections are rendered accordingly.<br/>
+<b>When</b> one or more required tables do not exist in the experiment<br/>
+<b>Then</b> the user is informed that the required tables must be created before the selector can be used.</p>
 
 <p><b>5) Asynchronous preparation details loading indicator</b></p>
 <p><b>As a User, I need to</b> receive visual feedback when preparation details are being retrieved.<br/>
 <b>Given</b> the user selects or modifies a Preparation Master record selection for the first time<br/>
 <b>When</b> preparation details are loading<br/>
-<b>Then</b> an overlay loading modal with a spinner and the message "Loading Preparation Details" is displayed for 5 seconds<br/>
+<b>Then</b> an overlay loading modal with a spinner and the message "Loading Preparation Details" is displayed until loading completes<br/>
 <b>And</b> once loading completes, the modal is hidden and the updated child item selections are displayed.</p>
 
-<p><b>6) Automatic child record selection propagation and tri-state checkboxes</b></p>
+<p><b>6) Automatic child record selection propagation</b></p>
 <p><b>As a User, I want to</b> see which child records belong to selected parent preparations.<br/>
 <b>Given</b> one or more Preparation Master records are selected<br/>
 <b>When</b> the user views the child tables (Preparations, Material/Lot/Container, Samples, Equipment)<br/>
-<b>Then</b> child records linked to all currently selected parent preparations are displayed with a checked checkbox<br/>
-<b>And</b> child records linked to some (but not all) currently selected parent preparations are displayed with an indeterminate (tri-state) checkbox<br/>
-<b>And</b> child records not linked to any selected parent preparation are displayed with an unchecked checkbox.</p>
+<b>Then</b> child records linked to all currently selected parent preparations are displayed as selected<br/>
+<b>And</b> child records linked to some (but not all) currently selected parent preparations are displayed as partially selected<br/>
+<b>And</b> child records not linked to any selected parent preparation are displayed as unselected<br/>
+<b>And</b> a child preparation that is the same record as a selected parent preparation cannot be selected.</p>
 
-<p><b>7) Select all visible rows in child tables</b></p>
-<p><b>As a User, I want to</b> select or deselect all visible child records at once.<br/>
+<p><b>7) Select individual or all visible child records</b></p>
+<p><b>As a User, I want to</b> select or deselect child records individually or all at once.<br/>
 <b>Given</b> a child table contains multiple rows on the current page<br/>
-<b>When</b> the user ticks the "Select all visible" checkbox in the table header<br/>
-<b>Then</b> all enabled visible rows on the current page are checked and linked to the active parent preparation(s)<br/>
-<b>When</b> the user unticks the header checkbox<br/>
-<b>Then</b> all visible enabled rows on the current page are unchecked and unlinked from the active parent preparation(s).</p>
+<b>When</b> the user selects or deselects an individual enabled row, or selects or deselects all visible enabled rows<br/>
+<b>Then</b> the affected records are linked to or unlinked from the active parent preparation(s)<br/>
+<b>And</b> the records are added to or removed from the corresponding preparation's record list in the details pane.</p>
 
-<p><b>8) Dynamic appending and removal of subtable records upon selection/deselection</b></p>
-<p><b>As a User, I want to</b> automatically append or remove records from a parent preparation's linked list when checking or unchecking items in subtables.<br/>
-<b>Given</b> one or more parent Preparation Master records are selected<br/>
-<b>When</b> the user checks an unlinked row in any subtable (Preparations, Material/Lot/Container, Samples, Equipment)<br/>
-<b>Then</b> that record is immediately linked to the active parent preparation(s) and appended to the corresponding preparation's record list in the details pane<br/>
-<b>When</b> the user unchecks a previously linked row in any subtable<br/>
-<b>Then</b> that record is immediately unlinked from the active parent preparation(s) and removed from the corresponding preparation's record list in the details pane<br/>
-<b>And</b> the relationship node graph and selection summary indicators update in real time to reflect the change.</p>
-
-<p><b>9) Hover tooltips for linked child rows</b></p>
+<p><b>8) Hover tooltips for linked child rows</b></p>
 <p><b>As a User, I need to</b> view which parent preparations are associated with a specific child record.<br/>
-<b>Given</b> a child record checkbox is in a checked or indeterminate state<br/>
-<b>When</b> the user hovers the cursor over the row selection checkbox<br/>
+<b>Given</b> a child record is selected or partially selected<br/>
+<b>When</b> the user hovers over the row selection control<br/>
 <b>Then</b> a floating tooltip is displayed showing the Preparation ID, Name, and Comment for each parent preparation linked to that record.</p>
 
-<p><b>10) Drag-and-drop and manual row number reordering</b></p>
-<p><b>As a User, I want to</b> reorder records either by dragging row handles or typing a specific row position.<br/>
-<b>Given</b> a table is displaying all records on a single page (Page Length set to "All")<br/>
-<b>When</b> the user drags a row handle to a new position in the table<br/>
-<b>Then</b> the row is moved to the target position and all row numbers (#) update to 1..N order<br/>
-<b>When</b> the user enters a numeric value into the "#" row number input field and presses Enter or leaves the field<br/>
-<b>Then</b> the row is moved to the specified position and remaining rows are renumbered accordingly<br/>
-<b>And</b> reordering controls are disabled when pagination hides records across multiple pages.</p>
-
-<p><b>11) Circular reference prevention and warning notifications</b></p>
-<p><b>As a User, I need to</b> be prevented from creating circular preparation dependencies.<br/>
-<b>Given</b> a row in the Preparations child table represents the selected parent preparation or would form a closed dependency loop (e.g. Prep A &rarr; Prep B &rarr; Prep A)<br/>
-<b>When</b> the user inspects or attempts to select that preparation row<br/>
-<b>Then</b> the row checkbox is disabled to prevent selection<br/>
-<b>And</b> if a circular dependency is triggered, a warning toast notification (e.g. "&nbsp;&#9888; Circular reference: ...") is displayed at the bottom of the screen.</p>
-
-<p><b>12) Interactive preparation relationship node graph panel</b></p>
-<p><b>As a User, I want to</b> visualize parent-child preparation relationships in a graphical diagram.<br/>
-<b>Given</b> parent and child preparations exist in the session<br/>
-<b>When</b> the user views the floating "Preparations Links" panel in the top-right<br/>
-<b>Then</b> an SVG node graph renders all preparation records as circular nodes and dependency links as directed arrows<br/>
-<b>And</b> selected parent preparations are highlighted in blue<br/>
-<b>And</b> potential circular dependencies are displayed with red arrows<br/>
-<b>And</b> the graph panel can be collapsed/expanded or repositioned across the viewport by dragging its header.</p>
-
-<p><b>13) Consolidated preparation details view in right pane</b></p>
+<p><b>9) Consolidated preparation details view in right pane</b></p>
 <p><b>As a User, I want to</b> review a consolidated list of all linked child records for each selected parent preparation.<br/>
 <b>Given</b> one or more Preparation Master records are selected<br/>
 <b>When</b> the user inspects the right details pane<br/>
 <b>Then</b> a dedicated details block is rendered for each selected Preparation Master record<br/>
 <b>And</b> each block contains a combined table listing all linked records from Preparations, Material/Lot/Container, Samples, and Equipment<br/>
-<b>And</b> each row displays a source icon (🧪, 📦, 🧬, 🔧), ID, Name, and Comment<br/>
-<b>And</b> rows within the combined table support independent drag-and-drop reordering, manual row number input, sorting, search, and pagination<br/>
-<b>And</b> manual row reordering in the details pane is preserved across subsequent selection changes.</p>
+<b>And</b> each row displays a source letter (P for preparation, M for material, S for sample, or E for equipment), ID, Name, and Comment<br/>
+<b>And</b> rows within the combined table support sorting, search, and pagination.</p>
 
-<p><b>14) Data table search, column sorting, and pagination</b></p>
+<p><b>10) Data table search, column sorting, and pagination</b></p>
 <p><b>As a User, I want to</b> filter, sort, and paginate through records across all tables.<br/>
 <b>Given</b> any table contains data records<br/>
 <b>When</b> the user enters a search term in the search input<br/>
@@ -129,21 +97,21 @@
 <b>When</b> the user selects a page size (5, 10, 25, All) or uses pagination buttons<br/>
 <b>Then</b> the table updates the displayed records and updates the selection counter in the table info text (e.g. "Showing 1 to 5 of 14 entries - X selected").</p>
 
-<p><b>15) Commit subtable updates</b></p>
+<p><b>11) Commit subtable updates</b></p>
 <p><b>As a User, I want to</b> save and commit updated preparation linkages back to the experiment session.<br/>
 <b>Given</b> the user has configured parent-child preparation selections and child entity linkages<br/>
 <b>When</b> the user clicks the "Update Prep. Sub" button<br/>
-<b>Then</b> all parent-child associations, row orderings, and linked subtable records are saved and committed to the experiment dataset.</p>
+<b>Then</b> all parent-child associations and linked subtable records are saved and committed to the experiment dataset.</p>
 
-<p><b>16) Data loss prevention via localStorage synchronization and pending update check</b></p>
+<p><b>12) Recovery of uncommitted updates</b></p>
 <p><b>As a User, I need to</b> avoid losing uncommitted preparation updates if my browser session is reloaded or closed unexpectedly.<br/>
-<b>Given</b> the user modifies parent-child selections, linkages, or row orderings in the selector interface<br/>
+<b>Given</b> the user modifies parent-child selections or linkages in the selector interface<br/>
 <b>When</b> changes are made prior to clicking "Update Prep. Sub"<br/>
-<b>Then</b> the system automatically synchronizes the uncommitted working state to browser localStorage<br/>
+<b>Then</b> the system temporarily stores the uncommitted working state for recovery<br/>
 <b>When</b> the user opens or reloads the Signals Preparations Selector page<br/>
-<b>Then</b> the system checks localStorage for pending uncommitted updates<br/>
+<b>Then</b> the system checks for pending uncommitted updates<br/>
 <b>And</b> if non-committed updates are found, the system informs the user and restores the pending working state<br/>
-<b>And</b> upon clicking "Update Prep. Sub" to commit the updates, the pending state in localStorage is cleared.</p>
+<b>And</b> upon clicking "Update Prep. Sub" to commit the updates, the temporarily stored pending state is cleared.</p>
 
 </body>
 </html>
