@@ -115,28 +115,28 @@
             display: none
         }
 
-        .panel table {
+        table {
             font-size: .82rem;
         }
 
-        .panel th,
-        .panel td {
+        th,
+        td {
             line-height: 1.1;
             padding: .15rem .35rem;
         }
 
-        .panel .dt-layout-row {
+        .dt-layout-row {
             margin: .25rem 0 !important;
         }
 
-        .panel .dt-length,
-        .panel .dt-search,
-        .panel .dt-info,
-        .panel .dt-paging {
+        .dt-length,
+        .dt-search,
+        .dt-info,
+        .dt-paging {
             font-size: .78rem;
         }
 
-        .panel .dt-paging-button {
+        .dt-paging-button {
             min-width: 1.6rem;
             padding: .15rem .35rem;
         }
@@ -191,24 +191,24 @@
             cursor: not-allowed;
         }
 
-        .panel table.reorder-disabled .drag-handle-cell {
+        table.reorder-disabled .drag-handle-cell {
             cursor: not-allowed;
             opacity: .4;
         }
 
-        .panel tbody tr.dragging-row {
+        tbody tr.dragging-row {
             opacity: .5;
         }
 
-        .panel tbody tr.drop-before>td {
+        tbody tr.drop-before>td {
             border-top: 2px solid #1a73e8;
         }
 
-        .panel tbody tr.drop-after>td {
+        tbody tr.drop-after>td {
             border-bottom: 2px solid #1a73e8;
         }
 
-        .panel tbody tr.row-disabled {
+        tbody tr.row-disabled {
             opacity: .5;
         }
 
@@ -380,6 +380,137 @@
             font-size: 12px;
             font-weight: 600;
             font-family: inherit;
+        }
+
+        .prep-records-panel {
+            position: fixed;
+            top: 300px;
+            right: 1rem;
+            z-index: 40;
+            background: #fff;
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+            width: 360px;
+            height: 420px;
+            min-width: 300px;
+            min-height: 160px;
+            max-width: 90vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            resize: both;
+            overflow: hidden;
+        }
+
+        .prep-records-panel.collapsed {
+            resize: none;
+            height: auto !important;
+        }
+
+        .prep-records-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: .45rem .7rem;
+            background: #f1f3f4;
+            border-bottom: 1px solid #d9d9d9;
+            border-radius: 6px 6px 0 0;
+            cursor: move;
+            user-select: none;
+        }
+
+        .prep-records-panel.collapsed .prep-records-header {
+            border-bottom: none;
+            border-radius: 6px;
+        }
+
+        .prep-records-title {
+            font-size: .8rem;
+            font-weight: 600;
+            color: #202124;
+        }
+
+        .prep-records-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: .8rem;
+            line-height: 1;
+            color: #5f6368;
+            padding: 0 .2rem;
+        }
+
+        .prep-records-body {
+            padding: .6rem .7rem;
+            flex: 1 1 auto;
+            overflow: auto;
+            min-height: 0;
+        }
+
+        .prep-records-panel.collapsed .prep-records-body {
+            display: none;
+        }
+
+        .prep-records-panel table.reorder-disabled .drag-handle-cell {
+            cursor: not-allowed;
+            opacity: .4;
+        }
+
+        .prep-records-panel tbody tr.dragging-row {
+            opacity: .5;
+        }
+
+        .prep-records-panel tbody tr.drop-before>td {
+            border-top: 2px solid #1a73e8;
+        }
+
+        .prep-records-panel tbody tr.drop-after>td {
+            border-bottom: 2px solid #1a73e8;
+        }
+
+        .prep-records-empty {
+            font-size: .8rem;
+            color: #5f6368;
+            margin: 0;
+        }
+
+        .prep-record-block+.prep-record-block {
+            margin-top: .8rem;
+            padding-top: .8rem;
+            border-top: 1px solid #e6e6e6;
+        }
+
+        .prep-record-heading {
+            font-size: .85rem;
+            font-weight: 700;
+            color: #1a73e8;
+            margin: 0 0 .4rem;
+        }
+
+        .prep-record-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .74rem;
+            margin-bottom: .3rem;
+        }
+
+        .prep-record-table th,
+        .prep-record-table td {
+            border: 1px solid #e6e6e6;
+            padding: .15rem .35rem;
+        }
+
+        .prep-record-table th {
+            background: #f8f9fa;
+            white-space: nowrap;
+            position: static;
+        }
+
+        .prep-record-source-cell {
+            text-align: center;
+            width: 1.6rem;
+            font-size: .85rem;
         }
     </style>
 </head>
@@ -1367,6 +1498,9 @@
             if (typeof renderPreparationRelationshipGraph === 'function') {
                 renderPreparationRelationshipGraph();
             }
+            if (typeof renderPreparationRecordsPanel === 'function') {
+                renderPreparationRecordsPanel();
+            }
         }
 
         const preparationLoadingModal = document.getElementById('preparationLoadingModal');
@@ -1417,13 +1551,13 @@
         });
 
         // always-on-top top-right panel showing an SVG node graph of Preparation Master <-> Preparation links;
-        // draggable via its header and collapsible via the toggle button
+        // draggable via its header and collapsible via the toggle button; starts collapsed
         const prepGraphPanel = document.createElement('div');
-        prepGraphPanel.className = 'prep-graph-panel';
+        prepGraphPanel.className = 'prep-graph-panel collapsed';
         prepGraphPanel.innerHTML = `
             <div class="prep-graph-header">
-                <span class="prep-graph-title">Preparation Links</span>
-                <button type="button" class="prep-graph-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
+                <span class="prep-graph-title">Preparations Links</span>
+                <button type="button" class="prep-graph-toggle" aria-expanded="false" aria-label="Expand">&#9656;</button>
             </div>
             <div class="prep-graph-body">
                 <svg viewBox="0 0 220 220" width="210" height="210" aria-label="Preparation relationship graph"></svg>
@@ -1496,6 +1630,355 @@
             prepGraphToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
             keepGraphPanelOnScreen();
         });
+
+        // always-on-top floating popup listing, per selected Preparation Master record, every child
+        // row ticked in Preparations/Material/Samples/Equipment - a table view of preparationLinks,
+        // draggable via its header and collapsible via the toggle button, same behaviour as the graph panel.
+        // Row sorting order in each table defaults to link order but can be manually overridden by the
+        // user (drag row handle, or type a value in the "#" row-number input) - see prepRecordOrder below.
+        const prepRecordsPanel = document.createElement('div');
+        prepRecordsPanel.className = 'prep-records-panel';
+        prepRecordsPanel.innerHTML = `
+            <div class="prep-records-header">
+                <span class="prep-records-title">Preparations</span>
+                <button type="button" class="prep-records-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
+            </div>
+            <div class="prep-records-body"></div>
+        `;
+        document.body.appendChild(prepRecordsPanel);
+        const prepRecordsBody = prepRecordsPanel.querySelector('.prep-records-body');
+
+        const prepRecordsHeader = prepRecordsPanel.querySelector('.prep-records-header');
+        let isDraggingRecordsPanel = false;
+        let recordsDragOffsetX = 0;
+        let recordsDragOffsetY = 0;
+
+        prepRecordsHeader.addEventListener('mousedown', (event) => {
+            if (event.target.closest('.prep-records-toggle')) {
+                return;
+            }
+            const rect = prepRecordsPanel.getBoundingClientRect();
+            recordsDragOffsetX = event.clientX - rect.left;
+            recordsDragOffsetY = event.clientY - rect.top;
+            prepRecordsPanel.style.left = `${rect.left}px`;
+            prepRecordsPanel.style.top = `${rect.top}px`;
+            prepRecordsPanel.style.right = 'auto';
+            isDraggingRecordsPanel = true;
+            event.preventDefault();
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            if (!isDraggingRecordsPanel) {
+                return;
+            }
+            const maxLeft = window.innerWidth - prepRecordsPanel.offsetWidth;
+            const maxTop = window.innerHeight - prepRecordsPanel.offsetHeight;
+            const left = Math.min(Math.max(event.clientX - recordsDragOffsetX, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(event.clientY - recordsDragOffsetY, 0), Math.max(maxTop, 0));
+            prepRecordsPanel.style.left = `${left}px`;
+            prepRecordsPanel.style.top = `${top}px`;
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDraggingRecordsPanel = false;
+        });
+
+        // re-clamps the panel back on screen if a resize (e.g. collapsing) leaves it partly off-viewport
+        function keepRecordsPanelOnScreen() {
+            const rect = prepRecordsPanel.getBoundingClientRect();
+            const maxLeft = window.innerWidth - rect.width;
+            const maxTop = window.innerHeight - rect.height;
+            const left = Math.min(Math.max(rect.left, 0), Math.max(maxLeft, 0));
+            const top = Math.min(Math.max(rect.top, 0), Math.max(maxTop, 0));
+            if (left !== rect.left || top !== rect.top) {
+                prepRecordsPanel.style.left = `${left}px`;
+                prepRecordsPanel.style.top = `${top}px`;
+                prepRecordsPanel.style.right = 'auto';
+            }
+        }
+        window.addEventListener('resize', keepRecordsPanelOnScreen);
+        keepRecordsPanelOnScreen();
+
+        const prepRecordsToggle = prepRecordsPanel.querySelector('.prep-records-toggle');
+        prepRecordsToggle.addEventListener('click', () => {
+            const collapsed = prepRecordsPanel.classList.toggle('collapsed');
+            prepRecordsToggle.setAttribute('aria-expanded', String(!collapsed));
+            prepRecordsToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
+            keepRecordsPanelOnScreen();
+        });
+
+        // display metadata for each child source table: the icon/tooltip shown in the leftmost
+        // column of the combined table, identifying which source a row came from
+        const childTableMeta = {
+            preparationsTable: { label: 'Preparations', icon: '\u{1F9EA}' },
+            materialTable: { label: 'Material/Lot/Container', icon: '\u{1F4E6}' },
+            samplesTable: { label: 'Samples', icon: '\u{1F9EB}' },
+            equipmentTable: { label: 'Equipment', icon: '\u{1F527}' }
+        };
+
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            }[ch]));
+        }
+
+        // per-preparation manual display order for its combined records table (array of "tableId|key"
+        // composite keys), so drag-reorder / typed row numbers survive later refreshes triggered by
+        // unrelated tickbox changes elsewhere on the page
+        const prepRecordOrder = new Map();
+        // live DataTable instance per selected Preparation Master record, kept alive across refreshes
+        // so column sort/search/paging state also survives, exactly like the main-page tables
+        const prepRecordBlocks = new Map();
+
+        function clearRecordDropIndicators(tableElement) {
+            tableElement.querySelectorAll('.drop-before, .drop-after').forEach((row) => {
+                row.classList.remove('drop-before', 'drop-after');
+            });
+        }
+
+        // row shape is [tableId, key, name, comment, orderValue]; keeps the trailing order field in sync
+        function renumberRecordRows(rows) {
+            rows.forEach((row, index) => { row[4] = index + 1; });
+        }
+
+        function saveRecordOrder(prepId, rows) {
+            prepRecordOrder.set(prepId, rows.map((row) => `${row[0]}|${row[1]}`));
+        }
+
+        // returns [{ tableId, key, row }] for every currently linked child record of prepId, ordered
+        // per any stored manual order, with newly linked items appended and unlinked ones dropped
+        function getOrderedRecordEntries(prepId) {
+            const links = preparationLinks[prepId] || {};
+            const rowByCompositeKey = new Map();
+            const naturalOrder = [];
+            Object.keys(childTableMeta).forEach((tableId) => {
+                const rowsByKey = new Map(tables[tableId].dataTable.rows().data().toArray().map((row) => [row[0], row]));
+                (links[tableId] || []).forEach((key) => {
+                    const row = rowsByKey.get(key);
+                    if (!row) {
+                        return;
+                    }
+                    const compositeKey = `${tableId}|${key}`;
+                    naturalOrder.push(compositeKey);
+                    rowByCompositeKey.set(compositeKey, { tableId, key, row });
+                });
+            });
+
+            const naturalSet = new Set(naturalOrder);
+            const storedOrder = (prepRecordOrder.get(prepId) || []).filter((compositeKey) => naturalSet.has(compositeKey));
+            const storedSet = new Set(storedOrder);
+            const mergedOrder = storedOrder.concat(naturalOrder.filter((compositeKey) => !storedSet.has(compositeKey)));
+            prepRecordOrder.set(prepId, mergedOrder);
+
+            return mergedOrder.map((compositeKey) => rowByCompositeKey.get(compositeKey));
+        }
+
+        function reorderRecordRows(prepId, dataTable, draggedCompositeKey, targetCompositeKey, insertBefore) {
+            if (draggedCompositeKey === targetCompositeKey) {
+                return;
+            }
+            const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+            const fromIndex = allRows.findIndex((row) => `${row[0]}|${row[1]}` === draggedCompositeKey);
+            if (fromIndex === -1) {
+                return;
+            }
+            const [movedRow] = allRows.splice(fromIndex, 1);
+            let toIndex = allRows.findIndex((row) => `${row[0]}|${row[1]}` === targetCompositeKey);
+            if (toIndex === -1) {
+                return;
+            }
+            if (!insertBefore) {
+                toIndex += 1;
+            }
+            allRows.splice(toIndex, 0, movedRow);
+            renumberRecordRows(allRows);
+            saveRecordOrder(prepId, allRows);
+            dataTable.clear();
+            dataTable.rows.add(allRows);
+            dataTable.order([]).draw(false);
+        }
+
+        // moves a row to the 1-based position typed into its "#" input
+        function applyManualRecordRowNumber(prepId, dataTable, inputEl) {
+            const rowData = dataTable.row(inputEl.closest('tr')).data();
+            const totalRows = dataTable.rows().count();
+            let target = parseInt(inputEl.value, 10);
+            if (!Number.isFinite(target)) {
+                target = rowData[4];
+            }
+            target = Math.min(Math.max(target, 1), totalRows);
+
+            const allRows = dataTable.rows().data().toArray().map((row) => row.slice());
+            const fromIndex = allRows.findIndex((row) => row[0] === rowData[0] && row[1] === rowData[1]);
+            if (fromIndex === -1) {
+                return;
+            }
+            const [movedRow] = allRows.splice(fromIndex, 1);
+            const insertIndex = Math.min(Math.max(target - 1, 0), allRows.length);
+            allRows.splice(insertIndex, 0, movedRow);
+            renumberRecordRows(allRows);
+            saveRecordOrder(prepId, allRows);
+            dataTable.clear();
+            dataTable.rows.add(allRows);
+            dataTable.order([]).draw(false);
+        }
+
+        // reordering (drag or typed "#") is only allowed while every record is on one page, matching
+        // the main-page tables' behaviour
+        function updateRecordDragInteractivity(tableElement, dataTable) {
+            const showingAll = dataTable.page.len() === -1;
+            tableElement.classList.toggle('reorder-disabled', !showingAll);
+            tableElement.querySelectorAll('tbody tr').forEach((row) => { row.draggable = showingAll; });
+            tableElement.querySelectorAll('.row-number-input').forEach((input) => { input.disabled = !showingAll; });
+        }
+
+        // builds the combined, sortable/searchable/paginated/reorderable DataTable for one selected
+        // Preparation Master record - same feature set as the main-page tables (minus the checkboxes,
+        // since these rows are already the result of ticking boxes elsewhere)
+        function createPrepRecordBlock(prepId) {
+            const blockEl = document.createElement('div');
+            blockEl.className = 'prep-record-block';
+            blockEl.innerHTML = `<h4 class="prep-record-heading">${escapeHtml(prepId)}</h4><table class="prep-record-table compact"></table>`;
+            prepRecordsBody.appendChild(blockEl);
+            const tableElement = blockEl.querySelector('table');
+
+            const orderFieldIndex = 4;
+            const dataTable = new DataTable(tableElement, {
+                data: [],
+                columns: [
+                    {
+                        title: '', data: null, orderable: false, searchable: false,
+                        className: 'drag-handle-cell',
+                        render: () => '<span class="drag-handle" aria-hidden="true">&#8942;&#8942;</span>'
+                    },
+                    {
+                        title: '#', data: null, orderable: true, searchable: false, type: 'num',
+                        className: 'row-number-cell',
+                        render: (data, type, row) => {
+                            if (type === 'display') {
+                                return `<input type="number" class="row-number-input" min="1" step="1" value="${row[orderFieldIndex]}" aria-label="Row number">`;
+                            }
+                            return row[orderFieldIndex];
+                        }
+                    },
+                    {
+                        title: '', data: 0, className: 'prep-record-source-cell',
+                        render: (data, type) => {
+                            const meta = childTableMeta[data];
+                            if (type === 'display') {
+                                return `<span title="${escapeHtml(meta ? meta.label : data)}">${meta ? meta.icon : ''}</span>`;
+                            }
+                            return meta ? meta.label : data;
+                        }
+                    },
+                    { title: 'ID', data: 1, className: 'col-id' },
+                    { title: 'Name', data: 2, className: 'col-name' },
+                    { title: 'Comment', data: 3, className: 'col-comment' }
+                ],
+                order: [],
+                pageLength: 5,
+                lengthMenu: [[5, 10, 25, -1], [5, 10, 25, 'All']],
+                language: { emptyTable: 'No linked records ticked yet.' },
+                layout: {
+                    topStart: 'pageLength',
+                    topEnd: 'search',
+                    bottomStart: 'info',
+                    bottomEnd: 'paging'
+                },
+                createdRow: (row, data) => {
+                    row.draggable = true;
+                    row.addEventListener('dragstart', (event) => {
+                        event.dataTransfer.effectAllowed = 'move';
+                        event.dataTransfer.setData('text/plain', `${data[0]}|${data[1]}`);
+                        row.classList.add('dragging-row');
+                    });
+                    row.addEventListener('dragend', () => {
+                        row.classList.remove('dragging-row');
+                        clearRecordDropIndicators(tableElement);
+                    });
+                    row.addEventListener('dragover', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        row.classList.toggle('drop-before', before);
+                        row.classList.toggle('drop-after', !before);
+                    });
+                    row.addEventListener('dragleave', () => row.classList.remove('drop-before', 'drop-after'));
+                    row.addEventListener('drop', (event) => {
+                        event.preventDefault();
+                        const before = (event.clientY - row.getBoundingClientRect().top) < row.offsetHeight / 2;
+                        clearRecordDropIndicators(tableElement);
+                        const draggedKey = event.dataTransfer.getData('text/plain');
+                        if (draggedKey) {
+                            reorderRecordRows(prepId, dataTable, draggedKey, `${data[0]}|${data[1]}`, before);
+                        }
+                    });
+                }
+            });
+
+            tableElement.addEventListener('keydown', (event) => {
+                if (event.target.classList.contains('row-number-input') && event.key === 'Enter') {
+                    event.preventDefault();
+                    event.target.blur();
+                }
+            });
+            tableElement.addEventListener('change', (event) => {
+                if (event.target.classList.contains('row-number-input')) {
+                    applyManualRecordRowNumber(prepId, dataTable, event.target);
+                }
+            });
+
+            dataTable.on('draw', () => updateRecordDragInteractivity(tableElement, dataTable));
+
+            return { blockEl, dataTable, tableElement };
+        }
+
+        // feeds an existing block's DataTable with its current entries, preserving whatever
+        // column sort / search / paging state that instance already has
+        function updatePrepRecordTableData(entry, entries) {
+            const rows = entries.map(({ tableId, key, row }, index) => [tableId, key, row[1], row[2], index + 1]);
+            entry.dataTable.clear();
+            entry.dataTable.rows.add(rows);
+            entry.dataTable.draw(false);
+            updateRecordDragInteractivity(entry.tableElement, entry.dataTable);
+        }
+
+        // rebuilds the popup: one block per selected Preparation Master record (titled with its
+        // Preparation Name), each with a single combined table of every ticked/linked row across
+        // Preparations/Material/Samples/Equipment - a live view of the preparationLinks in-memory store
+        function renderPreparationRecordsPanel() {
+            const selectedPrepIds = Array.from(tables.preparationMasterTable.selectedKeys);
+
+            Array.from(prepRecordBlocks.keys()).forEach((prepId) => {
+                if (!selectedPrepIds.includes(prepId)) {
+                    const entry = prepRecordBlocks.get(prepId);
+                    entry.dataTable.destroy();
+                    entry.blockEl.remove();
+                    prepRecordBlocks.delete(prepId);
+                    prepRecordOrder.delete(prepId);
+                }
+            });
+
+            if (selectedPrepIds.length === 0) {
+                prepRecordsBody.innerHTML = '<p class="prep-records-empty">Select a Preparation Master record to see its linked records.</p>';
+                return;
+            }
+
+            const emptyState = prepRecordsBody.querySelector('.prep-records-empty');
+            if (emptyState) {
+                emptyState.remove();
+            }
+
+            selectedPrepIds.forEach((prepId) => {
+                let entry = prepRecordBlocks.get(prepId);
+                if (!entry) {
+                    entry = createPrepRecordBlock(prepId);
+                    prepRecordBlocks.set(prepId, entry);
+                } else {
+                    prepRecordsBody.appendChild(entry.blockEl);
+                }
+                updatePrepRecordTableData(entry, getOrderedRecordEntries(prepId));
+            });
+        }
 
         // redraws every Preparation Master node and the edges derived from preparationLinks.preparationsTable
         function renderPreparationRelationshipGraph() {
@@ -1616,6 +2099,7 @@
         }
 
         renderPreparationRelationshipGraph();
+        renderPreparationRecordsPanel();
 
         const preparationTooltip = document.createElement('div');
         preparationTooltip.className = 'prep-tooltip';

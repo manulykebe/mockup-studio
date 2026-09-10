@@ -9,7 +9,47 @@
     <style>
         body {
             font-family: system-ui, sans-serif;
-            color: #202124
+            color: #202124;
+            margin: 0;
+        }
+
+        #root {
+            height: 100vh;
+        }
+
+        .split-layout {
+            --left-pane-width: 58%;
+            display: grid;
+            grid-template-columns: minmax(0, var(--left-pane-width)) 8px minmax(0, 1fr);
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .picker-pane,
+        .records-pane {
+            min-width: 0;
+            min-height: 0;
+            overflow: auto;
+        }
+
+        .records-pane {
+            background: #f8f9fa;
+        }
+
+        .split-divider {
+            background: #d9d9d9;
+            border: 0;
+            border-left: 1px solid #c5c9cc;
+            border-right: 1px solid #c5c9cc;
+            cursor: col-resize;
+            padding: 0;
+            touch-action: none;
+        }
+
+        .split-divider:hover,
+        .split-divider:focus-visible {
+            background: #1a73e8;
+            outline: none;
         }
 
         table {
@@ -383,62 +423,12 @@
         }
 
         .prep-records-panel {
-            position: fixed;
-            top: 300px;
-            right: 1rem;
-            z-index: 40;
+            position: static;
             background: #fff;
-            border: 1px solid #d9d9d9;
-            border-radius: 6px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
-            width: 360px;
-            height: 420px;
-            min-width: 300px;
-            min-height: 160px;
-            max-width: 90vw;
-            max-height: 90vh;
+            min-height: 100%;
             display: flex;
             flex-direction: column;
-            resize: both;
-            overflow: hidden;
-        }
-
-        .prep-records-panel.collapsed {
-            resize: none;
-            height: auto !important;
-        }
-
-        .prep-records-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: .45rem .7rem;
-            background: #f1f3f4;
-            border-bottom: 1px solid #d9d9d9;
-            border-radius: 6px 6px 0 0;
-            cursor: move;
-            user-select: none;
-        }
-
-        .prep-records-panel.collapsed .prep-records-header {
-            border-bottom: none;
-            border-radius: 6px;
-        }
-
-        .prep-records-title {
-            font-size: .8rem;
-            font-weight: 600;
-            color: #202124;
-        }
-
-        .prep-records-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: .8rem;
-            line-height: 1;
-            color: #5f6368;
-            padding: 0 .2rem;
+            overflow: visible;
         }
 
         .prep-records-body {
@@ -446,10 +436,6 @@
             flex: 1 1 auto;
             overflow: auto;
             min-height: 0;
-        }
-
-        .prep-records-panel.collapsed .prep-records-body {
-            display: none;
         }
 
         .prep-records-panel table.reorder-disabled .drag-handle-cell {
@@ -524,8 +510,10 @@
         </div>
     </div>
     <div id="root">
-        <div class="min-h-screen bg-base-200 py-8 px-4">
-            <div class="max-w-7xl mx-auto">
+        <div class="split-layout">
+            <main class="picker-pane">
+                <div class="min-h-screen bg-base-200 py-8 px-4">
+                    <div class="max-w-7xl mx-auto">
                 <section class="panel" id="panel-preparation-master">
                     <button type="button" class="panel-header" aria-expanded="true"
                         aria-controls="panel-preparation-master-body">
@@ -1007,7 +995,13 @@
                 <div class="flex justify-end gap-4 mt-6">
                     <button class="btn btn-primary ">Update Prep. Sub</button>
                 </div>
-            </div>
+                    </div>
+                </div>
+            </main>
+            <button class="split-divider" id="splitDivider" type="button" role="separator"
+                aria-label="Resize picker and preparations sections" aria-valuemin="20" aria-valuemax="80"
+                aria-valuenow="58"></button>
+            <aside class="records-pane" id="recordsPane" aria-label="Preparations details"></aside>
         </div>
     </div>
 
@@ -1631,80 +1625,54 @@
             keepGraphPanelOnScreen();
         });
 
-        // always-on-top floating popup listing, per selected Preparation Master record, every child
-        // row ticked in Preparations/Material/Samples/Equipment - a table view of preparationLinks,
-        // draggable via its header and collapsible via the toggle button, same behaviour as the graph panel.
+        // lists, per selected Preparation Master record, every child row ticked in
+        // Preparations/Material/Samples/Equipment - a table view of preparationLinks.
         // Row sorting order in each table defaults to link order but can be manually overridden by the
         // user (drag row handle, or type a value in the "#" row-number input) - see prepRecordOrder below.
         const prepRecordsPanel = document.createElement('div');
         prepRecordsPanel.className = 'prep-records-panel';
         prepRecordsPanel.innerHTML = `
-            <div class="prep-records-header">
-                <span class="prep-records-title">Preparations</span>
-                <button type="button" class="prep-records-toggle" aria-expanded="true" aria-label="Collapse">&#9662;</button>
-            </div>
             <div class="prep-records-body"></div>
         `;
-        document.body.appendChild(prepRecordsPanel);
+        document.getElementById('recordsPane').appendChild(prepRecordsPanel);
         const prepRecordsBody = prepRecordsPanel.querySelector('.prep-records-body');
 
-        const prepRecordsHeader = prepRecordsPanel.querySelector('.prep-records-header');
-        let isDraggingRecordsPanel = false;
-        let recordsDragOffsetX = 0;
-        let recordsDragOffsetY = 0;
+        const splitLayout = document.querySelector('.split-layout');
+        const splitDivider = document.getElementById('splitDivider');
+        let isResizingSplit = false;
 
-        prepRecordsHeader.addEventListener('mousedown', (event) => {
-            if (event.target.closest('.prep-records-toggle')) {
-                return;
-            }
-            const rect = prepRecordsPanel.getBoundingClientRect();
-            recordsDragOffsetX = event.clientX - rect.left;
-            recordsDragOffsetY = event.clientY - rect.top;
-            prepRecordsPanel.style.left = `${rect.left}px`;
-            prepRecordsPanel.style.top = `${rect.top}px`;
-            prepRecordsPanel.style.right = 'auto';
-            isDraggingRecordsPanel = true;
-            event.preventDefault();
-        });
-
-        document.addEventListener('mousemove', (event) => {
-            if (!isDraggingRecordsPanel) {
-                return;
-            }
-            const maxLeft = window.innerWidth - prepRecordsPanel.offsetWidth;
-            const maxTop = window.innerHeight - prepRecordsPanel.offsetHeight;
-            const left = Math.min(Math.max(event.clientX - recordsDragOffsetX, 0), Math.max(maxLeft, 0));
-            const top = Math.min(Math.max(event.clientY - recordsDragOffsetY, 0), Math.max(maxTop, 0));
-            prepRecordsPanel.style.left = `${left}px`;
-            prepRecordsPanel.style.top = `${top}px`;
-        });
-
-        document.addEventListener('mouseup', () => {
-            isDraggingRecordsPanel = false;
-        });
-
-        // re-clamps the panel back on screen if a resize (e.g. collapsing) leaves it partly off-viewport
-        function keepRecordsPanelOnScreen() {
-            const rect = prepRecordsPanel.getBoundingClientRect();
-            const maxLeft = window.innerWidth - rect.width;
-            const maxTop = window.innerHeight - rect.height;
-            const left = Math.min(Math.max(rect.left, 0), Math.max(maxLeft, 0));
-            const top = Math.min(Math.max(rect.top, 0), Math.max(maxTop, 0));
-            if (left !== rect.left || top !== rect.top) {
-                prepRecordsPanel.style.left = `${left}px`;
-                prepRecordsPanel.style.top = `${top}px`;
-                prepRecordsPanel.style.right = 'auto';
-            }
+        function setSplitPosition(clientX) {
+            const bounds = splitLayout.getBoundingClientRect();
+            const percent = Math.min(Math.max(((clientX - bounds.left) / bounds.width) * 100, 20), 80);
+            splitLayout.style.setProperty('--left-pane-width', `${percent}%`);
+            splitDivider.setAttribute('aria-valuenow', String(Math.round(percent)));
         }
-        window.addEventListener('resize', keepRecordsPanelOnScreen);
-        keepRecordsPanelOnScreen();
 
-        const prepRecordsToggle = prepRecordsPanel.querySelector('.prep-records-toggle');
-        prepRecordsToggle.addEventListener('click', () => {
-            const collapsed = prepRecordsPanel.classList.toggle('collapsed');
-            prepRecordsToggle.setAttribute('aria-expanded', String(!collapsed));
-            prepRecordsToggle.innerHTML = collapsed ? '&#9656;' : '&#9662;';
-            keepRecordsPanelOnScreen();
+        splitDivider.addEventListener('pointerdown', (event) => {
+            isResizingSplit = true;
+            splitDivider.setPointerCapture(event.pointerId);
+            setSplitPosition(event.clientX);
+        });
+
+        splitDivider.addEventListener('pointermove', (event) => {
+            if (isResizingSplit) {
+                setSplitPosition(event.clientX);
+            }
+        });
+
+        splitDivider.addEventListener('pointerup', () => {
+            isResizingSplit = false;
+        });
+
+        splitDivider.addEventListener('keydown', (event) => {
+            const current = Number(splitDivider.getAttribute('aria-valuenow'));
+            if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+                event.preventDefault();
+                const direction = event.key === 'ArrowLeft' ? -1 : 1;
+                const percent = Math.min(Math.max(current + direction, 20), 80);
+                splitLayout.style.setProperty('--left-pane-width', `${percent}%`);
+                splitDivider.setAttribute('aria-valuenow', String(percent));
+            }
         });
 
         // display metadata for each child source table: the icon/tooltip shown in the leftmost
