@@ -59,6 +59,17 @@
             font-size: .95rem
         }
 
+        /* DataTables sets an inline style="width:100%" on init/draw; !important is needed to beat that
+           inline style. width is pinned to the table's natural content size (like Preparation Master's
+           un-wrapped headers already do) so panel/divider resizing never stretches/shrinks it; the
+           .overflow-x-auto wrapper scrolls horizontally instead. margin is reset to keep it left-aligned
+           (DataTables' own CSS centers tables with "margin:0 auto"). */
+        table.dataTable {
+            width: max-content !important;
+            max-width: none !important;
+            margin: 0 !important;
+        }
+
         th,
         td {
             border: 1px solid #d9d9d9;
@@ -190,18 +201,6 @@
         .checkbox-cell {
             width: 1%;
             text-align: center;
-        }
-
-        .col-id {
-            width: 9rem;
-        }
-
-        .col-name {
-            width: 16rem;
-        }
-
-        .col-comment {
-            width: 32rem;
         }
 
         .drag-handle {
@@ -1844,6 +1843,10 @@
                     { title: 'Comment', data: 3, className: 'col-comment' }
                 ],
                 order: [],
+                // this table starts empty and is refilled as rows are (un)linked; DataTables' autoWidth
+                // pins <col> widths in px from the first calculation, so it must stay off here or columns
+                // never grow/shrink to fit new content - plain CSS auto table layout sizes them instead
+                autoWidth: false,
                 pageLength: -1,
                 lengthMenu: [[5, 10, 25, -1], [5, 10, 25, 'All']],
                 language: { emptyTable: 'No linked records ticked yet.' },
@@ -1907,6 +1910,8 @@
             entry.dataTable.clear();
             entry.dataTable.rows.add(rows);
             entry.dataTable.draw(false);
+            // recalculates column widths to fit the new row count/content instead of keeping stale ones
+            entry.dataTable.columns.adjust();
             updateRecordDragInteractivity(entry.tableElement, entry.dataTable);
         }
 
