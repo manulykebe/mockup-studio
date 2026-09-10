@@ -25,8 +25,24 @@ http:
     type: bearer
     token: "{{zontal_access_token}}"
 
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        const disposition = res.headers["content-disposition"];
+
+        if (disposition) {
+          const match = disposition.match(/filename="?([^"]+)"?/);
+          if (match) {
+            filename = match[1];
+          }
+        }
+
+        console.log(`Downloaded ${filename}`);
+
 settings:
   encodeUrl: true
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true
