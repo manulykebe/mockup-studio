@@ -62,13 +62,22 @@
 <b>When</b> the user unticks the header checkbox<br/>
 <b>Then</b> all visible enabled rows on the current page are unchecked and unlinked from the active parent preparation(s).</p>
 
-<p><b>7) Hover tooltips for linked child rows</b></p>
+<p><b>7) Dynamic appending and removal of subtable records upon selection/deselection</b></p>
+<p><b>As a User, I want to</b> automatically append or remove records from a parent preparation's linked list when checking or unchecking items in subtables.<br/>
+<b>Given</b> one or more parent Preparation Master records are selected<br/>
+<b>When</b> the user checks an unlinked row in any subtable (Preparations, Material/Lot/Container, Samples, Equipment)<br/>
+<b>Then</b> that record is immediately linked to the active parent preparation(s) and appended to the corresponding preparation's record list in the details pane<br/>
+<b>When</b> the user unchecks a previously linked row in any subtable<br/>
+<b>Then</b> that record is immediately unlinked from the active parent preparation(s) and removed from the corresponding preparation's record list in the details pane<br/>
+<b>And</b> the relationship node graph and selection summary indicators update in real time to reflect the change.</p>
+
+<p><b>8) Hover tooltips for linked child rows</b></p>
 <p><b>As a User, I need to</b> view which parent preparations are associated with a specific child record.<br/>
 <b>Given</b> a child record checkbox is in a checked or indeterminate state<br/>
 <b>When</b> the user hovers the cursor over the row selection checkbox<br/>
 <b>Then</b> a floating tooltip is displayed showing the Preparation ID, Name, and Comment for each parent preparation linked to that record.</p>
 
-<p><b>8) Drag-and-drop and manual row number reordering</b></p>
+<p><b>9) Drag-and-drop and manual row number reordering</b></p>
 <p><b>As a User, I want to</b> reorder records either by dragging row handles or typing a specific row position.<br/>
 <b>Given</b> a table is displaying all records on a single page (Page Length set to "All")<br/>
 <b>When</b> the user drags a row handle to a new position in the table<br/>
@@ -77,14 +86,14 @@
 <b>Then</b> the row is moved to the specified position and remaining rows are renumbered accordingly<br/>
 <b>And</b> reordering controls are disabled when pagination hides records across multiple pages.</p>
 
-<p><b>9) Circular reference prevention and warning notifications</b></p>
+<p><b>10) Circular reference prevention and warning notifications</b></p>
 <p><b>As a User, I need to</b> be prevented from creating circular preparation dependencies.<br/>
 <b>Given</b> a row in the Preparations child table represents the selected parent preparation or would form a closed dependency loop (e.g. Prep A &rarr; Prep B &rarr; Prep A)<br/>
 <b>When</b> the user inspects or attempts to select that preparation row<br/>
 <b>Then</b> the row checkbox is disabled to prevent selection<br/>
 <b>And</b> if a circular dependency is triggered, a warning toast notification (e.g. "&nbsp;&#9888; Circular reference: ...") is displayed at the bottom of the screen.</p>
 
-<p><b>10) Interactive preparation relationship node graph panel</b></p>
+<p><b>11) Interactive preparation relationship node graph panel</b></p>
 <p><b>As a User, I want to</b> visualize parent-child preparation relationships in a graphical diagram.<br/>
 <b>Given</b> parent and child preparations exist in the session<br/>
 <b>When</b> the user views the floating "Preparations Links" panel in the top-right<br/>
@@ -93,7 +102,7 @@
 <b>And</b> potential circular dependencies are displayed with red arrows<br/>
 <b>And</b> the graph panel can be collapsed/expanded or repositioned across the viewport by dragging its header.</p>
 
-<p><b>11) Consolidated preparation details view in right pane</b></p>
+<p><b>12) Consolidated preparation details view in right pane</b></p>
 <p><b>As a User, I want to</b> review a consolidated list of all linked child records for each selected parent preparation.<br/>
 <b>Given</b> one or more Preparation Master records are selected<br/>
 <b>When</b> the user inspects the right details pane<br/>
@@ -103,7 +112,7 @@
 <b>And</b> rows within the combined table support independent drag-and-drop reordering, manual row number input, sorting, search, and pagination<br/>
 <b>And</b> manual row reordering in the details pane is preserved across subsequent selection changes.</p>
 
-<p><b>12) Data table search, column sorting, and pagination</b></p>
+<p><b>13) Data table search, column sorting, and pagination</b></p>
 <p><b>As a User, I want to</b> filter, sort, and paginate through records across all tables.<br/>
 <b>Given</b> any table contains data records<br/>
 <b>When</b> the user enters a search term in the search input<br/>
@@ -113,13 +122,13 @@
 <b>When</b> the user selects a page size (5, 10, 25, All) or uses pagination buttons<br/>
 <b>Then</b> the table updates the displayed records and updates the selection counter in the table info text (e.g. "Showing 1 to 5 of 14 entries - X selected").</p>
 
-<p><b>13) Commit subtable updates</b></p>
+<p><b>14) Commit subtable updates</b></p>
 <p><b>As a User, I want to</b> save and commit updated preparation linkages back to the experiment session.<br/>
 <b>Given</b> the user has configured parent-child preparation selections and child entity linkages<br/>
 <b>When</b> the user clicks the "Update Prep. Sub" button<br/>
 <b>Then</b> all parent-child associations, row orderings, and linked subtable records are saved and committed to the experiment dataset.</p>
 
-<p><b>14) Data loss prevention via localStorage synchronization and pending update check</b></p>
+<p><b>15) Data loss prevention via localStorage synchronization and pending update check</b></p>
 <p><b>As a User, I need to</b> avoid losing uncommitted preparation updates if my browser session is reloaded or closed unexpectedly.<br/>
 <b>Given</b> the user modifies parent-child selections, linkages, or row orderings in the picker interface<br/>
 <b>When</b> changes are made prior to clicking "Update Prep. Sub"<br/>
