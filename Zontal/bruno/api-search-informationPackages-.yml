@@ -1,5 +1,5 @@
 info:
-  name: GET/api/search/informationPackages/
+  name: /api/search/informationPackages/
   type: http
   seq: 6
 

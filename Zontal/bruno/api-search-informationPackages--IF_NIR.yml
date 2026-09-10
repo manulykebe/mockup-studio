@@ -1,0 +1,76 @@
+info:
+  name: /api/search/informationPackages--IF_NIR
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: https://{{ZONTAL_HOST}}/api/search/informationPackages/
+  body:
+    type: json
+    data: |-
+      {
+          "size": 25,
+      //     "query": "S0995945",
+          "filter": [
+              {
+                  "propertyName": "lifecycleStatus",
+                  "value": [
+                      "Submitted",
+                      "Archived"
+                  ],
+                  "filterType": "terms"
+              },
+              {
+                  "propertyName": "fileName",
+                  "value": [
+                      "S0995945"
+                  ],
+                  "filterType": "wildcard"
+              },
+              {
+                  "propertyName": "instrumentId",
+                  "value": [
+                      "IF_NIR"
+                  ],
+                  "filterType": "terms"
+              },
+              {
+                  "propertyName": "informationPackageProfile",
+                  "value": [
+                      "Bruker MPA III VNF"
+                  ],
+                  "filterType": "terms"
+              }
+          ],
+          "sortField": [
+              "createdOn"
+          ],
+          "sortOrder": [
+              "asc"
+          ]
+      }
+  auth:
+    type: bearer
+    token: "{{zontal_access_token}}"
+
+runtime:
+  scripts:
+    - type: after-response
+      code: |-
+        bru.setEnvVar('reccount', res.getBody().member?.length)
+        console.log('Record count:', res.getBody().member?.length);
+
+        if (res.getBody().member?.length||0===1) {
+          bru.setEnvVar('IPID', res.getBody().member[0].objectKey[0])
+        }
+        if (res.getBody().member?.length||0===1) {
+          bru.setEnvVar('IPTitle', res.getBody().member[0].fileName[0])
+        }
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true

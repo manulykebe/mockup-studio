@@ -16,9 +16,9 @@ http:
           {
             "propertyName": "informationPackageIdentifier",
             "value": [
-              "0"
+              "247d49949d9945a8a1ed7bcc5c986c"
             ],
-            "filterType": "prefix",
+            "filterType": "term",
             "operator": null
           }
         ],
