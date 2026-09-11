@@ -14,12 +14,11 @@ http:
         "query": "",
         "filter": [
           {
-            "propertyName": "informationPackageIdentifier",
+            "propertyName": "informationPackageId",
             "value": [
               "247d49949d9945a8a1ed7bcc5c986c"
             ],
-            "filterType": "term",
-            "operator": null
+            "filterType": "term"
           }
         ],
         "sortField": [

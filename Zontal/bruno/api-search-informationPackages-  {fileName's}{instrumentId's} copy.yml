@@ -1,7 +1,7 @@
 info:
-  name: /api/search/informationPackages/  {fileName's}{instrumentId's}
+  name: /api/search/informationPackages/  {fileName's}{instrumentId's} copy
   type: http
-  seq: 7
+  seq: 9
 
 http:
   method: POST

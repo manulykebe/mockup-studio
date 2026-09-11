@@ -1,0 +1,29 @@
+{
+    "size": 25,
+    "query": "",
+    "filter": [
+        {
+            "propertyName": "lifecycleStatus",
+            "value": [
+                "Submitted",
+                "Archived"
+            ],
+            "filterType": "terms",
+            "operator": null
+        },
+        {
+            "propertyName": "title",
+            "value": [
+                "Zontal testing- D9838-1-19.csv.asm"
+            ],
+            "filterType": "terms",
+            "operator": null
+        }
+    ],
+    "sortField": [
+        "createdOn"
+    ],
+    "sortOrder": [
+        "asc"
+    ]
+}

@@ -11,12 +11,12 @@ http:
       value: Bearer {{zontal_access_token}}
   body:
     type: json
-    data: |-
+    data: |
       {
-        "title": "{{IPTitle}}",
+        "title": "00237_NIR005_G017_water_S0995945_S01.001.asm",
         "informationPackage": [
           {
-            "identifier": "{{IPID}}"
+            "identifier": "247d49949d9945a8a1ed7bcc5c986c"
           }
         ],
         "digitalObjectsOnly": true
@@ -30,6 +30,7 @@ runtime:
     - type: after-response
       code: |-
         const disposition = res.headers["content-disposition"];
+        let filename;
 
         if (disposition) {
           const match = disposition.match(/filename="?([^"]+)"?/);

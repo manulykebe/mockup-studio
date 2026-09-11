@@ -1,0 +1,14 @@
+/api/search/informationPackages/
+
+what values are possible for "propertyName" to "filter" on?
+"filter": [
+        {
+            "propertyName": "???",
+	}]
+
+is there a means to make a call and list all these values?
+
+
+
+
+identifier
