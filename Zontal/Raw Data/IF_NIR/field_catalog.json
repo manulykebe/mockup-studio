@@ -1,0 +1,262 @@
+[
+  {
+    "path": [
+      "analyst"
+    ],
+    "label": "analyst",
+    "type": "scalar",
+    "value": "Marc Lenaerts",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "beamsplitter type"
+    ],
+    "label": "beamsplitter type",
+    "type": "scalar",
+    "value": "Quartz",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "detector type"
+    ],
+    "label": "detector type",
+    "type": "scalar",
+    "value": "RT-PbS [External]",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "equipment serial number"
+    ],
+    "label": "equipment serial number",
+    "type": "scalar",
+    "value": "1903",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "measurement identifier"
+    ],
+    "label": "measurement identifier",
+    "type": "scalar",
+    "value": "9a760996-faa3-4a13-be69-83ee745b7cb3",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "sample identifier"
+    ],
+    "label": "sample identifier",
+    "type": "scalar",
+    "value": "00237_NIR005_G017_water_S0995945_S01.001",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "measurement time"
+    ],
+    "label": "measurement time",
+    "type": "scalar",
+    "value": "2025-08-11T09:44:57.419000+02:00",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "michelson interferometer acquisition mode setting"
+    ],
+    "label": "michelson interferometer acquisition mode setting",
+    "type": "scalar",
+    "value": "DD",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "analytical method identifier"
+    ],
+    "label": "analytical method identifier",
+    "type": "scalar",
+    "value": "sphere_macro.XPM",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "sample measurement interface type"
+    ],
+    "label": "sample measurement interface type",
+    "type": "scalar",
+    "value": "Sphere Macrosample",
+    "unit": null,
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "optical velocity setting"
+    ],
+    "label": "optical velocity setting",
+    "type": "quantity",
+    "value": 0.31646761044694033,
+    "unit": "cm/s",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "resolution"
+    ],
+    "label": "resolution",
+    "type": "quantity",
+    "value": 16,
+    "unit": "1/cm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "number of averages"
+    ],
+    "label": "number of averages",
+    "type": "quantity",
+    "value": 128,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "aperture size setting"
+    ],
+    "label": "aperture size setting",
+    "type": "quantity",
+    "value": 0,
+    "unit": "nm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "detector gain setting"
+    ],
+    "label": "detector gain setting",
+    "type": "quantity",
+    "value": 3,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "absorption spectrum data cube"
+    ],
+    "label": "absorption spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "absorbance",
+        "unit": "AU"
+      }
+    ],
+    "n_points": 1038,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "infrared interferogram data cube"
+    ],
+    "label": "infrared interferogram data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "length",
+        "unit": "cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "relative intensity",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": 8132,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "transmittance spectrum data cube"
+    ],
+    "label": "transmittance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "transmittance",
+        "unit": "%"
+      }
+    ],
+    "n_points": 1038,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "reflectance spectrum data cube"
+    ],
+    "label": "reflectance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "reflectance",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": 1038,
+    "include": false
+  }
+]

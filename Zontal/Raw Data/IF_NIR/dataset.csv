@@ -1,0 +1,16 @@
+label,value,unit,path
+analyst,Marc Lenaerts,,analyst
+beamsplitter type,Quartz,,beamsplitter type
+detector type,RT-PbS [External],,detector type
+equipment serial number,1903,,equipment serial number
+measurement identifier,9a760996-faa3-4a13-be69-83ee745b7cb3,,measurement identifier
+sample identifier,00237_NIR005_G017_water_S0995945_S01.001,,sample identifier
+measurement time,2025-08-11T09:44:57.419000+02:00,,measurement time
+michelson interferometer acquisition mode setting,DD,,michelson interferometer acquisition mode setting
+analytical method identifier,sphere_macro.XPM,,analytical method identifier
+sample measurement interface type,Sphere Macrosample,,sample measurement interface type
+optical velocity setting,0.31646761044694033,cm/s,Fourier transform infrared document.measurement document.optical velocity setting
+resolution,16,1/cm,Fourier transform infrared document.measurement document.resolution
+number of averages,128,(unitless),Fourier transform infrared document.measurement document.number of averages
+aperture size setting,0,nm,Fourier transform infrared document.measurement document.aperture size setting
+detector gain setting,3,(unitless),Fourier transform infrared document.measurement document.detector gain setting

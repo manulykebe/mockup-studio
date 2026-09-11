@@ -1,0 +1,13 @@
+  {
+  "@id": "http://purl.allotrope.org/manifests/ftir/REC/2024/12/ftir.manifest",
+  "@type": "http://purl.allotrope.org/ontologies/manifest#Manifest",
+  "json-schemas": [
+    "http://purl.allotrope.org/json-schemas/adm/ftir/REC/2024/12/ftir.schema"
+  ],
+  "shapes": [
+    "http://purl.allotrope.org/shapes/adm/ftir/REC/2021/09/ftir.shapes"
+  ],
+  "vocabulary": [
+    "http://purl.allotrope.org/voc/afo/merged/REC/2021/12/merged"
+  ]
+}

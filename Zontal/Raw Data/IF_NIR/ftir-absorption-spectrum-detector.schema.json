@@ -1,0 +1,228 @@
+{
+  "$defs": {
+    "measurementDocumentItems": {
+      "properties": {
+        "device control aggregate document": {
+          "properties": {
+            "device control document": {
+              "items": {
+                "allOf": [
+                  {
+                    "properties": {
+                      "aperture size setting": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/nm"
+                          }
+                        ]
+                      },
+                      "apodization": {
+                        "$asm.pattern": "value datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002410",
+                        "$asm.type": "http://www.w3.org/2001/XMLSchema#string",
+                        "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tStringValue"
+                      },
+                      "detector gain setting": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/(unitless)"
+                          }
+                        ]
+                      },
+                      "integration time": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0001671",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/s"
+                          }
+                        ]
+                      },
+                      "number of averages": {
+                        "$asm.pattern": "value datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
+                        "$asm.type": "http://www.w3.org/2001/XMLSchema#int",
+                        "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tIntValue"
+                      },
+                      "optical velocity setting": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/cm~1s"
+                          }
+                        ]
+                      },
+                      "phase correction": {
+                        "$asm.pattern": "value datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002412",
+                        "$asm.type": "http://www.w3.org/2001/XMLSchema#string",
+                        "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tStringValue"
+                      },
+                      "resolution": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/1~1cm"
+                          }
+                        ]
+                      },
+                      "zero filling factor": {
+                        "$asm.pattern": "quantity datum",
+                        "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002411",
+                        "allOf": [
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tQuantityValue"
+                          },
+                          {
+                            "$ref": "http://purl.allotrope.org/json-schemas/qudt/REC/2026/07/units.schema#/$defs/(unitless)"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "optical velocity setting",
+                      "resolution",
+                      "number of averages",
+                      "aperture size setting",
+                      "detector gain setting"
+                    ]
+                  },
+                  {
+                    "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/orderedItem"
+                  }
+                ]
+              },
+              "minItems": 1
+            }
+          }
+        },
+        "processed data aggregate document": {
+          "properties": {
+            "processed data document": {
+              "items": {
+                "properties": {
+                  "three-dimensional FTIR spectrum": {
+                    "$asm.pattern": "datacube",
+                    "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002327",
+                    "allOf": [
+                      {
+                        "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/cube.schema#/$defs/tDatacube"
+                      },
+                      {
+                        "properties": {
+                          "cube-structure": {
+                            "properties": {
+                              "dimensions": {
+                                "maxItems": 2,
+                                "minItems": 2,
+                                "prefixItems": [
+                                  {
+                                    "properties": {
+                                      "@componentDatatype": {
+                                        "const": "double"
+                                      },
+                                      "concept": {
+                                        "const": "elapsed time"
+                                      },
+                                      "unit": {
+                                        "const": "s"
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "properties": {
+                                      "@componentDatatype": {
+                                        "const": "double"
+                                      },
+                                      "concept": {
+                                        "const": "wavelength"
+                                      },
+                                      "unit": {
+                                        "const": "1/cm"
+                                      }
+                                    }
+                                  }
+                                ]
+                              },
+                              "measures": {
+                                "contains": {
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "@componentDatatype": {
+                                          "const": "double"
+                                        },
+                                        "concept": {
+                                          "const": "absorbance"
+                                        },
+                                        "unit": {
+                                          "const": "AU"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                },
+                                "maxItems": 1,
+                                "minItems": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ],
+                    "type": "object"
+                  }
+                },
+                "required": [
+                  "three-dimensional FTIR spectrum"
+                ]
+              },
+              "minItems": 1
+            }
+          },
+          "required": [
+            "processed data document"
+          ]
+        },
+        "radiation source type": {
+          "$asm.pattern": "value datum",
+          "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002324",
+          "$asm.type": "http://www.w3.org/2001/XMLSchema#string",
+          "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tStringValue"
+        },
+        "spectrometer type": {
+          "$asm.pattern": "value datum",
+          "$asm.property-class": "http://purl.allotrope.org/ontologies/result#AFR_0002364",
+          "$asm.type": "http://www.w3.org/2001/XMLSchema#string",
+          "$ref": "http://purl.allotrope.org/json-schemas/adm/core/REC/2026/07/core.schema#/$defs/tStringValue"
+        }
+      },
+      "required": [
+        "processed data aggregate document"
+      ]
+    }
+  },
+  "$id": "http://purl.allotrope.org/json-schemas/adm/ftir/REC/2026/07/ftir-absorption-spectrum-detector.schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}
