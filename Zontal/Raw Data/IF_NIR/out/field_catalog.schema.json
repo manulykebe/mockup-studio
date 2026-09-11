@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Field catalog",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "path": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "label": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string",
+        "enum": [
+          "quantity",
+          "datacube",
+          "scalar"
+        ]
+      },
+      "value": {
+        "type": [
+          "number",
+          "string",
+          "boolean",
+          "null"
+        ]
+      },
+      "unit": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "include": {
+        "type": "boolean"
+      },
+      "dimensions": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "concept": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "concept",
+            "unit"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "measures": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "concept": {
+              "type": "string"
+            },
+            "unit": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "concept",
+            "unit"
+          ],
+          "additionalProperties": true
+        }
+      },
+      "n_points": {
+        "type": [
+          "integer",
+          "null"
+        ]
+      },
+      "xsd_type": {
+        "type": [
+          "string",
+          "null"
+        ]
+      }
+    },
+    "required": [
+      "path",
+      "label",
+      "type",
+      "include"
+    ],
+    "additionalProperties": true
+  }
+}

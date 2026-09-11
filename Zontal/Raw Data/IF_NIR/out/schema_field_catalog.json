@@ -1,0 +1,435 @@
+[
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "aperture size setting"
+    ],
+    "label": "aperture size setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "nm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "detector gain setting"
+    ],
+    "label": "detector gain setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "infrared interferogram data cube"
+    ],
+    "label": "infrared interferogram data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "length",
+        "unit": "cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "relative intensity",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": null,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "number of averages"
+    ],
+    "label": "number of averages",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "optical velocity setting"
+    ],
+    "label": "optical velocity setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "cm/s",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "background document",
+      "resolution"
+    ],
+    "label": "resolution",
+    "type": "quantity",
+    "value": null,
+    "unit": "1/cm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "absorption spectrum data cube"
+    ],
+    "label": "absorption spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "absorbance",
+        "unit": "AU"
+      }
+    ],
+    "n_points": null,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "aperture size setting"
+    ],
+    "label": "aperture size setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "nm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "detector gain setting"
+    ],
+    "label": "detector gain setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "infrared interferogram data cube"
+    ],
+    "label": "infrared interferogram data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "length",
+        "unit": "cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "relative intensity",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": null,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "number of averages"
+    ],
+    "label": "number of averages",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "optical velocity setting"
+    ],
+    "label": "optical velocity setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "cm/s",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "reflectance spectrum data cube"
+    ],
+    "label": "reflectance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "reflectance",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": null,
+    "include": false
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "resolution"
+    ],
+    "label": "resolution",
+    "type": "quantity",
+    "value": null,
+    "unit": "1/cm",
+    "include": true
+  },
+  {
+    "path": [
+      "Fourier transform infrared document",
+      "measurement document",
+      "transmittance spectrum data cube"
+    ],
+    "label": "transmittance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "transmittance",
+        "unit": "%"
+      }
+    ],
+    "n_points": null,
+    "include": false
+  },
+  {
+    "path": [
+      "analyst"
+    ],
+    "label": "analyst",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "analytical method identifier"
+    ],
+    "label": "analytical method identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "assay comment"
+    ],
+    "label": "assay comment",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "assay data identifier"
+    ],
+    "label": "assay data identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "batch identifier"
+    ],
+    "label": "batch identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "beamsplitter type"
+    ],
+    "label": "beamsplitter type",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "conformance assessment"
+    ],
+    "label": "conformance assessment",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "include": true
+  },
+  {
+    "path": [
+      "detector type"
+    ],
+    "label": "detector type",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "equipment serial number"
+    ],
+    "label": "equipment serial number",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "experimental data identifier"
+    ],
+    "label": "experimental data identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "material identifier"
+    ],
+    "label": "material identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "measurement identifier"
+    ],
+    "label": "measurement identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "measurement time"
+    ],
+    "label": "measurement time",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+    "include": true
+  },
+  {
+    "path": [
+      "michelson interferometer acquisition mode setting"
+    ],
+    "label": "michelson interferometer acquisition mode setting",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "reference identifier"
+    ],
+    "label": "reference identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "sample identifier"
+    ],
+    "label": "sample identifier",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "sample measurement interface type"
+    ],
+    "label": "sample measurement interface type",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": [
+      "sample preparation description"
+    ],
+    "label": "sample preparation description",
+    "type": "scalar",
+    "value": null,
+    "unit": null,
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  }
+]

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generic ASM Field Extraction - Synopsis</title>
+</head>
+<body>
+
+<h1>Generic ASM Field Extraction: Procedure Synopsis</h1>
+
+<p>
+Goal: turn any Allotrope ASM measurement file into a linearized dataset
+(rows of label, value, unit) by joining it against a reviewable field
+catalog, without hardcoding field names per instrument.
+</p>
+
+<h2>Always, first</h2>
+<ol>
+  <li>Read the measurement file.</li>
+  <li>Extract <code>$asm.manifest</code> (a URI string at the top level).</li>
+</ol>
+
+<h2>If the manifest is new (no cached catalog yet)</h2>
+<ol>
+  <li>Resolve the manifest URI: strip the scheme and host, then look up
+      <code>in/manifest/&lt;remaining path&gt;.json</code> (e.g. the manifest
+      <code>http://purl.allotrope.org/manifests/ftir/REC/2024/12/ftir.manifest</code>
+      resolves to <code>in/manifest/ftir/REC/2024/12/ftir.manifest.json</code>),
+      matched by its <code>@id</code>, then read its <code>json-schemas[0]</code> URI.</li>
+  <li>Resolve that schema URI the same way: strip the scheme and host, then
+      look up <code>in/schema/&lt;remaining path&gt;</code> (e.g.
+      <code>http://purl.allotrope.org/json-schemas/adm/ftir/REC/2024/12/ftir.schema</code>
+      resolves to <code>in/schema/adm/ftir/REC/2024/12/ftir.schema</code>),
+      matched by its <code>$id</code>.</li>
+  <li>Run <code>scripts/schema_catalog_builder.js</code> on that schema to
+      produce a catalog of every candidate field, with <code>value: null</code>
+      and an <code>include</code> flag pre-set
+      (true for scalar/quantity, false for datacube).</li>
+  <li>Manually review the catalog: adjust <code>include</code> flags as
+      needed, then save it under a name keyed to the manifest in
+      <code>out/</code> (e.g. <code>out/&lt;manifest-name&gt;.catalog.json</code>).
+      Never reuse the reserved name <code>field_catalog.schema.json</code> -
+      that file is the JSON Schema validating the catalog format itself,
+      not a catalog.</li>
+</ol>
+
+<h2>If the manifest is already known (cached catalog exists)</h2>
+<ol>
+  <li>Resolve the manifest URI the same way, to confirm it matches the
+      cached catalog's manifest.</li>
+  <li>Load the existing cached catalog directly - skip regeneration.</li>
+</ol>
+
+<h2>Always, last: the "join"</h2>
+<ol>
+  <li>Run
+      <code>node scripts/dataset_extractor.js in/&lt;measurement-file&gt; out/&lt;catalog-file&gt; -o out/dataset.csv</code>.</li>
+  <li>For each catalog entry with <code>include: true</code>, resolve its
+      <code>path</code> against the live measurement file and emit a
+      <code>label, value, unit</code> row.</li>
+</ol>
+
+<h2>Key clarifications</h2>
+<ul>
+  <li>The manifest does not contain a schema directly - it only points to
+      one via a URI, which must be matched to a local <code>.schema</code>
+      file by <code>$id</code>.</li>
+  <li>The join ignores the catalog's own <code>value</code> field entirely;
+      only <code>path</code> and <code>include</code> matter. The actual
+      value always comes fresh from the measurement file being processed.</li>
+  <li>Catalogs must be cached per manifest, under distinct filenames, to
+      avoid collisions with reserved schema files.</li>
+</ul>
+
+<h2>Folder layout</h2>
+<ul>
+  <li><code>in/</code> - measurement files (read-only inputs).</li>
+  <li><code>in/manifest/</code> - manifest JSON files, stored under a path
+      that mirrors their <code>$asm.manifest</code> URI
+      (host stripped, path kept, <code>.json</code> appended).</li>
+  <li><code>in/schema/</code> - ASM schema files, stored under a path that
+      mirrors their <code>$id</code> URI (host stripped, path kept).</li>
+  <li><code>scripts/</code> - the three Node.js tools described below.</li>
+  <li><code>out/</code> - generated catalogs and the linearized dataset (all script outputs).</li>
+</ul>
+
+<h2>Tooling map</h2>
+<table border="1" cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Script</th>
+    <th>Input</th>
+    <th>Output</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>scripts/catalog_builder.js</td>
+    <td>in/&lt;measurement file&gt; (.asm.json)</td>
+    <td>out/field_catalog.json</td>
+    <td>Discover fields from an actual data file (values populated)</td>
+  </tr>
+  <tr>
+    <td>scripts/schema_catalog_builder.js</td>
+    <td>in/schema/&lt;schema file&gt; (.schema)</td>
+    <td>out/schema_field_catalog.json</td>
+    <td>Discover fields from a schema (no data yet, values null)</td>
+  </tr>
+  <tr>
+    <td>scripts/dataset_extractor.js</td>
+    <td>in/&lt;measurement file&gt; + out/&lt;catalog file&gt;</td>
+    <td>out/dataset.csv</td>
+    <td>Join catalog against a measurement file, emit linearized rows</td>
+  </tr>
+</table>
+
+</body>
+</html>
