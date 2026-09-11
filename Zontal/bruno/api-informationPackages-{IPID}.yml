@@ -1,5 +1,5 @@
 info:
-  name: get IP
+  name: /api/informationPackages/{IPID}
   type: http
   seq: 2
 
@@ -15,3 +15,4 @@ settings:
   timeout: 0
   followRedirects: true
   maxRedirects: 5
+  forwardAuthorizationHeader: true

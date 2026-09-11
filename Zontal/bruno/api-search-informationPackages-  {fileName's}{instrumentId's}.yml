@@ -1,5 +1,5 @@
 info:
-  name: /api/search/informationPackages--IF_NIR
+  name: /api/search/informationPackages/  {fileName's}{instrumentId's}
   type: http
   seq: 7
 

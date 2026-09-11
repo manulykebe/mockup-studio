@@ -1,5 +1,5 @@
 info:
-  name: Search DATA by IP
+  name: /api/download/{APID}{APTitle}
   type: http
   seq: 2
 
