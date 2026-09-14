@@ -269,7 +269,7 @@
       "analyst"
     ],
     "label": "analyst",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001116",
@@ -281,7 +281,7 @@
       "analytical method identifier"
     ],
     "label": "analytical method identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001978",
@@ -293,7 +293,7 @@
       "assay comment"
     ],
     "label": "assay comment",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001980",
@@ -305,7 +305,7 @@
       "assay data identifier"
     ],
     "label": "assay data identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002019",
@@ -317,7 +317,7 @@
       "batch identifier"
     ],
     "label": "batch identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001120",
@@ -329,7 +329,7 @@
       "beamsplitter type"
     ],
     "label": "beamsplitter type",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002254",
@@ -341,7 +341,7 @@
       "conformance assessment"
     ],
     "label": "conformance assessment",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001991",
@@ -353,7 +353,7 @@
       "detector type"
     ],
     "label": "detector type",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002253",
@@ -365,7 +365,7 @@
       "equipment serial number"
     ],
     "label": "equipment serial number",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001119",
@@ -377,7 +377,7 @@
       "experimental data identifier"
     ],
     "label": "experimental data identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001977",
@@ -389,7 +389,7 @@
       "material identifier"
     ],
     "label": "material identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001745",
@@ -401,7 +401,7 @@
       "measurement identifier"
     ],
     "label": "measurement identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001121",
@@ -413,7 +413,7 @@
       "measurement time"
     ],
     "label": "measurement time",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0000952",
@@ -425,7 +425,7 @@
       "michelson interferometer acquisition mode setting"
     ],
     "label": "michelson interferometer acquisition mode setting",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002390",
@@ -437,7 +437,7 @@
       "reference identifier"
     ],
     "label": "reference identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001992",
@@ -449,7 +449,7 @@
       "sample identifier"
     ],
     "label": "sample identifier",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001118",
@@ -461,7 +461,7 @@
       "sample measurement interface type"
     ],
     "label": "sample measurement interface type",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002391",
@@ -473,7 +473,7 @@
       "sample preparation description"
     ],
     "label": "sample preparation description",
-    "type": "scalar",
+    "type": "value",
     "value": null,
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002202",
