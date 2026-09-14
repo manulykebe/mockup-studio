@@ -62,6 +62,7 @@ function rowsForScalar(entry) {
     unit: entry.unit !== undefined ? entry.unit : null,
     ontology: entry.ontology || null,
     xsd_type: entry.xsd_type || null,
+    path: entry.path.slice(0, -1).join("|"),
   }];
 }
 
@@ -85,6 +86,7 @@ function rowsForDatacube(entry, doc) {
         unit: measureMeta[m].unit !== undefined ? measureMeta[m].unit : null,
         ontology: entry.ontology || null,
         xsd_type: "http://www.w3.org/2001/XMLSchema#double",
+        path: entry.path.slice(0, -1).join("|"),
       });
     });
   }
@@ -153,6 +155,7 @@ function toCsv(rows, title) {
     "Scalar DateTime Datum",
     "Unit",
     "Ontology",
+    "Path",
   ];
   const lines = rows.map((row, index) => {
     const columns = datumColumns(row);
@@ -166,6 +169,7 @@ function toCsv(rows, title) {
       columns.dateTime,
       row.unit,
       row.ontology,
+      row.path,
     ].map(csvEscape).join(";");
   });
   return [header.join(";"), ...lines].join("\n") + "\n";
