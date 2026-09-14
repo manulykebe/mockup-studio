@@ -3,7 +3,7 @@
  * with entries separated by ", ".
  *
  * Usage (Node):
- *   node extract.js path/to/response.json.txt
+ *   node extract-response-title-identifier.js response.json
  *
  * Usage (Browser):
  *   const result = extractTitleIdList(payload);
@@ -21,7 +21,7 @@ function extractTitleIdList(payload) {
       return `${title.trim()}|${id.trim()}`;
     })
     .filter(entry => entry !== '|' && entry !== '|') // drop entries where both missing
-    .join(', ');
+    .join(',');
 }
 
 /* ------------------------
