@@ -12,7 +12,7 @@
  * Recognized "$asm.pattern" values:
  *   - "aggregate datum": a container -> recurse into its "properties".
  *   - "quantity datum":  a {value, unit} leaf -> unit taken from the units.schema $ref.
- *   - "value datum":     a plain scalar leaf -> unit is always null.
+ *   - "value datum":     a plain value leaf -> unit is always null.
  *   - "datacube":        an Allotrope data cube -> described (dimensions/measures), not expanded.
  *
  * Usage:
@@ -85,7 +85,7 @@ function walk(node, currentPath, entries) {
       type: "quantity",
       value: null,
       unit: extractUnit(node),
-      property_class: node["$asm.property-class"] || null,
+      ontology: node["$asm.property-class"] || null,
       xsd_type: node["$asm.type"] || null,
       include: true,
     });
@@ -96,10 +96,10 @@ function walk(node, currentPath, entries) {
     entries.push({
       path: currentPath,
       label,
-      type: "scalar",
+      type: "value",
       value: null,
       unit: null,
-      property_class: node["$asm.property-class"] || null,
+      ontology: node["$asm.property-class"] || null,
       xsd_type: node["$asm.type"] || null,
       include: true,
     });
@@ -115,7 +115,7 @@ function walk(node, currentPath, entries) {
       dimensions: meta.dimensions,
       measures: meta.measures,
       n_points: null,
-      property_class: node["$asm.property-class"] || null,
+      ontology: node["$asm.property-class"] || null,
       xsd_type: node["$asm.type"] || null,
       include: false,
     });

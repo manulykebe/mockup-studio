@@ -8,11 +8,11 @@ variables:
     name: client_secret
   - secret: true
     name: zontal_access_token
+  - name: IPID
+    value: 247d49949d9945a8a1ed7bcc5c986c
+  - name: IPTitle
+    value: 00237_NIR005_G017_water_S0995945_S01.001.asm
   - name: reccount
     value:
       type: number
       data: "1"
-  - name: IPID
-    value: 247d49949d9945a8a1ed7bcc5c986c
-  - name: IPTitle
-    value: 00237_NIR005_G017_water_S0995945_S01.001
