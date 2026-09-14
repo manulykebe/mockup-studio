@@ -130,10 +130,10 @@ flat view of the joined result: one row per label, value, and unit.
     </p>
 
   <p>Representative rows from the generated semicolon-delimited dataset:</p>
-  <pre><code>Title;Datum Label;Index;Scalar Double Datum;Scalar String Datum;Scalar Boolean Datum;Scalar DateTime Datum;Unit;Ontology
-  00237_NIR005_G017_water_S0995945_S01.001;aperture size setting;1;0;;;;nm;http://purl.allotrope.org/ontologies/result#AFR_0002389
-  00237_NIR005_G017_water_S0995945_S01.001;analyst;6;;Marc Lenaerts;;;;http://purl.allotrope.org/ontologies/result#AFR_0001116
-  00237_NIR005_G017_water_S0995945_S01.001;measurement time;11;;;;2025-08-11T09:44:57.419000+02:00;;http://purl.allotrope.org/ontologies/result#AFR_0000952</code></pre>
+  <pre><code>Title;Datum Label;Index;Scalar Double Datum;Scalar String Datum;Scalar Boolean Datum;Scalar DateTime Datum;Unit;Ontology;Path
+  00237_NIR005_G017_water_S0995945_S01.001;aperture size setting;1;0;;;;nm;http://purl.allotrope.org/ontologies/result#AFR_0002389;Fourier transform infrared document|measurement document
+  00237_NIR005_G017_water_S0995945_S01.001;analyst;6;;Marc Lenaerts;;;;http://purl.allotrope.org/ontologies/result#AFR_0001116;
+  00237_NIR005_G017_water_S0995945_S01.001;measurement time;11;;;;2025-08-11T09:44:57.419000+02:00;;http://purl.allotrope.org/ontologies/result#AFR_0000952;</code></pre>
 
   <p>
   The schema catalog is the reusable selection template. After manual review,
@@ -153,8 +153,9 @@ flat view of the joined result: one row per label, value, and unit.
       <code>unit</code> populate the joined entry, replacing the schema
       catalog's null value placeholder.</li>
       <li>The CSV columns are <code>Title</code>, <code>Datum Label</code>,
-        <code>Index</code>, typed scalar value columns, <code>Unit</code>, and
-        <code>Ontology</code>. Numeric values currently use
+        <code>Index</code>, typed scalar value columns, <code>Unit</code>,
+        <code>Ontology</code>, and the pipe-delimited parent <code>Path</code>.
+        Numeric values currently use
         <code>Scalar Double Datum</code>; the title comes from <code>-t</code>
         or falls back to the measurement's <code>sample identifier</code>.</li>
   <li>Catalogs must be cached per manifest, under distinct filenames, to
