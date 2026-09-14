@@ -31,6 +31,7 @@ function joinEntry(entry, doc) {
 
   if (node === undefined || node === null) {
     joined.value = null;
+    joined.include = false;
     return joined;
   }
 

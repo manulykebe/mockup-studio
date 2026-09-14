@@ -62,7 +62,8 @@ catalog, without hardcoding field names per instrument.
       <code>label, value, unit</code> row.</li>
   <li>The optional <code>-j</code> output is the schema catalog populated
     with live measurement values, units, and datacube sizes. Missing
-    schema-defined paths remain <code>value: null</code>.</li>
+    schema-defined paths are retained for traceability with
+    <code>value: null</code> and <code>include: false</code>.</li>
 </ol>
 
   <h2>Worked example: the available FTIR file</h2>
@@ -94,7 +95,7 @@ catalog, without hardcoding field names per instrument.
         <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm in/catalog/schema_field_catalog.json -o out/dataset-from-schema.csv -j out/joined_field_catalog.json</code></pre>
         The schema catalog remains the selection/template contract; the
         extractor populates its actual values and units from the measurement.
-        This writes 28 selected linearized rows to
+        This writes 15 selected linearized rows to
         <code>out/dataset-from-schema.csv</code> and the populated template to
         <code>out/joined_field_catalog.json</code>.</li>
     </ol>

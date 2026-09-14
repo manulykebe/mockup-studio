@@ -7,7 +7,7 @@
     "unit": "nm",
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
     "xsd_type": null,
-    "include": true
+    "include": false
   },
   {
     "path": "Fourier transform infrared document|background document",
@@ -17,7 +17,7 @@
     "unit": "(unitless)",
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
     "xsd_type": null,
-    "include": true
+    "include": false
   },
   {
     "path": "Fourier transform infrared document|background document",
@@ -49,7 +49,7 @@
     "unit": "(unitless)",
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
     "xsd_type": null,
-    "include": true
+    "include": false
   },
   {
     "path": "Fourier transform infrared document|background document",
@@ -59,7 +59,7 @@
     "unit": "cm/s",
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
     "xsd_type": null,
-    "include": true
+    "include": false
   },
   {
     "path": "Fourier transform infrared document|background document",
@@ -69,7 +69,7 @@
     "unit": "1/cm",
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
     "xsd_type": null,
-    "include": true
+    "include": false
   },
   {
     "path": "Fourier transform infrared document|measurement document",
@@ -245,7 +245,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001980",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -255,7 +255,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002019",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -265,7 +265,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001120",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -285,7 +285,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001991",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#boolean",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -315,7 +315,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001977",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -325,7 +325,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001745",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -365,7 +365,7 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001992",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   },
   {
     "path": "",
@@ -395,6 +395,6 @@
     "unit": null,
     "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002202",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
-    "include": true
+    "include": false
   }
 ]
