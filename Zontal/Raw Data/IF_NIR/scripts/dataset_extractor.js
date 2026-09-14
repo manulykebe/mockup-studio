@@ -9,7 +9,7 @@
  * catalog and the file must share the same document shape (same ASM manifest).
  *
  * Usage:
- *   node dataset_extractor.js <asm_file.json> <field_catalog.json> [-o dataset.csv] [--expand-datacubes]
+ *   node dataset_extractor.js <asm_file.json> <schema_field_catalog.json> [-o dataset.csv] [-j joined_catalog.json] [--expand-datacubes]
  */
 "use strict";
 
@@ -19,21 +19,45 @@ const path = require("path");
 function resolve(doc, entryPath) {
   let node = doc;
   for (const key of entryPath) {
+    if (node === null || node === undefined) return undefined;
     node = Array.isArray(node) ? node[Number(key)] : node[key];
   }
   return node;
 }
 
-function rowsForScalar(entry, doc) {
+function joinEntry(entry, doc) {
+  const joined = { ...entry };
   const node = resolve(doc, entry.path);
-  let value, unit;
-  if (node !== null && typeof node === "object" && !Array.isArray(node)) {
-    value = node.value;
-    unit = node.unit !== undefined ? node.unit : null;
-  } else {
-    value = node;
-    unit = null;
+
+  if (node === undefined || node === null) {
+    joined.value = null;
+    return joined;
   }
+
+  if (entry.type === "datacube") {
+    const dimensions = node.data && node.data.dimensions;
+    const structure = node["cube-structure"] || {};
+    joined.dimensions = structure.dimensions || entry.dimensions || [];
+    joined.measures = structure.measures || entry.measures || [];
+    joined.n_points = dimensions && dimensions.length ? dimensions[0].length : 0;
+    joined.value = null;
+    return joined;
+  }
+
+  if (node !== null && typeof node === "object" && !Array.isArray(node)) {
+    joined.value = node.value;
+    joined.unit = node.unit !== undefined ? node.unit : null;
+  } else {
+    joined.value = node;
+    joined.unit = null;
+  }
+  return joined;
+}
+
+function rowsForScalar(entry) {
+  let value, unit;
+  value = entry.value;
+  unit = entry.unit !== undefined ? entry.unit : null;
   return [{ label: entry.label, value, unit, path: entry.path.join(".") }];
 }
 
@@ -66,13 +90,25 @@ function extract(doc, catalog, expandDatacubes) {
   const rows = [];
   for (const entry of catalog) {
     if (!entry.include) continue;
-    if (entry.type === "datacube") {
+    const joined = joinEntry(entry, doc);
+    if (joined.type === "datacube") {
       if (expandDatacubes) rows.push(...rowsForDatacube(entry, doc));
       continue;
     }
-    rows.push(...rowsForScalar(entry, doc));
+    rows.push(...rowsForScalar(joined));
   }
   return rows;
+}
+
+function joinCatalog(doc, catalog) {
+  return catalog.map((entry) => joinEntry(entry, doc));
+}
+
+function serializeJoinedCatalog(catalog) {
+  return catalog.map((entry) => ({
+    ...entry,
+    path: entry.path.slice(0, -1).join("|"),
+  }));
 }
 
 function csvEscape(value) {
@@ -92,7 +128,7 @@ function main() {
   const args = process.argv.slice(2);
   if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
     console.log(
-      "Usage: node dataset_extractor.js <asm_file.json> <field_catalog.json> [-o dataset.csv] [--expand-datacubes]"
+      "Usage: node dataset_extractor.js <asm_file.json> <schema_field_catalog.json> [-o dataset.csv] [-j joined_catalog.json] [--expand-datacubes]"
     );
     process.exit(args.length === 0 ? 1 : 0);
   }
@@ -100,11 +136,14 @@ function main() {
   let asmFile = null;
   let catalogFile = null;
   let output = "dataset.csv";
+  let joinedCatalogOutput = null;
   let expandDatacubes = false;
   const positional = [];
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "-o" || args[i] === "--output") {
       output = args[++i];
+    } else if (args[i] === "-j" || args[i] === "--joined-catalog") {
+      joinedCatalogOutput = args[++i];
     } else if (args[i] === "--expand-datacubes") {
       expandDatacubes = true;
     } else {
@@ -119,9 +158,15 @@ function main() {
 
   const doc = JSON.parse(fs.readFileSync(path.resolve(asmFile), "utf-8"));
   const catalog = JSON.parse(fs.readFileSync(path.resolve(catalogFile), "utf-8"));
-  const rows = extract(doc, catalog, expandDatacubes);
+  const joinedCatalog = joinCatalog(doc, catalog);
+  const rows = extract(doc, joinedCatalog, expandDatacubes);
 
   fs.writeFileSync(path.resolve(output), toCsv(rows), "utf-8");
+  if (joinedCatalogOutput) {
+    const joinedPath = path.resolve(joinedCatalogOutput);
+    fs.mkdirSync(path.dirname(joinedPath), { recursive: true });
+    fs.writeFileSync(joinedPath, JSON.stringify(serializeJoinedCatalog(joinedCatalog), null, 2), "utf-8");
+  }
   console.log(`Wrote ${rows.length} rows to ${output}`);
 }
 
@@ -129,4 +174,4 @@ if (require.main === module) {
   main();
 }
 
-module.exports = { resolve, extract, toCsv };
+module.exports = { resolve, joinEntry, joinCatalog, serializeJoinedCatalog, extract, toCsv };

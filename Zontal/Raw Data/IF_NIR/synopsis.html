@@ -56,10 +56,13 @@ catalog, without hardcoding field names per instrument.
 <h2>Always, last: the "join"</h2>
 <ol>
   <li>Run
-      <code>node scripts/dataset_extractor.js in/&lt;measurement-file&gt; out/&lt;catalog-file&gt; -o out/dataset.csv</code>.</li>
+    <code>node scripts/dataset_extractor.js in/&lt;measurement-file&gt; in/catalog/&lt;schema-catalog&gt; -o out/dataset.csv -j out/joined_field_catalog.json</code>.</li>
   <li>For each catalog entry with <code>include: true</code>, resolve its
       <code>path</code> against the live measurement file and emit a
       <code>label, value, unit</code> row.</li>
+  <li>The optional <code>-j</code> output is the schema catalog populated
+    with live measurement values, units, and datacube sizes. Missing
+    schema-defined paths remain <code>value: null</code>.</li>
 </ol>
 
   <h2>Worked example: the available FTIR file</h2>
@@ -87,14 +90,22 @@ catalog, without hardcoding field names per instrument.
       <code>in/catalog/schema_field_catalog.json</code>. Its values are
       <code>null</code> because the catalog was built from the schema.</li>
     <li>For this example, use the reviewed data catalog generated from the
-      measurement file:
-      <pre><code>node scripts/catalog_builder.js in/00237_NIR005_G017_water_S0995945_S01.001.asm -o out/field_catalog.json</code></pre>
-      This discovers 19 candidates and retains their actual values.</li>
-    <li>Join the measurement file with the selected catalog:
-      <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm out/field_catalog.json -o out/dataset.csv</code></pre>
-      This writes 15 linearized rows to <code>out/dataset.csv</code>.
-  </li>
-  </ol>
+        measurement file, or use the schema catalog as the template:
+        <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm in/catalog/schema_field_catalog.json -o out/dataset-from-schema.csv -j out/joined_field_catalog.json</code></pre>
+        The schema catalog remains the selection/template contract; the
+        extractor populates its actual values and units from the measurement.
+        This writes 28 selected linearized rows to
+        <code>out/dataset-from-schema.csv</code> and the populated template to
+        <code>out/joined_field_catalog.json</code>.</li>
+    </ol>
+
+    <p>
+    For example, the schema entry for
+    <code>Fourier transform infrared document.measurement document.aperture size setting</code>
+    starts with <code>value: null</code> and <code>unit: "nm"</code>. After the
+    join it contains <code>value: 0</code> and <code>unit: "nm"</code>, while its
+    schema metadata and path are retained.
+    </p>
 
   <p>Representative rows from the generated dataset:</p>
   <pre><code>label,value,unit,path
@@ -118,9 +129,10 @@ catalog, without hardcoding field names per instrument.
   <li>The manifest does not contain a schema directly - it only points to
       one via a URI, which must be matched to a local <code>.schema</code>
       file by <code>$id</code>.</li>
-  <li>The join ignores the catalog's own <code>value</code> field entirely;
-      only <code>path</code> and <code>include</code> matter. The actual
-      value always comes fresh from the measurement file being processed.</li>
+    <li>The catalog's <code>path</code> and <code>include</code> fields control
+      selection. The measurement's current <code>value</code> and
+      <code>unit</code> populate the joined entry, replacing the schema
+      catalog's null value placeholder.</li>
   <li>Catalogs must be cached per manifest, under distinct filenames, to
       avoid collisions with reserved schema files.</li>
 </ul>
@@ -160,9 +172,9 @@ catalog, without hardcoding field names per instrument.
   </tr>
   <tr>
     <td>scripts/dataset_extractor.js</td>
-    <td>in/&lt;measurement file&gt; + out/&lt;catalog file&gt;</td>
-    <td>out/dataset.csv</td>
-    <td>Join catalog against a measurement file, emit linearized rows</td>
+    <td>in/&lt;measurement file&gt; + in/catalog/&lt;schema catalog&gt;</td>
+    <td>out/dataset.csv + optional out/joined_field_catalog.json</td>
+    <td>Populate the schema template from a measurement and emit linearized rows</td>
   </tr>
 </table>
 

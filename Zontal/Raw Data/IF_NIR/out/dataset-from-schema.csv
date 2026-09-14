@@ -1,0 +1,29 @@
+label,value,unit,path
+aperture size setting,,nm,Fourier transform infrared document.background document.aperture size setting
+detector gain setting,,(unitless),Fourier transform infrared document.background document.detector gain setting
+number of averages,,(unitless),Fourier transform infrared document.background document.number of averages
+optical velocity setting,,cm/s,Fourier transform infrared document.background document.optical velocity setting
+resolution,,1/cm,Fourier transform infrared document.background document.resolution
+aperture size setting,0,nm,Fourier transform infrared document.measurement document.aperture size setting
+detector gain setting,3,(unitless),Fourier transform infrared document.measurement document.detector gain setting
+number of averages,128,(unitless),Fourier transform infrared document.measurement document.number of averages
+optical velocity setting,0.31646761044694033,cm/s,Fourier transform infrared document.measurement document.optical velocity setting
+resolution,16,1/cm,Fourier transform infrared document.measurement document.resolution
+analyst,Marc Lenaerts,,analyst
+analytical method identifier,sphere_macro.XPM,,analytical method identifier
+assay comment,,,assay comment
+assay data identifier,,,assay data identifier
+batch identifier,,,batch identifier
+beamsplitter type,Quartz,,beamsplitter type
+conformance assessment,,,conformance assessment
+detector type,RT-PbS [External],,detector type
+equipment serial number,1903,,equipment serial number
+experimental data identifier,,,experimental data identifier
+material identifier,,,material identifier
+measurement identifier,9a760996-faa3-4a13-be69-83ee745b7cb3,,measurement identifier
+measurement time,2025-08-11T09:44:57.419000+02:00,,measurement time
+michelson interferometer acquisition mode setting,DD,,michelson interferometer acquisition mode setting
+reference identifier,,,reference identifier
+sample identifier,00237_NIR005_G017_water_S0995945_S01.001,,sample identifier
+sample measurement interface type,Sphere Macrosample,,sample measurement interface type
+sample preparation description,,,sample preparation description
