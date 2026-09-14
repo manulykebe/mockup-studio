@@ -56,15 +56,36 @@ catalog, without hardcoding field names per instrument.
 <h2>Always, last: the "join"</h2>
 <ol>
   <li>Run
-    <code>node scripts/dataset_extractor.js in/&lt;measurement-file&gt; in/catalog/&lt;schema-catalog&gt; -o out/dataset.csv -j out/joined_field_catalog.json</code>.</li>
+    <code>node scripts/dataset_extractor.js in/&lt;measurement-file&gt; in/catalog/&lt;schema-catalog&gt; -o out/dataset.csv -j out/joined_field_catalog.json -t &lt;title&gt;</code>.</li>
   <li>For each catalog entry with <code>include: true</code>, resolve its
       <code>path</code> against the live measurement file and emit a
-      <code>label, value, unit</code> row.</li>
+      typed datum row.</li>
   <li>The optional <code>-j</code> output is the schema catalog populated
     with live measurement values, units, and datacube sizes. Missing
     schema-defined paths are retained for traceability with
     <code>value: null</code> and <code>include: false</code>.</li>
 </ol>
+
+<h2>What the join means</h2>
+<p>
+The schema catalog describes what a measurement can contain: field names,
+paths, units, types, and the fields selected for output. It is a template,
+not the measurement result.
+</p>
+<p>
+The join matches each selected catalog path with the same path in the actual
+measurement file. It then copies the current value and unit from the
+measurement into the catalog entry. Fields defined by the schema but missing
+from this measurement are kept for traceability and marked
+<code>include: false</code>.
+</p>
+<p>
+For scientists, this means the selected results are taken from the actual
+experiment while the schema supplies their meaning and expected units. For
+developers, it means the schema catalog supplies the field selection and
+paths, and the measurement file supplies the live data. The final CSV is a
+flat view of the joined result: one row per label, value, and unit.
+</p>
 
   <h2>Worked example: the available FTIR file</h2>
   <p>
@@ -92,7 +113,7 @@ catalog, without hardcoding field names per instrument.
       <code>null</code> because the catalog was built from the schema.</li>
     <li>For this example, use the reviewed data catalog generated from the
         measurement file, or use the schema catalog as the template:
-        <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm in/catalog/schema_field_catalog.json -o out/dataset-from-schema.csv -j out/joined_field_catalog.json</code></pre>
+        <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm in/catalog/schema_field_catalog.json -o out/dataset-from-schema.csv -j out/joined_field_catalog.json -t 00237_NIR005_G017_water_S0995945_S01.001</code></pre>
         The schema catalog remains the selection/template contract; the
         extractor populates its actual values and units from the measurement.
         This writes 15 selected linearized rows to
@@ -108,14 +129,11 @@ catalog, without hardcoding field names per instrument.
     schema metadata and path are retained.
     </p>
 
-  <p>Representative rows from the generated dataset:</p>
-  <pre><code>label,value,unit,path
-  analyst,Marc Lenaerts,,analyst
-  beamsplitter type,Quartz,,beamsplitter type
-  measurement identifier,9a760996-faa3-4a13-be69-83ee745b7cb3,,measurement identifier
-  optical velocity setting,0.31646761044694033,cm/s,Fourier transform infrared document.measurement document.optical velocity setting
-  resolution,16,1/cm,Fourier transform infrared document.measurement document.resolution
-  number of averages,128,(unitless),Fourier transform infrared document.measurement document.number of averages</code></pre>
+  <p>Representative rows from the generated semicolon-delimited dataset:</p>
+  <pre><code>Title;Datum Label;Index;Scalar Double Datum;Scalar String Datum;Scalar Boolean Datum;Scalar DateTime Datum;Unit;Ontology
+  00237_NIR005_G017_water_S0995945_S01.001;aperture size setting;1;0;;;;nm;http://purl.allotrope.org/ontologies/result#AFR_0002389
+  00237_NIR005_G017_water_S0995945_S01.001;analyst;6;;Marc Lenaerts;;;;http://purl.allotrope.org/ontologies/result#AFR_0001116
+  00237_NIR005_G017_water_S0995945_S01.001;measurement time;11;;;;2025-08-11T09:44:57.419000+02:00;;http://purl.allotrope.org/ontologies/result#AFR_0000952</code></pre>
 
   <p>
   The schema catalog is the reusable selection template. After manual review,
@@ -134,6 +152,11 @@ catalog, without hardcoding field names per instrument.
       selection. The measurement's current <code>value</code> and
       <code>unit</code> populate the joined entry, replacing the schema
       catalog's null value placeholder.</li>
+      <li>The CSV columns are <code>Title</code>, <code>Datum Label</code>,
+        <code>Index</code>, typed scalar value columns, <code>Unit</code>, and
+        <code>Ontology</code>. Numeric values currently use
+        <code>Scalar Double Datum</code>; the title comes from <code>-t</code>
+        or falls back to the measurement's <code>sample identifier</code>.</li>
   <li>Catalogs must be cached per manifest, under distinct filenames, to
       avoid collisions with reserved schema files.</li>
 </ul>
