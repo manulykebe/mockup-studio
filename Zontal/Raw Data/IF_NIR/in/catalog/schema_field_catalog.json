@@ -9,6 +9,8 @@
     "type": "quantity",
     "value": null,
     "unit": "nm",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -21,6 +23,8 @@
     "type": "quantity",
     "value": null,
     "unit": "(unitless)",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -44,6 +48,8 @@
       }
     ],
     "n_points": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002057",
+    "xsd_type": null,
     "include": false
   },
   {
@@ -56,6 +62,8 @@
     "type": "quantity",
     "value": null,
     "unit": "(unitless)",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -68,6 +76,8 @@
     "type": "quantity",
     "value": null,
     "unit": "cm/s",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -80,6 +90,8 @@
     "type": "quantity",
     "value": null,
     "unit": "1/cm",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -103,6 +115,8 @@
       }
     ],
     "n_points": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002283",
+    "xsd_type": null,
     "include": false
   },
   {
@@ -115,6 +129,8 @@
     "type": "quantity",
     "value": null,
     "unit": "nm",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -127,6 +143,8 @@
     "type": "quantity",
     "value": null,
     "unit": "(unitless)",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -150,6 +168,8 @@
       }
     ],
     "n_points": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002057",
+    "xsd_type": null,
     "include": false
   },
   {
@@ -162,6 +182,8 @@
     "type": "quantity",
     "value": null,
     "unit": "(unitless)",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -174,6 +196,8 @@
     "type": "quantity",
     "value": null,
     "unit": "cm/s",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -197,6 +221,8 @@
       }
     ],
     "n_points": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002282",
+    "xsd_type": null,
     "include": false
   },
   {
@@ -209,6 +235,8 @@
     "type": "quantity",
     "value": null,
     "unit": "1/cm",
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
+    "xsd_type": null,
     "include": true
   },
   {
@@ -232,6 +260,8 @@
       }
     ],
     "n_points": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002285",
+    "xsd_type": null,
     "include": false
   },
   {
@@ -242,6 +272,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001116",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -253,6 +284,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001978",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -264,6 +296,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001980",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -275,6 +308,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002019",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -286,6 +320,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001120",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -297,6 +332,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002254",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -308,6 +344,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001991",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#boolean",
     "include": true
   },
@@ -319,6 +356,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002253",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -330,6 +368,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001119",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -341,6 +380,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001977",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -352,6 +392,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001745",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -363,6 +404,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001121",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -374,6 +416,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0000952",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
     "include": true
   },
@@ -385,6 +428,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002390",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -396,6 +440,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001992",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -407,6 +452,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0001118",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -418,6 +464,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002391",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   },
@@ -429,6 +476,7 @@
     "type": "scalar",
     "value": null,
     "unit": null,
+    "property_class": "http://purl.allotrope.org/ontologies/result#AFR_0002202",
     "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
     "include": true
   }

@@ -16,7 +16,7 @@
  *   - "datacube":        an Allotrope data cube -> described (dimensions/measures), not expanded.
  *
  * Usage:
- *   node schema_catalog_builder.js <schema_file.schema> [-o schema_field_catalog.json]
+ *   node schema_catalog_builder.js <schema_file.schema> [-o in/catalog/schema_field_catalog.json]
  */
 "use strict";
 
@@ -85,6 +85,8 @@ function walk(node, currentPath, entries) {
       type: "quantity",
       value: null,
       unit: extractUnit(node),
+      property_class: node["$asm.property-class"] || null,
+      xsd_type: node["$asm.type"] || null,
       include: true,
     });
     return;
@@ -97,6 +99,7 @@ function walk(node, currentPath, entries) {
       type: "scalar",
       value: null,
       unit: null,
+      property_class: node["$asm.property-class"] || null,
       xsd_type: node["$asm.type"] || null,
       include: true,
     });
@@ -112,6 +115,8 @@ function walk(node, currentPath, entries) {
       dimensions: meta.dimensions,
       measures: meta.measures,
       n_points: null,
+      property_class: node["$asm.property-class"] || null,
+      xsd_type: node["$asm.type"] || null,
       include: false,
     });
     return;
@@ -135,12 +140,12 @@ function buildCatalog(schemaPath) {
 function main() {
   const args = process.argv.slice(2);
   if (args.length === 0 || args.includes("-h") || args.includes("--help")) {
-    console.log("Usage: node schema_catalog_builder.js <schema_file.schema> [-o schema_field_catalog.json]");
+    console.log("Usage: node schema_catalog_builder.js <schema_file.schema> [-o in/catalog/schema_field_catalog.json]");
     process.exit(args.length === 0 ? 1 : 0);
   }
 
   let schemaFile = null;
-  let output = "schema_field_catalog.json";
+  let output = "in/catalog/schema_field_catalog.json";
   for (let i = 0; i < args.length; i++) {
     if (args[i] === "-o" || args[i] === "--output") {
       output = args[++i];
@@ -154,7 +159,9 @@ function main() {
   }
 
   const entries = buildCatalog(path.resolve(schemaFile));
-  fs.writeFileSync(path.resolve(output), JSON.stringify(entries, null, 2), "utf-8");
+  const outputPath = path.resolve(output);
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
+  fs.writeFileSync(outputPath, JSON.stringify(entries, null, 2), "utf-8");
   console.log(`Wrote ${entries.length} candidate fields to ${output}`);
 }
 

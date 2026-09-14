@@ -23,9 +23,10 @@ catalog, without hardcoding field names per instrument.
 <h2>If the manifest is new (no cached catalog yet)</h2>
 <ol>
   <li>Resolve the manifest URI: strip the scheme and host, then look up
-      <code>in/manifest/&lt;remaining path&gt;.json</code> (e.g. the manifest
+      <code>in/manifest/&lt;remaining path&gt;</code> (e.g. the manifest
       <code>http://purl.allotrope.org/manifests/ftir/REC/2024/12/ftir.manifest</code>
-      resolves to <code>in/manifest/ftir/REC/2024/12/ftir.manifest.json</code>),
+      resolves to <code>in/manifest/ftir/REC/2024/12/ftir.manifest</code>,
+      still plain JSON content despite the extensionless name),
       matched by its <code>@id</code>, then read its <code>json-schemas[0]</code> URI.</li>
   <li>Resolve that schema URI the same way: strip the scheme and host, then
       look up <code>in/schema/&lt;remaining path&gt;</code> (e.g.
@@ -35,10 +36,11 @@ catalog, without hardcoding field names per instrument.
   <li>Run <code>scripts/schema_catalog_builder.js</code> on that schema to
       produce a catalog of every candidate field, with <code>value: null</code>
       and an <code>include</code> flag pre-set
-      (true for scalar/quantity, false for datacube).</li>
+      (true for scalar/quantity, false for datacube). Its output defaults to
+      <code>in/catalog/schema_field_catalog.json</code>.</li>
   <li>Manually review the catalog: adjust <code>include</code> flags as
       needed, then save it under a name keyed to the manifest in
-      <code>out/</code> (e.g. <code>out/&lt;manifest-name&gt;.catalog.json</code>).
+      <code>in/catalog/</code> (e.g. <code>in/catalog/&lt;manifest-name&gt;.catalog.json</code>).
       Never reuse the reserved name <code>field_catalog.schema.json</code> -
       that file is the JSON Schema validating the catalog format itself,
       not a catalog.</li>
@@ -60,6 +62,57 @@ catalog, without hardcoding field names per instrument.
       <code>label, value, unit</code> row.</li>
 </ol>
 
+  <h2>Worked example: the available FTIR file</h2>
+  <p>
+  The available measurement file is
+  <code>in/00237_NIR005_G017_water_S0995945_S01.001.asm</code>. Its extension is
+  <code>.asm</code>, but its content is JSON, so the Node.js scripts can read it
+  directly with <code>JSON.parse</code>.
+  </p>
+
+  <ol>
+    <li>Read the top-level <code>$asm.manifest</code> value:
+      <code>http://purl.allotrope.org/manifests/ftir/REC/2024/12/ftir.manifest</code>.</li>
+    <li>Resolve that URI to the local manifest:
+      <code>in/manifest/ftir/REC/2024/12/ftir.manifest</code>.
+      Its <code>@id</code> matches the measurement's manifest URI.</li>
+    <li>Read <code>json-schemas[0]</code> from the manifest:
+      <code>http://purl.allotrope.org/json-schemas/adm/ftir/REC/2024/12/ftir.schema</code>.</li>
+    <li>Resolve that URI to:
+      <code>in/schema/adm/ftir/REC/2024/12/ftir.schema</code>, then verify its
+      <code>$id</code> matches the schema URI.</li>
+    <li>Build the schema catalog:
+      <pre><code>node scripts/schema_catalog_builder.js in/schema/adm/ftir/REC/2024/12/ftir.schema</code></pre>
+      This writes 33 candidate fields to
+      <code>in/catalog/schema_field_catalog.json</code>. Its values are
+      <code>null</code> because the catalog was built from the schema.</li>
+    <li>For this example, use the reviewed data catalog generated from the
+      measurement file:
+      <pre><code>node scripts/catalog_builder.js in/00237_NIR005_G017_water_S0995945_S01.001.asm -o out/field_catalog.json</code></pre>
+      This discovers 19 candidates and retains their actual values.</li>
+    <li>Join the measurement file with the selected catalog:
+      <pre><code>node scripts/dataset_extractor.js in/00237_NIR005_G017_water_S0995945_S01.001.asm out/field_catalog.json -o out/dataset.csv</code></pre>
+      This writes 15 linearized rows to <code>out/dataset.csv</code>.
+  </li>
+  </ol>
+
+  <p>Representative rows from the generated dataset:</p>
+  <pre><code>label,value,unit,path
+  analyst,Marc Lenaerts,,analyst
+  beamsplitter type,Quartz,,beamsplitter type
+  measurement identifier,9a760996-faa3-4a13-be69-83ee745b7cb3,,measurement identifier
+  optical velocity setting,0.31646761044694033,cm/s,Fourier transform infrared document.measurement document.optical velocity setting
+  resolution,16,1/cm,Fourier transform infrared document.measurement document.resolution
+  number of averages,128,(unitless),Fourier transform infrared document.measurement document.number of averages</code></pre>
+
+  <p>
+  The schema catalog is the reusable selection template. After manual review,
+  its <code>include</code> flags can be used with future measurements that use
+  the same manifest and schema. The extractor always takes the current
+  <code>value</code> and <code>unit</code> from the measurement file, not from
+  the schema catalog's null placeholders.
+  </p>
+
 <h2>Key clarifications</h2>
 <ul>
   <li>The manifest does not contain a schema directly - it only points to
@@ -75,11 +128,12 @@ catalog, without hardcoding field names per instrument.
 <h2>Folder layout</h2>
 <ul>
   <li><code>in/</code> - measurement files (read-only inputs).</li>
-  <li><code>in/manifest/</code> - manifest JSON files, stored under a path
-      that mirrors their <code>$asm.manifest</code> URI
-      (host stripped, path kept, <code>.json</code> appended).</li>
+  <li><code>in/manifest/</code> - manifest files, stored under a path
+      that mirrors their <code>$asm.manifest</code> URI exactly
+      (host stripped, path kept, no extension added - still JSON content).</li>
   <li><code>in/schema/</code> - ASM schema files, stored under a path that
       mirrors their <code>$id</code> URI (host stripped, path kept).</li>
+  <li><code>in/catalog/</code> - schema-derived field catalogs (reviewable, before joining).</li>
   <li><code>scripts/</code> - the three Node.js tools described below.</li>
   <li><code>out/</code> - generated catalogs and the linearized dataset (all script outputs).</li>
 </ul>
@@ -101,7 +155,7 @@ catalog, without hardcoding field names per instrument.
   <tr>
     <td>scripts/schema_catalog_builder.js</td>
     <td>in/schema/&lt;schema file&gt; (.schema)</td>
-    <td>out/schema_field_catalog.json</td>
+    <td>in/catalog/schema_field_catalog.json</td>
     <td>Discover fields from a schema (no data yet, values null)</td>
   </tr>
   <tr>
