@@ -13,6 +13,7 @@ variables:
   - name: IPTitle
     value: 00237_NIR005_G017_water_S0995945_S01.001.asm
   - name: reccount
-    value:
-      type: number
-      data: "1"
+    value: |-
+      function res() {
+          [native code]
+      }
