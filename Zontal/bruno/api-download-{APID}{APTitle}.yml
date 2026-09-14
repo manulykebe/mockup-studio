@@ -13,10 +13,10 @@ http:
     type: json
     data: |-
       {
-          "title": "00237_NIR005_G017_water_S0995945_S01.001.asm",
+          "title": "Zontal testing- D9838-33-7.csv.asm", // title is required but can be anything
           "informationPackage": [
               {
-                  "identifier": "247d49949d9945a8a1ed7bcc5c986c"
+                  "identifier": "0d16c7b52519459da6e6a3e3da73ad"
               }
           ],
           "digitalObjectsOnly": true
