@@ -11,7 +11,7 @@ http:
     data: |-
       {
           "size": 25,
-      //     "query": "S0995945",
+          "query": "",
           "filter": [
               {
                   "propertyName": "lifecycleStatus",
@@ -19,28 +19,24 @@ http:
                       "Submitted",
                       "Archived"
                   ],
-                  "filterType": "terms"
+                  "filterType": "terms",
+                  "operator": null
               },
               {
-                  "propertyName": "fileName",
+                  "propertyName": "title",
                   "value": [
-                      "S0995945"
+                      "00237_NIR005"
                   ],
-                  "filterType": "wildcard"
-              },
-              {
-                  "propertyName": "instrumentId",
-                  "value": [
-                      "IF_NIR"
-                  ],
-                  "filterType": "terms"
+                  "filterType": "prefix",
+                  "operator": null
               },
               {
                   "propertyName": "informationPackageProfile",
                   "value": [
-                      "Bruker MPA III VNF"
+                      "VNF"
                   ],
-                  "filterType": "terms"
+                  "filterType": "wildcard",
+                  "operator": null
               }
           ],
           "sortField": [
@@ -65,7 +61,7 @@ runtime:
             bru.setEnvVar('IPID', res.getBody().member[0].objectKey[0])
         }
         if (res.getBody().member?.length || 0 === 1) {
-            bru.setEnvVar('IPTitle', res.getBody().member[0].fileName[0])
+            bru.setEnvVar('IPTitle', res.getBody().member[0].title)
         }
 
 settings:

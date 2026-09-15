@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signals Preparations Picker (Framed)</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #e9ebee;
+        }
+
+        .picker-frame {
+            /* explicit px sizing (not %) so it doesn't collapse to the iframe default 300x150 */
+            width: min(1550px, 100vw);
+            height: min(750px, 100vh);
+            border: 1px solid #d9d9d9;
+            border-radius: 6px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .15);
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <iframe class="picker-frame" src="Signals-Preparations-Picker.html" title="Signals Preparations Picker"></iframe>
+</body>
+
+</html>

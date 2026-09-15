@@ -11,22 +11,57 @@ http:
       value: Bearer {{zontal_access_token}}
   body:
     type: json
-    data: |
+    data: |+
+      // {
+      //     "title": "Zontal testing- D9838-33-7.csv.asm", // title is required but can be anything
+      //     "informationPackage": [
+      //         {
+      //             "identifier": "0d16c7b52519459da6e6a3e3da73ad"
+      //         }
+      //     ],
+      //     "digitalObjectsOnly": true
+      // }
+
+      // {
+      //     "title": "Zontal testing- D9838-1-19.csv.asm",
+      //     "informationPackage": [
+      //         {
+      //             "identifier": "0d16c7b52519459da6e6a3e3da73ad"
+      //         }
+      //     ],
+      //     "digitalObjectsOnly": true
+      // }
+
+
       {
-        "title": "00237_NIR005_G017_water_S0995945_S01.001.asm",
-        "informationPackage": [
-          {
-            "identifier": "247d49949d9945a8a1ed7bcc5c986c"
-          }
-        ],
-        "digitalObjectsOnly": true
+          "title": "{{IPTitle}}",
+          "informationPackage": [
+              {
+                  "identifier": "{{IPID}}"
+              }
+          ],
+          "digitalObjectsOnly": true
       }
+
   auth:
     type: bearer
     token: "{{zontal_access_token}}"
 
 runtime:
   scripts:
+    - type: before-request
+      code: |-
+        (function () {
+          const qas = 'Zontal testing- D9838-1-19.csv.asm|0d16c7b52519459da6e6a3e3da73ad,Zontal testing- D9838-33-6.csv.asm|15dc8cde0e38444e9d9369d6dcf20e'; // <-- paste full QAS here
+          const idx = 0; // change as needed
+
+          const items = qas.split(',').map(s => s.trim()).filter(Boolean);
+          const selected = items[idx] || '';
+          const [title = '', id = ''] = selected.split('|').map(s => s.trim());
+
+          console.log('Computed IPID =', id);
+          console.log('Computed IPTitle =', title);
+        })();
     - type: after-response
       code: |-
         const disposition = res.headers["content-disposition"];
@@ -47,3 +82,145 @@ settings:
   followRedirects: true
   maxRedirects: 5
   forwardAuthorizationHeader: true
+
+examples:
+  - name: 0d16c7b52519459da6e6a3e3da73ad
+    request:
+      url: https://{{ZONTAL_HOST}}/api/download/
+      method: POST
+      headers:
+        - name: Authorization
+          value: Bearer {{zontal_access_token}}
+      body:
+        type: json
+        data: |+
+          // {
+          //     "title": "Zontal testing- D9838-33-7.csv.asm", // title is required but can be anything
+          //     "informationPackage": [
+          //         {
+          //             "identifier": "0d16c7b52519459da6e6a3e3da73ad"
+          //         }
+          //     ],
+          //     "digitalObjectsOnly": true
+          // }
+
+          // {
+          //     "title": "Zontal testing- D9838-1-19.csv.asm",
+          //     "informationPackage": [
+          //         {
+          //             "identifier": "0d16c7b52519459da6e6a3e3da73ad"
+          //         }
+          //     ],
+          //     "digitalObjectsOnly": true
+          // }
+
+
+          {
+              "title": "{{IPTitle}}",
+              "informationPackage": [
+                  {
+                      "identifier": "{{IPID}}"
+                  }
+              ],
+              "digitalObjectsOnly": true
+          }
+
+    response:
+      status: 200
+      statusText: OK
+      headers:
+        - name: date
+          value: Mon, 14 Sep 2026 16:05:32 GMT
+        - name: content-type
+          value: application/zip
+        - name: content-length
+          value: "7318"
+        - name: connection
+          value: keep-alive
+        - name: vary
+          value: Origin, Access-Control-Request-Method, Access-Control-Request-Headers
+        - name: content-disposition
+          value: inline;filename="Zontal testing- D9838-1-19.csv.asm";filename*="utf-8''Zontal testing- D9838-1-19.csv.asm"
+        - name: accept-ranges
+          value: bytes
+        - name: x-content-type-options
+          value: nosniff
+        - name: x-xss-protection
+          value: "0"
+        - name: cache-control
+          value: no-cache, no-store, max-age=0, must-revalidate
+        - name: pragma
+          value: no-cache
+        - name: expires
+          value: "0"
+        - name: strict-transport-security
+          value: max-age=31536000 ; includeSubDomains
+        - name: x-frame-options
+          value: DENY
+      body:
+        type: text
+        data: "PK\x03\x04\x14\0\b\b\b\0��.]\0\0\0\0\0\0\0\0\0\0\0\0\"\0\r\0Zontal testing- D9838-1-19.csv.asmUT\t\0\x05K\e�jK\e�j���n\eI����)
+
+          �\x0e�\x03��y>�j����\x05���޽�پ(K�M�\"\x05\x1e��\x19��v�/�O�\x16eY\x14+��D�U��\e[�:Deef���_�?�PU���Y\\֗�t�j�X>;���Y.�N�?�Z�'u3�̖��ը��_?������������Ӌo�\ee�s��O'������f9�x�/�5���r|>\x19U��?F��x���_���ٴ�9�����.G���?q\x10\x0e�h�M�x�X�.����8��:�Mߎ��Ѽ�6����?f�e39�lpܼ\\p~b�R�'\x1d��-;ͦ�H]���~���z|�\v�_�G�������%�n<}}R}��M'�D�\x1aE�����\x0fN1\a�/�R�-���K\x19�({b�O:�*s�c\x1d]��Y{��/��k�v|>�
+
+          �z������7��B����|v�:_Vx��W��r5�޵���i��S<��싏\a]���u�vm�n<�����U{s����6�wxf7�m\x0f��]�&�tu���#7\x0f��x���G�\x02.\x17/��������-��b>k\x0f<��x��g7\a����/\e\x05�Tߎ��x��ڛY����������t�O�\x1dt��Y�w\vz���B�\e����Ǻ���
+
+          '���ҩW�F�(����^4�W[��?^�Y������_6��7w��h\x17��3��|�\x16t���f2^��^�.���l�L/������bѼ�;��$o��j�\x1a_T�ѫ9Z��-ntz1�{�\x18-��w���1o�ɪ�����{B�W�q[9�(���\x16�[Uq���r��2>�\x13pO\x16o��ѭˣ����:o&d%Y�\x16W�i�x�B/�M9��򌷏�ho�\b�'^�?���.v>��Z,�ꋛ+�����գ*\x1dP�\\w�\\Q�:��Q-�O\f�8��~���}Jl�#)��|�r��Ӥy9������\x14g�\x14_�:��\r��r�W�}x���\x12�\\?��V�a�:n}���|t����;��>�_�g�W�)��W��\x0fQ�b�z9a�b�y��������}��\x1ew�\x17�W�F�ҟ�\x0f�x�W��9~o^�2��\x1e%���V��\x16Z��\x1cݿV\x15\x02��n�شK��[\x04\x03���\r�=ژ8{�]}��ݘ�2g\x0fVq�[�ݝu!vt(\x1f�9i�����w޸�\x1d\x1f��\\��̗~̮+��س6����E�\x1c���a�Ӑ\t�y��'����I�H��J�����p�c�w��[\x1d�a���Z\\�u:��ܝ�)0��.{�<\x1c\\={�t�q�kz��\x18�ʍ�g�x������׵�)\eO۝󎼼���>���물\vd�\x18�\x1d�\x01�m��C�&�xL��S�<�E�@��ؓ�)���P{<�?e���M���ר�6��+�\x01��%�\x1fk�<
+
+          ��'��\x1c����y�6<ۤ=s���A�F?]���\aM޾�5Rt�˨�&���\x18Ԡ\x14\"��\t5bC �`�=!6i�\x04��!ڐ�&`s����\x19\x1c��J�\x03�Z`P�*:��\x03z9��Dד�G����!��Y����h�J�D7e���M�t_�l\x15q\x04�\x15]c\x12�mrt�A[BYdK\x17\x16�I�#�\f��U��Ɂ\x0ey�<�dM�;��k��AW\v\x1dp�hz�\e�+��I�\x05��R#�X:��g.\x01Bю�wG�Q��78\x1e�(Z��F�A����F��c�1�\x1d%�L�\x11'觢�\x11�X���h\x1c�'�pI�\x18\b7�53�h�\x1ct�!+�cBԩ]@�%�\x05�n\e�\f�@\x16�A�A5
+
+          hX�.\b?������\"��(d4�� \b�h\x14��\x19�\b��0k蚢���X�G��F5���\x02\x02R���Ȓ�\bIu�8\x17Y�\x10�P���L+l���ngY\x0f�=�\\���b\x12���$�Od��M�UH�\x16�e,$d:\x06������\b\x17!��|V)�2�=��8��l��62�0T\t�aG\x06Ƅ|\x13��VP��!)C;\b�\0���^$)�%z�\vgp�q\"\x1fZ1�@\x0f\x18��\x17�%y\x05$��f쀗��$�G��/��~���c��\e����}��]\t���������Z]]���d|9�>���\x1f^4�X3#V�x��}�3��jҴo��7T���\e�{�+�No\x0fW���\x15\x1d��]�fX�\x19tm���c\x17�\x1fVa�T{z��؅�\x0f]�[�����;���b9����W��e�k~��C�IR��x�\x17�ruY�̷�8խZ�g ]�B#\x1e�⼙4��<����=��$;�nI[�U��T�;��8Z�&�j9o��r��iu�9�_�\t����}U��}Y�_��j}��������袺\x1c5]�Un���
+
+          q�b0���f�j8��\a�ee�=��毚�G݄���Fn?�M�-���������f:\x1dM�):��e�Ó��M�8���\x1d�}r�o�j5/\x17��U�'�3��,�\x1d��S�\x1e���/\x17��yC�-c<ֶ�D&�G������UǌC��2S��\x1d=�ڷ�(�)v5�OV\t�s:.a�L�ܷd�)\x12��鳫������Z\\���|����9M(ߛ\e�����_���\av��e��t����j������J/��9���j4ڞ|��k�5��v~u����\x0f�w\x05��O&}��~`w��D�V�\x0fXĞ��\x03�8p(@.�,g�j:[�\x16\x0fs��*�)���T|^�����$\x06���6VZ]�z��\x1f*\x15�\e�\\��;y@n�9;���M�Mv����w.�\a�a\x1eHe�(T�P\x19�\a��l�����C\x0e]����\x10*C�\f�a�28�P\x19Be�v�2�� �Be\b�!TF%TƝM���M���]���؄�\x10���$���佢�\x12\\\x0f�dv�#DG'=e@�':�hG\x1c,-�JJ\x1f\x18�]Ќ�h)\r}����\rH:�ʴ�/h��Ӊ��!�i��(o��h%_��F&��,���,��`��H!3p\x06Z�y$�VӃV���5[\a���ľ?U]Lb����:{��A�\x19�N��=o{�x\x06=�}��\x1c\x1e����:va\x0e\x0fψԌ��\x17��\x19�\x13\t�q\x18�\x0e�g8j\x1c~Hx��\x06_\x05���]����\x19~W]�\r�AiŞ�\x19�H�^�\x19�:���\x19��F?�\f�U��\x19�g<��ώ�蔛O�g�\a�\x19��:�3���<����w�ꐺ��\t�!x��\x19�ÂgpV�3\x04� ��g\b�A�\x05�\x10<C��J��;��\x19\e��\x19ݻ\b�ѱ\t�!&1�ILb�2y���@�č�d���2ؐ�l\x01�|2�V[H��\"`�ᬓ���Bf D��f�D瓩�ޓ�\x06�\x17�P�\x1e�i\x17�0��=E�\"�aDZQN�N�\v��9\x17|�U�N�Lm �h�֟�*&1\r�tu��۠��\x1eL�P\x06MY\x1e�0�\ae\x18z\x1c�؅9<(�\x19�:va
+
+          ��>�@\x19�q��kfP\tА�\fO��\x13(��w�2\x06
+
+          e�$�z\x03ePo\x15z\x06e\x1c�o�E3�\e�%�A�
+
+          \x13&C��\a���1\x19�j�)�\f��53���\x03�\f(�\x17x8]s���\x10:��tF�V��#�̭�
+
+          N�\f�3\x04���\x04�ଂg\b�A�\x05�\x10<��\v�!x��\x19��\x19w6�366�3�w\x11<�c\x13<CLb\x12��>WSI�����ih��\f�\x04C'ee@$XZ��#\x0eʲ)=t\x1d�h(d];VϠEA�z\x06��
+
+          ���!��ш��B\t���}./�>��ʢK�
+
+          t\x04o\x19���A�v�\f\x1f�̶H\x04�H�\x02i@�0K���.�IL�5�_co�6pH�*�cO�\x1e\"��[�`��\x06�&�؅9<F#hR�\x1c�0��X�H\x18��8vxFc�W�\a�h8�\x1e\x14F��wa4\x06�h\x10yr�\x10\rjاg�\x06!\e\x04��t��F4���>��\x10Fc?\x17?CFc���o��pF���hh}����k݌������/���,��\tCOt�\x1a?��hs��~�Mrəxoh�}ޗPCof�Q��u�f2�c�^�\e\x1d\x03I\x03'7\x18\b���z1��\x16�\x10�i�����t���(�ЁT�lƿ���-&��j~5[t<�}a��꠴��h�R��gA1\x04�\x10\x14�pXP\f�*(��\x18�]P\fA1H��\x18�b\b�Q\t�qg\x13\x14cc\x13\x14�{\x17A1:6A1�$�ǙT\b\\ց�-�\x1dJy����M�b��2���Lʭs�\x18Y���F{~�8��%?i�NY��Y�>1S�K�\x1c4���LH.��2�J�XO˂��fBS����o�b�y�L���\x1f/��͘����Y`w�dn�\x029\x15�����,w~�`��\x01\a�/:N�\x1a�)e��8TM���p~n<\tzM;���\x04Y���\x127����q$J�\x16�V#A�&nH\0Vf�\fS�\x0f=܅�\x11y\b�7\x15)�rfRj�7�o��S� ��+)���\b�%�ִ\x02ͥx2�X
+
+          �w>Ѓ���˞\x1e2@J\x1c\f��J�Ns�ON:*Z�����Uok��˿\x05���\x10�)D��wc�&���p�\x11gkG��cO%\x1f\x181\x12����0\aF� {���mi\x0e\f\x191x��\x1eE?vi
+
+          3�>�0#�q��̈6�6O�$�a�\x11�\x04zaF:}\x17f��\x06���\x1eR#��R��a#��\x022�����SC\x15}�F\x1c5v=\x10l����kjDej�H���Q#?���
+
+          }CF�ڜ/g�wG�+(Y�\x14pE�\x1f�p�.���/\\��_�K�c��΅/�u*�,\x14��&\x14�A)���\x10\\�Vg����Z�Q\bF!\x18\x05��`\x14�U0
+
+          �(H�`\x14�Q�v�(\x04�\x10��\x12���&\x18��&\x18E�.�Qtl�Q�IL�3\x15a�d\r\x1a]\x0e�DK΅���3RA�/�kZt�\"�\x02�P[t �$Se�63Ѹ�l^q\t�Eh�R6DTF\x14�)��\x12��H�뛠\x14��\t��IA�\a�a\x12\x06!�[���0Z�^ۙ�\x03��D�R>ɲ�ώ\t�%%���*�+e�#@�adUy\x01�\x03�\tx�\x027�\x11�
+
+          tR����1'�-x\x015��3W�)jZ\f c7����;���\x05{T��FEFdjjRKQD�h�
+
+          ��躇L�CVs\ty*)1�p�2��$��iO��XCK39L*����=\x12j�dz�&A�+O\x0f�%�]�\fV\x16\b\x04U��/Ԋ\e�*ţ��^d$>(f��:@����S�kz}��b�ݘ��\x06l�6\\�B���w���1\x14�ց\x1e];va\x0e��H5�_�]�Cc(l�\r�r�إ)\f��D�P\x1cƱ�3\x14�8�`\ 
+
+          m\v8��7!\x10�@\x14\x0f��\aC\x14����D�\ 
+
+          j��W\x10\x055J�g��Sߠ\x18\bCᨡ�~3\x14�\x140a(���)��e(�d�S@\x14]�=��(©ʧ>?\f�H��(�ն\v�\x10���1\x02Q�vaߥ(\\��\a�\x12L֦k\x0e�0\x14�P\bCA8,\f\x05g\x15�B\x18
+
+          �.\f�0\x14�]\x18
+
+          a(�������\tC��\tCѽ�0\x14\x1d�0\x14b\x12��L���\x06V��\x1a˥|�o��:lD\ff�
+
+          ��6�,u\x15-7\v�\em8�\x03\x1d&Kq g`��2\x13��ܺ�2��\x1fZ�[�ä\x1chqP(\x02�a\\R�B���5����������s�N+J���}n\x1eaV�z�������_T,E�\x18��c�D��GN���&Z���3к\x1ai\x05�\x15;�-]���j��tG�5��*���D�?S \x1dO+:�\v1DzL��x��NHLI�,\a2����-\x13R��q�֚\x19�@>���*\x0f]�A\x121��5��[@\"\x14h\x02\x04\x12\x14�\x16]t�\x10\"�.�P\x06\v\x19>˗�'�Ƿ\f��[�-3\f\x02]�\rZ�3t��P��ɗ�23J�\x1d�e����?1}\x0e��g\0[�\r\x17�(Sԅ��8�C���R���90z\"DD'r|�؅90xBG\x03�Oj�c���\x13�\x13\t<q\x18�\x0e
+
+          O���\x13G\f\x05��u�ޙ\v9�黐\x13\x03%'Jһ�뾐\x13�z\x17�#r���\e�>�\x13q��\r�F'����F'ȏ\x11\t:!��N\t�\a:A���\0':@�������<\f��XO�\x02'�vZ���M����\x13�L��Ɇ\x14�5��c!�N\b:!�\x04ᰠ\x13�U�\tA'H��\x13�N�vA'\x04�\x10t�\x12t��&���&�D�.�Ntl�N�IL�3!\f�_\t�6jv\x01�\x10�\x05\x02��;��m6~}\x06\x17\x12\x02\x1fg\x0f��\t��&rd\x02T��>�_z\\:޵�C0_�oe\f�\x0ec�|��-��\a�\t\x1d�����s�Cd$\x1d�w\x10��r\\�֞�i��\x1d���� �;�yNҷX��S\x1ad�\x1a{0œr�>`׮�@\x17}\x19�V�C&�*\f�ܘ\x1a�&3��,�`�t� .*O\x0f& �r:�Ɍ�6\x0e����c
+
+          ̇��E�3t���/�f��C&�@�\f$\b�d:SB6l,S3}m�4h�=�a��~\x01�#9\x06\t�\x1d:�^�ģj\x162��C�z�_C���\x198.\x02�$���:�l�u] ³�4\x17\x02��\x14���S�G2�$�>��/��~\e.3�̦<�\\��1\x13:מ\x1ey9va\x0e����f^�\x1c�0��Lx�<:H\x1f�4��X�H���8vPf\" DRy�`�\t]�W��&��]���R\x13eDc�׽�&�q�^Q\x13䲾}�&��J�ojb'}�ShbWU\x11hB�\t��}�\tJ�=\x055�A1��&\\<��A�D���&BY&Z���M���R\x13�|c�;\x15]���5\aX�\t�&\x04� \x1c\x16h��
+
+          4!�\x04i\x17hB�\t�.Є@\x13\x02MT\x02M��\x04���\x04���E���M�\t1��q&�\x16ZxA�DkY(�C�q\x13�sb�Ǐ�E%Ew5��|��T\x11)7=y\x19�C�sPE��Z��\x11�\x14w~��8T�\x0e���\x14\x1c\".�\r@93�9�´�,�iK���ZGbW��\x1e���9qo�[�\"��5�o�\x19�;sz$ę\e\x0f�*0�\x11HI}t�\x18�Pu>ы��\x16١SnH\x19�ůBF$Fq\x194\x1e�\r��\x03����\be����۲\x18���\x04l;��N�m�u`�\x11ȄL�k���\x02���\r!6�]�Cƌ�%K\x0f2\x11=\a��\x170�\x19���0v\x05����#\t�|���^�0���m��Io��1!з_֋��\x1e�,
+
+          -$zJe\x19�1�\e�*+�p]����o�?\x01NL��������r\x13�\x10�T�\x1c{>�и�v|���90n�V�&:N���Y֭�m;\x17nb}\"�&\x0e��A�\t���\x10��`��X[*\x05\x11l��w�&\x06�M\fh����tl��S\x1c 6���܁`\x13�\x1a��77a�aB�&��ة���&(U�\x14܄V��\x13�ԸS�\x1e��D�\x02\x12\x048��'�\x04���\x04�8(8��)�)gc���kR��\x13\x02N\b8A8,�\x04g\x15pB�\t�.���\x13�]�\t\x01'\x04��\x04���\t8��\t8ѽ��\x13\x1d��\x13b\x12��L�\x19zzn��i.�3*'����\x1d�6\x1c�`�Rs\v*�\x10\r�\\CYN���9�� w}\x15i�]\x16dP�[�\x02}��V�0F\a��0*0b��G.���#� �)b�;�!)e\x17����/A�2Y�Վ�%�s�>��/���#�����hB���dJ�y90\x04B��v�b�\x13�1s�\x03A6�`\a�\x18D\x05�8t�S繹�*#���۰�\x19/������\x1fm+Ӎ����\\R\a��\f-x���\x1884�!�b4q�C\x19/drj�\x1cZ}@�8G��\b\x05�\x18y�j�,E��T�2M/\x06�j\x1d���iD���\x11\x17_&!0mߕ��\a�l��<��
+
+          \x14-�8��\x1an_⣘~7���\x01[�\r���HP�6~���\x03#(\\�\r-��]�\x03#(4jf�����!\x14Ɩ%�zK�\bB�>� \x14�q��\b\x05\x12\\$�Cg(����~�0\x14�P<�\x0e\x1e�P���+{�PPK>�\b�(s'v5�\x1e\"\x14���1\x10��Q#�F(\"5�$\b� \x14;5�\x1e\b\x05�ʞ���`\x1av3\x146�j�0����Pd\x13���؄�8(C\x11�r��fguʲ�D�&\f�0\x14�Ptۅ�\x10���\vC!\f\x05e\x17�B\x18
+
+          a(�&\f��\x1e�P�ڄ���E\x18��M\x18
+
+          1��S�4�\x14.�DFK\a������I��rt\f.�Bf����
+
+          \x01�Z0|�@���\x18��z\x06sy�;6g�H�X�!)n�\b\x04)F�\x15;rr�\x1c\x1d���乜\r��q\x04�A\x18�\t�dx��0����swoL��͕>�\bS<V�@�<\x05��T\x132n�Pn@!���3)�-z�I��\t��\x05�q�� �h[�|Q�\"
+
+          (|.�\x0e���\x03���;E����$ܩ�\r:a�(fd�)�\x11�[{�*���\ej��]��\x17�kZ�AX�n�\x1d_�\x16�L݌�eӏ��Ӹ:s8�\x0fMo��X<;Z��\x1e��N�ʴi\b\x1f�\x1eA���\x13�W�PW��=�hM���Ʋ\x14r;Z��'8��wc�\x0e��ۀ\x01�P[zH��\x13�\aFPX��4n|��\x1c\x18A�]\x1d�\bs��\x1c\x1a@�[X���)\0��D\x02P\x1cƱ�\x02\x14���{��\0\x14���0�\x10\x14��\vA1X�b�\a��BP��m��\b��\x155��g��|�6\x14��\x1a��9BA\r�\bB!\b�N\x15�\x0fBA��=\x10�[}��ï��������\x01PK\a\bzmw��\e\0\0-#\x02\0PK\x01\x02\x14\0\x14\0\b\b\b\0��.]zmw��\e\0\0-#\x02\0\"\0\t\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0Zontal testing- D9838-1-19.csv.asmUT\x05\0\x05K\e�jPK\x05\x06\0\0\0\0\x01\0\x01\0Y\0\0\0'\x1c\0\0\0\0"

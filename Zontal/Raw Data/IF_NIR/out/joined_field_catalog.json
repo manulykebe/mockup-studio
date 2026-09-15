@@ -1,0 +1,400 @@
+[
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "aperture size setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "nm",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
+    "xsd_type": null,
+    "include": false
+  },
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "detector gain setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
+    "xsd_type": null,
+    "include": false
+  },
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "infrared interferogram data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "concept": "length",
+        "unit": "cm"
+      }
+    ],
+    "measures": [
+      {
+        "concept": "relative intensity",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002057",
+    "xsd_type": null,
+    "include": false,
+    "value": null
+  },
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "number of averages",
+    "type": "quantity",
+    "value": null,
+    "unit": "(unitless)",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
+    "xsd_type": null,
+    "include": false
+  },
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "optical velocity setting",
+    "type": "quantity",
+    "value": null,
+    "unit": "cm/s",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
+    "xsd_type": null,
+    "include": false
+  },
+  {
+    "path": "Fourier transform infrared document|background document",
+    "label": "resolution",
+    "type": "quantity",
+    "value": null,
+    "unit": "1/cm",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
+    "xsd_type": null,
+    "include": false
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "absorption spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "absorbance",
+        "unit": "AU"
+      }
+    ],
+    "n_points": 1038,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002283",
+    "xsd_type": null,
+    "include": false,
+    "value": null
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "aperture size setting",
+    "type": "quantity",
+    "value": 0,
+    "unit": "nm",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002389",
+    "xsd_type": null,
+    "include": true
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "detector gain setting",
+    "type": "quantity",
+    "value": 3,
+    "unit": "(unitless)",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002250",
+    "xsd_type": null,
+    "include": true
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "infrared interferogram data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "length",
+        "unit": "cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "relative intensity",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": 8132,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002057",
+    "xsd_type": null,
+    "include": false,
+    "value": null
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "number of averages",
+    "type": "quantity",
+    "value": 128,
+    "unit": "(unitless)",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001672",
+    "xsd_type": null,
+    "include": true
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "optical velocity setting",
+    "type": "quantity",
+    "value": 0.31646761044694033,
+    "unit": "cm/s",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002251",
+    "xsd_type": null,
+    "include": true
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "reflectance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "reflectance",
+        "unit": "(unitless)"
+      }
+    ],
+    "n_points": 1038,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002282",
+    "xsd_type": null,
+    "include": false,
+    "value": null
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "resolution",
+    "type": "quantity",
+    "value": 16,
+    "unit": "1/cm",
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001619",
+    "xsd_type": null,
+    "include": true
+  },
+  {
+    "path": "Fourier transform infrared document|measurement document",
+    "label": "transmittance spectrum data cube",
+    "type": "datacube",
+    "dimensions": [
+      {
+        "@componentDatatype": "double",
+        "concept": "wavelength",
+        "unit": "1/cm"
+      }
+    ],
+    "measures": [
+      {
+        "@componentDatatype": "double",
+        "concept": "transmittance",
+        "unit": "%"
+      }
+    ],
+    "n_points": 1038,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002285",
+    "xsd_type": null,
+    "include": false,
+    "value": null
+  },
+  {
+    "path": "",
+    "label": "analyst",
+    "type": "value",
+    "value": "Marc Lenaerts",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001116",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "analytical method identifier",
+    "type": "value",
+    "value": "sphere_macro.XPM",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001978",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "assay comment",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001980",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "assay data identifier",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002019",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "batch identifier",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001120",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "beamsplitter type",
+    "type": "value",
+    "value": "Quartz",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002254",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "conformance assessment",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001991",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#boolean",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "detector type",
+    "type": "value",
+    "value": "RT-PbS [External]",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002253",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "equipment serial number",
+    "type": "value",
+    "value": "1903",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001119",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "experimental data identifier",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001977",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "material identifier",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001745",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "measurement identifier",
+    "type": "value",
+    "value": "9a760996-faa3-4a13-be69-83ee745b7cb3",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001121",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "measurement time",
+    "type": "value",
+    "value": "2025-08-11T09:44:57.419000+02:00",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0000952",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#dateTimeStamp",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "michelson interferometer acquisition mode setting",
+    "type": "value",
+    "value": "DD",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002390",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "reference identifier",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001992",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  },
+  {
+    "path": "",
+    "label": "sample identifier",
+    "type": "value",
+    "value": "00237_NIR005_G017_water_S0995945_S01.001",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0001118",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "sample measurement interface type",
+    "type": "value",
+    "value": "Sphere Macrosample",
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002391",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": true
+  },
+  {
+    "path": "",
+    "label": "sample preparation description",
+    "type": "value",
+    "value": null,
+    "unit": null,
+    "ontology": "http://purl.allotrope.org/ontologies/result#AFR_0002202",
+    "xsd_type": "http://www.w3.org/2001/XMLSchema#string",
+    "include": false
+  }
+]

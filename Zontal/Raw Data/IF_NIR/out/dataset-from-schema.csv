@@ -1,0 +1,16 @@
+Title;Datum Label;Index;Scalar Double Datum;Scalar String Datum;Scalar Boolean Datum;Scalar DateTime Datum;Unit;Ontology;Path
+00237_NIR005_G017_water_S0995945_S01.001;aperture size setting;1;0;;;;nm;http://purl.allotrope.org/ontologies/result#AFR_0002389;Fourier transform infrared document|measurement document
+00237_NIR005_G017_water_S0995945_S01.001;detector gain setting;2;3;;;;(unitless);http://purl.allotrope.org/ontologies/result#AFR_0002250;Fourier transform infrared document|measurement document
+00237_NIR005_G017_water_S0995945_S01.001;number of averages;3;128;;;;(unitless);http://purl.allotrope.org/ontologies/result#AFR_0001672;Fourier transform infrared document|measurement document
+00237_NIR005_G017_water_S0995945_S01.001;optical velocity setting;4;0.31646761044694033;;;;cm/s;http://purl.allotrope.org/ontologies/result#AFR_0002251;Fourier transform infrared document|measurement document
+00237_NIR005_G017_water_S0995945_S01.001;resolution;5;16;;;;1/cm;http://purl.allotrope.org/ontologies/result#AFR_0001619;Fourier transform infrared document|measurement document
+00237_NIR005_G017_water_S0995945_S01.001;analyst;6;;Marc Lenaerts;;;;http://purl.allotrope.org/ontologies/result#AFR_0001116;
+00237_NIR005_G017_water_S0995945_S01.001;analytical method identifier;7;;sphere_macro.XPM;;;;http://purl.allotrope.org/ontologies/result#AFR_0001978;
+00237_NIR005_G017_water_S0995945_S01.001;beamsplitter type;8;;Quartz;;;;http://purl.allotrope.org/ontologies/result#AFR_0002254;
+00237_NIR005_G017_water_S0995945_S01.001;detector type;9;;RT-PbS [External];;;;http://purl.allotrope.org/ontologies/result#AFR_0002253;
+00237_NIR005_G017_water_S0995945_S01.001;equipment serial number;10;;1903;;;;http://purl.allotrope.org/ontologies/result#AFR_0001119;
+00237_NIR005_G017_water_S0995945_S01.001;measurement identifier;11;;9a760996-faa3-4a13-be69-83ee745b7cb3;;;;http://purl.allotrope.org/ontologies/result#AFR_0001121;
+00237_NIR005_G017_water_S0995945_S01.001;measurement time;12;;;;2025-08-11T09:44:57.419000+02:00;;http://purl.allotrope.org/ontologies/result#AFR_0000952;
+00237_NIR005_G017_water_S0995945_S01.001;michelson interferometer acquisition mode setting;13;;DD;;;;http://purl.allotrope.org/ontologies/result#AFR_0002390;
+00237_NIR005_G017_water_S0995945_S01.001;sample identifier;14;;00237_NIR005_G017_water_S0995945_S01.001;;;;http://purl.allotrope.org/ontologies/result#AFR_0001118;
+00237_NIR005_G017_water_S0995945_S01.001;sample measurement interface type;15;;Sphere Macrosample;;;;http://purl.allotrope.org/ontologies/result#AFR_0002391;
