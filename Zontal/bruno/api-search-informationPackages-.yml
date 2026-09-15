@@ -35,7 +35,15 @@ http:
       //       "format": "string",
       //       "timeZone": "string",
       //       "operator": "NOOP"
-          }
+          },
+              {
+                  "propertyName": "informationPackageProfile",
+                  "value": [
+                      "VNF"
+                  ],
+                  "filterType": "wildcard",
+                  "operator": null
+              }
         ]
       //   "sortField": [
       //     "string"
